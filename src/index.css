@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* ===========================
+   LIGHT MODE (DEFAULT)
+=========================== */
+:root {
+  --bg: #F4F7FB;
+  --bg-card: #FFFFFF;
+  --bg-soft: #E9EEF7;
+
+  --primary: #00B8E6;
+  --primary-dark: #0095BD;
+  --primary-soft: rgba(0, 184, 230, 0.12);
+
+  --secondary: #6A00E6;
+  --secondary-dark: #5200B3;
+  --secondary-soft: rgba(106, 0, 230, 0.12);
+
+  --text-main: #0B0E14;
+  --text-secondary: #2A3147;
+  --text-muted: #5C6370;
+
+  --border: #DCE3F0;
+
+  --success: #00C27A;
+  --warning: #F59E0B;
+  --error: #E63946;
+  --info: #0077FF;
+
+  --gradient-primary: linear-gradient(135deg, #00B8E6, #6A00E6);
+  --gradient-soft: linear-gradient(135deg, rgba(0,184,230,0.15), rgba(106,0,230,0.15));
+}
+
+/* ===========================
+   DARK MODE
+=========================== */
+[data-theme="dark"] {
+  --bg: #0B0E14;
+  --bg-card: #151A2B;
+  --bg-soft: #111522;
+
+  --primary: #00D1FF;
+  --primary-dark: #00A8CC;
+  --primary-soft: rgba(0, 209, 255, 0.15);
+
+  --secondary: #7000FF;
+  --secondary-dark: #5200CC;
+  --secondary-soft: rgba(112, 0, 255, 0.15);
+
+  --text-main: #FFFFFF;
+  --text-secondary: #B8C1EC;
+  --text-muted: #8892B0;
+
+  --border: #1F2538;
+  
+   --success: #00C27A;
+  --warning: #F59E0B;
+  --error: #E63946;
+  --info: #0077FF;
+
+  --gradient-primary: linear-gradient(135deg, #00B8E6, #6A00E6);
+  --gradient-soft: linear-gradient(135deg, rgba(0,184,230,0.15), rgba(106,0,230,0.15));
+}
+
+/* Tailwind v4 Custom Theme Mapping */
+@theme {
+  --color-bg: var(--bg);
+  --color-card: var(--bg-card);
+  --color-soft: var(--bg-soft);
+
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-soft: var(--primary-soft);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-soft: var(--secondary-soft);
+
+  --color-text-main: var(--text-main);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+   --color-border: var(--border);
+
+   --shadow-md: 0 4px 16px var(--text-secondary); 
+}
+
+body {
+  @apply bg-bg text-text-main transition-all duration-300;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100vw;
+  height: 100vh;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}

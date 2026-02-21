@@ -1,0 +1,18 @@
+.login-image {
+    width: 100%;
+    height: 150px;
+    background-image: url("../image/forLogin.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 0 -70px 100px #111111;
+    border-radius: 8px;
+}
+.register-image {
+    width: 100%;
+    height: 170px;
+    border-radius: 5px 5px 0 0;
+    background-image: url("../image/forRegister.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: inset 0 -89px 80px #111111;
+}
