@@ -1,7 +1,7 @@
 .header-logo {
     font-size: 36px;
     font-weight: bold;
-    background: linear-gradient(to right, var(--secondary), var(--primary));
+    background: linear-gradient(to right, var(--primary), var(--secondary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -9,21 +9,43 @@
     transition: all 0.3s ease-in;
 }
 
+.hero-img {
+    height: 300px; width: 400px;
+    border-radius: 50px;
+    outline-color: var(--primary);
+    outline-width: 2px;
+    outline-offset: 5px;
+    border: 2px solid var(--primary);
+    outline-style: dashed;
+    animation: change 5s linear alternate infinite;
+    background-image: url("./image/micro.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+@keyframes change {
+    0% {
+        transform: rotate(-25deg);
+    }
+    100% {
+        transform: rotate(-20deg);
+    }
+}
 /* Wire Styling */
         .wire {
             fill: none;
             stroke: var(--secondary);
             stroke-width: 1;
-            filter: drop-shadow(0 0 0.5px #22d3ee);
+            filter: drop-shadow(0 0 0.5px var(--line));
         }
 
         /* Particle Flow Animation */
         .particle {
-            fill: #22d3ee;
-            filter: drop-shadow(0 0 4px #22d3ee);
+            fill: var(--line);
+            filter: drop-shadow(0 0 4px var(--line));
         }
         .circle-join {
-            filter: drop-shadow(0 0 4px #22d3ee);
+            filter: drop-shadow(0 0 4px var(--line));
         }
 
         /* RD Text Styling */
@@ -37,18 +59,18 @@
         }
         @keyframes textGlow {
             from { filter: drop-shadow(0 0 5px #8a2be2); }
-            to { filter: drop-shadow(0 0 20px #00d2ff); }
+            to { filter: drop-shadow(0 0 20px var(--line)); }
         }
         /* LED Animation */
         .led-main {
-            fill: #22d3ee;
-            filter: drop-shadow(0 0 10px #22d3ee);
+            fill: var(--line);
+            filter: drop-shadow(0 0 10px var(--line));
             animation: ledFlash 0.8s infinite alternate;
         }
 
         @keyframes ledFlash {
-            from { filter: drop-shadow(0 0 5px #22d3ee); opacity: 0.7; }
-            to { filter: drop-shadow(0 0 20px #22d3ee); opacity: 1; }
+            from { filter: drop-shadow(0 0 5px var(--line)); opacity: 0.7; }
+            to { filter: drop-shadow(0 0 20px var(--line)); opacity: 1; }
         }
 
         @keyframes raysPulse {

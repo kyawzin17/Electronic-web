@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+
+/* blockquote မှာ အလိုအလျောက် ပေါ်နေတဲ့ quotes တွေကို ဖျက်တာပါ */
+.prose blockquote p::before, 
+.prose blockquote p::after {
+  content: none !important;
+}
+
 /* ===========================
    LIGHT MODE (DEFAULT)
 =========================== */
@@ -8,13 +19,15 @@
   --bg-card: #FFFFFF;
   --bg-soft: #E9EEF7;
 
-  --primary: #00B8E6;
-  --primary-dark: #0095BD;
-  --primary-soft: rgba(0, 184, 230, 0.12);
+   --primary: #6A00E6;
+  --primary-dark: #5200B3;
+  --primary-soft: rgba(106, 0, 230, 0.1);
 
-  --secondary: #6A00E6;
-  --secondary-dark: #5200B3;
-  --secondary-soft: rgba(106, 0, 230, 0.12);
+  --line: #5200B3;
+  
+  --secondary: #00B8E6;
+  --secondary-dark: #0095BD;
+  --secondary-soft: rgba(0, 184, 230, 0.1);
 
   --text-main: #0B0E14;
   --text-secondary: #2A3147;
@@ -39,13 +52,15 @@
   --bg-card: #151A2B;
   --bg-soft: #111522;
 
-  --primary: #00D1FF;
-  --primary-dark: #00A8CC;
-  --primary-soft: rgba(0, 209, 255, 0.15);
+  --primary: #7000FF;
+  --primary-dark: #5200CC;
+  --primary-soft: rgba(112, 0, 255, 0.1);
 
-  --secondary: #7000FF;
-  --secondary-dark: #5200CC;
-  --secondary-soft: rgba(112, 0, 255, 0.15);
+   --secondary: #00D1FF;
+  --secondary-dark: #00A8CC;
+  --secondary-soft: rgba(0, 209, 255, 0.1);
+
+  --line: #00A8CC;
 
   --text-main: #FFFFFF;
   --text-secondary: #B8C1EC;
@@ -64,6 +79,7 @@
 
 /* Tailwind v4 Custom Theme Mapping */
 @theme {
+  
   --color-bg: var(--bg);
   --color-card: var(--bg-card);
   --color-soft: var(--bg-soft);

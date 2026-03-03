@@ -18,7 +18,7 @@ export default function ReadCard({
   };
 
   return (
-    <div className="max-w-sm bg-card rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-primary-soft border border-border">
+    <div className="max-w-sm bg-card/40 rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-primary-soft border-3 border-border">
       {/* Icon Section */}
       <div className="flex justify-center pt-6 pb-4">
           <FontAwesomeIcon 

@@ -7,6 +7,7 @@ import Context from "./hooks/useAppContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Docs from "./pages/Docs";
 
 export default function ThemeApp() {
 
@@ -33,7 +34,11 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/doc",
-                    element: <div>doc</div>,
+                    element: <Docs />,
+                },
+                {
+                    path: "/doc/:category/:fileName?",
+                    element: <Docs />,
                 },
                 {
                     path: "/project",

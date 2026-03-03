@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAppContext } from "../hooks/useAppContext"
 import "../App.css";
 import { useNavigate } from "react-router-dom";
@@ -8,21 +8,22 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import ReadCard from "../components/cards/ReadCard";
+import HeroCircle from "../components/HeroCircle";
 
 export default function Home() {
-    const [email, setEmail]= useState();
     const navigate= useNavigate();
     const {setActive}= useAppContext();
 //absolute top-[50%] left-[50%] -translate-1/2 
     return (
         <section className="w-full mx-auto relative z-2 tr">
+            <HeroCircle />
              {/* Hero div */}
-            <div className="w-300 mx-auto flex justify-between items-center my-30 z-2">
-                <div className="flex justify-center items-end">
-                    <div className="w-170 h-auto flex flex-col font-serif py-5 px-3 rounded-lg">
-                        <h6 className="text-gray-400 text-sm -mb-1">Red Dargon Electronic!</h6>
-                        <h2 className="text-5xl text-shadow-lg/30 font-bold mb-4 bg-gradient-to-r from-(--secondary) to-(--primary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
-                        <p className="text-md w-120 text-(--color) mb-6 opacity-80">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
+            <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 my-10 md:my-20 z-2">
+                <div className="flex justify-between items-end px-3 md:px-0">
+                    <div className="w-full md:w-160 h-auto flex flex-col items-center text-center md:text-start md:items-start font-serif py-5 px-3 rounded-lg gap-4 md:gap-px">
+                        <h6 className="w-fit text-main text-sm rounded-lg border-primary border-3 py-px px-2">Red Dargon Electronic!⚡</h6>
+                        <h2 className="text-4xl md:text-5xl text-shadow-lg/30 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
+                        <p className="text-sm md:text-base w-120 text-text-muted mb-4">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
                         <div className="flex gap-6 p-3">
                             <button onClick={() => {
                                 setActive("project");
@@ -32,28 +33,20 @@ export default function Home() {
                             <button onClick={() => {
                                 setActive("doc");
                                 navigate("/doc")
-                            }} className="px-4 py-2 border border-(--primary) text-(--primary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
+                            }} className="px-4 py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
                         </div>
                     </div>
                 </div>
 
-                <div className="hero-img bg-[url(./image/micro.png)] bg-no-repeat bg-cover bg-center">
+                <div className="hero-img">
+                    
                 </div>
             </div>
             {/* Information div */}
-            <div className="w-full mx-auto h-auto py-30 flex justify-center flex-wrap gap-6 font-serif">
-                    {/* <div className="w-84 h-65 flex flex-col items-center justify-center px-2 border border-(--primary) border-3 rounded-md drop-shadow-sm drop-shadow-cyan-500/50">
-                        <FontAwesomeIcon icon={faAddressCard} className="text-(--color) text-5xl mb-3" />
-                        <h2 className="text-(--color) text-2xl text-center mb-2">About Us</h2>
-                        <p className="text-(--color) text-md text-center mb-4">Learn more about our company and our mission to provide high-quality electronic products.</p>
-                        <button onClick={() => {
-                                setActive("about");
-                                navigate("/about")
-                            }} className="bg-(--secondary) text-(--color) text-lg rounded-lg px-6 py-1.5 hover:scale-103 hover:text-(--bg) select-none cursor-pointer">About Us</button>
-                    </div> */}
+            <div className="w-full mx-auto h-auto py-20 flex justify-center flex-wrap gap-6 font-serif">
                 
                 <ReadCard icon={faAddressCard} title="About Us"
-                             description="Learn more about our company and our mission to provide high-quality electronic products."
+                             description="Learn more about our website and our mission is to make electronic technology accessible to Myanmar."
                               buttonText="About Us"
                                buttonColor="primary"
                                onButtonClick={() => {
@@ -78,12 +71,12 @@ export default function Home() {
                             }} />
             </div>
             {/* Animation div */}
-            <div className="w-screen h-70 my-20 z-3 flex items-center"> 
+            <div className="w-screen h-70 my-10 md:my-20 z-3 flex items-center"> 
                 <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="rdGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style={{stopColor: "#a855f7"}} />
-                            <stop offset="100%" style={{stopColor: "#3b82f6"}} />
+                            <stop offset="0%" style={{stopColor: "var(--primary)"}} />
+                            <stop offset="100%" style={{stopColor: "var(--secondary)"}} />
                         </linearGradient>
 
                         <radialGradient id="raGradient" cx="50%" cy="50%" r="50%">
@@ -116,7 +109,7 @@ export default function Home() {
                     <circle className="particle" r="2.5"><animateMotion dur="5s" begin="0.2s" repeatCount="indefinite" path="M 0 155 H 950" /></circle>
                     <circle className="particle" r="2.5"><animateMotion dur="5s" begin="1.2s" repeatCount="indefinite" path="M 0 155 H 550" /></circle>
 
-                    <rect x="450" y="80" width="170" height="150" fill="none" stroke="#22d3ee" strokeDasharray="4,4" opacity="0.5" />
+                    <rect x="450" y="80" width="170" height="150" fill="none" stroke="var(--line)" strokeDasharray="4,4" opacity="0.7" />
                     <text x="480" y="185" className="rd-text">RD</text>
 
                     <g transform="translate(760, 134)">
@@ -163,74 +156,6 @@ export default function Home() {
                         <h2 className="text-(--constantW) text-md">More to view...</h2>
                     </div>
                 </div>
-            </div>
-            {/* Footer div */}
-            <footer className="w-full py-30 px-30">
-                <div className="mb-20 px-50">
-                    <h1><span className="text-shadow-lg/30 text-6xl font-bold header-logo">Red Dargon</span><span  className="text-sm font-semibold"> Electronic!</span></h1>
-                </div>
-                <div className="w-full flex justify-center items-center gap-5">
-                    <div className="w-55 text-(--color)">
-                        <p className="py-8 text-sm">
-                            Innovation at your fingertips.
-                        </p>
-                        <p className="text-sm">
-                            Connecting makers and engineers with the fature of electronics.
-                        </p>
-                    </div>
-                    <div className="w-px h-30 bg-(--primary) opacity-50"></div>
-                    <div className="me-5">
-                        <h2 className="text-md font-semibold text-(--primary) mb-2">EXPLORE</h2>
-                        <h3 className="text-md text-(--color)">
-                            Home
-                        </h3>
-                        <h3 className="text-md text-(--color)">
-                            About Us
-                        </h3>
-                        <h3 className="text-md text-(--color)">
-                            Documentation
-                        </h3>
-                        <h3 className="text-md text-(--color)">
-                            Projects
-                        </h3>
-                    </div>
-                    <div className="w-px h-30 bg-(--primary) opacity-50"></div>
-                    <div className="me-5">
-                        <h2 className="text-md font-semibold text-(--primary) mb-2">SUPPORT</h2>
-                        <h3 className="text-md text-(--color)">
-                            Contact Us
-                        </h3>
-                        <h3 className="text-md text-(--color)">
-                            FAQ
-                        </h3>
-                        <h3 className="text-md text-(--color)">
-                            Shipping & Returns
-                        </h3>
-                        <h3 className="text-md text-(--color)">
-                            Privacy Policy
-                        </h3>
-                    </div>
-                    <div className="w-px h-30 bg-(--primary) opacity-50"></div>
-                    <div className="w-50">
-                        <h2 className="text-md font-semibold text-(--primary) mb-2">CONNECT
-                            <FontAwesomeIcon icon={faFacebook} size="lg" className="ms-3 me-1 select-none cursor-pointer hover:text-blue-700 hover:scale-105"/>
-                            <FontAwesomeIcon icon={faGoogle} size="lg" className="select-none cursor-pointer hover:text-red-700 hover:scale-105"/>
-                        </h2>
-                        <p className="text-(--color) text-md">
-                            Stay Updated
-                        </p>
-                        <input className="outline-3 outline-(--primary) rounded-sm text-(--color) text-md px-1 py-1 mt-2 mb-4"
-                                placeholder="Your Email Addresss"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}/> <br></br>
-                        <button className='bg-(--primary) text-black px-8 py-1 rounded-sm ms-[50%] -translate-x-1/2 select-none cursor-pointer shadow transition duration-300 hover:shadow-[0_0_8px_var(--primary)] font-semibold'>
-                            Subscribe
-                        </button>
-                    </div>
-                </div>
-            </footer>
-            <div className="border-t-2 border-(--primary) py-2 text-gray-400 text-md text-center">
-                @2026 Red Dargon Electornic For you.
             </div>
         </section>
     )
