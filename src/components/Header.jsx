@@ -29,7 +29,7 @@ export default function Header() {
       </button>
 
       <div className="flex flex-col lg:flex-row items-center lg:gap-1 lg:items-end ">
-        <h2 className="header-logo text-shadow-lg/30">RD</h2>
+        <h2 className="header-logo text-shadow-lg/20">RD</h2>
         <p className="text-text-main font-serif text-base lg:text-sm -mt-4 lg:mt-0 lg:-ml-1 lg:mb-2">electronic!</p>
       </div>
 
@@ -38,7 +38,7 @@ export default function Header() {
       </div>
         
       <div className="flex gap-4 items-center ">
-        <button className={`bg-(--primary) text-(--text-main) hidden lg:block px-4 py-2 rounded-lg shadow hover:scale-104 transition duration-100 ${login ? "hidden" : "block"}`}><Link to="/login" className="text-(--color)">Login</Link></button>
+        <button className={`bg-primary hidden lg:block px-4 py-2 rounded-lg shadow hover:bg-primary/80 transition duration-100 ${login ? "hidden" : "block"}`}><Link to="/login" className="text-white font-serif font-semibold">Login</Link></button>
         <div className={`w-px h-8 border hidden lg:block border-(--text-main) rounded-2xl mx-px ${login ? "hidden" : "block"}`}></div>
 
       <ThemeButton />

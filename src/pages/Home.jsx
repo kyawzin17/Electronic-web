@@ -22,7 +22,7 @@ export default function Home() {
                 <div className="flex justify-between items-end px-3 md:px-0">
                     <div className="w-full md:w-160 h-auto flex flex-col items-center text-center md:text-start md:items-start font-serif py-5 px-3 rounded-lg gap-4 md:gap-px">
                         <h6 className="w-fit text-main text-sm rounded-lg border-primary border-3 py-px px-2">Red Dargon Electronic!⚡</h6>
-                        <h2 className="text-4xl md:text-5xl text-shadow-lg/30 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
+                        <h2 className="text-4xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
                         <p className="text-sm md:text-base w-120 text-text-muted mb-4">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
                         <div className="flex gap-6 p-3">
                             <button onClick={() => {
@@ -49,6 +49,7 @@ export default function Home() {
                              description="Learn more about our website and our mission is to make electronic technology accessible to Myanmar."
                               buttonText="About Us"
                                buttonColor="primary"
+                               color="primary"
                                onButtonClick={() => {
                                 setActive("about");
                                 navigate("/about")
@@ -56,7 +57,8 @@ export default function Home() {
                 <ReadCard icon={faBookmark} title="Documentation"
                              description="How each electrical device works and what they are about."
                               buttonText="To Read"
-                               buttonColor="primary"
+                               buttonColor="secondary"
+                               color="secondary"
                                onButtonClick={() => {
                                 setActive("doc");
                                 navigate("/doc")
@@ -64,7 +66,8 @@ export default function Home() {
                 <ReadCard icon={faLightbulb} title="Creative Projects"
                              description="Simple and basic projects and projects with many uses."
                               buttonText="View Projects"
-                               buttonColor="primary" 
+                               buttonColor="accent"
+                               color="accent"
                                onButtonClick={() => {
                                 setActive("project");
                                 navigate("/project")

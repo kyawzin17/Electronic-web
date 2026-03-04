@@ -4,11 +4,27 @@ import { useAppContext } from "../hooks/useAppContext";
 import MarkdownView from "../components/MarkdownView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronRight, faMicrochip } from '@fortawesome/free-solid-svg-icons';
+import RightSidebar from "../components/RightSideBar";
+
 export default function Docs() {
     const { headerHeight } = useAppContext();
    const { category: activeCategory, fileName = "resistor" } = useParams(); // URL parameter ကနေ ယူမယ်၊ default က resistor
     const navigate = useNavigate();
     const [content, setContent] = useState("");
+
+  const [headings, setHeadings] = useState([]);
+
+  useEffect(() => {
+    // Markdown မှ h2 ခေါင်းစဉ်များကို ဆွဲထုတ်ခြင်း
+    const rawHeadings = content.match(/^###\s+(.*)$/gm) || [];
+    const formattedHeadings = rawHeadings.map(h => {
+      const title = h.replace(/^###\s+/, '');
+      const id = title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]/g, '');
+      return { title, id };
+    });
+    setHeadings(formattedHeadings);
+  
+  }, [content]);
 
     const [ openCategory, setOpenCategory ]= useState( activeCategory || "passives" ); // Sidebar category open/close state
     
@@ -155,11 +171,7 @@ export default function Docs() {
             </div>
 
             {/* Right Sidebar (Optional/TOC) */}
-            <div className="sticky overflow-y-auto bg-soft hidden xl:block py-12 px-4"
-                 style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
-                <p className="text-text-secondary text-sm">On this page</p>
-                {/* ဤနေရာတွင် Table of Contents ထပ်ထည့်နိုင်ပါသည် */}
-            </div>
+            <RightSidebar headings={headings} />
         </section>
     );
 }

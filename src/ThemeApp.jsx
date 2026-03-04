@@ -8,6 +8,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Docs from "./pages/Docs";
+import About from "./pages/About";
+import Project from "./pages/Project";
 
 export default function ThemeApp() {
 
@@ -30,7 +32,7 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/about",
-                    element: <div>About</div>,
+                    element: <About />,
                 },
                 {
                     path: "/doc",
@@ -42,7 +44,7 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/project",
-                    element: <div>Project</div>,
+                    element: <Project />,
                 }
             ]
         },

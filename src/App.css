@@ -1,7 +1,7 @@
 .header-logo {
     font-size: 36px;
     font-weight: bold;
-    background: linear-gradient(to right, var(--primary), var(--secondary), var(--secondary));
+    background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

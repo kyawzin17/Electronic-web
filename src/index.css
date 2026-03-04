@@ -14,22 +14,23 @@
 /* ===========================
    LIGHT MODE (DEFAULT)
 =========================== */
-:root {
+ :root {
   --bg: #F4F7FB;
   --bg-card: #FFFFFF;
   --bg-soft: #E9EEF7;
 
-   --primary: #6A00E6;
-  --primary-dark: #5200B3;
+   --primary: #7E22CE;
   --primary-soft: rgba(106, 0, 230, 0.1);
 
   --line: #5200B3;
   
-  --secondary: #00B8E6;
-  --secondary-dark: #0095BD;
+  --secondary: #0891B2;
   --secondary-soft: rgba(0, 184, 230, 0.1);
 
-  --text-main: #0B0E14;
+  --accent: #EC4899;
+  --accent-soft: rgba(236, 72, 153, 0.1);
+
+  --text-main: #0F172A;
   --text-secondary: #2A3147;
   --text-muted: #5C6370;
 
@@ -47,22 +48,23 @@
 /* ===========================
    DARK MODE
 =========================== */
-[data-theme="dark"] {
+ [data-theme="dark"] {
   --bg: #0B0E14;
-  --bg-card: #151A2B;
+  --bg-card: #0F172A;
   --bg-soft: #111522;
 
-  --primary: #7000FF;
-  --primary-dark: #5200CC;
+  --primary: #A855F7;
   --primary-soft: rgba(112, 0, 255, 0.1);
 
-   --secondary: #00D1FF;
-  --secondary-dark: #00A8CC;
+   --secondary: #22D3EE;
   --secondary-soft: rgba(0, 209, 255, 0.1);
+
+  --accent: #F472B6;
+  --accent-soft: rgba(244, 114, 182, 0.1);
 
   --line: #00A8CC;
 
-  --text-main: #FFFFFF;
+  --text-main: #F1F5F9;
   --text-secondary: #B8C1EC;
   --text-muted: #8892B0;
 
@@ -85,12 +87,13 @@
   --color-soft: var(--bg-soft);
 
   --color-primary: var(--primary);
-  --color-primary-dark: var(--primary-dark);
   --color-primary-soft: var(--primary-soft);
 
   --color-secondary: var(--secondary);
-  --color-secondary-dark: var(--secondary-dark);
   --color-secondary-soft: var(--secondary-soft);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
 
   --color-text-main: var(--text-main);
   --color-text-secondary: var(--text-secondary);

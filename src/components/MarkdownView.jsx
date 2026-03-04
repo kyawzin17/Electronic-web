@@ -11,6 +11,25 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css"; // CSS မပါရင် zoom effect အလုပ်မလုပ်ပါဘူး
 
 export default function MarkdownView({ markdown }) {
+
+
+    const renderH3 = ({ children }) => {
+  // children ထဲက စာသားကို ယူပြီး id အဖြစ် ပြောင်းလဲခြင်း
+  const title = Array.isArray(children) ? children[0] : children;
+  const id = typeof title === 'string' 
+    ? title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]/g, '') 
+    : '';
+    console.log("Rendering H3 with ID:", id); // Debugging အတွက် console log
+
+  return (
+    <h3 
+      id={id} 
+      className="scroll-mt-24 font-bold text-slate-900 dark:text-white"
+    >
+      {children}
+    </h3>
+  );
+};
     return (
         /* စာသားအားလုံးအတွက် Typography Class များကို ဤနေရာတွင် ထားပါ */
         <div className="w-full h-auto px-4 py-6 
@@ -32,6 +51,7 @@ export default function MarkdownView({ markdown }) {
                 remarkPlugins={[remarkGfm, remarkMath]} 
                 rehypePlugins={[rehypeKatex]}
                 components={{
+                    h3: renderH3,
                     // Hydration Error အတွက် p tag logic
                     p: ({ children }) => {
                         const hasImage = Array.isArray(children) 
