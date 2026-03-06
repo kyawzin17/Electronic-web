@@ -10,6 +10,9 @@ import Register from "./pages/Register";
 import Docs from "./pages/Docs";
 import About from "./pages/About";
 import Project from "./pages/Project";
+import ProjectDetail from "./pages/ProjectDetail";
+
+
 
 export default function ThemeApp() {
 
@@ -45,6 +48,10 @@ export default function ThemeApp() {
                 {
                     path: "/project",
                     element: <Project />,
+                },
+                {
+                    path: "/project/:id",
+                    element: <ProjectDetail />,
                 }
             ]
         },

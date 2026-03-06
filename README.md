@@ -140,3 +140,10 @@ npm run start
 
 ## 🤝 Contribution
 အကယ်၍ သင်သည် ဤ Project တွင် ပါဝင်ကူညီလိုပါက သို့မဟုတ် Component သစ်များ ထည့်သွင်းလိုပါက Pull Request ပို့နိုင်ပါသည်။
+
+
+## image .jpg, .png တွေကို .webp သို့ ပြောင်းပါ။  
+
+```bash  
+node convert.js
+```

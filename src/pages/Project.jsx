@@ -1,10 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 
+
 const Project = () => {
+  const navigate = useNavigate();
+ 
   const projects = [
     {
       title: "Smart Home Automation",
+      slug: "smart-home-automation",
       description: "ESP8266 နှင့် Relay Module များကို အသုံးပြု၍ အိမ်တွင်းမီးများကို ဖုန်းမှတစ်ဆင့် ထိန်းချုပ်နိုင်သော စနစ်။",
       micro: "ESP8266 / NodeMCU",
       power: "5V DC",
@@ -14,6 +19,7 @@ const Project = () => {
     },
     {
       title: "Digital Thermometer",
+      slug: "digital-thermometer",
       description: "LM35 Temperature Sensor နှင့် I2C LCD Display ကို အသုံးပြုထားသော အပူချိန်တိုင်း ကိရိယာ။",
       micro: "Arduino Nano",
       power: "9V Battery",
@@ -22,6 +28,8 @@ const Project = () => {
       category: "Sensors"
     }
   ];
+
+  
 
 //   const [searchTerm, setSearchTerm] = useState("");
 
@@ -32,10 +40,10 @@ const Project = () => {
 // );
 
   return (
-    <div className="space-y-16 py-10 max-w-6xl mx-auto px-4">
+    <div className="space-y-16 py-10 max-w-6xl mx-auto px-8 ">
         <SearchBar />
       {projects.map((proj, index) => (
-        <div key={index} className="bg-[var(--bg-card)] border border-[var(--border)] rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform hover:scale-[1.01]">
+        <div key={index} className="w-full bg-card border border-border rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform hover:translate-y-[-8px] duration-300">
           <div className="flex flex-col lg:flex-row">
             
             {/* Image Preview Area */}
@@ -46,17 +54,17 @@ const Project = () => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] to-transparent opacity-40 lg:hidden" />
-              <div className="absolute top-6 left-6 px-4 py-1.5 bg-[var(--pink-soft)] text-[var(--pink-main)] backdrop-blur-md rounded-full text-xs font-bold border border-[var(--pink-main)]/20">
+              <div className="absolute top-6 left-6 px-4 py-1.5 bg-soft/90 text-accent backdrop-blur-md rounded-full text-xs font-bold border border-accent/90">
                 {proj.category}
               </div>
             </div>
 
             {/* Technical Info Area */}
             <div className="lg:w-1/2 p-8 lg:p-12 space-y-6">
-              <h2 className="text-3xl font-bold text-[var(--text-main)] tracking-tight">
+              <h2 className="text-3xl font-bold text-text-main tracking-tight">
                 {proj.title}
               </h2>
-              <p className="text-[var(--text-secondary)] leading-relaxed">
+              <p className="text-text-secondary leading-relaxed">
                 {proj.description}
               </p>
 
@@ -64,21 +72,18 @@ const Project = () => {
               <div className="grid grid-cols-2 gap-6 py-6 border-y border-[var(--border)]">
                 <div>
                   <p className="text-[var(--text-muted)] text-[10px] uppercase font-bold tracking-widest mb-1">Microcontroller</p>
-                  <p className="font-semibold text-[var(--primary)]">{proj.micro}</p>
+                  <p className="font-semibold text-primary">{proj.micro}</p>
                 </div>
                 <div>
                   <p className="text-[var(--text-muted)] text-[10px] uppercase font-bold tracking-widest mb-1">Power Req.</p>
-                  <p className="font-semibold text-[var(--secondary)]">{proj.power}</p>
+                  <p className="font-semibold text-secondary">{proj.power}</p>
                 </div>
               </div>
 
               {/* Action Buttons */}
               <div className="flex gap-4 pt-4">
-                <button className="flex-1 py-4 bg-[var(--gradient-primary)] text-white font-bold rounded-2xl shadow-lg shadow-[var(--primary-soft)] hover:opacity-90 transition-all">
-                  Guide မန်ဘာဝင်ဖတ်ရှုရန်
-                </button>
-                <button className="px-6 py-4 bg-[var(--bg-soft)] text-[var(--text-main)] font-bold rounded-2xl border border-[var(--border)] hover:bg-[var(--border)] transition-all">
-                  <i className="fa-brands fa-github text-lg"></i>
+                <button onClick={() => navigate(`/project/${proj.slug}`)} className="flex-1 py-4 bg-soft hover:border-2 border-primary text-text-main font-bold rounded-2xl shadow-lg shadow-soft hover:opacity-90 transition-all">
+                  ဖတ်ရှုရန်
                 </button>
               </div>
             </div>

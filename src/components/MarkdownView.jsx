@@ -19,7 +19,6 @@ export default function MarkdownView({ markdown }) {
   const id = typeof title === 'string' 
     ? title.toLowerCase().trim().replace(/\s+/g, '-').replace(/[^\w-]/g, '') 
     : '';
-    console.log("Rendering H3 with ID:", id); // Debugging အတွက် console log
 
   return (
     <h3 
@@ -69,7 +68,7 @@ export default function MarkdownView({ markdown }) {
                                 {...props} 
                                 className="rounded-xl border border-slate-300 dark:border-slate-700 
                                            my-4 mx-auto cursor-zoom-in transition-all duration-300
-                                           dark:invert dark:brightness-90 hover:brightness-110" 
+                                             hover:brightness-110" 
                                 style={{ maxHeight: '500px', objectFit: 'contain' }}
                             />
                         </Zoom>

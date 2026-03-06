@@ -42,11 +42,42 @@ export default function Docs() {
         { name: "Timmer", slug: "timmer", category: "passives" },
         { name: "Ferrite Bead", slug: "ferriteBead", category: "passives" },
         { name: "Choke Coil", slug: "chokeCoil", category: "passives" },
+        { name: "Transformer", slug: "transformer", category: "passives" },
+        { name: "Step-up Transformer", slug: "stepUpTransformer", category: "passives" },
+        { name: "Step-down Transformer", slug: "stepDownTransformer", category: "passives" },
+        { name: "Autotransformer", slug: "autoTransformer", category: "passives" },
+
         { name: "PN Junction", slug: "pnJunction", category: "diodes" },
         { name: "Rectifier Diode", slug: "rectifier", category: "diodes" },
         { name: "Fast Recovery Diode", slug: "fastRecovery", category: "diodes" },
         { name: "Schottky Diode", slug: "schottky", category: "diodes" },
         { name: "Zener Diode", slug: "zener", category: "diodes" },
+        { name: "TVS Diode", slug: "tvs", category: "diodes" },
+        { name: "Varactor Diode", slug: "varactor", category: "diodes" },
+        { name: "LED", slug: "led", category: "diodes" },
+        { name: "High Power Diode", slug: "highPower", category: "diodes" },
+        { name: "Infrared Diode", slug: "infrared", category: "diodes" },
+        { name: "Laser Diode", slug: "laser", category: "diodes" },
+        { name: "Photodiode", slug: "photo", category: "diodes" },
+        { name: "Avalanche Diode", slug: "avalanche", category: "diodes" },
+        { name: "Bridge Rectifier", slug: "bridgeRectifier", category: "diodes" },
+
+        { name: "Bipolar Junction Transistor", slug: "bipolarJunction", category: "transistors" },
+        { name: "NPN Transistor", slug: "npn", category: "transistors" },
+        { name: "PNP Transistor", slug: "pnp", category: "transistors" },
+        { name: "Darlington Pair", slug: "darlingtonPair", category: "transistors" },
+        { name: "MOSFET", slug: "mosfet", category: "transistors" },
+        { name: "N-channel MOSFET", slug: "nChannelMosfet", category: "transistors" },
+        { name: "P-channel MOSFET", slug: "pChannelMosfet", category: "transistors" },
+        { name: "JFET", slug: "jfet", category: "transistors" },
+        { name: "IGBT", slug: "igbt", category: "transistors" },
+        { name: "SCR", slug: "scr", category: "transistors" },
+        { name: "TRIAC", slug: "triac", category: "transistors" },
+        { name: "DIAC", slug: "diac", category: "transistors" },
+        { name: "UJT", slug: "ujt", category: "transistors" },
+        { name: "Phototransistor", slug: "photoTransistor", category: "transistors" },
+        { name: "Optocoupler", slug: "optocoupler", category: "transistors" },
+
     ];
 
     const categories = [...new Set(docArray.map(item => item.category))];
@@ -80,44 +111,44 @@ export default function Docs() {
             <div className="sticky bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4 py-10"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
                     {categories.map((cat) => (
-        <div key={cat} className="flex flex-col w-full">
-          {/* Category Header (Dropdown Button) */}
-          <button
-            onClick={() => setOpenCategory(openCategory === cat ? null : cat)}
-            className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all 
-              ${openCategory === cat ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
-          >
-            <div className="flex items-center gap-2">
-              <FontAwesomeIcon icon={faMicrochip} size="xs" />
-              <span className="capitalize font-bold text-sm">{cat}</span>
-            </div>
-            <FontAwesomeIcon 
-              icon={openCategory === cat ? faChevronDown : faChevronRight} 
-              className="text-[10px]" 
-            />
-          </button>
+                        <div key={cat} className="flex flex-col w-full">
+                        {/* Category Header (Dropdown Button) */}
+                        <button
+                            onClick={() => setOpenCategory(openCategory === cat ? null : cat)}
+                            className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all 
+                            ${openCategory === cat ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
+                        >
+                            <div className="flex items-center gap-2">
+                            <FontAwesomeIcon icon={faMicrochip} size="xs" />
+                            <span className="capitalize font-bold text-sm">{cat}</span>
+                            </div>
+                            <FontAwesomeIcon 
+                            icon={openCategory === cat ? faChevronDown : faChevronRight} 
+                            className="text-[10px]" 
+                            />
+                        </button>
 
-          {/* Sub-menu items (Dropdown Content) */}
-          {openCategory === cat && (
-            <div className="flex flex-col ml-4 mt-1 border-l border-slate-200 dark:border-slate-700">
-              {docArray
-                .filter(item => item.category === cat)
-                .map(item => (
-                  <Link
-                    key={item.slug}
-                    to={`/doc/${item.category}/${item.slug}`}
-                    className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-[1px]
-                      ${fileName === item.slug 
-                        ? "border-purple-500 text-purple-600 font-bold" 
-                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"}`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-            </div>
-          )}
-        </div>
-      ))}
+                        {/* Sub-menu items (Dropdown Content) */}
+                        {openCategory === cat && (
+                            <div className="flex flex-col ml-4 mt-1 border-l border-slate-200 dark:border-slate-700">
+                            {docArray
+                                .filter(item => item.category === cat)
+                                .map(item => (
+                                <Link
+                                    key={item.slug}
+                                    to={`/doc/${item.category}/${item.slug}`}
+                                    className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-[1px]
+                                    ${fileName === item.slug 
+                                        ? "border-purple-500 text-purple-600 font-bold" 
+                                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"}`}
+                                >
+                                    {item.name}
+                                </Link>
+                                ))}
+                            </div>
+                        )}
+                        </div>
+                    ))}
                 {/* <div className="w-full flex flex-col gap-2 px-2.5">
                     <span className="text-md text-text-main font-semibold">Documentation</span>
                     <div className="w-full h-auto ps-2 flex flex-col gap-1 border-l-2 border-text-secondary">
