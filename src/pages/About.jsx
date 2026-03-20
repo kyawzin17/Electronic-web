@@ -24,7 +24,7 @@ export default function About() {
             <p className="text-text-secondary text-sm mt-2">Founded Year</p>
           </div>
           <div className="p-6 bg-card rounded-2xl border-2 border-border hover:bg-card/30 hover:border-secondary hover:translate-y-[-5px] transition-all">
-            <h3 className="text-3xl font-bold text-secondary">10+</h3>
+            <h3 className="text-3xl font-bold text-secondary">100+</h3>
             <p className="text-text-secondary text-sm mt-2">Components Documented</p>
           </div>
           <div className="p-6 bg-card rounded-2xl border-2 border-border hover:bg-card/30 hover:border-accent hover:translate-y-[-5px] transition-all">

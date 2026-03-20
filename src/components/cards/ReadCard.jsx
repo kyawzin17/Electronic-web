@@ -1,15 +1,16 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { forwardRef } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
-export default function ReadCard({ 
-  icon, 
+const ReadCard= forwardRef(( 
+  { icon, 
   title, 
   description, 
   buttonText,
   buttonColor,
   onButtonClick,
-  color
-}) {
+  color },
+  ref
+ ) => {
 
   const buttonColorClasses = {
     primary: "bg-primary hover:bg-primary/80 focus:ring-blue-300",
@@ -20,7 +21,7 @@ export default function ReadCard({
   };
 
   return (
-    <div className={`max-w-sm bg-card/40 flex flex-col justify-between rounded-lg overflow-hidden transform transition-all duration-300 hover:translate-y-[-10px] border-3 border-border hover:border-${color} py-4`}>
+    <div ref={ref} className={`max-w-sm bg-card/40 flex flex-col justify-between rounded-lg overflow-hidden transform transition-all duration-300 hover:translate-y-[-10px] border-3 border-border hover:border-${color} py-4`}>
       {/* Icon Section */}
       
        <div className="px-4">
@@ -52,4 +53,6 @@ export default function ReadCard({
       </div>
     )
 }
+)
+export default ReadCard;
       {/* Content Section */}

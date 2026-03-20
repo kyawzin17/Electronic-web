@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useAppContext } from "../hooks/useAppContext"
 import "../App.css";
 import { useNavigate } from "react-router-dom";
@@ -6,19 +6,30 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
-import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import ReadCard from "../components/cards/ReadCard";
 import HeroCircle from "../components/HeroCircle";
+import Timeline from "../components/Timeline";
+
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+import TrendComponents from "../components/TrendComponents";
+
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Home() {
     const navigate= useNavigate();
     const {setActive}= useAppContext();
-//absolute top-[50%] left-[50%] -translate-1/2 
+    const containerRef= useRef(null);
+    const cardRef= useRef([]);
+
+   
     return (
-        <section className="w-full mx-auto relative z-2 tr">
+        <section className="w-full mx-auto relative z-2 transform transition duration-300">
             <HeroCircle />
              {/* Hero div */}
-            <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 my-10 md:my-20 z-2">
+            <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
                 <div className="flex justify-between items-end px-3 md:px-0">
                     <div className="w-full md:w-160 h-auto flex flex-col items-center text-center md:text-start md:items-start font-serif py-5 px-3 rounded-lg gap-4 md:gap-px">
                         <h6 className="w-fit text-main text-sm rounded-lg border-primary border-3 py-px px-2">Red Dargon Electronic!⚡</h6>
@@ -43,9 +54,9 @@ export default function Home() {
                 </div>
             </div>
             {/* Information div */}
-            <div className="w-full mx-auto h-auto py-20 flex justify-center flex-wrap gap-6 font-serif">
+            <div ref={containerRef} className="w-full mx-auto h-auto py-10 md:py-20 flex justify-center flex-wrap gap-6 font-serif">
                 
-                <ReadCard icon={faAddressCard} title="About Us"
+                <ReadCard ref={(el) => cardRef.current[0] = el} icon={faAddressCard} title="About Us"
                              description="Learn more about our website and our mission is to make electronic technology accessible to Myanmar."
                               buttonText="About Us"
                                buttonColor="primary"
@@ -53,8 +64,9 @@ export default function Home() {
                                onButtonClick={() => {
                                 setActive("about");
                                 navigate("/about")
-                               }} />
-                <ReadCard icon={faBookmark} title="Documentation"
+                               }} 
+                                />
+                <ReadCard ref={(el) => cardRef.current[1] = el} icon={faBookmark} title="Documentation"
                              description="How each electrical device works and what they are about."
                               buttonText="To Read"
                                buttonColor="secondary"
@@ -62,8 +74,9 @@ export default function Home() {
                                onButtonClick={() => {
                                 setActive("doc");
                                 navigate("/doc")
-                            }} />
-                <ReadCard icon={faLightbulb} title="Creative Projects"
+                            }}
+                             />
+                <ReadCard ref={(el) => cardRef.current[2] = el} icon={faLightbulb} title="Creative Projects"
                              description="Simple and basic projects and projects with many uses."
                               buttonText="View Projects"
                                buttonColor="accent"
@@ -71,7 +84,8 @@ export default function Home() {
                                onButtonClick={() => {
                                 setActive("project");
                                 navigate("/project")
-                            }} />
+                            }} 
+                             />
             </div>
             {/* Animation div */}
             <div className="w-screen h-70 my-10 md:my-20 z-3 flex items-center"> 
@@ -138,28 +152,10 @@ export default function Home() {
                     <circle transform="translate(766, 155)" fill="url(#raGradient)" className="circle-join" r="2" />
                 </svg>
             </div>
-
-            {/* Store div */}
-            <div className="w-fit my-30 mx-auto">
-                <h2 className="text-(--color) text-3xl font-semibold mb-3">Trending Components</h2>
-                <div className="w-full h-auto flex justify-center items-center flex-wrap gap-4">
-                    {/* {components.map((element) => {
-                        return (<div key={element.id} className="w-60 h-70 px-4 py-3 bg-gray-900 rounded-lg flex flex-col justify-between hover:border-4 border-(--primary) popular-img">
-                                <div className="w-full h-[80%] flex justify-center items-center">
-                                    <img src={element.img} alt={element.name} className="w-full" />
-                                </div>
-                                <div>
-                                    <h3 className="text-(--constantW) font-lg font-semibold">{element.name}</h3>
-                                    <span className="text-(--primary) opacity-75 text-ms me-2">Price:</span><span className="text-(--primary) text-md font-semibold">{element.price}</span>
-                                </div>
-                            </div>)
-                    })} */}
-                    <div className="w-60 h-70 px-4 py-3 bg-gray-900 rounded-lg flex flex-col justify-center items-center hover:border-4 border-(--primary)">
-                        <FontAwesomeIcon icon={faPlus}  className="text-4xl text-(--primary) select-none cursor-pointer"/>
-                        <h2 className="text-(--constantW) text-md">More to view...</h2>
-                    </div>
-                </div>
-            </div>
+            {/* TrendComponents div */}
+            <TrendComponents />
+            {/* Timeline design */}
+            <Timeline />
         </section>
     )
 }
