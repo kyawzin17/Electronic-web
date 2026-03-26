@@ -18,7 +18,7 @@ export default function Nav() {
      const navLinks = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Doc', path: '/doc/passives/resistor' },
+    { name: 'Doc', path: '/doc/components'},
     { name: 'Project', path: '/project' },
   ];
      // Get active item position

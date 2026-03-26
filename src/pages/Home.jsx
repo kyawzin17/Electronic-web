@@ -4,7 +4,7 @@ import "../App.css";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTemperatureUp } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import ReadCard from "../components/cards/ReadCard";
 import HeroCircle from "../components/HeroCircle";
@@ -14,6 +14,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
 import TrendComponents from "../components/TrendComponents";
+import ElectronicsInfoSection from "../components/ElectronicsInfoSection";
+import ElectronicHistory from "../components/ElectronicHistory";
 
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -24,7 +26,26 @@ export default function Home() {
     const containerRef= useRef(null);
     const cardRef= useRef([]);
 
-   
+   useGSAP(() => {
+    gsap.fromTo(
+        cardRef.current,
+        {
+            y: 70,
+            opacity: 0
+        },
+        {
+            y: 0,
+            opacity: 1,
+            stagger: 0.3,
+            duration: 0.5,
+            scrollTrigger: {
+                trigger: containerRef.current,
+                start: "top 80%",
+                toggleActions: 'play none none reverse',
+            }
+        }
+    )
+   }, { scope: containerRef})
     return (
         <section className="w-full mx-auto relative z-2 transform transition duration-300">
             <HeroCircle />
@@ -43,7 +64,7 @@ export default function Home() {
                                              text-(--color) rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">Get Start</button>
                             <button onClick={() => {
                                 setActive("doc");
-                                navigate("/doc")
+                                navigate("/doc/components")
                             }} className="px-4 py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
                         </div>
                     </div>
@@ -73,7 +94,7 @@ export default function Home() {
                                color="secondary"
                                onButtonClick={() => {
                                 setActive("doc");
-                                navigate("/doc")
+                                navigate("/doc/components")
                             }}
                              />
                 <ReadCard ref={(el) => cardRef.current[2] = el} icon={faLightbulb} title="Creative Projects"
@@ -154,6 +175,8 @@ export default function Home() {
             </div>
             {/* TrendComponents div */}
             <TrendComponents />
+            <ElectronicsInfoSection />
+            <ElectronicHistory />
             {/* Timeline design */}
             <Timeline />
         </section>

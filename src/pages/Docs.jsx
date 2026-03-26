@@ -3,16 +3,20 @@ import { useParams, useNavigate, Link } from "react-router-dom"; // Dynamic rout
 import { useAppContext } from "../hooks/useAppContext";
 import MarkdownView from "../components/MarkdownView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronRight, faMicrochip } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown, faChevronRight, faMicrochip, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import RightSidebar from "../components/RightSideBar";
+import Components from "../components/Components";
+import MobileLeftSidebar from "../components/MobileLeftSidebar";
 
 export default function Docs() {
-    const { headerHeight } = useAppContext();
-   const { category: activeCategory, fileName = "resistor" } = useParams(); // URL parameter ကနေ ယူမယ်၊ default က resistor
+    const { headerHeight, menu, setMenu } = useAppContext();
+   const { category: activeCategory, fileName } = useParams(); // URL parameter ကနေ ယူမယ်၊ default က resistor
     const navigate = useNavigate();
     const [content, setContent] = useState("");
-
   const [headings, setHeadings] = useState([]);
+
+  const [searchTerm, setSearchTerm]= useState("");
+  
 
   useEffect(() => {
     // Markdown မှ h2 ခေါင်းစဉ်များကို ဆွဲထုတ်ခြင်း
@@ -26,7 +30,7 @@ export default function Docs() {
   
   }, [content]);
 
-    const [ openCategory, setOpenCategory ]= useState( activeCategory || "passives" ); // Sidebar category open/close state
+    const [ openCategory, setOpenCategory ]= useState( activeCategory || "components" ); // Sidebar category open/close state
     
     // Documentation list ကို အရင်ဆုံး တစ်ခါတည်း ပြင်ဆင်ထားမယ် (အနာဂတ်မှာ API ကနေ ယူနိုင်ပါတယ်)
     const docArray = [
@@ -198,16 +202,56 @@ export default function Docs() {
 
     return (
         <section className="w-full h-auto mx-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
+            
+             <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
             <div className="sticky bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4 py-10"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
-                    {categories.map((cat) => (
+                     {/* Search Bar */}
+                    <div className="w-full px-3 mb-2">
+                        <div className="relative">
+                            <FontAwesomeIcon 
+                                icon={faSearch} 
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary text-sm"
+                            />
+                            <input
+                                type="text"
+                                placeholder="Search components..."
+                                value={searchTerm}
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                className="w-full pl-10 pr-4 py-2 text-sm border border-border rounded-lg bg-bg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            />
+                        </div>
+                    </div>
+                    <button 
+                        onClick={() => {
+                            setOpenCategory("components");
+                            navigate("/doc/components")}}
+                        className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all 
+                            ${openCategory === "components" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}>
+                                <div className="flex items-center gap-2">
+                            <FontAwesomeIcon icon={faMicrochip} size="xs" />
+                            <span className="capitalize font-bold text-sm">Components</span>
+                            </div>
+                        </button>
+                    {categories.map((cat) => {
+                        const hasMatchingItems = docArray
+                            .filter(item => item.category === cat)
+                            .some(item => searchTerm === "" || item.name.toLowerCase().includes(searchTerm.toLowerCase()));
+                        
+                        const shouldShowCategory = searchTerm === "" || hasMatchingItems;
+                        const shouldAutoExpand = searchTerm !== "" && hasMatchingItems;
+                        
+                        if (!shouldShowCategory) return null;
+                        
+                        return (
                         <div key={cat} className="flex flex-col w-full">
                         {/* Category Header (Dropdown Button) */}
                         <button
-                            onClick={() => setOpenCategory(openCategory === cat ? null : cat)}
+                            onClick={() =>  
+                                setOpenCategory(openCategory === cat ? null : cat)}
                             className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all 
-                            ${openCategory === cat ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
+                            ${(openCategory === cat || shouldAutoExpand) ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
                         >
                             <div className="flex items-center gap-2">
                             <FontAwesomeIcon icon={faMicrochip} size="xs" />
@@ -220,26 +264,38 @@ export default function Docs() {
                         </button>
 
                         {/* Sub-menu items (Dropdown Content) */}
-                        {openCategory === cat && (
+                        {(openCategory === cat || shouldAutoExpand) && (
                             <div className="flex flex-col ml-4 mt-1 border-l border-slate-200 dark:border-slate-700">
                             {docArray
                                 .filter(item => item.category === cat)
-                                .map(item => (
-                                <Link
-                                    key={item.slug}
-                                    to={`/doc/${item.category}/${item.slug}`}
-                                    className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-[1px]
-                                    ${fileName === item.slug 
-                                        ? "border-purple-500 text-purple-600 font-bold" 
-                                        : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"}`}
-                                >
-                                    {item.name}
-                                </Link>
-                                ))}
+                                .filter(item => searchTerm === "" || item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+                                .map(item => {
+                                    const isHighlighted = searchTerm !== "" && item.name.toLowerCase().includes(searchTerm.toLowerCase());
+                                    return (
+                                        <Link
+                                            key={item.slug}
+                                            to={`/doc/${item.category}/${item.slug}`}
+                                            className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-[1px]
+                                            ${fileName === item.slug 
+                                                ? "border-purple-500 text-purple-600 font-bold" 
+                                                : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"}
+                                            ${isHighlighted ? "bg-yellow-100 dark:bg-yellow-900/20" : ""}`}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                    );
+                                })}
+                                {docArray
+                                    .filter(item => item.category === cat)
+                                    .filter(item => searchTerm === "" || item.name.toLowerCase().includes(searchTerm.toLowerCase())).length === 0 && (
+                                    <div className="pl-4 py-2 text-sm text-slate-400 italic">
+                                        No components found
+                                    </div>
+                                )}
                             </div>
                         )}
                         </div>
-                    ))}
+                    );})}
                 {/* <div className="w-full flex flex-col gap-2 px-2.5">
                     <span className="text-md text-text-main font-semibold">Documentation</span>
                     <div className="w-full h-auto ps-2 flex flex-col gap-1 border-l-2 border-text-secondary">
@@ -262,38 +318,47 @@ export default function Docs() {
             </div>
 
             {/* Main Content */}
-            <div className="h-auto bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen">
-                <MarkdownView markdown={content} />
+                {
+                    !fileName
+                    ?
+                    <div className="h-auto bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen">
+                        <Components />
+                    </div>
+                    :
+                    <div className="h-auto bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen">
+                        <MarkdownView markdown={content} />
+                        <div className="w-full h-0.5 bg-border my-8"></div>
+
+                        {/* Dynamic Pagination Buttons */}
+                        <div className="flex justify-between items-center mt-4">
+                            <div>
+                                {prevDoc && (
+                                    <button 
+                                        onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
+                                        className="px-4 py-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                    >
+                                        ← {prevDoc.name}
+                                    </button>
+                                )}
+                            </div>
+                            <div>
+                                {nextDoc && (
+                                    <button 
+                                        onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
+                                        className="px-4 py-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                    >
+                                        {nextDoc.name} →
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    
+                }
+                {/* Right Sidebar (Optional/TOC) */}
+                    <RightSidebar headings={headings} />
+                    
                 
-                <div className="w-full h-0.5 bg-border my-8"></div>
-
-                {/* Dynamic Pagination Buttons */}
-                <div className="flex justify-between items-center mt-4">
-                    <div>
-                        {prevDoc && (
-                            <button 
-                                onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
-                                className="px-4 py-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
-                            >
-                                ← {prevDoc.name}
-                            </button>
-                        )}
-                    </div>
-                    <div>
-                        {nextDoc && (
-                            <button 
-                                onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
-                                className="px-4 py-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
-                            >
-                                {nextDoc.name} →
-                            </button>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-            {/* Right Sidebar (Optional/TOC) */}
-            <RightSidebar headings={headings} />
         </section>
     );
 }

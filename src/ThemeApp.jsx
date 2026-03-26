@@ -18,6 +18,7 @@ export default function ThemeApp() {
 
     const [ globalMessage, setGlobalMessage ]= useState(""); //Success or warn or error 
     const [menu, setMenu]= useState(false);                  //Menu open or close
+    const [rightMenu, setRightMenu]= useState(false);        //Right sidebar menu open or close
     const [active, setActive]= useState("home");             //Navbar active
     const [login, setLogin]= useState(false);                //Login page
     const [error, setError]= useState(false);                //All error
@@ -39,6 +40,10 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/doc",
+                    element: <Docs />,
+                },
+                {
+                    path: '/doc/components',
                     element: <Docs />,
                 },
                 {
@@ -65,7 +70,7 @@ export default function ThemeApp() {
         }
     ])
     return (
-            <Context.Provider value={{globalMessage, setGlobalMessage, menu, setMenu, active, setActive, login, setLogin, error, setError, headerHeight, setHeaderHeight}}>
+            <Context.Provider value={{globalMessage, setGlobalMessage, menu, setMenu, rightMenu, setRightMenu, active, setActive, login, setLogin, error, setError, headerHeight, setHeaderHeight}}>
                 <RouterProvider router={router} />
             </Context.Provider>
     )

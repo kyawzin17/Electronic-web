@@ -3,7 +3,7 @@ import "../App.css";
 import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { faSun, faMoon, faSearch, faBars, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import { faSun, faMoon, faBars, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useAppContext } from "../hooks/useAppContext";
 import useTheme from "../hooks/useTheme";
 import Nav from "./Nav";
@@ -12,7 +12,7 @@ import ThemeButton from "./ThemeButton";
 export default function Header() {
    
     //Context
-    const { globalMessage, setGlobalMessage, menu, setMenu, active, setActive, login, setLogin, headerHeight, setHeaderHeight }= useAppContext();
+    const { globalMessage, setGlobalMessage, menu, setMenu, rightMenu, setRightMenu, active, setActive, login, setLogin, headerHeight, setHeaderHeight }= useAppContext();
     const { theme, toggleTheme }= useTheme();
 
     const headerRef= useRef();
@@ -24,11 +24,19 @@ export default function Header() {
 
  return (
     <header ref={headerRef} className="bg-soft/98 shadow-[0_1px_4px_var(--text-secondary)] px-3 md:px-6 lg:px-10 py-1 flex justify-between items-center z-100 sticky top-0 left-0 tr">
-      <button className="cursor-pointer block lg:hidden">
+      {active === "doc" && 
+      <button
+       className="cursor-pointer block lg:hidden"
+       onClick={
+        () => {
+          setMenu(!menu);
+          setRightMenu(false);
+       }}>
         <FontAwesomeIcon icon={faBars} size="xl"></FontAwesomeIcon>
       </button>
+      }
 
-      <div className="flex flex-col lg:flex-row items-center lg:gap-1 lg:items-end ">
+      <div className={`flex lg:flex-row ${active === "doc" ? "flex-col items-center" : "flex-row items-end"} lg:gap-1 lg:items-end`}>
         <h2 className="header-logo text-shadow-lg/20">RD</h2>
         <p className="text-text-main font-serif text-base lg:text-sm -mt-4 lg:mt-0 lg:-ml-1 lg:mb-2">electronic!</p>
       </div>
@@ -52,10 +60,13 @@ export default function Header() {
         </div> */}
         <div className={`w-px h-8 font-semibold font-serif border border-(--text-primary) rounded-2xl mx-px ${login ? "block" : "hidden"}`}></div>
 
-        <button className="cursor-pointer black lg:hidden">
-          <FontAwesomeIcon icon={faSearch} size="xl" className="text-text-main" />
-        </button>
-        <button className="cursor-pointer block lg:hidden">
+        <button 
+          className="cursor-pointer block lg:hidden"
+          onClick={() => {
+            setRightMenu(!rightMenu);
+            setMenu(false);
+          }}
+        >
           <FontAwesomeIcon icon={faEllipsisVertical} size="xl" className="text-text-main" />
         </button>
       </div>

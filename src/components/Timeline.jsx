@@ -23,6 +23,7 @@ function Timeline() {
   const mainRef = useRef(); // အဓိက container ref
   const lineRef = useRef(); // SVG line ref
   const textRef= useRef(); //Text animation
+  const headerRef = useRef(); // Header ref
 
   // `@gsap/react` ရဲ့ useGSAP hook ကို သုံးပါ
   useGSAP(() => {
@@ -42,6 +43,22 @@ function Timeline() {
         },
       }
     );
+
+    gsap.from(
+      headerRef.current, 
+      {
+        y: 50,
+        opacity: 0,
+        duration: 0.6,
+        ease: "linear",
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 80%",
+          end: "bottom center",
+          toggleActions: 'play none none reverse',
+        }
+      }
+    )
 
    gsap.to(
     textRef.current,
@@ -78,7 +95,7 @@ function Timeline() {
         .to(content, { 
           opacity: 1, 
           x: isLeft ? 0 : 0, // ဘယ်/ညာမှ ဝင်လာတဲ့ animation ထည့်ချင်ရင် ပြင်နိုင်
-          duration: 0.5, 
+          duration: 0.6, 
           ease: 'power2.out' 
         }, "-=0.2") // Circle ပြီးပြီးချင်း (0.2s စောပြီး) Content ပေါ်လာရန်
         .to(item, {opacity: 1, duration: 0.1}, 0); // main container ပေါ်ရန်
@@ -88,8 +105,8 @@ function Timeline() {
 
   return (
     <div className="mt-4 md:mt-10">
-         <div className='w-full flex justify-center items-center gap-2 py-2 mb-18'>
-                <h2 className='text-3xl font-bold font-serif text-text-main'>⚡ဘာကြောင့် Electronic ပညာကို လေ့လာသင့်တာလဲ?</h2>
+         <div ref={headerRef} className='max-w-240 mx-auto gap-2 py-2 mb-18'>
+                <h2 className='text-3xl text-center font-bold font-serif text-text-main mb-4 md:mb-8'>⚡Electronic ပညာ လေ့လာခြင်း၏ အကျိုးကျေးဇူးများ</h2>
         </div>
       
       <div className="timeline-container" ref={mainRef}>

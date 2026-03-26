@@ -20,7 +20,6 @@ const RightSidebar = ({ headings }) => {
 );
     // Heading တစ်ခုချင်းစီကို လိုက်ကြည့်ခိုင်းခြင်း
     headings.forEach((heading) => {
-        console.log("Observing Heading:", heading.title, heading.id); // Debugging အတွက် console log
       const element = document.getElementById(heading.id);
       if (element) observer.observe(element);
     });

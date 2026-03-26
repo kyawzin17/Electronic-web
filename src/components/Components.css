@@ -86,13 +86,10 @@
 }
 
 .spec {
-    background: rgba(0, 255, 136, 0.2);
-    color: #00ff88;
     padding: 0.3rem 0.8rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 500;
-    border: 1px solid rgba(0, 255, 136, 0.4);
 }
 
 /* Card Animation States */
