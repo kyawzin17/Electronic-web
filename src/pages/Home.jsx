@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useAppContext } from "../hooks/useAppContext"
 import "../App.css";
+import "./page.css";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,7 +48,7 @@ export default function Home() {
     )
    }, { scope: containerRef})
     return (
-        <section className="w-full mx-auto relative z-2 transform transition duration-300">
+        <section className="w-full overflow-x-hidden mx-auto relative z-2 transform transition duration-300">
             <HeroCircle />
              {/* Hero div */}
             <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
@@ -75,7 +76,7 @@ export default function Home() {
                 </div>
             </div>
             {/* Information div */}
-            <div ref={containerRef} className="w-full mx-auto h-auto py-10 md:py-20 flex justify-center flex-wrap gap-6 font-serif">
+            <div ref={containerRef} className="w-full mx-auto px-4 h-auto py-10 md:py-20 flex justify-center flex-wrap gap-6 font-serif">
                 
                 <ReadCard ref={(el) => cardRef.current[0] = el} icon={faAddressCard} title="About Us"
                              description="Learn more about our website and our mission is to make electronic technology accessible to Myanmar."
@@ -109,7 +110,7 @@ export default function Home() {
                              />
             </div>
             {/* Animation div */}
-            <div className="w-screen h-70 my-10 md:my-20 z-3 flex items-center"> 
+            <div className="w-screen h-70 my-4 md:my-20 z-3 flex items-center"> 
                 <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="rdGradient" x1="0%" y1="0%" x2="100%" y2="0%">

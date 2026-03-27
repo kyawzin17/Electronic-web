@@ -35,7 +35,7 @@ export default function TrendComponents() {
                 ease: "power1.inOut",
                 scrollTrigger: {
                     trigger: trendRef.current,
-                    start: "top 80%",
+                    start: "top 85%",
                     toggleActions: 'play none none reverse',
                 }
             }
@@ -55,7 +55,7 @@ export default function TrendComponents() {
                 delay: 0.1,
                 scrollTrigger: {
                     trigger: trendRef.current,
-                    start: "top 80%",
+                    start: "top 85%",
                     toggleActions: 'play none none reverse',
                 }
             }
@@ -70,7 +70,7 @@ export default function TrendComponents() {
 
     return (
         <div ref={trendRef} className="w-fit my-20 md:my-30 mx-auto">
-                <h2 ref={headerRef} className="text-(--color) text-3xl font-semibold mb-6 md:mb-16">Trending Components</h2>
+                <h2 ref={headerRef} className="text-(--color) text-3xl font-semibold mb-8 md:mb-16">Trending Components</h2>
                 <div ref={comRef} className="flex justify-center items-center gap-4 flex-wrap w-full">
                     {
                         components.map((item) => (

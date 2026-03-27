@@ -31,7 +31,7 @@ export default function MarkdownView({ markdown }) {
 };
     return (
         /* စာသားအားလုံးအတွက် Typography Class များကို ဤနေရာတွင် ထားပါ */
-        <div className="w-full h-auto px-4 py-6 
+        <div className="w-full h-auto px-4 py-6 overflow-x-hidden
             prose lg:prose-lg max-w-none prose-slate
             /* Light Mode အရောင်များ */
             prose-headings:text-slate-900 
@@ -77,14 +77,16 @@ export default function MarkdownView({ markdown }) {
                     code({ node, inline, className, children, ...props }) {
                         const match = /language-(\w+)/.exec(className || '');
                         return !inline && match ? (
-                            <SyntaxHighlighter
-                                style={dracula}
-                                language={match[1]}
-                                PreTag="div"
-                                {...props}
-                            >
-                                {String(children).replace(/\n$/, '')}
-                            </SyntaxHighlighter>
+                            <div className="w-full overflow-x-auto">
+                                <SyntaxHighlighter
+                                    style={dracula}
+                                    language={match[1]}
+                                    PreTag="div"
+                                    {...props}
+                                >
+                                    {String(children).replace(/\n$/, '')}
+                                </SyntaxHighlighter>
+                            </div>
                         ) : (
                             <code className="bg-slate-100 dark:bg-slate-800 px-1 py-0.5 rounded text-pink-500" {...props}>
                                 {children}

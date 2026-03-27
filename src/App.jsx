@@ -6,7 +6,7 @@ import MobileRightSidebar from "./components/MobileRightSidebar";
 export default function App() {
 
   return (
-    <div className="min-h-screen min-w-screen bg-bg text-text-main relative">
+    <div className="min-h-screen max-w-screen bg-bg text-text-main relative">
       <Header />
       <MobileRightSidebar />
       <main className="w-full h-auto">

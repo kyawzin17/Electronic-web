@@ -62,8 +62,8 @@ export default function Components() {
         <div className="w-full min-h-screen flex flex-wrap justify-center gap-6 py-6">
         
             {/* Card Container */}
-            { components.map((item) => (
-                <div key={item.index} className="relative hover:-translate-y-2 w-60 h-80 bg-card rounded-xl border border-border px-3.5 py-4 flex flex-col items-center justify-between overflow-hidden shadow-2xl transition-all hover:border-primary group">
+            { components.map((item, index) => (
+                <div key={index} className="relative hover:-translate-y-2 w-60 h-80 bg-card rounded-xl border border-border px-3.5 py-4 flex flex-col items-center justify-between overflow-hidden shadow-2xl transition-all hover:border-primary group">
                 
                     <div className="relative w-full h-[57%] flex justify-center items-center">
                     {/* Background Glow Effect */}

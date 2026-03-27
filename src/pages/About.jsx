@@ -3,7 +3,7 @@ import profile from "../image/profile.png";
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-bg text-text-main py-20 px-6">
+    <div className="min-h-screen w-full bg-bg text-text-main py-20 px-6">
       <div className="max-w-5xl mx-auto space-y-30">
         
         {/* Hero Section */}

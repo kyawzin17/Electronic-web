@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../components/SearchBar";
 
@@ -31,13 +31,13 @@ const Project = () => {
 
   
 
-//   const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
-//   const filteredProjects = projects.filter(project => 
-//   project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//   project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-//   project.micro.toLowerCase().includes(searchTerm.toLowerCase())
-// );
+  const filteredProjects = projects.filter(project => 
+  project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  project.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  project.micro.toLowerCase().includes(searchTerm.toLowerCase())
+);
 
   return (
     <div className="space-y-16 py-10 max-w-6xl mx-auto px-8 ">

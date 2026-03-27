@@ -201,7 +201,7 @@ export default function Docs() {
     }, [fileName]);
 
     return (
-        <section className="w-full h-auto mx-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
+        <section className="w-full relative h-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
             
              <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
@@ -296,36 +296,18 @@ export default function Docs() {
                         )}
                         </div>
                     );})}
-                {/* <div className="w-full flex flex-col gap-2 px-2.5">
-                    <span className="text-md text-text-main font-semibold">Documentation</span>
-                    <div className="w-full h-auto ps-2 flex flex-col gap-1 border-l-2 border-text-secondary">
-                        {categories.map((item) => (
-                            <Link
-                                key={item.slug}
-                                to={`/doc/${item.category}/${item.slug}`}
-                                className={`w-full px-2 py-1 rounded-md transition-all ${
-                                    // fileName ရော category ရော တူမှ active color ပေးမယ်
-                                    fileName === item.slug && category === item.category 
-                                        ? "bg-border text-text-main" 
-                                        : "text-text-secondary hover:bg-bg"
-                                } font-semibold text-md`}
-                            >
-                                {item.name}
-                            </Link>
-                        ))}
-                    </div>
-                </div> */}
+                
             </div>
 
             {/* Main Content */}
                 {
                     !fileName
                     ?
-                    <div className="h-auto bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen">
-                        <Components />
+                    <div className="bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen overflow-x-hidden">
+                        <Components/>
                     </div>
                     :
-                    <div className="h-auto bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen">
+                    <div className="bg-bg py-6 md:py-8 lg:py-10 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen overflow-x-hidden">
                         <MarkdownView markdown={content} />
                         <div className="w-full h-0.5 bg-border my-8"></div>
 
@@ -335,7 +317,7 @@ export default function Docs() {
                                 {prevDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
-                                        className="px-4 py-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-4 py-2 ms-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         ← {prevDoc.name}
                                     </button>
@@ -345,7 +327,7 @@ export default function Docs() {
                                 {nextDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
-                                        className="px-4 py-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-4 py-2 me-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         {nextDoc.name} →
                                     </button>

@@ -11,6 +11,10 @@ import Docs from "./pages/Docs";
 import About from "./pages/About";
 import Project from "./pages/Project";
 import ProjectDetail from "./pages/ProjectDetail";
+import ContactUs from "./support/ContactUs";
+import Faq from "./support/Faq";
+import ShippingReturn from "./support/ShippingReturn";
+import Privacy from "./support/Privacy";
 
 
 
@@ -67,6 +71,22 @@ export default function ThemeApp() {
         {
             path: "/register",
             element: <Register />
+        },
+        { 
+            path: "/contact",
+            element: <ContactUs />
+        },
+        {
+            path: "/faq",
+            element: <Faq />
+        },
+        {
+            path: "/shipping",
+            element: <ShippingReturn />
+        },
+        {
+            path: "/privacy",
+            element: <Privacy />
         }
     ])
     return (

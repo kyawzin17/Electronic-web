@@ -9,20 +9,6 @@
     transition: all 0.3s ease-in;
 }
 
-.hero-img {
-    height: 300px; width: 400px;
-    border-radius: 50px;
-    outline-color: var(--primary);
-    outline-width: 2px;
-    outline-offset: 5px;
-    border: 2px solid var(--primary);
-    outline-style: dashed;
-    animation: change 5s linear alternate infinite;
-    background-image: url("./image/micro.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
 @keyframes change {
     0% {
         transform: rotate(-25deg);
