@@ -1,11 +1,11 @@
 import { useAppContext } from "../hooks/useAppContext.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import React, { useEffect } from "react";
 
 export default function MobileRightSidebar() {
-    const { rightMenu, setRightMenu, active, setActive, login, setLogin } = useAppContext();
+    const { rightMenu, setRightMenu, login, setLogin } = useAppContext();
 
     // Lock body scroll when right menu is open
     useEffect(() => {
@@ -47,6 +47,14 @@ export default function MobileRightSidebar() {
         };
     }, [rightMenu]);
 
+    const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Doc', path: '/doc' }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
+    { name: 'Project', path: '/project' },
+  ];
+  const activeClass= "px-3 py-2 rounded-md transition-all bg-slate-100 dark:bg-slate-800 text-purple-500";
+  const normalClass= "px-3 py-2 rounded-md transition-all text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"
     return (
             <div className={`fixed inset-0 z-101 lg:hidden ${rightMenu ? 'block' : 'hidden'}`}>
                 {/* Backdrop that prevents all background interaction */}
@@ -74,70 +82,18 @@ export default function MobileRightSidebar() {
                         <div className="mb-6">
                             <h4 className="text-sm font-bold text-text-main uppercase tracking-widest mb-3">Navigation</h4>
                             <nav className="flex flex-col gap-2">
-                                <Link 
-                                    to="/" 
+                                {navItems.map((item) => (
+                                    <NavLink 
+                                    key={item.path} 
+                                    to={item.path} 
                                     onClick={() => {
                                         setRightMenu(false);
-                                        setActive("home")
                                     }}
-                                    className={`px-3 py-2 rounded-md transition-all ${active === "home" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
-                                >
-                                    Home
-                                </Link>
-                                <Link 
-                                    to="/about" 
-                                    onClick={() => {
-                                        setRightMenu(false);
-                                        setActive("about")
-                                    }}
-                                    className={`px-3 py-2 rounded-md transition-all ${active === "about" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
-                                >
-                                    About
-                                </Link>
-                                <Link 
-                                    to="/doc/components" 
-                                    onClick={() => {
-                                        setRightMenu(false);
-                                        setActive("doc")
-                                    }}
-                                    className={`px-3 py-2 rounded-md transition-all ${active === "doc" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
-                                >
-                                    Documentation
-                                </Link>
-                                <Link 
-                                    to="/project" 
-                                    onClick={() => {
-                                        setRightMenu(false)
-                                        setActive("project")
-                                    }}
-                                    className={`px-3 py-2 rounded-md transition-all ${active === "project" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}
-                                >
-                                    Projects
-                                </Link>
+                                    className={({isActive}) => isActive || (item.path !== '/' && window.location.pathname.startsWith(item.path)) ? activeClass : normalClass}
+                                >{item.name}</NavLink>
+                                 ))}
                             </nav>
                         </div>
-
-                        {/* Table of Contents
-                        {headings.length > 0 && (
-                            <div>
-                                <h4 className="text-sm font-bold text-text-main uppercase tracking-widest mb-3">On this page</h4>
-                                <nav>
-                                    <ul className="space-y-2 text-sm border-l border-slate-200 dark:border-slate-800">
-                                        {headings.map((heading) => (
-                                            <li key={heading.id}>
-                                                <a
-                                                    href={`#${heading.id}`}
-                                                    onClick={() => setRightMenu(false)}
-                                                    className="block pl-4 -ml-px border-l-2 border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-slate-300 transition-all duration-200 hover:border-purple-500"
-                                                >
-                                                    {heading.title}
-                                                </a>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </nav>
-                            </div>
-                        )} */}
 
                         {/* Login/Profile Section */}
                         <div className="mt-6 pt-4 border-t border-border">

@@ -74,7 +74,7 @@ export default function TrendComponents() {
                 <div ref={comRef} className="flex justify-center items-center gap-4 flex-wrap w-full">
                     {
                         components.map((item) => (
-                            <div key={item.id} className="component-card" data-component={item.name} onClick={() => navigate(`${item.link}`)}>
+                            <div key={item.id} className="component-card" data-component={item.name} onClick={() =>  navigate(`${item.link}`)}>
                                 <div className="card-image">
                                     <img src={item.img} alt={item.name} className="component-img" />
                                 </div>
@@ -89,7 +89,8 @@ export default function TrendComponents() {
                             </div>
                         ))
                     }
-                    <div onClick={() => navigate("/doc/components")} className="relative w-70 h-80 px-4 py-3 bg-card rounded-lg flex flex-col justify-center items-center border-3 border-border hover:border-4 transition duration-300 ease-linear hover:border-primary">
+                    <div onClick={() => navigate("/doc/components")} 
+                            className="relative w-70 h-80 px-4 py-3 bg-card rounded-lg flex flex-col justify-center items-center border-3 border-border hover:border-4 transition duration-300 ease-linear hover:border-primary">
                         <FontAwesomeIcon icon={faPlus}  className="text-4xl z-10 text-primary select-none cursor-pointer"/>
                         <h2 className="text-text-main text-md z-10">More to view...</h2>
                         <img src={arduino} alt="Arduino" className="absolute w-15 top-10 left-15 z-9" />

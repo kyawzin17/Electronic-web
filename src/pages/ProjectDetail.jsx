@@ -20,7 +20,7 @@ const ProjectDetail = () => {
   }, [id]);
 
   return (
-    <div className="h-auto bg-[var(--bg)] py-12 px-6">
+    <div className="h-auto bg-bg py-12 px-6 max-w-5xl mx-auto">
       <MarkdownView markdown={content} />
                 <Link 
                     to="/project" 

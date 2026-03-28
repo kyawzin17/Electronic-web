@@ -8,6 +8,24 @@ const Project = () => {
  
   const projects = [
     {
+      title: "Arduino Clap Switch",
+      slug: "arduino-clap-switch",
+      description: "Sound Sensor ကို အသုံးပြု၍ လက်ခုပ်သံနဲ့ မီးဖွင့်ပိတ်နိုင်သော စနစ်။",
+      micro: "Arduino UNO R3",
+      power: "5V DC",
+      image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1000",
+      category: "Automation"
+    },
+    {
+      title: "Ultrasonic Distance Detector",
+      slug: "ultrasonic-distance-detector",
+      description: "Ultrasonic Sensor နှင့် Arduino UNO R3 ကို အသုံးပြု၍ အကွာအဝေးတိုင်းတာသော စနစ်။",
+      micro: "Arduino UNO R3",
+      power: "7V - 12V DC",
+      image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1000",
+      category: "Automation"
+    },
+    {
       title: "Smart Home Automation",
       slug: "smart-home-automation",
       description: "ESP8266 နှင့် Relay Module များကို အသုံးပြု၍ အိမ်တွင်းမီးများကို ဖုန်းမှတစ်ဆင့် ထိန်းချုပ်နိုင်သော စနစ်။",
@@ -41,8 +59,8 @@ const Project = () => {
 
   return (
     <div className="space-y-16 py-10 max-w-6xl mx-auto px-8 ">
-        <SearchBar />
-      {projects.map((proj, index) => (
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      {filteredProjects.map((proj, index) => (
         <div key={index} className="w-full bg-card border border-border rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform hover:translate-y-[-8px] duration-300">
           <div className="flex flex-col lg:flex-row">
             

@@ -14,6 +14,7 @@ export default function Docs() {
     const navigate = useNavigate();
     const [content, setContent] = useState("");
   const [headings, setHeadings] = useState([]);
+  const [activeId, setActiveId] = useState(null);
 
   const [searchTerm, setSearchTerm]= useState("");
   
@@ -174,6 +175,34 @@ export default function Docs() {
         { name: "Stepper Motor", slug: "stepperMotor", category: "interfaces" },
 
     ];
+
+    const componentsForSidebar= [
+        {id: "com-passives", name: "Passives"},
+        {id: "com-diodes", name: "Diodes"},
+        {id: "com-transistors", name: "Transistors"},
+    ]
+    useEffect(() => {
+        // မျက်နှာပြင်ပေါ် ရောက်/မရောက် စောင့်ကြည့်မည့် logic
+        const observer = new IntersectionObserver(
+      (entries) => {
+        // Screen ထဲကို ဝင်လာတဲ့ (Intersecting ဖြစ်တဲ့) အရာတွေကိုပဲ စစ်မယ်
+        const visibleEntries = entries.filter(entry => entry.isIntersecting);
+          setActiveId(visibleEntries[0].target.id);
+      },
+       { 
+         rootMargin: '-20% 0px -60% 0px',
+         threshold: [0.1, 0.5, 0.9]
+       }
+
+    );
+        // Heading တစ်ခုချင်းစီကို လိုက်ကြည့်ခိုင်းခြင်း
+        componentsForSidebar.forEach((item) => {
+          const element = document.getElementById(item.id);
+          if (element) observer.observe(element);
+        });
+    
+        return () => observer.disconnect();
+      }, [componentsForSidebar]);
 
     const categories = [...new Set(docArray.map(item => item.category))];
 
@@ -338,7 +367,34 @@ export default function Docs() {
                     
                 }
                 {/* Right Sidebar (Optional/TOC) */}
-                    <RightSidebar headings={headings} />
+                    {!fileName 
+                    ?
+                     <aside className="sticky overflow-y-auto bg-soft hidden xl:block py-12 px-4"
+                                    style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
+                        <h3 className="text-sm font-bold text-text-main uppercase tracking-widest mb-4">
+                            On this page
+                        </h3>  
+                        <nav>
+                            <ul className="space-y-3 text-[13px] border-l border-slate-200 dark:border-slate-800">
+                            {componentsForSidebar.map((item) => (
+                                <li key={item.id} onClick={() => setActiveId(item.id)}>
+                                <a
+                                    href={`#${item.id}`}
+                                    className={`block pl-4 -ml-px border-l-2 transition-all duration-200 ${
+                                    activeId === item.id
+                                        ? "border-purple-500 text-purple-600 dark:text-purple-400 font-bold"
+                                        : "border-transparent text-slate-500 hover:text-slate-900 dark:hover:text-slate-300"
+                                    }`}
+                                >
+                                    {item.name}
+                                </a>
+                                </li>
+                            ))}
+                            </ul>
+                        </nav>
+                    </aside>
+                    :
+                    <RightSidebar headings={headings} />}
                     
                 
         </section>

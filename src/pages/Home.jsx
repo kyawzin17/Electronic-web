@@ -1,11 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { useAppContext } from "../hooks/useAppContext"
+import React, { useRef } from "react";
 import "../App.css";
 import "./page.css";
 import { useNavigate } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTemperatureUp } from "@fortawesome/free-solid-svg-icons";
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import ReadCard from "../components/cards/ReadCard";
 import HeroCircle from "../components/HeroCircle";
@@ -23,7 +20,6 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Home() {
     const navigate= useNavigate();
-    const {setActive}= useAppContext();
     const containerRef= useRef(null);
     const cardRef= useRef([]);
 
@@ -48,7 +44,7 @@ export default function Home() {
     )
    }, { scope: containerRef})
     return (
-        <section className="w-full overflow-x-hidden mx-auto relative z-2 transform transition duration-300">
+        <section className="w-full relative z-2 transform transition duration-300">
             <HeroCircle />
              {/* Hero div */}
             <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
@@ -58,15 +54,11 @@ export default function Home() {
                         <h2 className="text-4xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
                         <p className="text-sm md:text-base w-120 text-text-muted mb-4">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
                         <div className="flex gap-6 p-3">
-                            <button onClick={() => {
-                                setActive("project");
-                                navigate("/project")
-                            }} className="px-5 py-2 bg-gradient-to-r from-(--primary) to-(--secondary)
+                            <button onClick={() => navigate("/project")}
+                                     className="px-5 py-2 bg-gradient-to-r from-(--primary) to-(--secondary)
                                              text-(--color) rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">Get Start</button>
-                            <button onClick={() => {
-                                setActive("doc");
-                                navigate("/doc/components")
-                            }} className="px-4 py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
+                            <button onClick={() => navigate("/doc/components")}
+                                     className="px-4 py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
                         </div>
                     </div>
                 </div>
@@ -83,30 +75,21 @@ export default function Home() {
                               buttonText="About Us"
                                buttonColor="primary"
                                color="primary"
-                               onButtonClick={() => {
-                                setActive("about");
-                                navigate("/about")
-                               }} 
+                               onButtonClick={() => navigate("/about")} 
                                 />
                 <ReadCard ref={(el) => cardRef.current[1] = el} icon={faBookmark} title="Documentation"
                              description="How each electrical device works and what they are about."
                               buttonText="To Read"
                                buttonColor="secondary"
                                color="secondary"
-                               onButtonClick={() => {
-                                setActive("doc");
-                                navigate("/doc/components")
-                            }}
+                               onButtonClick={() => navigate("/doc/components")}
                              />
                 <ReadCard ref={(el) => cardRef.current[2] = el} icon={faLightbulb} title="Creative Projects"
                              description="Simple and basic projects and projects with many uses."
                               buttonText="View Projects"
                                buttonColor="accent"
                                color="accent"
-                               onButtonClick={() => {
-                                setActive("project");
-                                navigate("/project")
-                            }} 
+                               onButtonClick={() => navigate("/project")} 
                              />
             </div>
             {/* Animation div */}

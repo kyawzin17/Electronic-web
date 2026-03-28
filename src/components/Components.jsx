@@ -59,9 +59,13 @@ export default function Components() {
    
 ];
     return (
-        <div className="w-full min-h-screen flex flex-wrap justify-center gap-6 py-6">
+        <div className="w-full min-h-screen">
         
-            {/* Card Container */}
+            
+            <div id="com-passives" className="w-full h-auto flex flex-wrap justify-center gap-6 py-6 scroll-mt-36">
+                <h2 className="w-full text-start text-2xl font-bold text-text-main uppercase tracking-widest mb-6 ms-4 hover:text-primary transition-colors duration-300">
+                #Passives
+            </h2>
             { components.map((item, index) => (
                 <div key={index} className="relative hover:-translate-y-2 w-60 h-80 bg-card rounded-xl border border-border px-3.5 py-4 flex flex-col items-center justify-between overflow-hidden shadow-2xl transition-all hover:border-primary group">
                 
@@ -95,6 +99,83 @@ export default function Components() {
                 </div>
              )
             )}
+            </div>
+            <div id="com-diodes" className="w-full h-auto flex flex-wrap justify-center gap-6 py-6 scroll-mt-4">
+                <h2 className="w-full text-start text-2xl font-bold text-text-main uppercase tracking-widest mb-6 ms-4 hover:text-primary transition-colors duration-300 mt-12">
+                #Diodes
+            </h2>
+            { components.map((item, index) => (
+                <div key={index} className="relative hover:-translate-y-2 w-60 h-80 bg-card rounded-xl border border-border px-3.5 py-4 flex flex-col items-center justify-between overflow-hidden shadow-2xl transition-all hover:border-primary group">
+                
+                    <div className="relative w-full h-[57%] flex justify-center items-center">
+                    {/* Background Glow Effect */}
+                        <div className="absolute inset-0 bg-purple-600/12 blur-3xl rounded-full"></div>
+                        
+                        <img src={item.url} alt={item.name} style={{ objectFit: "contain", filter: "brightness(1.2) contrast(1.1)"}} className="w-[94%] h-full overflow-hidden" />                </div>
+
+                    {/* Text Section */}
+                    <div className="w-full h-[42%] flex flex-col items-center justify-between gap-1">
+                        <h2 className="text-tex-main text-md text-center font-bold tracking-widest uppercase group-hover:text-primary transition-colors">
+                            {item.name}
+                        </h2>
+                    
+                        <p className="text-text-secondary text-center text-base fond-medium leading-relaxed mb-1 line-clamp-2">
+                            {item.about}
+                        </p>
+
+                        {/* Specs/Key Parameters Section */}
+                        <div className="w-full">
+                            <p className="text-text-muted text-center text-xs font-semibold mb-2 uppercase tracking-tighter">
+                                {item.des}
+                            </p>
+                        </div>
+
+                        {/* Corner Accent (Optional for extra detail) */}
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-purple-500/50 rounded-tl-xl"></div>
+                    </div>
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div>
+                </div>
+             )
+            )}
+            </div>
+             <div id="com-transistors" className="w-full h-auto flex flex-wrap justify-center gap-6 py-6 scroll-mt-4">
+                <h2 className="w-full text-start text-2xl font-bold text-text-main uppercase tracking-widest mb-6 ms-4 hover:text-primary transition-colors duration-300 mt-12">
+                Transistors
+            </h2>
+            { components.map((item, index) => (
+                <div key={index} className="relative hover:-translate-y-2 w-60 h-80 bg-card rounded-xl border border-border px-3.5 py-4 flex flex-col items-center justify-between overflow-hidden shadow-2xl transition-all hover:border-primary group">
+                
+                    <div className="relative w-full h-[57%] flex justify-center items-center">
+                    {/* Background Glow Effect */}
+                        <div className="absolute inset-0 bg-purple-600/12 blur-3xl rounded-full"></div>
+                        
+                        <img src={item.url} alt={item.name} style={{ objectFit: "contain", filter: "brightness(1.2) contrast(1.1)"}} className="w-[94%] h-full overflow-hidden" />                </div>
+
+                    {/* Text Section */}
+                    <div className="w-full h-[42%] flex flex-col items-center justify-between gap-1">
+                        <h2 className="text-tex-main text-md text-center font-bold tracking-widest uppercase group-hover:text-primary transition-colors">
+                            {item.name}
+                        </h2>
+                    
+                        <p className="text-text-secondary text-center text-base fond-medium leading-relaxed mb-1 line-clamp-2">
+                            {item.about}
+                        </p>
+
+                        {/* Specs/Key Parameters Section */}
+                        <div className="w-full">
+                            <p className="text-text-muted text-center text-xs font-semibold mb-2 uppercase tracking-tighter">
+                                {item.des}
+                            </p>
+                        </div>
+
+                        {/* Corner Accent (Optional for extra detail) */}
+                        <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-purple-500/50 rounded-tl-xl"></div>
+                    </div>
+                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div>
+                </div>
+             )
+            )}
+            </div>
         </div>
     )
 }

@@ -1,6 +1,14 @@
 import React from "react";
 
-const SearchBar = () => {
+const SearchBar = ({ searchTerm, setSearchTerm }) => {
+  
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleTagClick = (tag) => {
+    setSearchTerm(tag);
+  };
 
   return (
     <div className="max-w-2xl mx-auto mb-16 relative group">
@@ -17,6 +25,8 @@ const SearchBar = () => {
         <input 
           type="text" 
           placeholder="Search projects (e.g. Arduino, Sensor, IoT...)"
+          value={searchTerm}
+          onChange={handleSearchChange}
           className="w-full pl-16 pr-24 py-5 bg-[var(--bg-card)] border-2 border-[var(--border)] rounded-[2rem] text-[var(--text-main)] focus:outline-none focus:border-[var(--primary)] shadow-lg transition-all placeholder:text-[var(--text-muted)]"
         />
 
@@ -30,7 +40,10 @@ const SearchBar = () => {
       {/* Popular Tags (Quick Filters) */}
       <div className="flex gap-3 mt-4 px-4 overflow-x-auto no-scrollbar">
         {['Arduino', 'ESP32', 'PCB', 'IoT'].map(tag => (
-          <button key={tag} className="text-xs font-medium px-4 py-1.5 rounded-full bg-[var(--bg-soft)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--secondary)] hover:text-[var(--secondary)] transition-all">
+          <button 
+            key={tag} 
+            onClick={() => handleTagClick(tag)}
+            className="text-xs font-medium px-4 py-1.5 rounded-full bg-[var(--bg-soft)] border border-[var(--border)] text-[var(--text-secondary)] hover:border-[var(--secondary)] hover:text-[var(--secondary)] transition-all cursor-pointer">
             #{tag}
           </button>
         ))}

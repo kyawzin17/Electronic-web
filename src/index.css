@@ -104,8 +104,7 @@
    --shadow-md: 0 4px 16px var(--text-secondary); 
 }
 
-body, html {
-  @apply bg-bg text-text-main transition-all duration-300;
+html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
@@ -114,6 +113,13 @@ body, html {
   height: 100vh;
   min-height: 100vh;
   scrollbar-gutter: stable;
+}
+body {
+  @apply bg-bg text-text-main transition-all duration-300;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
 }
 
 h1 {
