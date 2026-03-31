@@ -13,7 +13,7 @@ const Project = () => {
       description: "Sound Sensor ကို အသုံးပြု၍ လက်ခုပ်သံနဲ့ မီးဖွင့်ပိတ်နိုင်သော စနစ်။",
       micro: "Arduino UNO R3",
       power: "5V DC",
-      image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1000",
+      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774853660/clip-img_zlbadf.jpg",
       category: "Automation"
     },
     {
@@ -22,7 +22,7 @@ const Project = () => {
       description: "Ultrasonic Sensor နှင့် Arduino UNO R3 ကို အသုံးပြု၍ အကွာအဝေးတိုင်းတာသော စနစ်။",
       micro: "Arduino UNO R3",
       power: "7V - 12V DC",
-      image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1000",
+      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774853665/distance-detector_ezshky.png",
       category: "Automation"
     },
     {
@@ -32,7 +32,7 @@ const Project = () => {
       micro: "ESP8266 / NodeMCU",
       power: "5V DC",
       // Internet မှ နမူနာပုံ (Smart Home/Arduino)
-      image: "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80&w=1000",
+      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774864193/smart-img_lsuccq.jpg",
       category: "Automation"
     },
     {
@@ -79,7 +79,7 @@ const Project = () => {
 
             {/* Technical Info Area */}
             <div className="lg:w-1/2 p-8 lg:p-12 space-y-6">
-              <h2 className="text-3xl font-bold text-text-main tracking-tight">
+              <h2 className="text-2xl md:text-3xl font-bold text-text-main tracking-tight">
                 {proj.title}
               </h2>
               <p className="text-text-secondary leading-relaxed">

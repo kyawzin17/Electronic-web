@@ -146,6 +146,6 @@ export default function MobileLeftSidebar({categories, docArray, openCategory, s
                         })}
 </div>
                     </div>
-                </div>
+    </div>
     )
 }

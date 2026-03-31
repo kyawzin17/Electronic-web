@@ -177,10 +177,16 @@ export default function Docs() {
     ];
 
     const componentsForSidebar= [
-        {id: "com-passives", name: "Passives"},
-        {id: "com-diodes", name: "Diodes"},
-        {id: "com-transistors", name: "Transistors"},
+        {id: "passives", name: "Passives"},
+        {id: "diodes", name: "Diodes"},
+        {id: "transistors", name: "Transistors"},
+        {id: "analogics", name: "Analog ICs"},
+        {id: "microcontrollers", name: "Microcontrollers"},
+        {id: "protections", name: "Protections"},
+        {id: "interfaces", name: "Interfaces"},
     ]
+
+    //Doc page Components section scroll logic
     useEffect(() => {
         // မျက်နှာပြင်ပေါ် ရောက်/မရောက် စောင့်ကြည့်မည့် logic
         const observer = new IntersectionObserver(
@@ -346,7 +352,7 @@ export default function Docs() {
                                 {prevDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
-                                        className="px-4 py-2 ms-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-2 py-1 md:px-4 md:py-2 ms-2 text-base md:text-lg border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         ← {prevDoc.name}
                                     </button>
@@ -356,7 +362,7 @@ export default function Docs() {
                                 {nextDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
-                                        className="px-4 py-2 me-2 border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-2 py-1 md:px-4 md:py-2 me-2 text-base md:text-lg border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         {nextDoc.name} →
                                     </button>

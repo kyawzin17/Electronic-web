@@ -23,7 +23,9 @@ ESP8266 (NodeMCU) သည် Local Wi-Fi ကွန်ရက်သို့ ချ
 
 ---
 
-### ၄။ တစ်ခုချင်းစီ၏ အလုပ်လုပ်ပုံ (Component Functions)
+### ၄။ တစ်ခုချင်းစီ၏ အလုပ်လုပ်ပုံ (Component Functions)  
+
+![Smart Home Automation System](https://res.cloudinary.com/dn4jczzgu/image/upload/w_800,e_sharpen:100,f_auto,q_100/v1774864193/smart-dig_tcbys6.jpg)
 
 1.  **NodeMCU ESP8266:** Wi-Fi ချိတ်ဆက်မှုနှင့် Web Server ကို ကိုင်တွယ်ပေးသည့် အဓိက ဦးနှောက်ဖြစ်သည်။
 2.  **Relay Module:** Microcontroller မှ လာသော အားနည်းသည့် Signal (3.3V/5V) ဖြင့် အိမ်သုံးလျှပ်စစ်မီး (220V AC) ကို ဘေးကင်းစွာ switch လုပ်ပေးသည်။
@@ -31,7 +33,10 @@ ESP8266 (NodeMCU) သည် Local Wi-Fi ကွန်ရက်သို့ ချ
 
 ---
 
-### ၅။ ပတ်လမ်းပုံစံ (Circuit Diagram Description)
+### ၅။ ပတ်လမ်းပုံစံ (Circuit Diagram Description)  
+
+![Smart Home Automation System Circuit](https://res.cloudinary.com/dn4jczzgu/image/upload/w_800,e_sharpen:100,f_auto,q_100/v1774864193/smart-circuit_f5n3lt.jpg)
+
 
 * **Relay Module နှင့် NodeMCU ချိတ်ဆက်မှု:**
     * VCC -> NodeMCU Vin (သို့မဟုတ် 5V)
@@ -136,6 +141,9 @@ void loop() {
 * ရုံးခန်းများတွင် မီးများကို အဝေးမှ စုပေါင်းထိန်းချုပ်ခြင်း။
 
 * ခြံဝင်းအတွင်းရှိ ရေပန့် သို့မဟုတ် မီးများကို ထိန်းချုပ်ခြင်း။  
+
+
+![Smart Home Automation System](https://res.cloudinary.com/dn4jczzgu/image/upload/w_800,e_sharpen:100,f_auto,q_100/v1774864193/smart-img_lsuccq.jpg)
 
 ---
 

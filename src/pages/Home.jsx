@@ -50,9 +50,9 @@ export default function Home() {
             <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
                 <div className="flex justify-between items-end px-3 md:px-0">
                     <div className="w-full md:w-160 h-auto flex flex-col items-center text-center md:text-start md:items-start font-serif py-5 px-3 rounded-lg gap-4 md:gap-px">
-                        <h6 className="w-fit text-main text-sm rounded-lg border-primary border-3 py-px px-2">Red Dargon Electronic!⚡</h6>
-                        <h2 className="text-4xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
-                        <p className="text-sm md:text-base w-120 text-text-muted mb-4">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
+                        <h6 className="w-fit text-main text-xs md:text-sm rounded-lg border-primary border-3 py-px px-2">Red Dargon Electronic!⚡</h6>
+                        <h2 className="text-3xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
+                        <p className="text-sm md:text-base w-100 md:w-120 text-text-muted mb-4">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
                         <div className="flex gap-6 p-3">
                             <button onClick={() => navigate("/project")}
                                      className="px-5 py-2 bg-gradient-to-r from-(--primary) to-(--secondary)
@@ -63,7 +63,7 @@ export default function Home() {
                     </div>
                 </div>
 
-                <div className="hero-img">
+                <div className="hero-img w-70 h-60 sm:w-80 sm:h-70">
                     
                 </div>
             </div>

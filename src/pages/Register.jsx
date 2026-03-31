@@ -2,34 +2,41 @@ import React, { useRef, useState } from "react";
 import "./page.css";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../hooks/useAppContext";
-
+import { motion } from "framer-motion";
 
 export default function Register() {
 
 
-    const nameRef = useRef();
-    const emailRef = useRef();
-    const passwordRef = useRef();
-    const {login, setLogin}= useAppContext();
+    // const nameRef = useRef();
+    // const emailRef = useRef();
+    // const passwordRef = useRef();
+    // const {login, setLogin}= useAppContext();
 
 
-    const [ error, setError ] = useState(null);
+    // const [ error, setError ] = useState(null);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const name= nameRef.current.value;
-        const email= emailRef.current.value;
-        const password= passwordRef.current.value;
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const name= nameRef.current.value;
+    //     const email= emailRef.current.value;
+    //     const password= passwordRef.current.value;
 
-        if (!name || !email || !password) {
-            setError("name, email and password required!");
-            return false;
-        }
-    }
+    //     if (!name || !email || !password) {
+    //         setError("name, email and password required!");
+    //         return false;
+    //     }
+    // }
            
     return (
-        <div className="w-full h-screen flex flex-col justify-center items-center bg-gray-900 text-white">
-        <div className="w-100 h-auto pb-6 bg-[#111111] rounded-lg">
+        <motion.div 
+                initial={{ opacity: 0, y: 30 }} 
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="w-full h-screen flex flex-col justify-center items-center bg-gray-900 text-white">
+
+            <h1 className="text-4xl mb-2 font-bold mb-8 text-center">ခု လက်ရှိမှာ တော့ Login လုပ်လို့ မရသေးပါဘူး ဗျ😃</h1>
+            <h2 className="text-xl font-bold text-center">နောက် version ကျမှ ကိုယ်ရဲ့ အကောင့်ကို Login လုပ်တာတို့၊ ကိုယ်ရဲ့ အကောင့်မရှိဘူးဆိုရင် Register လုပ်တာတို့ လုပ်လို့ရမှာ ပါဗျ။</h2>
+        {/* <div className="w-100 h-auto pb-6 bg-[#111111] rounded-lg">
             <div className="register-image">
             </div>
             <div className="p-0 -mt-10 w-full text-center">
@@ -69,7 +76,7 @@ export default function Register() {
                     <p className="text-gray-400">Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link></p>
                 </div>
                 </div>
-        </div>
-    </div>
+        </div> */}
+    </motion.div>
     )
 }

@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import "./page.css";
+
 
 export default function Login() {
 
@@ -18,7 +20,10 @@ export default function Login() {
     // }
 
     return (
-        <div className="w-full h-screen flex flex-col justify-center items-center bg-gray-900 text-white px-12">
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}  className="w-full h-screen flex flex-col justify-center items-center bg-gray-900 text-white px-12">
             <h1 className="text-4xl mb-2 font-bold mb-8 text-center">ခု လက်ရှိမှာ တော့ Login လုပ်လို့ မရသေးပါဘူး ဗျ😃</h1>
             <h2 className="text-xl font-bold text-center">နောက် version ကျမှ ကိုယ်ရဲ့ အကောင့်ကို Login လုပ်တာတို့၊ ကိုယ်ရဲ့ အကောင့်မရှိဘူးဆိုရင် Register လုပ်တာတို့ လုပ်လို့ရမှာ ပါဗျ။</h2>
             {/* <div className="w-100 h-auto pb-6 bg-[#111111] rounded-lg">
@@ -62,6 +67,6 @@ export default function Login() {
                     </div>
                 </div>
             </div> */}
-        </div>
+        </motion.div>
     )
 }
