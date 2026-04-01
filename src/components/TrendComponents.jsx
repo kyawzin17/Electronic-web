@@ -69,7 +69,7 @@ export default function TrendComponents() {
     ]
 
     return (
-        <div ref={trendRef} className="w-fit my-20 md:my-30 mx-auto">
+        <div ref={trendRef} className="w-fit my-4 md:my-20 mx-auto">
                 <h2 ref={headerRef} className="text-(--color) text-3xl font-semibold mb-8 md:mb-16">Trending Components</h2>
                 <div ref={comRef} className="flex justify-center items-center gap-4 flex-wrap w-full">
                     {

@@ -47,18 +47,18 @@ export default function Home() {
         <section className="w-full relative z-2 transform transition duration-300">
             <HeroCircle />
              {/* Hero div */}
-            <div className="w-full mx-auto flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
+            <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
                 <div className="flex justify-between items-end px-3 md:px-0">
-                    <div className="w-full md:w-160 h-auto flex flex-col items-center text-center md:text-start md:items-start font-serif py-5 px-3 rounded-lg gap-4 md:gap-px">
-                        <h6 className="w-fit text-main text-xs md:text-sm rounded-lg border-primary border-3 py-px px-2">Red Dargon Electronic!⚡</h6>
-                        <h2 className="text-3xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent">Next-Gen Electronic for Makers & Engineers</h2>
-                        <p className="text-sm md:text-base w-100 md:w-120 text-text-muted mb-4">Are you looking for reliable electrical knowledge and electrical stores(next version)? Then this website is for you. </p>
+                    <div className="w-full h-auto flex flex-col items-center text-center lg:text-start lg:items-start font-serif py-5 px-3 rounded-lg gap-px md:gap-0.5">
+                        <h6 className="w-fit text-main text-xs md:text-sm rounded-lg border-primary border-3 py-px px-2 mb-0.5 md:mb-1">Red Dargon Electronic!⚡</h6>
+                        <h2 className="text-2xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent mb-px md:mb-0.5">Next-Gen Electronic for <br /> Makers & Engineers</h2>
+                        <p className="text-sm md:text-base text-text-muted mb-2 md:mb-4">Are you looking for reliable electrical knowledge and<br /> electrical stores(next version)? Then this website is for you. </p>
                         <div className="flex gap-6 p-3">
                             <button onClick={() => navigate("/project")}
-                                     className="px-5 py-2 bg-gradient-to-r from-(--primary) to-(--secondary)
+                                     className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-(--primary) to-(--secondary)
                                              text-(--color) rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">Get Start</button>
                             <button onClick={() => navigate("/doc/components")}
-                                     className="px-4 py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
+                                     className="px-3 py-1.5 md:px-4 md:py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
                         </div>
                     </div>
                 </div>
@@ -93,7 +93,7 @@ export default function Home() {
                              />
             </div>
             {/* Animation div */}
-            <div className="w-screen h-70 my-4 md:my-20 z-3 flex items-center"> 
+            <div className="w-screen h-auto my-4 md:my-20 z-3 flex items-center"> 
                 <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="rdGradient" x1="0%" y1="0%" x2="100%" y2="0%">

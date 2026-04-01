@@ -352,7 +352,7 @@ export default function Docs() {
                                 {prevDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
-                                        className="px-2 py-1 md:px-4 md:py-2 ms-2 text-base md:text-lg border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-2 py-1 md:px-4 md:py-2 ms-2 text-sm md:text-base md:text-lg border-1 md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         ← {prevDoc.name}
                                     </button>
@@ -362,7 +362,7 @@ export default function Docs() {
                                 {nextDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
-                                        className="px-2 py-1 md:px-4 md:py-2 me-2 text-base md:text-lg border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-2 py-1 md:px-4 md:py-2 me-2 text-sm md:text-base md:text-lg border-1 md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         {nextDoc.name} →
                                     </button>

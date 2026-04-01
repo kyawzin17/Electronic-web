@@ -30,9 +30,9 @@ export default function ElectronicHistory() {
 
     gsap.fromTo(
       mmRef.current,
-      { x: -80, opacity: 0 },
+      { y: -80, opacity: 0 },
       {
-        x: 0,
+        y: 0,
         opacity: 1,
         duration: 1,
         delay: 0.2,
@@ -46,9 +46,9 @@ export default function ElectronicHistory() {
 
     gsap.fromTo(
       enRef.current,
-      { x: 80, opacity: 0 },
+      { y: 80, opacity: 0 },
       {
-        x: 0,
+        y: 0,
         opacity: 1,
         duration: 1,
         delay: 0.4,
@@ -64,7 +64,7 @@ export default function ElectronicHistory() {
   return (
     <section
       ref={sectionRef}
-      className="bg-bg text-text-main py-20 px-6 md:px-12"
+      className="bg-bg text-text-main py-4 md:py-20 px-6 md:px-12"
     >
       <div className="max-w-6xl mx-auto">
         {/* Title */}

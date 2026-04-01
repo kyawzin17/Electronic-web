@@ -36,7 +36,7 @@ export default function MobileLeftSidebar({categories, docArray, openCategory, s
         ></div>
         
         {/* Menu Container */}
-        <div className="absolute left-0 top-0 h-full w-80 bg-soft shadow-lg transform transition-transform duration-300 translate-x-0">
+        <div className="absolute left-0 top-0 h-full w-full md:w-80 bg-soft shadow-lg transform transition-transform duration-300 translate-x-0">
             {/* Header */}
             <div className="p-4 border-b border-border flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-text-main">Menu</h3>
