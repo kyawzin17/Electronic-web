@@ -4,6 +4,12 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Google Font ကို Import လုပ်ခြင်း */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;700&display=swap');
+
+/* Padauk Font ကို Google Fonts မှ ခေါ်ယူခြင်း */
+@import url('https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap');
+
 
 /* blockquote မှာ အလိုအလျောက် ပေါ်နေတဲ့ quotes တွေကို ဖျက်တာပါ */
 .prose blockquote p::before, 
@@ -102,6 +108,15 @@
    --color-border: var(--border);
 
    --shadow-md: 0 4px 16px var(--text-secondary); 
+
+   /* Custom Font Family သတ်မှတ်ခြင်း */
+  --font-myanmar: "Noto Sans Myanmar", ui-sans-serif, system-ui;
+  
+  /* မြန်မာစာအတွက် သီးသန့် line-height (Custom spacing) */
+  --spacing-mm-relaxed: 1.8;
+
+  /* Tailwind v4 မှာ Font Variable သတ်မှတ်ခြင်း */
+  --font-padauk: "Padauk", ui-sans-serif, system-ui;
 }
 
 html {
