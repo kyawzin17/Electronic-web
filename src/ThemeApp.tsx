@@ -14,6 +14,8 @@ import ContactUs from "./support/ContactUs";
 import Faq from "./support/Faq";
 import ShippingReturn from "./support/ShippingReturn.tsx";
 import Privacy from "./support/Privacy";
+
+import Circuit from "./circuits/Circuit.tsx";
 import { AppProvider } from "./hooks/useAppContext.tsx";
 
 
@@ -52,6 +54,10 @@ export default function ThemeApp() {
                 {
                     path: "/project/:id",
                     element: <ProjectDetail />,
+                },
+                {
+                    path: "/circuit",
+                    element: <Circuit />,
                 }
             ]
         },

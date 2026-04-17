@@ -10,6 +10,7 @@ export default function Nav() {
     { name: 'About', path: '/about' },
     { name: 'Doc', path: '/doc' }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
     { name: 'Project', path: '/project' },
+    { name: 'Circuit', path: '/circuit' },
   ];
 
   // လက်ရှိ URL က ဘယ် Nav အောက်မှာ ရှိနေလဲဆိုတာ စစ်ဆေးခြင်း
