@@ -3,7 +3,7 @@ import { type EdgeProps, BaseEdge, EdgeLabelRenderer, Position, useReactFlow, us
 
 type Point = { x: number; y: number };
 
-const GRID_SIZE = 10; 
+const GRID_SIZE = 10.5; 
 const CORNER_RADIUS = 8; // ပုံထဲကလို ထောင့်ချိုးလေးတွေ ဝိုင်းစေရန်
 const STUB_LENGTH = 15; // Pin ကနေ တည့်တည့်ထွက်မယ့် အကွာအဝေး
 
@@ -176,7 +176,7 @@ export default function EditableEdge({
       <BaseEdge 
         path={edgePath} 
         markerEnd={markerEnd} 
-        style={{ stroke: style.stroke || '#0a1161', strokeWidth: 4, ...style }} 
+        style={{ stroke: style.stroke || '#0a1161', strokeWidth: 4, ...style, zIndex: 100 }} 
       />
 
       {/* Invisible Interactive Areas */}
@@ -187,7 +187,7 @@ export default function EditableEdge({
           fill="none"
           stroke={hoveredIndex === index ? "rgba(100,149,237,0.3)" : "transparent"}
           strokeWidth={seg.isDraggable ? 20 : 0} 
-          style={{ cursor: !seg.isDraggable ? 'default' : seg.isVertical ? 'col-resize' : 'row-resize', transition: 'stroke 0.2s' }}
+          style={{ cursor: !seg.isDraggable ? 'default' : seg.isVertical ? 'col-resize' : 'row-resize', transition: 'stroke 0.2s', zIndex: 100 }}
           onMouseEnter={() => seg.isDraggable && setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
           onMouseDown={(e) => seg.isDraggable && onSegmentMouseDown(e, index, seg.isVertical)}
