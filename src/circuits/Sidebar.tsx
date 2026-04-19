@@ -32,9 +32,6 @@ const Sidebar = () => {
     { type: 'buzzer', name: 'Buzzer', tag: 'wokwi-buzzer', props: {}, scale: 0.5, yOffset: '0px' },
     { type: 'servo', name: 'Servo Motor', tag: 'wokwi-servo', props: {}, scale: 0.2, yOffset: '0px' },
     { type: 'hc-sr04', name: 'Ultrasonic Sensor', tag: 'wokwi-hc-sr04', props: {}, scale: 0.2, yOffset: '0px' },
-    { type: 'pir', name: 'PIR Sensor', tag: 'wokwi-pir', props: {}, scale: 0.25, yOffset: '0px' },
-    { type: 'dht11', name: 'DHT11 Sensor', tag: 'wokwi-dht11', props: {}, scale: 0.4, yOffset: '0px' },
-    { type: 'photoresistor', name: 'LDR (Photoresistor)', tag: 'wokwi-photoresistor', props: {}, scale: 0.7, yOffset: '0px' },
     { type: 'membrane-keypad', name: 'Keypad', tag: 'wokwi-membrane-keypad', props: {}, scale: 0.15, yOffset: '0px' },
   ];
 

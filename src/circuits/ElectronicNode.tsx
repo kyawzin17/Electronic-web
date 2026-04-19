@@ -18,30 +18,28 @@ const ElectronicNode = ({ data }: NodeProps) => {
   return (
       <div style={{ 
   position: 'relative', 
-  transform: 'scale(1.25)', 
-  transformOrigin: 'top left' 
+  transform: 'scale(1)', 
+  transformOrigin: 'top left', 
 }}>
         {React.createElement(data.tag, { ...data.props })}
         
         {/* Pins (Handles) တည်ဆောက်ခြင်း */}
         {pins.map((pin) => (
           <div
-            key={pin.name}
-            className="absolute z-99 pointer-events-none z-200"
-            style={{ left: `${pin.x}px`, top: `${pin.y}px` }}
-          >
+            key={pin.name}>
             <Handle
               id={pin.name}
               type="source" // ကြိုးက အဝင်ရော အထွက်ရော လုပ်လို့ရအောင်
               position={getHandlePosition(pin.dir)} // နေရာက coordinate နဲ့ ချိန်မှာမလို့ position က default ထားလို့ရပါတယ်
-              className="bg-gray-400 border-1 border-slate-900 hover:bg-white transition-colors" 
+              className="absolute" 
               title={pin.name}
               style={{ 
                 transform: 'translate(-50%, -50%)',
-                zIndex: 100,
                 width: "6px",
                 height: "6px",
                 borderRadius: '2px',
+                pointerEvents: 'all',
+                 left: `${pin.x}px`, top: `${pin.y}px`
               }}
               data-signals={JSON.stringify(pin.signals)}
             />

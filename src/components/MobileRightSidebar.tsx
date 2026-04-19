@@ -52,6 +52,7 @@ export default function MobileRightSidebar() {
     { name: 'About', path: '/about' },
     { name: 'Doc', path: '/doc' }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
     { name: 'Project', path: '/project' },
+    { name: 'Circuit', path: '/circuit'}
   ];
   const activeClass= "px-3 py-2 rounded-md transition-all bg-slate-100 dark:bg-slate-800 text-purple-500";
   const normalClass= "px-3 py-2 rounded-md transition-all text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"

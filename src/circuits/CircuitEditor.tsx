@@ -59,7 +59,7 @@ const onConnect = useCallback((params: Connection | Edge) => {
   data: { points: null }, // initialization အတွက်
   style: {
   strokeWidth: 1,
-  stroke: strokeColor
+  stroke: strokeColor,
  },
 };
 
@@ -79,8 +79,6 @@ const onDragOver = useCallback((event: React.DragEvent) => {
  event.preventDefault();
  event.dataTransfer.dropEffect = 'move';
 }, []);
-
-// App.tsx သို့မဟုတ် Flow.tsx ထဲမှာ
 
 const onDrop = useCallback(
   (event: React.DragEvent) => {
@@ -172,6 +170,11 @@ const onDrop = useCallback(
    setEdgeMenu(null); // ဖျက်ပြီးရင် Menu ကို ဖျောက်ပါ
  };
 
+// ဆက်သွားပြီးရင် မြင်ရမယ့် ကြိုးရဲ့ Setting များ
+const defaultEdgeOptions = {
+  type: 'smoothstep',  // ကြိုးပုံစံ (straight, step, smoothstep, default)
+  zIndex: 1000,        // 🌟 အရေးကြီးဆုံး: Component တွေရဲ့ အပေါ်ကို ရောက်လာစေဖို့
+};
  return (
    <div className="flex w-full h-screen bg-gray-100">
 
@@ -225,6 +228,8 @@ const onDrop = useCallback(
           onPaneClick={onPaneClick} // ထပ်တိုး
           connectionMode={ConnectionMode.Loose}
           fitView
+// အောက်က နှစ်ကြောင်းကို ထပ်ထည့်ပေးပါ
+      defaultEdgeOptions={defaultEdgeOptions}
         >
           <Background color="#e2e8f0" gap={GRID_SIZE} size={1} variant={BackgroundVariant.Lines} />
           <Controls />

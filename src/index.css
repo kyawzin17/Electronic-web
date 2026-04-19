@@ -19,10 +19,12 @@ wokwi-arduino-uno, wokwi-led, wokwi-resistor {
 .react-flow__handle {
   visibility: visible !important;
   background: #fbbf24 !important; /* Yellow */
-  border: 2px solid #000 !important;
+  border: 1px solid #000 !important;
   z-index: 9999 !important;
 }
-
+.react-flow__handle:hover {
+  background-color: #FFFFFF !important;
+}
 /* blockquote မှာ အလိုအလျောက် ပေါ်နေတဲ့ quotes တွေကို ဖျက်တာပါ */
 .prose blockquote p::before, 
 .prose blockquote p::after {
