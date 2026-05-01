@@ -3,7 +3,7 @@ import { Handle, Position, type NodeProps } from 'reactflow';
 import { PIN_CONFIGS } from './constants/pins/index';
 
 const ElectronicNode = ({ data }: NodeProps) => {
-  const pins = PIN_CONFIGS[data.tag] || [];
+  const pins = PIN_CONFIGS[data.componentType] || [];
 
   const getHandlePosition = (side: string) => {
     switch (side) {

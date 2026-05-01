@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import { motion } from "framer-motion";
+import EvolutionTimeline from "./EvolutionTimeline";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ElectronicHistory() {
@@ -76,16 +77,18 @@ export default function ElectronicHistory() {
         </h2>
 
         {/* Content Grid */}
-        <div className="grid md:grid-cols-2 gap-10">
+        <div className="grid lg:grid-cols-2 gap-10">
           {/* Myanmar */}
-          <div
+          <motion.div 
+                whileHover={{ y: -10, scale: 1.03 }} 
+                transition={{ duration: 0.6, ease: "backOut"}}
             ref={mmRef}
-            className="bg-card backdrop-blur p-6 rounded-xl shadow-lg"
+            className="bg-card backdrop-blur p-6 rounded-xl transition-shadow duration-300 ease-linear shadow-md hover:shadow-lg shadow-text-muted/40 hover:border-2 hover:border-text-muted/50"
           >
             <h3 className="text-xl font-semibold mb-4 text-secondary">
               ⚡ အီလက်ထရွန်းနစ်ပညာ၏ စတင်ပေါ်ပေါက်လာမှု
             </h3>
-            <p className="text-text-main tracking-wide text-base font-light md:text-lg leading-[1.8] font-padauk">
+            <p className="text-text-main tracking-wide text-base font-light md:text-lg leading-mm-relaxed font-padauk">
               
                 အီလက်ထရွန်းနစ်ပညာ၏ အစောဆုံးအခြေခံသဘောတရားများသည် လျှပ်စစ်ဓာတ်နှင့် မက်ဂနက်နစ်သဘောတရားများကို လေ့လာသည့်
                 ၁၉ ရာစုအတွင်း သိပ္ပံပညာရှင်များ၏ သုတေသနများမှ စတင်ပေါ်ပေါက်လာခဲ့သည်။
@@ -100,10 +103,11 @@ export default function ElectronicHistory() {
                 ဆက်သွယ်ရေး၊ ဆေးပညာ၊ အာကာသနည်းပညာနှင့် အလိုအလျောက်စက်မှုလုပ်ငန်းများအထိ
                 လူသားဘဝတိုးတက်မှုကို ဦးဆောင်နေသည့် အဓိကနည်းပညာကဏ္ဍတစ်ခုဖြစ်လာခဲ့သည်။
             </p>
-          </div>
+          </motion.div>
+          <EvolutionTimeline />
 
           {/* English */}
-          <div
+          {/* <div
             ref={enRef}
             className="bg-card backdrop-blur p-6 rounded-xl shadow-lg"
           >
@@ -126,7 +130,7 @@ export default function ElectronicHistory() {
                 driving progress across telecommunications, medicine, aerospace,
                 and modern automated industries.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

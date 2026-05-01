@@ -2,11 +2,16 @@ import { useRef, forwardRef } from "react";
 import "../App.css";
 import "./page.css";
 import { useNavigate } from "react-router-dom";
+import Legent from "../image/legend.png";
+import componentTimeline from "../image/componentTimeline.png";
 
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import ReadCard from "../components/cards/ReadCard.tsx";
 import HeroCircle from "../components/HeroCircle";
 import Timeline from "../components/Timeline";
+import LanguageToggle from "../components/LanguageToogle";
+import FeatureShowcase from "../components/FeatureShowcase";
+
 
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,57 +26,55 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 const Home= forwardRef<HTMLElement>(() => {
     const navigate= useNavigate();
     const containerRef= useRef<HTMLDivElement | null>(null);
-    const cardRef= useRef<{ [key: string]: HTMLElement | null }>({});
+    const cardRef= useRef<{ [key: string]: HTMLElement | null }>({}); 
+    const imageRef= useRef<HTMLDivElement>(null);
 
    useGSAP(() => {
-    const tl= gsap.timeline({ scrollTrigger: { trigger: containerRef.current, start: "top 80%", end: "bottom 20%", toggleActions: "play none none reverse", }, stagger: 0.12, duration: 0.6, ease: "power1.out", smooth: true, });
-       tl.fromTo(
-        cardRef.current[0],
-        {
-            y: 70,
-            opacity: 0,
-        },
-        { 
-            y: 0,
-            opacity: 1,
+    const tl= gsap.timeline({
+                         scrollTrigger: { trigger: containerRef.current, start: "top 94%", toggleActions: "play none none reverse", },
+                          defaults: { duration: 0.6, ease: "power2.out" } });
+        
+        tl.from( cardRef.current[0], { y: 70, delay: 0.2, opacity: 0 })
+            .from( cardRef.current[1], { y: 70, opacity: 0 }, "-=0.4")
+            .from( cardRef.current[2], { y: 70, opacity: 0 }, "-=0.4");
+
+   }, { scope: containerRef});
+
+   useGSAP(() => {
+    
+    gsap.from(imageRef.current, {
+        y: 70,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+            trigger: imageRef.current,
+            start: "top 80%",
         }
-    )
-    .fromTo(
-        cardRef.current[1],
-        {
-            y: 70,
-            opacity: 0,
-        },
-        { 
-            y: 0,
-            opacity: 1,
-        }
-    )
-    .fromTo(
-        cardRef.current[2],
-        {
-            y: 70,
-            opacity: 0,
-        },
-        { 
-            y: 0,
-            opacity: 1,
-        }
-    )
-   }, { scope: containerRef})
+    })
+
+    gsap.from(".home-svg", {
+        scaleX: 0,
+        scaleY: 0,
+        scrollTrigger: { trigger: ".home-svg", start: "top 80%", toggleActions: "play none none reverse" },
+        duration: 1,
+        ease: 'back.out(1.5)'
+    });
+   }, { });
     return (
         <section className="w-full relative z-2 transform transition duration-300">
             <HeroCircle />
              {/* Hero div */}
-            <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-24 py-1 md:py-20 my-10 z-2">
+            <div className="w-full flex flex-col lg:flex-row items-center justify-center gap-24 py-20 md:py-30 z-2 relative">
+                    <LanguageToggle />
                 <div className="flex justify-between items-end px-3 md:px-0">
                     <div className="w-full h-auto flex flex-col items-center text-center lg:text-start lg:items-start font-serif py-5 px-3 rounded-lg gap-px md:gap-0.5">
                         <h6 className="w-fit text-main text-xs md:text-sm rounded-lg border-primary border-3 py-px px-2 mb-0.5 md:mb-1">Red Dargon Electronic!⚡</h6>
-                        <h2 className="text-2xl md:text-5xl text-shadow-lg/25 font-bold bg-gradient-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent mb-px md:mb-0.5">Next-Gen Electronic for <br /> Makers & Engineers</h2>
+                        <h2 className="text-2xl md:text-5xl text-shadow-lg/25 font-bold bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent mb-px md:mb-0.5">Next-Gen Electronic for <br /> Makers & Engineers</h2>
                         <p className="text-sm md:text-base text-text-muted mb-2 md:mb-4">Are you looking for reliable electrical knowledge and<br /> electrical stores(next version)? Then this website is for you. </p>
                         <div className="flex gap-6 p-3">
                             <button onClick={() => navigate("/project")}
-                                     className="px-3 py-1.5 md:px-4 md:py-2 bg-gradient-to-r from-(--primary) to-(--secondary)
+                                     className="px-3 py-1.5 md:px-4 md:py-2 bg-linear-to-r from-(--primary) to-(--secondary)
                                              text-(--color) rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">Get Start</button>
                             <button onClick={() => navigate("/doc/components")}
                                      className="px-3 py-1.5 md:px-4 md:py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">Learn More</button>
@@ -83,25 +86,43 @@ const Home= forwardRef<HTMLElement>(() => {
                     
                 </div>
             </div>
+
+            {/* Image */}
+            <div ref={imageRef} className="w-full h-auto relative mt-12 z-10">
+                <p className="font-extrabold w-full text-md md:text-2xl font-serif text-white/90 text-center absolute top-[5%] text-shadow-amber-200">The Legends of Electricity</p>
+                <span className="font-bold text-base md:text-lg font-serif text-secondary absolute top-[26%] left-[41.5%]">AC</span>
+                <span className="font-bold text-base md:text-lg font-serif text-(--warning) absolute top-[31%] right-[43.5%]">DC</span>
+                <div className="w-full flex justify-center absolute bottom-[20%] gap-14 md:gap-20 lg:gap-38 transition-all ease-linear duration-150">
+                    <div className="flex flex-col items-center">
+                        <p className="font-bold text-md md:text-lg lg:text-xl font-serif text-white/90">NIKOLA TESLA</p>
+                        <p className="font-serif text-xs md:text-base text-white/60">The Father of Alternating Current (AC)</p>
+                    </div>                
+                    <div className="flex flex-col items-center">
+                        <p className="font-bold text-md md:text-lg lg:text-xl font-serif text-white/90">THOMAS EDISON</p>
+                        <p className="font-serif text-xs md:text-base text-white/60">The Wizard of Menlo Park, DC Power (DC)</p>
+                    </div> 
+                </div>                               
+                <img src={Legent} className="w-full h-auto" />
+            </div>
             {/* Information div */}
-            <div ref={containerRef} className="w-full mx-auto px-4 h-auto py-10 md:py-20 flex justify-center flex-wrap gap-6 font-serif">
+            <div ref={containerRef} className="w-full mx-auto px-4 h-auto -mt-8 md:-mt-16 lg:-mt-20 flex justify-center flex-wrap gap-8 font-serif z-12">
                 
                 <ReadCard ref={(el) => {cardRef.current[0] = el}} icon={faAddressCard} title="About Us"
-                             description="Learn more about our website and our mission is to make electronic technology accessible to Myanmar."
+                             description="ဒီ website ရဲ့ ရည်ရွယ်ချက်မှာ အီလက်ထရွန်းနစ်နည်းပညာကို မြန်မာစာဖြင့် လွယ်ကူစွာ လေ့လာနိုင်စေရန်ဖြစ်သည်။ website အကြောင်းပိုမိုလေ့လာရန်--"
                               buttonText="About Us"
                                buttonColor="primary"
                                color="primary"
                                onButtonClick={() => navigate("/about")} 
                                 />
                 <ReadCard ref={(el) => {cardRef.current[1] = el}} icon={faBookmark} title="Documentation"
-                             description="How each electrical device works and what they are about."
+                             description="လျှပ်စစ်ပစ္စည်းတစ်ခုစီ၏ အကြောင်းအရာများ၊ အသုံးပြုနည်းများကို မြန်မာစာဖြင့် ဖော်ပြထားသည်။"
                               buttonText="To Read"
                                buttonColor="secondary"
                                color="secondary"
                                onButtonClick={() => navigate("/doc/components")}
                              />
                 <ReadCard ref={(el) => {cardRef.current[2] = el}} icon={faLightbulb} title="Creative Projects"
-                             description="Simple and basic projects and projects with many uses."
+                             description="ရိုးရှင်းပြီး အခြေခံကျသော Project များနှင့် အသုံးပြုမှုများစွာ ပါဝင်သော Project များ"
                               buttonText="View Projects"
                                buttonColor="accent"
                                color="accent"
@@ -109,7 +130,7 @@ const Home= forwardRef<HTMLElement>(() => {
                              />
             </div>
             {/* Animation div */}
-            <div className="w-screen h-auto my-4 md:my-20 z-3 flex items-center"> 
+            <div className="home-svg w-screen h-auto z-3 flex items-center py-16 md:py-4"> 
                 <svg viewBox="0 0 900 300" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="rdGradient" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -175,8 +196,10 @@ const Home= forwardRef<HTMLElement>(() => {
             </div>
             {/* TrendComponents div */}
             <TrendComponents />
+            <FeatureShowcase />
             <ElectronicsInfoSection />
             <ElectronicHistory />
+            <img src={componentTimeline} alt="Timeline" className="max-w-6xl mx-auto rounded-2xl h-auto" />
             {/* Timeline design */}
             <Timeline />
         </section>

@@ -1,10 +1,13 @@
 import CircuitEditor from "./CircuitEditor";
-import CodeSection from "./CodeSection";
+// import CodeSection from "./CodeSection";
 
-const Circuit = () => (
+const Circuit = () => {
+
+return (
   <div className="w-full min-h-screen">
         <CircuitEditor />
-        <CodeSection />
+        {/* <CodeSection /> */}
   </div>
 );
+};
 export default Circuit;

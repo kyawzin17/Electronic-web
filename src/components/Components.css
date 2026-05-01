@@ -3,8 +3,8 @@
     background: linear-gradient(135deg, var(--card) 0%, var(--soft) 100%);
     border-radius: 15px;
     padding: 1.5rem;
-    width: 280px;
-    min-height: 350px;
+    width: 260px;
+    min-height: 330px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,7 +32,6 @@
 }
 
 .component-card:hover {
-    transform: translateY(-10px) scale(1.02);
     border-color: var(--secondary);
     box-shadow: 0 15px 35px rgba(20, 171, 231, 0.3);
 }
@@ -64,7 +63,7 @@
 
 .component-title {
     color: var(--secondary);
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 0.5rem;
     text-transform: uppercase;

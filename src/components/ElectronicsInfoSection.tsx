@@ -1,6 +1,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
+
+import HumanImg from "../../public/docs/images/human-test.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,16 +79,18 @@ export default function ElectronicsInfoSection() {
         </h2>
 
         {/* Content Grid */}
-        <div className="grid md:grid-cols-2 gap-10">
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* Myanmar */}
-          <div
+          <motion.div 
+                whileHover={{ y: -10, scale: 1.03 }} 
+                transition={{ duration: 0.6, ease: "backOut"}}
             ref={mmRef}
-            className="bg-card backdrop-blur p-6 rounded-xl shadow-lg"
+            className="bg-card backdrop-blur p-6 rounded-xl transition-shadow duration-300 ease-linear shadow-md hover:shadow-lg shadow-text-muted/40 hover:border-2 hover:border-text-muted/50"
           >
             <h3 className="text-xl font-semibold mb-4 text-secondary">
               🔌 အီလက်ထရွန်းနစ် ပညာကို လေ့လာသင့်သည့် အကြောင်း
             </h3>
-            <p className="text-text-main space-y-5 text-base md:text-lg font-light font-padauk leading-[1.8]">
+            <p className="text-text-main space-y-5 text-base md:text-lg font-light font-padauk leading-mm-relaxed">
               ယနေ့ခေတ်တွင် အသုံးပြုနေသော နည်းပညာအများစု၏
               အခြေခံအုတ်မြစ်မှာ အီလက်ထရွန်းနစ်ပညာဖြစ်သည်။
               စမတ်ဖုန်းများ၊ ကွန်ပျူတာများ၊ ဆက်သွယ်ရေးစနစ်များမှစ၍
@@ -97,10 +102,16 @@ export default function ElectronicsInfoSection() {
               ပြဿနာများကို သဘောတရားအရ စဉ်းစားဖြေရှင်းနိုင်စွမ်းနှင့်
               နည်းပညာအသစ်များ ဖန်တီးနိုင်စွမ်းကို တိုးတက်စေသည်။
             </p>
-          </div>
+          </motion.div>
 
+          {/* Image */}
+          <motion.div 
+                whileHover={{ y: -10, scale: 1.02 }} 
+                transition={{ duration: 0.6, ease: "backOut"}} ref={enRef} className="bg-transparent rounded-xl w-full overflow-hidden shadow-md shadow-primary/70 border-6 border-zinc-50">
+              <img src={HumanImg} alt='Circuit Marking dig!' className="w-full h-auto"/>
+          </motion.div>
           {/* English */}
-          <div
+          {/* <div
             ref={enRef}
             className="bg-card backdrop-blur p-6 rounded-xl shadow-lg"
           >
@@ -118,7 +129,7 @@ export default function ElectronicsInfoSection() {
               technical expertise required to innovate in a technology-driven
               world.
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

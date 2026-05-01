@@ -16,6 +16,7 @@ import ReactFlow, {
 import 'reactflow/dist/style.css';
 import Sidebar from './Sidebar.tsx';
 import ElectronicNode from './ElectronicNode.tsx';
+import { useAppContext } from "../hooks/useAppContext";
 
 
 // CircuitEditor.tsx အပေါ်ဆုံးမှာ Import လုပ်ပါ
@@ -40,11 +41,14 @@ const getEdgeColor = (handleId: string | null) => {
 
 const GRID_SIZE = 10.5;
 
+
+//start CircuitEditor
 const CircuitEditor = () => {
  const reactFlowWrapper = useRef<HTMLDivElement>(null);
  const [nodes, setNodes, onNodesChange] = useNodesState([]);
  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
+ const { headerHeight } = useAppContext();
 
  // ... အပေါ်က useState တွေရဲ့အောက်မှာ ထည့်ပါ ...
 const [edgeMenu, setEdgeMenu] = useState<{ id: string, x: number, y: number, color: string } | null>(null);
@@ -94,9 +98,10 @@ const onDrop = useCallback(
 
     // Sidebar က အစိတ်အပိုင်းအလိုက် Tag နှင့် Props များ သတ်မှတ်ခြင်း
     const componentConfigs: Record<string, any> = {
-      'arduino': { tag: 'wokwi-arduino-uno', label: 'Arduino Uno' },
-      'mega': { tag: 'wokwi-arduino-mega', label: 'Arduino Mega' },
-      'nano': { tag: 'wokwi-arduino-nano', label: 'Arduino Nano' },
+      'breadboard-half': { tag: 'wokwi-breadboard-half', label: 'Breadboard Half' },
+      'arduino-uno': { tag: 'wokwi-arduino-uno', label: 'Arduino Uno' },
+      'arduino-mega': { tag: 'wokwi-arduino-mega', label: 'Arduino Mega' },
+      'arduino-nano': { tag: 'wokwi-arduino-nano', label: 'Arduino Nano' },
       'led-red': { tag: 'wokwi-led', props: { color: 'red' }, label: 'Red LED' },
       'led-green': { tag: 'wokwi-led', props: { color: 'green' }, label: 'Green LED' },
       'led-blue': { tag: 'wokwi-led', props: { color: 'blue' }, label: 'Blue LED' },
@@ -106,6 +111,7 @@ const onDrop = useCallback(
       'slide-switch': { tag: 'wokwi-slide-switch', label: 'Slide Switch' },
       '7segment': { tag: 'wokwi-7segment', label: '7-Segment' },
       'lcd1602': { tag: 'wokwi-lcd1602', label: 'LCD 16x2' },
+      'lcd1602-i2c': { tag: 'wokwi-lcd1602', props: { pins: 'i2c'}, label: 'LCD 16x2 (I2C)' },
       'neopixel': { tag: 'wokwi-neopixel', label: 'NeoPixel' },
       'buzzer': { tag: 'wokwi-buzzer', label: 'Buzzer' },
       'servo': { tag: 'wokwi-servo', label: 'Servo' },
@@ -122,6 +128,7 @@ const onDrop = useCallback(
       type: 'electronicNode', // ကျွန်တော်တို့ ရေးခဲ့တဲ့ custom node type
       position,
       data: { 
+        componentType: type,
         tag: config.tag, 
         props: config.props,
         label: config.label 
@@ -176,7 +183,7 @@ const defaultEdgeOptions = {
   zIndex: 1000,        // 🌟 အရေးကြီးဆုံး: Component တွေရဲ့ အပေါ်ကို ရောက်လာစေဖို့
 };
  return (
-   <div className="flex w-full h-screen bg-gray-100">
+   <div className="flex w-full bg-gray-100" style={{ height: `calc(100vh - ${headerHeight}px)` }}>
 
      <Sidebar />
 {/*       Sidebar - မြန်မာစာသားများဖြင့် အဆင့်မြှင့်ထားသည်
@@ -228,6 +235,8 @@ const defaultEdgeOptions = {
           onPaneClick={onPaneClick} // ထပ်တိုး
           connectionMode={ConnectionMode.Loose}
           fitView
+          minZoom={0.5}
+          maxZoom={12}
 // အောက်က နှစ်ကြောင်းကို ထပ်ထည့်ပေးပါ
       defaultEdgeOptions={defaultEdgeOptions}
         >

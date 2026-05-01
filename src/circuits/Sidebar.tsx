@@ -16,22 +16,24 @@ const Sidebar = () => {
 
   // --- အစိတ်အပိုင်း ၂၀ စာရင်း ---
   const allComponents = [
-    { type: 'arduino', name: 'Arduino Uno', tag: 'wokwi-arduino-uno', props: {}, scale: 0.12, yOffset: '-15px' },
-    { type: 'mega', name: 'Arduino Mega', tag: 'wokwi-arduino-mega', props: {}, scale: 0.08, yOffset: '-10px' },
-    { type: 'nano', name: 'Arduino Nano', tag: 'wokwi-arduino-nano', props: {}, scale: 0.25, yOffset: '0px' },
+    { type: "breadboard-half", name: "Breadboard-half", tag: "wokwi-breadboard-half", props: {}, scale: 0.5, yOffset: '-15px' },
+    { type: 'arduino-uno', name: 'Arduino Uno', tag: 'wokwi-arduino-uno', props: {}, scale: 0.2, yOffset: '-15px' },
+    { type: 'arduino-mega', name: 'Arduino Mega', tag: 'wokwi-arduino-mega', props: {}, scale: 0.2, yOffset: '-10px' },
+    { type: 'arduino-nano', name: 'Arduino Nano', tag: 'wokwi-arduino-nano', props: {}, scale: 0.3, yOffset: '0px' },
     { type: 'led-red', name: 'Red LED', tag: 'wokwi-led', props: { color: 'red' }, scale: 0.8, yOffset: '0px' },
     { type: 'led-green', name: 'Green LED', tag: 'wokwi-led', props: { color: 'green' }, scale: 0.8, yOffset: '0px' },
     { type: 'led-blue', name: 'Blue LED', tag: 'wokwi-led', props: { color: 'blue' }, scale: 0.8, yOffset: '0px' },
-    { type: 'resistor', name: 'Resistor', tag: 'wokwi-resistor', props: { value: '1000' }, scale: 0.6, yOffset: '0px' },
+    { type: 'resistor', name: 'Resistor', tag: 'wokwi-resistor', props: { value: '1000' }, scale: 0.8, yOffset: '0px' },
     { type: 'pushbutton', name: 'Pushbutton', tag: 'wokwi-pushbutton', props: { color: 'red' }, scale: 0.5, yOffset: '0px' },
     { type: 'potentiometer', name: 'Potentiometer', tag: 'wokwi-potentiometer', props: {}, scale: 0.4, yOffset: '0px' },
-    { type: 'slide-switch', name: 'Slide Switch', tag: 'wokwi-slide-switch', props: {}, scale: 0.6, yOffset: '0px' },
+    { type: 'slide-switch', name: 'Slide Switch', tag: 'wokwi-slide-switch', props: {}, scale: 0.8, yOffset: '0px' },
     { type: '7segment', name: '7-Segment', tag: 'wokwi-7segment', props: {}, scale: 0.4, yOffset: '0px' },
     { type: 'lcd1602', name: 'LCD 1602', tag: 'wokwi-lcd1602', props: {}, scale: 0.15, yOffset: '0px' },
-    { type: 'neopixel', name: 'NeoPixel', tag: 'wokwi-neopixel', props: {}, scale: 0.6, yOffset: '0px' },
+    { type: 'lcd1602-i2c', name: 'LCD 1602 (I2C)', tag: 'wokwi-lcd1602', props: { pins: 'i2c' }, scale: 0.15, yOffset: '0px'},
+    { type: 'neopixel', name: 'NeoPixel', tag: 'wokwi-neopixel', props: {}, scale: 2, yOffset: '0px' },
     { type: 'buzzer', name: 'Buzzer', tag: 'wokwi-buzzer', props: {}, scale: 0.5, yOffset: '0px' },
     { type: 'servo', name: 'Servo Motor', tag: 'wokwi-servo', props: {}, scale: 0.2, yOffset: '0px' },
-    { type: 'hc-sr04', name: 'Ultrasonic Sensor', tag: 'wokwi-hc-sr04', props: {}, scale: 0.2, yOffset: '0px' },
+    { type: 'hc-sr04', name: 'Ultrasonic Sensor', tag: 'wokwi-hc-sr04', props: {}, scale: 0.4, yOffset: '0px' },
     { type: 'membrane-keypad', name: 'Keypad', tag: 'wokwi-membrane-keypad', props: {}, scale: 0.15, yOffset: '0px' },
   ];
 
@@ -71,7 +73,7 @@ const Sidebar = () => {
 
       {/* --- Components List --- */}
       <div className="flex-1 overflow-y-auto px-6 pb-6 custom-scrollbar">
-        <div className="flex flex-col gap-4">
+        <div className="grid grid-cols-2 gap-4">
           {filteredComponents.length > 0 ? (
             filteredComponents.map((comp) => (
               <div

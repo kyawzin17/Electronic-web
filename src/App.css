@@ -78,7 +78,7 @@
   position: relative;
   max-width: 1200px;
   margin: 100px auto; /* အပေါ်နဲ့ အောက် space ထားရန် */
-  padding: 0 20px;
+  padding: 0 24px;
 }
 
 /* Vertical SVG Line */
@@ -124,18 +124,18 @@
 
 /* Content Box */
 .timeline-content {
-  width: 45%;
+  width: 40%;
   background-color: transparent;
-  padding: 20px;
+  padding: 10px;
   border-radius: 8px;
-  border: var(--primary) 3px solid;
-  box-shadow: 0 2px 6px var(--primary);
+  border: var(--primary) 2px solid;
+  box-shadow: 0 1px 4px var(--primary);
   transition: all 0.3s ease-in;
   position: relative;
 }
 .timeline-content:hover {
     border: var(--secondary) 3px solid;
-    box-shadow: 0 3px 7px var(--secondary);
+    box-shadow: 0 2px 5px var(--secondary);
 }
 
 /* ဘယ်ဘက် Content */

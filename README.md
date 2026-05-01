@@ -14,16 +14,16 @@ The purpose of this website is to provide documentation for Myanmar Physics stud
 ```electronic-client/
 ├── public/
 │   ├── docs/
-│   │   ├── diodes/
-│   │   │   └── rectifier.md
-│   │   ├── passives/
-│   │   │   ├── ferriteBead.md
-│   │   │   ├── integrated-circuit.md
-│   │   │   ├── resistor.md
-│   │   │   └── timmer.md
-│   │   └── transistors/
-│   │       └── bjt.md
-│   └── index.html
+│       ├── diodes/
+│       │   └── rectifier.md
+│       ├── passives/
+│       │   ├── ferriteBead.md
+│       │   ├── integrated-circuit.md
+│       │   ├── resistor.md
+│       │   └── timmer.md
+│       └── transistors/
+│           └── bjt.md
+│
 ├── src/
 │   ├── components/
 │   │   ├── HeroCircle.jsx
@@ -39,6 +39,7 @@ The purpose of this website is to provide documentation for Myanmar Physics stud
 │   ├── App.jsx
 │   ├── index.css
 │   └── main.jsx
+│__ index.html
 ├── .gitignore
 ├── package.json
 ├── README.md

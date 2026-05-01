@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import "./Components.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -8,10 +8,13 @@ import resistor from "../../public/docs/images/resistor.webp";
 import capactior from "../../public/docs/images/capacitor.webp";
 import transistor from "../../public/docs/images/transistor.webp";
 import { useNavigate } from "react-router-dom";
+
+import { motion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function TrendComponents() {
     const navigate= useNavigate();
@@ -19,50 +22,32 @@ export default function TrendComponents() {
     const headerRef= useRef<HTMLDivElement>(null);
     const comRef= useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (!comRef.current) return;
-
-        gsap.fromTo(
-            comRef.current,
-            {
+    useGSAP(() => {
+        gsap.from( comRef.current,{
                 y: 70,
-                opacity: 0
-            },
-            {
-                y: 0,
-                opacity: 1,
+                opacity: 0,
                 duration: 0.8,
-                delay: 0.2,
-                ease: "power1.inOut",
+                ease: "back.out",
                 scrollTrigger: {
-                    trigger: trendRef.current,
-                    start: "top 85%",
-                    toggleActions: 'play none none reverse',
+                    trigger: comRef.current,
+                    start: "top 70%",
                 }
             }
         );
-        if (!headerRef.current) return;
-
-        gsap.fromTo(
-            headerRef.current,
+        gsap.from(headerRef.current,
             {
-                x: -50,
-                opacity: 0
-            },
-            {
-                x: 0,
+                x: 70,
                 duration: 0.8,
-                opacity: 1,
-                ease: "power1.out",
+                opacity: 0,
+                ease: "back.out",
                 delay: 0.1,
                 scrollTrigger: {
                     trigger: trendRef.current,
-                    start: "top 85%",
-                    toggleActions: 'play none none reverse',
+                    start: "top 70%",
                 }
             }
         )
-    }, []);
+    }, {});
 
     const components= [
         {id: 1, name: "Arduino UNO R3", img: arduino, des: "Microcontroller Board", first: "5V", second: "ATmega328P", link: "/doc/microcontrollers/arduino" },
@@ -71,28 +56,34 @@ export default function TrendComponents() {
     ]
 
     return (
-        <div ref={trendRef} className="w-fit my-4 md:my-20 mx-auto">
-                <h2 ref={headerRef} className="text-(--color) text-3xl font-semibold mb-8 md:mb-16">Trending Components</h2>
+        <div ref={trendRef} className="w-fit my-4 md:my-20 mx-auto px-6">
+                <h2 ref={headerRef} className="text-text-main text-3xl font-semibold mb-10 md:mb-20 border-l-4 border-secondary px-2">Trending Components</h2>
                 <div ref={comRef} className="flex justify-center items-center gap-4 flex-wrap w-full">
                     {
                         components.map((item) => (
-                            <div key={item.id} className="component-card" data-component={item.name} onClick={() =>  navigate(`${item.link}`)}>
+                            <motion.div 
+                                whileHover={{ y: -10, scale: 1.02}} 
+                                transition={{ duration: 0.6, ease: "backOut"}} 
+                                 key={item.id} className="component-card" data-component={item.name} onClick={() =>  navigate(`${item.link}`)}>
                                 <div className="card-image">
                                     <img src={item.img} alt={item.name} className="component-img" />
                                 </div>
                                 <div className="card-content">
-                                    <h3 className="component-title">{item.name}</h3>
+                                    <h4 className="component-title">{item.name}</h4>
                                     <p className="component-description">{item.des}</p>
                                     <div className="component-specs">
-                                        <span className="spec bg-accent/20 text-accent border-1 border-accent/40">{item.first}</span>
-                                        <span className="spec bg-accent/20 text-accent border-1 border-accent/40">{item.second}</span>
+                                        <span className="spec bg-accent/20 text-accent border border-accent/40">{item.first}</span>
+                                        <span className="spec bg-accent/20 text-accent border border-accent/40">{item.second}</span>
                                     </div>
                                 </div>
-                            </div>
+                            </motion.div>
                         ))
                     }
-                    <div onClick={() => navigate("/doc/components")} 
-                            className="relative w-70 h-80 px-4 py-3 bg-card rounded-lg flex flex-col justify-center items-center border-3 border-border hover:border-4 transition duration-300 ease-linear hover:border-primary">
+                    <motion.div 
+                                whileHover={{ y: -10, scale: 1.02}} 
+                                transition={{ duration: 0.4, ease: "backOut"}} 
+                                 onClick={() => navigate("/doc/components")} 
+                            className="relative component-card bg-card flex flex-col justify-center items-center">
                         <FontAwesomeIcon icon={faPlus}  className="text-4xl z-10 text-primary select-none cursor-pointer"/>
                         <h2 className="text-text-main text-md z-10">More to view...</h2>
                         <img src={arduino} alt="Arduino" className="absolute w-15 top-10 left-15 z-9" />
@@ -100,7 +91,7 @@ export default function TrendComponents() {
                         <img src={resistor} alt="Resistor" className="absolute w-15 bottom-20 left-20 z-9" />
                         <img src={capactior} alt="Capacitor" className="absolute w-15 bottom-35 left-4 z-9" />
                         <img src={transistor} alt="Transistor" className="absolute w-15 bottom-11 right-10 z-9" />
-                    </div>
+                    </motion.div>
                 </div>
         </div>
     )

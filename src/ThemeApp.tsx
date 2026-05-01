@@ -10,12 +10,11 @@ import Docs from "./pages/Docs.tsx";
 import About from "./pages/About.jsx";
 import Project from "./pages/Project.tsx";
 import ProjectDetail from "./pages/ProjectDetail";
-import ContactUs from "./support/ContactUs";
-import Faq from "./support/Faq";
-import ShippingReturn from "./support/ShippingReturn.tsx";
+import ContactUs from "./support/ContactUs.tsx";
+import Request from "./support/Request.tsx";
+import Report from "./support/Report.tsx";
 import Privacy from "./support/Privacy";
 
-import Circuit from "./circuits/Circuit.tsx";
 import { AppProvider } from "./hooks/useAppContext.tsx";
 
 
@@ -54,10 +53,6 @@ export default function ThemeApp() {
                 {
                     path: "/project/:id",
                     element: <ProjectDetail />,
-                },
-                {
-                    path: "/circuit",
-                    element: <Circuit />,
                 }
             ]
         },
@@ -74,12 +69,12 @@ export default function ThemeApp() {
             element: <ContactUs />
         },
         {
-            path: "/faq",
-            element: <Faq />
+            path: "/request",
+            element: <Request />
         },
         {
-            path: "/shipping",
-            element: <ShippingReturn />
+            path: "/report",
+            element: <Report />
         },
         {
             path: "/privacy",

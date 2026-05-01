@@ -130,7 +130,7 @@ function Timeline() {
           >
             <div className="timeline-circle"></div>
             <div className="timeline-content hover:translate-y-5">
-                <h3 className='text-md md:text-xl font-medium font-padauk text-text-main'>{item.desc}</h3>
+                <h3 className='text-md md:text-lg font-medium font-padauk text-text-main'>{item.desc}</h3>
             </div>
           </div>
         ))}

@@ -13,8 +13,8 @@ export default function Footer() {
         
         {/* Brand Section */}
         <div className="space-y-4">
-          <h2 className="text-4xl font-bold bg-gradient-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
-            Red Dragon <span className="text-sm text-text-main font-normal text-slate-500 tracking-widest">Electronic!</span>
+          <h2 className="text-4xl font-bold bg-linear-to-r from-purple-500 to-cyan-400 bg-clip-text text-transparent">
+            Red Dragon <span className="text-sm text-text-main font-normal tracking-widest">Electronic!</span>
           </h2>
           <p className="text-sm text-text-secondary leading-relaxed">
             Innovation at your fingertips. <br />
@@ -42,8 +42,8 @@ export default function Footer() {
           <h3 className="text-text-main font-semibold mb-6 border-l-2 border-purple-500 pl-3">Support</h3>
           <ul className="space-y-3 text-sm text-text-secondary">
             <li><Link to="/contact" className="hover:text-purple-400 transition-colors">Contact Us</Link></li>
-            <li><Link to="/faq" className="hover:text-purple-400 transition-colors">FAQ</Link></li>
-            <li><Link to="/shipping" className="hover:text-purple-400 transition-colors">Shipping & Returns</Link></li>
+            <li><Link to="/request" className="hover:text-purple-400 transition-colors">Request a Tutorial</Link></li>
+            <li><Link to="/report" className="hover:text-purple-400 transition-colors">Report a Bug</Link></li>
             <li><Link to="/privacy" className="hover:text-purple-400 transition-colors">Privacy Policy</Link></li>
           </ul>
         </div>
@@ -63,12 +63,12 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-14 py-4 md:py-6 px-4 px-6 md:px-12 border-t border-slate-800 flex items-center justify-between">
+      <div className="mt-14 py-4 md:py-6 px-6 md:px-12 border-t border-slate-800 flex items-center justify-between">
         <div>
             <span className="text-text-main">©</span> <span className='text-xs text-slate-500 uppercase tracking-tighter'>2026 Red Dragon Electronic For you.</span>
         </div>
         <button onClick={() => scrollTo({ top: 0, behavior: 'smooth' })}>
-          <FontAwesomeIcon icon={faCircleArrowUp} className='font-bold text-xl md:text-3xl text-text-muted hover:translate-y-[-4px] hover:text-text-main cursor-pointer' />
+          <FontAwesomeIcon icon={faCircleArrowUp} className='font-bold text-xl md:text-3xl text-text-muted hover:-translate-y-2 hover:text-text-main cursor-pointer' />
         </button>
       </div>
     </footer>

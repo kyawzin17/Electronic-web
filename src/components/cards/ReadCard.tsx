@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { motion } from "framer-motion";
 
 interface PropsCard {
     icon: any;
@@ -30,7 +31,16 @@ const ReadCard= forwardRef<HTMLDivElement, PropsCard>((
   };
 
   return (
-    <div ref={ref} className={`max-w-sm bg-card/40 flex flex-col justify-between rounded-lg overflow-hidden transform transition-all duration-300 hover:translate-y-[-10px] border-3 border-border hover:border-${color} py-4`}>
+    <motion.div 
+      whileHover={{ 
+        y: "-16px",
+        scale: 1.03,
+      }} 
+      transition={{ 
+        duration: 0.6,
+        ease: "backOut",
+      }}
+      ref={ref} className={`max-w-sm bg-card/40 backdrop-blur-md flex flex-col justify-between rounded-lg overflow-hidden shadow-md hover:shadow-lg shadow-text-muted border-3 border-border hover:border-${color} py-4 z-12`}>
       {/* Icon Section */}
       
        <div className="px-4">
@@ -41,12 +51,12 @@ const ReadCard= forwardRef<HTMLDivElement, PropsCard>((
           />
       </div>
         {/* Title */}
-        <h3 className="text-xl font-bold text-text-primary text-center mb-3">
+        <h3 className="text-xl font-bold text-text-main text-center mb-3">
           {title}
         </h3>
         
         {/* Description */}
-        <p className="text-text-muted text-center mb-6 leading-relaxed">
+        <p className="text-text-main/70 text-center mb-6 leading-relaxed">
           {description}
         </p>
         </div>
@@ -59,9 +69,8 @@ const ReadCard= forwardRef<HTMLDivElement, PropsCard>((
             {buttonText}
           </button>
         </div>
-      </div>
+      </motion.div>
     )
 }
 )
 export default ReadCard;
-      {/* Content Section */}

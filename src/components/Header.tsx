@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../App.css";
 import { Link, useLocation } from "react-router-dom";
 
@@ -14,14 +14,24 @@ export default function Header() {
     const headerRef= useRef<HTMLElement | null>(null);
     const location= useLocation();
     const isDocActive= location.pathname.startsWith('/doc');
+    const [ scrollHeader, setHeaderScroll ]= useState<boolean>(false);
 
     useEffect(() => {
         const height= headerRef.current?.offsetHeight || 0;
         setHeaderHeight(height);
+
+        const handleScroll= () => { 
+          if (window.scrollY > 10) {
+            setHeaderScroll(true);
+          } else {
+            setHeaderScroll(false);
+          }
+        };
+        window.addEventListener('scroll', handleScroll);
     }, []);
 
  return (
-    <header ref={headerRef} className="bg-soft/98 shadow-[0_1px_4px_var(--text-secondary)] px-3 md:px-6 lg:px-10 py-1 flex justify-between items-center z-100 sticky top-0 left-0 tr">
+    <header ref={headerRef} className={`bg-bg/50 ${scrollHeader ? "shadow-[0_1px_8px_var(--text-secondary)]" : ""} px-3 md:px-6 lg:px-10 py-1 flex justify-between items-center z-100 sticky top-0 left-0 transition duration-100 backdrop-blur-md`}>
       {isDocActive && 
       <button
        className="cursor-pointer block lg:hidden"
