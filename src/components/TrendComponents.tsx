@@ -2,11 +2,13 @@ import { useRef } from "react";
 import "./Components.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import arduino from "../../public/docs/images/arduino.webp";
-import led from "../../public/docs/images/led1.webp";
-import resistor from "../../public/docs/images/resistor.webp";
-import capactior from "../../public/docs/images/capacitor.webp";
-import transistor from "../../public/docs/images/transistor.webp";
+
+import arduino from "../../public/assets/arduino.webp";
+import led from "../../public/assets/led1.webp";
+import resistor from "../../public/assets/resistor.webp";
+import capactior from "../../public/assets/capacitor.webp";
+import transistor from "../../public/assets/transistor.webp";
+
 import { useNavigate } from "react-router-dom";
 
 import { motion } from "framer-motion";
@@ -56,7 +58,7 @@ export default function TrendComponents() {
     ]
 
     return (
-        <div ref={trendRef} className="w-fit my-4 md:my-20 mx-auto px-6">
+        <div ref={trendRef} className="w-fit my-16 md:my-20 mx-auto px-6">
                 <h2 ref={headerRef} className="text-text-main text-3xl font-semibold mb-10 md:mb-20 border-l-4 border-secondary px-2">Trending Components</h2>
                 <div ref={comRef} className="flex justify-center items-center gap-4 flex-wrap w-full">
                     {
@@ -65,7 +67,7 @@ export default function TrendComponents() {
                                 whileHover={{ y: -10, scale: 1.02}} 
                                 transition={{ duration: 0.6, ease: "backOut"}} 
                                  key={item.id} className="component-card" data-component={item.name} onClick={() =>  navigate(`${item.link}`)}>
-                                <div className="card-image">
+                                <div className="w-full h-25 mb-8 bg-[rgba(255, 255, 255, 0.05)]">
                                     <img src={item.img} alt={item.name} className="component-img" />
                                 </div>
                                 <div className="card-content">

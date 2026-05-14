@@ -146,5 +146,5 @@ npm run start
 ## image .jpg, .png တွေကို .webp သို့ ပြောင်းပါ။  
 
 ```bash  
-node convert.js
+node convert.ts
 ```

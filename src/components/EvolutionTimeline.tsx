@@ -1,4 +1,5 @@
-import React from 'react';
+import { motion } from "framer-motion";
+import TimelineImg from "../../public/assets/historyTimeline.webp"
 
 const EvolutionTimeline = () => {
   const timelineData = [
@@ -9,8 +10,12 @@ const EvolutionTimeline = () => {
   ];
 
   return (
-    <div className="p-6 rounded-2xl bg-white/5 backdrop-blur-md border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-      <h2 className="text-xl font-bold text-cyan-400 mb-8 text-center tracking-wide">
+    <motion.div 
+                initial={{ y: 70, opacity: 0 }} 
+                whileInView={{ y: 0, opacity: 1}}
+                whileHover={{ y: -10, scale: 1.03 }} 
+                transition={{ duration: 0.6, ease: "backOut"}} className="p-6 rounded-2xl bg-card backdrop-blur-md border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+      <h2 className="text-xl font-bold text-secondary dark:text-cyan-400 mb-8 text-center tracking-wide">
         အီလက်ထရွန်နစ်နည်းပညာ တိုးတက်ပြောင်းလဲလာမှု သမိုင်းကြောင်း
       </h2>
       
@@ -18,19 +23,22 @@ const EvolutionTimeline = () => {
         {timelineData.map((item, index) => (
           <div key={index} className="relative pl-6">
             {/* Glowing Dot */}
-            <div className="absolute -left-[9px] top-1 w-4 h-4 bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"></div>
+            <div className="absolute -left-2.5 top-1 w-4 h-4 bg-secondary dark:bg-cyan-400 rounded-full shadow-[0_0_10px_#22d3ee]"></div>
             
-            <h3 className="text-lg font-semibold text-white">
-              <span className="text-cyan-300 mr-2">{item.year}:</span> 
+            <h3 className="text-lg font-semibold text-text-main">
+              <span className="dark:text-cyan-300 text-secondary mr-2">{item.year}:</span> 
               {item.title}
             </h3>
-            <p className="text-gray-300 text-sm mt-1 leading-relaxed">
+            <p className="text-text-main/70 text-sm mt-1 leading-relaxed">
               {item.desc}
             </p>
           </div>
         ))}
       </div>
-    </div>
+      <div className="w-full mt-4 h-auto rounded-2xl overflow-hidden border-3 dark:border-cyan-300 border-secondary">
+        <img src={TimelineImg} alt="Timeline Image" className="w-full h-auto" />
+      </div>
+    </motion.div>
   );
 };
 

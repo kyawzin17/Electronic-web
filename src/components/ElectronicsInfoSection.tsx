@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
 
-import HumanImg from "../../public/docs/images/human-test.webp";
+import HumanImg from "../../public/assets/human-test.webp";
 
 gsap.registerPlugin(ScrollTrigger);
 

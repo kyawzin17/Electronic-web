@@ -14,6 +14,10 @@ interface AppContext {
     setError: (error: boolean) => void;
     headerHeight: number;
     setHeaderHeight: (headerHeight: number) => void;
+    language: string;
+    setLanguage: (language: 'EN' | 'MM') => void;
+    docComponents: boolean;
+    setDocComponents: (docComponents: boolean) => void;
 }
 
 
@@ -36,9 +40,12 @@ export function AppProvider({ children } : { children: React.ReactNode}) {
     const [rightMenu, setRightMenu]= useState<boolean>(false);        //Right sidebar menu open or close 
     const [error, setError]= useState<boolean>(false);                //All error
     const [headerHeight, setHeaderHeight]= useState<number>(0);      //Header height for main container
+    const [language, setLanguage]= useState<'EN' | 'MM'>('EN');
+      const [docComponents, setDocComponents] = useState<boolean>(true);
+
 
     return (
-        <Context.Provider value={{ login, setLogin, globalMessage, setGlobalMessage, menu, setMenu, rightMenu, setRightMenu, error, setError, headerHeight, setHeaderHeight }}>
+        <Context.Provider value={{ login, setLogin, globalMessage, setGlobalMessage, menu, setMenu, rightMenu, setRightMenu, error, setError, headerHeight, setHeaderHeight, language, setLanguage, docComponents, setDocComponents }}>
             {children}
         </Context.Provider>
     )

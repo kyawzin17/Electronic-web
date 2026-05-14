@@ -1,7 +1,7 @@
 .login-image {
     width: 100%;
     height: 150px;
-    background-image: url("../image/forLogin.png");
+    background-image: url("../../public/assets/forLogin.webp");
     background-size: cover;
     background-position: center;
     box-shadow: inset 0 -70px 100px #111111;
@@ -11,22 +11,17 @@
     width: 100%;
     height: 170px;
     border-radius: 5px 5px 0 0;
-    background-image: url("../image/forRegister.png");
+    background-image: url("../../public/assets/forRegister.webp");
     background-size: cover;
     background-position: center;
     box-shadow: inset 0 -89px 80px #111111;
 }
 
-.hero-img {
-    border-radius: 50px;
-    outline-color: var(--primary);
-    outline-width: 2px;
-    outline-offset: 5px;
-    border: 2px solid var(--primary);
-    outline-style: dashed;
-    animation: change 5s linear alternate infinite;
-    background-image: url("../image/micro.png");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
+@keyframes change {
+    0% {
+        transform: rotate(-25deg);
+    }
+    100% {
+        transform: rotate(25deg);
+    }
 }

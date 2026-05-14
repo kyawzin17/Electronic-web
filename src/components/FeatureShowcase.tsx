@@ -2,7 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaBolt, FaRobot } from 'react-icons/fa';
-
+import documentationImg from "../../public/assets/docImage.webp"
+import projectImg from "../../public/assets/projectImage.webp"
 // GSAP Plugin ကို Register လုပ်ခြင်း
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,12 +45,11 @@ const FeatureShowcase: React.FC = () => {
   return (
     <section 
       ref={containerRef} 
-      className="relative bg-[#0b1121] py-24 px-6 overflow-hidden font-myanmar"
+      className="relative bg-card py-24 px-6 overflow-hidden font-myanmar"
     >
       {/* Background Glow Effects (နောက်ခံ အရောင်လွင့်နေသည့် ပုံစံ) */}
-      <div className="absolute top-0 left-[-10%] w-[500px] h-[500px] bg-purple-900/20 blur-[120px] rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-0 right-[-10%] w-[500px] h-[500px] bg-cyan-900/20 blur-[120px] rounded-full pointer-events-none"></div>
-
+      <div className="absolute top-0 left-[-10%] w-125 h-125 bg-purple-900/20 blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-0 right-[-10%] w-125 h-125 bg-cyan-900/20 blur-[120px] rounded-full pointer-events-none"></div>
       {/* Floating Elements (နောက်ခံက ပျံဝဲနေတဲ့ ပုံစံငယ်လေးများ) */}
       <div className="floating-shape absolute top-32 left-10 w-4 h-4 border border-cyan-500/50 rotate-45"></div>
       <div className="floating-shape absolute top-1/2 right-20 w-3 h-3 bg-purple-500/50 rounded-full"></div>
@@ -66,20 +66,20 @@ const FeatureShowcase: React.FC = () => {
                 <FaBolt className="text-purple-400 text-xl" />
               </div>
               <div>
-                <p className="text-gray-400 tracking-widest text-xs uppercase font-bold">DOCUMENTATION</p>
-                <p className="text-purple-300 text-sm">သင်ခန်းစာများ</p>
+                <p className="text-text-main/90 tracking-widest text-xs uppercase font-bold">DOCUMENTATION</p>
+                <p className="text-primary text-sm">သင်ခန်းစာများ</p>
               </div>
             </div>
 
-            <h2 className="text-3xl md:text-5xl font-bold text-white leading-[1.6]">
+            <h2 className="text-3xl md:text-5xl font-bold text-black/90 dark:text-white leading-[1.6]">
               အခြေခံမှ အဆင့်မြင့်အထိ စနစ်တကျလေ့လာပါ။
             </h2>
 
-            <p className="text-slate-400 text-lg leading-[2] max-w-xl">
+            <p className="text-text-main/80 text-lg leading-loose max-w-xl">
               မိုက်ခရိုကွန်ထရိုလာများ၊ ဆင်ဆာများ နှင့် Circuit design သင်ခန်းစာများကို မြန်မာလို လွယ်ကူစွာ ဖတ်ရှုနိုင်ပါသည်။ Code နမူနာများ၊ wiring diagram များကို Documentation page တွင် အပြည့်အစုံ လေ့လာပါ။
             </p>
 
-            <button className="mt-4 px-6 py-3 rounded-lg border border-purple-500/50 text-purple-300 font-medium hover:bg-purple-500/10 transition-colors duration-300">
+            <button className="mt-4 px-6 py-3 rounded-lg border border-primary text-primary/90 font-medium hover:bg-purple-500/10 transition-colors duration-300">
               သင်ခန်းစာများဖတ်ရန်
             </button>
           </div>
@@ -89,7 +89,7 @@ const FeatureShowcase: React.FC = () => {
             <div className="relative group perspective-1000">
               {/* Mockup Container */}
               <div className="transform rotate-3 group-hover:rotate-0 transition-all duration-500 ease-out 
-                              border-[8px] border-slate-900 bg-slate-950 rounded-[1.5rem] overflow-hidden 
+                              border-2 border-slate-900 bg-slate-950 rounded-3xl overflow-hidden 
                               shadow-[0_0_50px_-10px_rgba(168,85,247,0.5)]">
                 {/* Browser Header */}
                 <div className="h-8 bg-slate-900 border-b border-slate-800 flex items-center px-4 gap-2">
@@ -100,9 +100,9 @@ const FeatureShowcase: React.FC = () => {
                 </div>
                 {/* Placeholder for Documentation Image (Replace with your screenshot) */}
                 <img 
-                  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1000&auto=format&fit=crop" 
+                  src={documentationImg}
                   alt="Documentation Mockup" 
-                  className="w-full aspect-[4/3] object-cover opacity-80"
+                  className="w-full aspect-4/3 object-cover opacity-80"
                 />
               </div>
             </div>
@@ -118,20 +118,20 @@ const FeatureShowcase: React.FC = () => {
                 <FaRobot className="text-cyan-400 text-xl" />
               </div>
               <div>
-                <p className="text-gray-400 tracking-widest text-xs uppercase font-bold">PROJECT SHOWCASE</p>
-                <p className="text-cyan-300 text-sm">ပရောဂျက်များ</p>
+                <p className="text-text-main/90 tracking-widest text-xs uppercase font-bold">PROJECT SHOWCASE</p>
+                <p className="text-secondary text-sm">ပရောဂျက်များ</p>
               </div>
             </div>
 
-            <h2 className="text-3xl md:text-5xl font-bold text-white leading-[1.6]">
+            <h2 className="text-3xl md:text-5xl font-bold text-black/90 dark:text-white leading-[1.6]">
               လက်တွေ့အသုံးချ Project များဖြင့် လေ့ကျင့်ပါ။
             </h2>
 
-            <p className="text-slate-400 text-lg leading-[2] max-w-xl">
+            <p className="text-text-main/80 text-lg leading-loose max-w-xl">
               Wiring diagrams, component lists နဲ့ source code အပြည့်အစုံပါဝင်တဲ့ DIY project များကို တစ်ဆင့်ချင်းစီ လုပ်ဆောင်ကြည့်နိုင်ပါသည်။ သင့်စိတ်ကူးတွေကို အကောင်အထည်ဖော်ပါ။
             </p>
 
-            <button className="mt-4 px-6 py-3 rounded-lg border border-cyan-500/50 text-cyan-300 font-medium hover:bg-cyan-500/10 transition-colors duration-300">
+            <button className="mt-4 px-6 py-3 rounded-lg border border-secondary text-secondary/90 font-medium hover:bg-cyan-500/10 transition-colors duration-300">
               ပရောဂျက်များကြည့်ရန်
             </button>
           </div>
@@ -141,7 +141,7 @@ const FeatureShowcase: React.FC = () => {
             <div className="relative group perspective-1000">
               {/* Mockup Container */}
               <div className="transform -rotate-3 group-hover:rotate-0 transition-all duration-500 ease-out 
-                              border-[8px] border-slate-900 bg-slate-950 rounded-[1.5rem] overflow-hidden 
+                              border-2 border-slate-900 bg-slate-950 rounded-3xl overflow-hidden 
                               shadow-[0_0_50px_-10px_rgba(34,211,238,0.5)]">
                 {/* Browser Header */}
                 <div className="h-8 bg-slate-900 border-b border-slate-800 flex items-center px-4 gap-2">
@@ -152,9 +152,9 @@ const FeatureShowcase: React.FC = () => {
                 </div>
                 {/* Placeholder for Project Image (Replace with your screenshot) */}
                 <img 
-                  src="https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?q=80&w=1000&auto=format&fit=crop" 
+                  src={projectImg} 
                   alt="Projects Mockup" 
-                  className="w-full aspect-[4/3] object-cover opacity-80"
+                  className="w-full aspect-4/3 object-cover opacity-80"
                 />
               </div>
             </div>

@@ -73,7 +73,7 @@ export default function Components() {
 
 const ComponentsCard= ({header, array}: {header: string, array: any[]}) => {
     return (
-    <div id={header.toLowerCase()} className="w-full h-auto flex flex-wrap justify-center gap-6 py-6 scroll-mt-4">
+    <div id={header.toLowerCase()} className="w-full h-auto flex flex-wrap justify-center gap-6 scroll-mt-4">
                 <h2 className="w-full text-start text-2xl font-bold text-text-main uppercase tracking-widest mb-6 ms-4 hover:text-primary transition-colors duration-300 mt-12">
                     {header}
                 </h2>

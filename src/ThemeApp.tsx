@@ -14,7 +14,7 @@ import ContactUs from "./support/ContactUs.tsx";
 import Request from "./support/Request.tsx";
 import Report from "./support/Report.tsx";
 import Privacy from "./support/Privacy";
-
+import Learn from "./pages/Learn.tsx";
 import { AppProvider } from "./hooks/useAppContext.tsx";
 
 
@@ -45,6 +45,14 @@ export default function ThemeApp() {
                 {
                     path: "/doc/:category/:fileName?",
                     element: <Docs />,
+                },
+                {
+                    path: "/doc/learning",
+                    element: <Learn />,
+                },
+                {
+                    path: "/doc/learning/:category/:fileName?",
+                    element: <Learn />,
                 },
                 {
                     path: "/project",

@@ -105,7 +105,7 @@ function Timeline() {
 
   return (
     <div className="mt-4 md:mt-10 font-padauk">
-         <div ref={headerRef} className='max-w-240 mx-auto gap-2 py-2 mb-18'>
+         <div ref={headerRef} className='max-w-240 mx-auto gap-2 py-2 mb-8 md:mb-16'>
                 <h2 className='text-xl md:text-3xl text-center font-bold text-text-main mb-4 md:mb-8 font-padauk'>⚡Electronic ပညာ လေ့လာခြင်း၏ အကျိုးကျေးဇူးများ</h2>
         </div>
       

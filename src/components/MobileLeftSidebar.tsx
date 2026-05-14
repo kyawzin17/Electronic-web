@@ -16,8 +16,8 @@ interface MobileLeftSidebarProps {
 }
 
 const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, openCategory, setOpenCategory}: MobileLeftSidebarProps) => {
-    const { menu, setMenu} = useAppContext();
-    const { category: activeCategory, fileName } = useParams<{ category: string; fileName: string }>(); // URL parameter ကနေ ယူမယ်၊ default က resistor
+    const { menu, setMenu, docComponents, setDocComponents } = useAppContext();
+    const { category: activeCategory, fileName } = useParams<{ category: string | undefined; fileName: string }>(); // URL parameter ကနေ ယူမယ်၊ default က resistor
     const navigate = useNavigate();
     // Lock body scroll when menu is open
     useEffect(() => {
@@ -46,16 +46,29 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
         {/* Menu Container */}
         <div className="absolute left-0 top-0 h-full w-full md:w-80 bg-soft shadow-lg transform transition-transform duration-300 translate-x-0">
             {/* Header */}
-            <div className="p-4 border-b border-border flex justify-between items-center">
+            <div className="py-4 px-1 border-b border-border flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-text-main">Menu</h3>
                 <button 
                     onClick={() => setMenu(false)}
                     className="p-2 rounded-md hover:bg-border transition-colors"
                 >
-                    <FontAwesomeIcon icon={faTimes} className="text-text-main" />
+                    <FontAwesomeIcon icon={faTimes} className="text-text-main text-lg" />
                 </button>
             </div>
-            
+            <div className="w-full bg-transparent flex py-6 border-b-4 border-double border-b-text-secondary/50">
+                        <button onClick={() => {
+                            setDocComponents(true);
+                            navigate("/doc/components")
+                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium ${docComponents ? "text-text-main border-text-secondary bg-text-muted/40" : " bg-transparent text-text-muted rounded-sm"}`}>
+                            Components
+                        </button>
+                        <button onClick={() => {
+                            setDocComponents(false);
+                            navigate("/doc/learning")
+                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium ${!docComponents ? "text-text-main border-text-secondary bg-text-muted/40" : " bg-transparent text-text-muted rounded-sm"}`}>
+                            Learning
+                        </button>
+                    </div>
             {/* Scrollable Content */}
             <div className="flex-1 overflow-y-auto" style={{ height: 'calc(100% - 73px)' }}>
                         {/* Search Bar */}
@@ -76,6 +89,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                         </div>
                         
                         {/* Components Button */}
+                        {docComponents && (
                         <button 
                             onClick={() => {
                                 setOpenCategory("components");
@@ -89,7 +103,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                                     <span className="capitalize font-bold text-sm">Components</span>
                                 </div>
                             </button>
-                        
+                        )}
                         {/* Categories */}
                         {categories.map((cat: string) => {
                             const hasMatchingItems = docArray
@@ -128,9 +142,9 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                                                     return (
                                                         <Link
                                                             key={item.slug}
-                                                            to={`/doc/${item.category}/${item.slug}`}
+                                                            to={`${docComponents ? "/doc/" : "/doc/learning/"}${item.category}/${item.slug}`}
                                                             onClick={() => setMenu(false)}
-                                                            className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-[1px]
+                                                            className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-1
                                                             ${fileName === item.slug 
                                                                 ? "border-purple-500 text-purple-600 font-bold" 
                                                                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"}

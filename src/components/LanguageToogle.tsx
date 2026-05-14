@@ -1,10 +1,9 @@
-import { useState } from 'react';
+import { useAppContext } from '../hooks/useAppContext';
 
 const LanguageToggle = () => {
-  const [language, setLanguage] = useState<'EN' | 'MM'>('EN');
-
+  const { language, setLanguage }= useAppContext();
   const toggleLanguage = () => {
-    setLanguage((prev) => (prev === 'EN' ? 'MM' : 'EN'));
+    setLanguage(language === 'EN' ? 'MM' : 'EN');
     // ဤနေရာတွင် i18n logic သို့မဟုတ် context state ပြောင်းလဲမှုကို ထည့်သွင်းနိုင်သည်
   };
 

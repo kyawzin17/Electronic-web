@@ -58,28 +58,29 @@ const Project = () => {
 );
 
   return (
-    <div className="space-y-16 py-10 max-w-6xl mx-auto px-8 ">
+    <div className="space-y-16 py-10 max-w-7xl mx-auto px-8 ">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      {filteredProjects.map((proj, index) => (
-        <div key={index} className="w-full bg-card border border-border rounded-[2.5rem] overflow-hidden shadow-2xl transition-transform hover:translate-y-[-8px] duration-300">
-          <div className="flex flex-col lg:flex-row">
+        <div className="w-full h-auto grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {filteredProjects.map((proj, index) => (
+        <div key={index} className="w-full bg-card border border-border rounded-2xl overflow-hidden shadow-2xl transition-transform hover:-translate-y-2 duration-300">
+          <div className="flex flex-col">
             
             {/* Image Preview Area */}
-            <div className="lg:w-1/2 relative h-60 md:h-72 lg:h-auto overflow-hidden">
+            <div className="relative h-60 overflow-hidden">
               <img 
                 src={proj.image} 
                 alt={proj.title} 
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[var(--bg-card)] to-transparent opacity-40 lg:hidden" />
+              <div className="absolute inset-0 bg-linear-to-t from-card to-transparent opacity-40 lg:hidden" />
               <div className="absolute top-6 left-6 px-4 py-1.5 bg-soft/90 text-accent backdrop-blur-md rounded-full text-xs font-bold border border-accent/90">
                 {proj.category}
               </div>
             </div>
 
             {/* Technical Info Area */}
-            <div className="lg:w-1/2 p-8 lg:p-12 space-y-4 md:space-y-6">
-              <h2 className="text-2xl md:text-3xl font-bold text-text-main tracking-tight">
+            <div className="p-4 space-y-2">
+              <h2 className="text-xl md:text-2xl font-bold text-text-main tracking-tight">
                 {proj.title}
               </h2>
               <p className="text-text-secondary leading-relaxed">
@@ -87,13 +88,13 @@ const Project = () => {
               </p>
 
               {/* Specs Table-like Grid */}
-              <div className="grid grid-cols-2 gap-4 md:gap-6 py-6 border-y border-[var(--border)]">
+              <div className="grid grid-cols-2 gap-4 md:gap-6 py-6 border-y border-(--border)">
                 <div>
-                  <p className="text-[var(--text-muted)] text-[10px] uppercase font-bold tracking-widest mb-1">Microcontroller</p>
+                  <p className="text-text-muted text-[10px] uppercase font-bold tracking-widest mb-1">Microcontroller</p>
                   <p className="font-semibold text-primary">{proj.micro}</p>
                 </div>
                 <div>
-                  <p className="text-[var(--text-muted)] text-[10px] uppercase font-bold tracking-widest mb-1">Power Req.</p>
+                  <p className="text-text-muted text-[10px] uppercase font-bold tracking-widest mb-1">Power Req.</p>
                   <p className="font-semibold text-secondary">{proj.power}</p>
                 </div>
               </div>
@@ -108,6 +109,7 @@ const Project = () => {
           </div>
         </div>
       ))}
+        </div>
     </div>
   );
 };

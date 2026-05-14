@@ -59,7 +59,7 @@ export default function MarkdownView({ markdown }: { markdown: string }) {
                             : children.type && (children.type.name === 'img' || children.type === 'img');
                         
                         if (hasImage) return <div className="my-8 flex justify-center">{children}</div>;
-                        return <p className="mb-4 text-base md:text-lg font-light font-padauk leading-[1.8]">{children}</p>;
+                        return <p className="mb-4 text-base md:text-lg font-light font-padauk leading-mm-relaxed">{children}</p>;
                     },
 
                     // ပုံများအတွက် Class သီးသန့်

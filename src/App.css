@@ -9,14 +9,6 @@
     transition: all 0.3s ease-in;
 }
 
-@keyframes change {
-    0% {
-        transform: rotate(-25deg);
-    }
-    100% {
-        transform: rotate(-20deg);
-    }
-}
 /* Wire Styling */
         .wire {
             fill: none;

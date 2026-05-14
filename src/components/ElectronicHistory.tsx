@@ -9,8 +9,6 @@ export default function ElectronicHistory() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const mmRef = useRef(null);
-  const enRef = useRef(null);
-
   useEffect(() => {
     const el = sectionRef.current;
 
@@ -43,23 +41,7 @@ export default function ElectronicHistory() {
           toggleActions: 'play none none reverse',
         },
       }
-    );
-
-    gsap.fromTo(
-      enRef.current,
-      { y: 80, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 1,
-        delay: 0.4,
-        scrollTrigger: {
-          trigger: el,
-          start: "top 72%",
-          toggleActions: 'play none none reverse',
-        },
-      }
-    );
+    )
   }, []);
 
   return (
@@ -83,7 +65,7 @@ export default function ElectronicHistory() {
                 whileHover={{ y: -10, scale: 1.03 }} 
                 transition={{ duration: 0.6, ease: "backOut"}}
             ref={mmRef}
-            className="bg-card backdrop-blur p-6 rounded-xl transition-shadow duration-300 ease-linear shadow-md hover:shadow-lg shadow-text-muted/40 hover:border-2 hover:border-text-muted/50"
+            className="bg-card p-6 rounded-xl transition-shadow duration-300 ease-linear backdrop-blur-md border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
           >
             <h3 className="text-xl font-semibold mb-4 text-secondary">
               ⚡ အီလက်ထရွန်းနစ်ပညာ၏ စတင်ပေါ်ပေါက်လာမှု

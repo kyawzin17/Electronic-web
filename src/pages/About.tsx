@@ -1,5 +1,5 @@
 
-import profile from "../image/profile.png";
+import profile from "../../public/assets/profile.webp";
 
 export default function About() {
   return (
@@ -8,7 +8,7 @@ export default function About() {
         
         {/* Hero Section */}
         <section className="text-center space-y-6">
-          <h1 className="text-5xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <h1 className="text-5xl font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
             About Red Dragon Electronic
           </h1>
           <p className="text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">

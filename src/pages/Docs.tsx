@@ -7,6 +7,7 @@ import { faChevronDown, faChevronRight, faMicrochip, faSearch } from '@fortaweso
 import RightSidebar from "../components/RightSideBar";
 import Components from "../components/Components.tsx";
 import MobileLeftSidebar from "../components/MobileLeftSidebar";
+import LearnSidebarMode from "../components/LearnSidebarMode";
 
 interface FormattedHeading {
     title: string;
@@ -15,6 +16,7 @@ interface FormattedHeading {
 
 export default function Docs() {
     const { headerHeight } = useAppContext();
+    
    const { category: activeCategory, fileName } = useParams<{ category: string; fileName: string }>(); // URL parameter ကနေ ယူမယ်၊ default က resistor
     const navigate = useNavigate();
     const [content, setContent] = useState<string>("");
@@ -26,6 +28,7 @@ export default function Docs() {
 
   useEffect(() => {
     // Markdown မှ h2 ခေါင်းစဉ်များကို ဆွဲထုတ်ခြင်း
+
     const rawHeadings = content.match(/^###\s+(.*)$/gm) || [];
     const formattedHeadings: FormattedHeading[] = rawHeadings.map(h => {
       const title = h.replace(/^###\s+/, '');
@@ -38,6 +41,7 @@ export default function Docs() {
 
     const [ openCategory, setOpenCategory ]= useState<string | null>( activeCategory || "components" ); // Sidebar category open/close state
     
+
     // Documentation list ကို အရင်ဆုံး တစ်ခါတည်း ပြင်ဆင်ထားမယ် (အနာဂတ်မှာ API ကနေ ယူနိုင်ပါတယ်)
     const docArray: {
         name: string;
@@ -249,10 +253,11 @@ export default function Docs() {
             
              <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
-            <div className="sticky bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4 py-10"
+            <div className="sticky bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
+                    <LearnSidebarMode />
                      {/* Search Bar */}
-                    <div className="w-full px-3 mb-2">
+                    <div className="w-full px-3 mb-1">
                         <div className="relative">
                             <FontAwesomeIcon 
                                 icon={faSearch} 
@@ -319,7 +324,7 @@ export default function Docs() {
                                         <Link
                                             key={item.slug}
                                             to={`/doc/${item.category}/${item.slug}`}
-                                            className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-[1px]
+                                            className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-px
                                             ${fileName === item.slug 
                                                 ? "border-purple-500 text-purple-600 font-bold" 
                                                 : "border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"}
@@ -361,7 +366,7 @@ export default function Docs() {
                                 {prevDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
-                                        className="px-2 py-1 md:px-4 md:py-2 ms-2 text-sm md:text-base md:text-lg border-1 md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-2 py-1 md:px-4 md:py-2 ms-2 text-sm md:text-base border md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         ← {prevDoc.name}
                                     </button>
@@ -371,7 +376,7 @@ export default function Docs() {
                                 {nextDoc && (
                                     <button 
                                         onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
-                                        className="px-2 py-1 md:px-4 md:py-2 me-2 text-sm md:text-base md:text-lg border-1 md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
+                                        className="px-2 py-1 md:px-4 md:py-2 me-2 text-sm md:text-base border md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         {nextDoc.name} →
                                     </button>
