@@ -22,15 +22,16 @@ const QuizComponent: React.FC<QuizProps> = ({ question, options, correctAnswer }
   };
 
   return (
-    <div className="quiz-container">
-      <h3>{question}</h3>
+    <div className="border border-border p-2 rounded-lg max-w-100 my-5 bg-card">
+
+      <h4 className="font-semibold text-text-main">{question}</h4>
       
       <select
         value={selectedValue}
         onChange={handleSelectChange}
-        className={`quiz-select ${getStatusClass()}`}
+        className={`w-full p-2.5 mt-2.5 rounded-md border border-text-secondary outline-none text-[14px] ${getStatusClass()}`}
       >
-        <option value="" disabled>အဖြေတစ်ခု ရွေးချယ်ပါ</option>
+        <option value="" disabled className="text-text-main">အဖြေတစ်ခု ရွေးချယ်ပါ</option>
         {options.map((option, index) => (
           <option key={index} value={option}>
             {option}

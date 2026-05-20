@@ -34,9 +34,9 @@ const RightSidebar = ({ headings }: { headings: Heading[] }) => {
   return (
     <aside className="sticky overflow-y-auto bg-soft hidden xl:block py-12 px-4"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
-      <h3 className="text-sm font-bold text-text-main uppercase tracking-widest mb-4">
+      <p className="text-base font-semibold text-text-main tracking-widest mb-4">
         On this page
-      </h3>
+      </p>
       <nav>
         <ul className="space-y-3 text-[13px] border-l border-slate-200 dark:border-slate-800">
           {headings.map((heading) => (

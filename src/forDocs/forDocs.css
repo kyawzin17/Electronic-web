@@ -1,39 +1,45 @@
-.quiz-container {
-  border: 1px solid #ddd;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  margin: 20px 0;
-  background-color: #fdfdfd;
+h1 {
+  color: var(--text-main);
+  font-weight: semi-bold;
+  font-size: 28px;
 }
-
-.quiz-select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
-  border: 2px solid #ccc;
-  outline: none;
-  font-size: 16px;
+h2 {
+  color: var(--text-main);
+  font-weight: semi-bold;
+  font-size: 24px;
+} 
+h3 {
+  color: var(--text-main);
+  font-weight: semi-bold;
+  font-size: 20px;
 }
-
+h4 {
+  color: var(--text-main);
+  font-weight: semi-bold;
+  font-size: 18px;
+}
+strong {
+  color: var(--text-main);
+  font-weight: semi-bold;
+  font-size: 18px;
+}
 /* မှန်ရင် ပြမယ့်အရောင် */
 .quiz-select.correct {
   border-color: #22c55e;
-  background-color: #f0fdf4;
+  background-color: var(--card);
   color: #15803d;
 }
 
 /* မှားရင် ပြမယ့်အရောင် */
 .quiz-select.incorrect {
   border-color: #ef4444;
-  background-color: #fef2f2;
+  background-color: var(--card);
   color: #b91c1c;
 }
 
 .result-text {
   margin-top: 10px;
-  font-weight: bold;
+  font-weight: semi-bold;
 }
 .text-green { color: #22c55e; }
 .text-red { color: #ef4444; }

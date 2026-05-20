@@ -64,7 +64,7 @@ useEffect(() => {
   const timer = setTimeout(() => {
     // 1. 'article' tag ထဲမှာရှိတဲ့ h3 အားလုံးကို ရှာမယ်
     // (သင့်ရဲ့ MDX content ကို article tag နဲ့ အုပ်ထားဖို့ လိုပါမယ်)
-    const headingElements = document.querySelectorAll("article h3");
+    const headingElements = document.querySelectorAll("article h2");
 
     const formattedHeadings: FormattedHeading[] = Array.from(headingElements).map((el) => {
       const title = el.textContent || "";
@@ -247,9 +247,9 @@ useEffect(() => {
             </div>
 
             {/* Main Content */}
-                    <div className="bg-bg py-6 md:py-8 lg:py-10 px-6 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen overflow-x-hidden">
+                    <div className="bg-bg/80 py-6 md:py-8 lg:py-10 px-6 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen overflow-x-hidden">
                         {ActiveComp ? 
-                        <article className="prose prose-slate max-w-none">
+                        <article className="prose prose-slate max-w-none text-md text-text-main/90">
                             <ActiveComp />
                         </article>
                          : <p>Loading or File Not Found...</p>}
@@ -284,9 +284,9 @@ useEffect(() => {
                     ?
                      <aside className="sticky overflow-y-auto bg-soft hidden xl:block py-12 px-4"
                                     style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
-                        <h3 className="text-sm font-bold text-text-main uppercase tracking-widest mb-4">
+                        <p className="text-base font-semibold text-text-main uppercase tracking-widest mb-4">
                             On this page
-                        </h3>  
+                        </p>  
                         <nav>
                             <ul className="space-y-3 text-[13px] border-l border-slate-200 dark:border-slate-800">
                             {componentsForSidebar.map((item: any) => (

@@ -23,7 +23,7 @@ export default function DocViewer({ category, fileName }: { category: string, fi
   }, [category, fileName]);
 
   return (
-    <div className="content-area">
+    <div className="content-area text-text-main">
       {ActiveComp ? <ActiveComp /> : <p>Loading or File Not Found...</p>}
     </div>
   );
