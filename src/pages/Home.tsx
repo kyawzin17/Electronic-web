@@ -107,7 +107,7 @@ const Home= forwardRef<HTMLElement>(() => {
         <section className="w-full relative z-2 transform transition duration-300">
             <HeroCircle />
              {/* Hero div */}
-            <div className="w-full flex flex-col items-center justify-center py-16 md:py-24 z-2 relative">
+            <div className="w-full flex flex-col items-center justify-center py-20 md:py-28 z-2 relative">
                     <LanguageToggle />
 
                     <div className="floating-shape absolute top-32 left-10 w-4 h-4 border border-cyan-500/50 rotate-45"></div>
@@ -124,7 +124,7 @@ const Home= forwardRef<HTMLElement>(() => {
                         <h2 className="text-3xl md:text-5xl text-shadow-lg/25 font-bold bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent mb-px md:mb-0.5">{content.EN.title}</h2>
                         <p className="text-sm md:text-base text-text-muted mb-2 md:mb-4">{content.EN.sub}</p>
                         <div className="flex gap-6 p-3">
-                            <button onClick={() => navigate("/doc/components")}
+                            <button onClick={() => navigate("/docs/doc/components")}
                                      className="px-3 py-1.5 md:px-4 md:py-2 bg-linear-to-r from-(--primary) to-(--secondary)
                                              text-bg text-base rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">{content.EN.btnPrimary}</button>
                             <button onClick={() => navigate("/project")}
@@ -185,7 +185,7 @@ const Home= forwardRef<HTMLElement>(() => {
                               buttonText="To Read"
                                buttonColor="secondary"
                                color="secondary"
-                               onButtonClick={() => navigate("/doc/components")}
+                               onButtonClick={() => navigate("/docs/doc/components")}
                              />
                 <ReadCard ref={(el) => {cardRef.current[2] = el}} icon={faLightbulb} title="Creative Projects"
                              description="ရိုးရှင်းပြီး အခြေခံကျသော Project များနှင့် အသုံးပြုမှုများစွာ ပါဝင်သော Project များ"

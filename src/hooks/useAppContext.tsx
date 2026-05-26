@@ -16,8 +16,8 @@ interface AppContext {
     setHeaderHeight: (headerHeight: number) => void;
     language: string;
     setLanguage: (language: 'EN' | 'MM') => void;
-    docComponents: boolean;
-    setDocComponents: (docComponents: boolean) => void;
+    docComponents: string;
+    setDocComponents: (docComponents: string) => void;
 }
 
 
@@ -34,6 +34,8 @@ export function useAppContext() {
 }
 
 export function AppProvider({ children } : { children: React.ReactNode}) {
+
+    const docLocalStorage= localStorage.getItem("docComponents") || "doc";
     const [login, setLogin]= useState<boolean>(false);
     const [ globalMessage, setGlobalMessage ]= useState<string>(""); //Success or warn or error 
     const [menu, setMenu]= useState<boolean>(false);                  //Menu open or close
@@ -41,7 +43,7 @@ export function AppProvider({ children } : { children: React.ReactNode}) {
     const [error, setError]= useState<boolean>(false);                //All error
     const [headerHeight, setHeaderHeight]= useState<number>(0);      //Header height for main container
     const [language, setLanguage]= useState<'EN' | 'MM'>('EN');
-      const [docComponents, setDocComponents] = useState<boolean>(true);
+    const [docComponents, setDocComponents] = useState<string>(docLocalStorage);
 
 
     return (

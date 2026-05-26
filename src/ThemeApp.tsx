@@ -6,7 +6,8 @@ import App from "./App.tsx";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Register from "./pages/Register.tsx";
-import Docs from "./pages/Docs.tsx";
+import DocLayar from "./pages/DocLayar.tsx";
+import Docs from "./pages/Doc.tsx";
 import About from "./pages/About.jsx";
 import Project from "./pages/Project.tsx";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -35,23 +36,23 @@ export default function ThemeApp() {
                     element: <About />,
                 },
                 {
-                    path: "/doc",
+                    path: "/docs",
+                    element: <DocLayar />,
+                },
+                {
+                    path: '/docs/doc/components',
                     element: <Docs />,
                 },
                 {
-                    path: '/doc/components',
+                    path: "/docs/doc/:category/:fileName?",
                     element: <Docs />,
                 },
                 {
-                    path: "/doc/:category/:fileName?",
-                    element: <Docs />,
-                },
-                {
-                    path: "/doc/learning",
+                    path: "/docs/learning",
                     element: <Learn />,
                 },
                 {
-                    path: "/doc/learning/:category/:fileName?",
+                    path: "/docs/learning/:category/:fileName?",
                     element: <Learn />,
                 },
                 {

@@ -24,7 +24,7 @@ export default function MarkdownView({ markdown }: { markdown: string }) {
   return (
     <h3 
       id={id} 
-      className="scroll-mt-24 mb-4 font-bold text-slate-900 dark:text-white/90 font-padauk"
+      className="scroll-mt-24 mb-4 font-bold text-text-main/90 font-padauk"
     >
       {children}
     </h3>
@@ -59,7 +59,7 @@ export default function MarkdownView({ markdown }: { markdown: string }) {
                             : children.type && (children.type.name === 'img' || children.type === 'img');
                         
                         if (hasImage) return <div className="my-8 flex justify-center">{children}</div>;
-                        return <p className="mb-4 text-base md:text-lg font-light font-padauk leading-mm-relaxed">{children}</p>;
+                        return <p className="mb-4 text-base lg:text-lg text-text-main/80 font-medium font-padauk leading-mm-relaxed line-height-2">{children}</p>;
                     },
 
                     // ပုံများအတွက် Class သီးသန့်

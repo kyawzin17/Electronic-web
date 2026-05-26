@@ -275,7 +275,7 @@ export default function Docs() {
                     <button 
                         onClick={() => {
                             setOpenCategory("components");
-                            navigate("/doc/components")}}
+                            navigate("/docs/doc/components")}}
                         className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all 
                             ${openCategory === "components" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}>
                                 <div className="flex items-center gap-2">
@@ -323,7 +323,7 @@ export default function Docs() {
                                     return (
                                         <Link
                                             key={item.slug}
-                                            to={`/doc/${item.category}/${item.slug}`}
+                                            to={`/docs/doc/${item.category}/${item.slug}`}
                                             className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-px
                                             ${fileName === item.slug 
                                                 ? "border-purple-500 text-purple-600 font-bold" 

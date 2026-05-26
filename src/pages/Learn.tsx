@@ -6,6 +6,7 @@ import { faChevronDown, faChevronRight, faMicrochip, faSearch } from '@fortaweso
 import RightSidebar from "../components/RightSideBar";
 import MobileLeftSidebar from "../components/MobileLeftSidebar";
 import LearnSidebarMode from "../components/LearnSidebarMode";
+import "../forDocs/forDocs.css";
 // ၁။ ဒါကို file ရဲ့ ထိပ်ဆုံးမှာ ထားပါ
 const allLessons = import.meta.glob('../learns/**/*.mdx');
 
@@ -21,7 +22,6 @@ export default function Learn() {
     
    const { category: activeCategory, fileName } = useParams<{ category: string; fileName: string | undefined }>(); // URL parameter ကနေ ယူမယ်၊ default က resistor
     const navigate = useNavigate();
-    const [content, setContent] = useState<string>("");
   const [headings, setHeadings] = useState<FormattedHeading[]>([] as FormattedHeading[]);
   const [activeId, setActiveId] = useState<string>("");
 
@@ -147,7 +147,7 @@ useEffect(() => {
   }, 500); // MDX render ကာလ
 
   return () => clearTimeout(timer);
-}, [headings, ActiveComp]); // Content ပြောင်းတိုင်း ပြန် run မယ်
+}, [ActiveComp]); // Content ပြောင်းတိုင်း ပြန် run မယ်
 
     const categories = [...new Set(learningArray.map(item => item.category))];
 
@@ -221,7 +221,7 @@ useEffect(() => {
                                     return (
                                         <Link
                                             key={item.slug}
-                                            to={`/doc/learning/${item.category}/${item.slug}`}
+                                            to={`/docs/learning/${item.category}/${item.slug}`}
                                             className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-1
                                             ${fileName === item.slug 
                                                 ? "border-purple-500 text-purple-600 font-bold" 
@@ -249,7 +249,7 @@ useEffect(() => {
             {/* Main Content */}
                     <div className="bg-bg/80 py-6 md:py-8 lg:py-10 px-6 col-span-5 lg:col-span-4 xl:col-span-3 min-h-screen overflow-x-hidden">
                         {ActiveComp ? 
-                        <article className="prose prose-slate max-w-none text-md text-text-main/90">
+                        <article className="learning prose prose-slate max-w-none text-md text-text-main/90">
                             <ActiveComp />
                         </article>
                          : <p>Loading or File Not Found...</p>}

@@ -40,7 +40,7 @@ const ReadCard= forwardRef<HTMLDivElement, PropsCard>((
         duration: 0.6,
         ease: "backOut",
       }}
-      ref={ref} className={`max-w-sm bg-card/40 backdrop-blur-md flex flex-col justify-between rounded-lg overflow-hidden shadow-md hover:shadow-lg shadow-text-muted border-3 border-border hover:border-${color} py-4 z-12`}>
+      ref={ref} className={`max-w-sm bg-card/40 backdrop-blur-md flex flex-col justify-between rounded-lg overflow-hidden shadow-md shadow-text-muted border-3 border-border hover:border-${color} py-4 z-12`}>
       {/* Icon Section */}
       
        <div className="px-4">

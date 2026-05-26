@@ -1,24 +1,24 @@
-h1 {
+.learning h1 {
   color: var(--text-main);
   font-weight: semi-bold;
   font-size: 28px;
 }
-h2 {
+.learning h2 {
   color: var(--text-main);
   font-weight: semi-bold;
   font-size: 24px;
 } 
-h3 {
+.learning h3 {
   color: var(--text-main);
   font-weight: semi-bold;
   font-size: 20px;
 }
-h4 {
+.learning h4 {
   color: var(--text-main);
   font-weight: semi-bold;
   font-size: 18px;
 }
-strong {
+.learning strong {
   color: var(--text-main);
   font-weight: semi-bold;
   font-size: 18px;

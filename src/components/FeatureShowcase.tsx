@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FaBolt, FaRobot } from 'react-icons/fa';
 import documentationImg from "../../public/assets/docImage.webp"
 import projectImg from "../../public/assets/projectImage.webp"
+import { Link } from "react-router-dom";
 // GSAP Plugin ကို Register လုပ်ခြင်း
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,7 +81,9 @@ const FeatureShowcase: React.FC = () => {
             </p>
 
             <button className="mt-4 px-6 py-3 rounded-lg border border-primary text-primary/90 font-medium hover:bg-purple-500/10 transition-colors duration-300">
-              သင်ခန်းစာများဖတ်ရန်
+              <Link to="/docs/doc/components">
+                သင်ခန်းစာများဖတ်ရန်
+              </Link>
             </button>
           </div>
 
@@ -132,7 +135,9 @@ const FeatureShowcase: React.FC = () => {
             </p>
 
             <button className="mt-4 px-6 py-3 rounded-lg border border-secondary text-secondary/90 font-medium hover:bg-cyan-500/10 transition-colors duration-300">
-              ပရောဂျက်များကြည့်ရန်
+              <Link to="/projects">
+                ပရောဂျက်များကြည့်ရန်
+              </Link>
             </button>
           </div>
 

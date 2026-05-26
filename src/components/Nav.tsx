@@ -4,13 +4,14 @@ import { motion } from 'framer-motion';
 
 export default function Nav() {
   const { pathname } = useLocation();
-
+  const docLocalStorage= localStorage.getItem("docComponents") || "/docs/doc/components";
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Doc', path: '/doc' }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
+    { name: 'Docs', path: docLocalStorage }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
     { name: 'Project', path: '/project' },
   ];
+  
 
   // လက်ရှိ URL က ဘယ် Nav အောက်မှာ ရှိနေလဲဆိုတာ စစ်ဆေးခြင်း
   const getActiveTab = () => {
@@ -31,8 +32,8 @@ export default function Nav() {
           className={({ isActive }) => `
             relative px-1 py-1 text-base font-medium transition-colors duration-300
             ${isActive || (item.path !== '/' && pathname.startsWith(item.path))
-              ? "text-[var(--primary)]" 
-              : "text-[var(--text-secondary)] hover:text-[var(--text-main)]"}
+              ? "text-primary" 
+              : "text-text-secondary hover:text-text-main"} 
           `}
         >
           {item.name}
@@ -41,7 +42,7 @@ export default function Nav() {
           {activeTab === item.name && (
             <motion.div
               layoutId="underline" // ဒါက magic ပါ၊ တူညီတဲ့ ID ရှိတဲ့ div တွေကြား animation ပြေးပေးတာပါ
-              className="absolute rounded-md left-0 right-0 bottom-0 h-[3px] bg-[var(--primary)] shadow-[0_0_10px_var(--primary-soft)]"
+              className="absolute rounded-md left-0 right-0 bottom-0 h-0.75 bg-primary shadow-[0_0_10px_var(--primary-soft)]"
               transition={{ type: "spring", stiffness: 380, damping: 30 }}
             />
           )}

@@ -84,7 +84,7 @@ export default function TrendComponents() {
                     <motion.div 
                                 whileHover={{ y: -10, scale: 1.02}} 
                                 transition={{ duration: 0.4, ease: "backOut"}} 
-                                 onClick={() => navigate("/doc/components")} 
+                                 onClick={() => navigate("/docs/doc/components")} 
                             className="relative component-card bg-card flex flex-col justify-center items-center">
                         <FontAwesomeIcon icon={faPlus}  className="text-4xl z-10 text-primary select-none cursor-pointer"/>
                         <h2 className="text-text-main text-md z-10">More to view...</h2>

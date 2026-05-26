@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-
 // Folder ထဲက .mdx file အားလုံးကို dynamic ဆွဲယူထားမယ်
 const allLessons = import.meta.glob('../learns/chapter-1/*.mdx');
 
