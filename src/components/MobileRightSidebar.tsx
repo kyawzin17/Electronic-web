@@ -47,10 +47,12 @@ export default function MobileRightSidebar() {
         };
     }, [rightMenu]);
 
+  const docLocalStorage = localStorage.getItem("docComponents") || "/docs/doc/components";
+
     const navItems = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
-    { name: 'Doc', path: '/doc' }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
+    { name: 'Doc', path: docLocalStorage }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
     { name: 'Project', path: '/project' },
   ];
   const activeClass= "px-3 py-2 rounded-md transition-all bg-slate-100 dark:bg-slate-800 text-purple-500";

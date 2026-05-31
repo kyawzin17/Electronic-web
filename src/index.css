@@ -123,6 +123,11 @@ wokwi-arduino-uno, wokwi-led, wokwi-resistor {
 
    --shadow-md: 0 4px 16px var(--text-secondary); 
 
+   --color-success: var(--success);
+   --color-warning: var(--warning);
+   --color-error: var(--error);
+   --color-info: var(--info);
+
    /* Custom Font Family သတ်မှတ်ခြင်း */
   --font-myanmar: "Noto Sans Myanmar", ui-sans-serif, system-ui;
   

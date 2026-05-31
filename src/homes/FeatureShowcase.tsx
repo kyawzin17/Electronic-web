@@ -81,7 +81,7 @@ const FeatureShowcase: React.FC = () => {
             </p>
 
             <button className="mt-4 px-6 py-3 rounded-lg border border-primary text-primary/90 font-medium hover:bg-purple-500/10 transition-colors duration-300">
-              <Link to="/docs/doc/components">
+              <Link to="/docs/learning">
                 သင်ခန်းစာများဖတ်ရန်
               </Link>
             </button>
@@ -135,7 +135,7 @@ const FeatureShowcase: React.FC = () => {
             </p>
 
             <button className="mt-4 px-6 py-3 rounded-lg border border-secondary text-secondary/90 font-medium hover:bg-cyan-500/10 transition-colors duration-300">
-              <Link to="/projects">
+              <Link to="/project">
                 ပရောဂျက်များကြည့်ရန်
               </Link>
             </button>

@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import "./Components.css";
+import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -52,14 +52,14 @@ export default function TrendComponents() {
     }, {});
 
     const components= [
-        {id: 1, name: "Arduino UNO R3", img: arduino, des: "Microcontroller Board", first: "5V", second: "ATmega328P", link: "/doc/microcontrollers/arduino" },
-        {id: 2, name: "LED", img: led, des: "Light Emitting Diode", first: "2V", second: "20mA", link: "/doc/diodes/led"},
-        {id: 3, name: "Resistor", img: resistor, des: "Limits current flow in circuits", first: "1k", second: "1/4W", link: "/doc/passives/resistor"},
+        {id: 1, name: "Arduino UNO R3", img: arduino, des: "Microcontroller Board", first: "5V", second: "ATmega328P", link: "/docs/doc/microcontrollers/arduino" },
+        {id: 2, name: "LED", img: led, des: "Light Emitting Diode", first: "2V", second: "20mA", link: "/docs/doc/diodes/led"},
+        {id: 3, name: "Resistor", img: resistor, des: "Limits current flow in circuits", first: "1k", second: "1/4W", link: "/docs/doc/passives/resistor"},
     ]
 
     return (
-        <div ref={trendRef} className="w-fit my-16 md:my-20 mx-auto px-6">
-                <h2 ref={headerRef} className="text-text-main text-3xl font-semibold mb-10 md:mb-20 border-l-4 border-secondary px-2">Trending Components</h2>
+        <div ref={trendRef} className="w-fit py-18 md:py-22 mx-auto px-6">
+                <h2 ref={headerRef} className="text-text-main text-3xl font-semibold mb-12 md:mb-18 border-l-4 border-secondary px-2">Trending Components</h2>
                 <div ref={comRef} className="flex justify-center items-center gap-4 flex-wrap w-full">
                     {
                         components.map((item) => (

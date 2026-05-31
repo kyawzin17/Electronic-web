@@ -1,5 +1,6 @@
+
 import { useEffect } from "react";
-import { useAppContext } from "../hooks/useAppContext";
+import { useAppContext } from "../../hooks/useAppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faSearch, faMicrochip, faChevronRight, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -16,7 +17,7 @@ interface MobileLeftSidebarProps {
 }
 
 const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, openCategory, setOpenCategory}: MobileLeftSidebarProps) => {
-    const { menu, setMenu, docComponents, setDocComponents } = useAppContext();
+    const { menu, setMenu } = useAppContext();
     const { category: activeCategory, fileName } = useParams<{ category: string | undefined; fileName: string }>(); // URL parameter ကနေ ယူမယ်၊ default က resistor
     const navigate = useNavigate();
     // Lock body scroll when menu is open
@@ -57,15 +58,13 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
             </div>
             <div className="w-full bg-transparent flex py-6 border-b-4 border-double border-b-text-secondary/50">
                         <button onClick={() => {
-                            setDocComponents(true);
-                            navigate("/doc/components")
-                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium ${docComponents ? "text-text-main border-text-secondary bg-text-muted/40" : " bg-transparent text-text-muted rounded-sm"}`}>
+                            navigate("/docs/doc/components")
+                        }} className="w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium bg-transparent text-text-muted rounded-sm">
                             Components
                         </button>
                         <button onClick={() => {
-                            setDocComponents(false);
-                            navigate("/doc/learning")
-                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium ${!docComponents ? "text-text-main border-text-secondary bg-text-muted/40" : " bg-transparent text-text-muted rounded-sm"}`}>
+                            navigate("/docs/learning")
+                        }} className="w-full cursor-pointer border-2 py-2 flex items-center justify-center font-medium text-text-main border-text-secondary bg-text-muted/40">
                             Learning
                         </button>
                     </div>
@@ -89,11 +88,11 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                         </div>
                         
                         {/* Components Button */}
-                        {docComponents && (
+
                         <button 
                             onClick={() => {
                                 setOpenCategory("components");
-                                navigate("/doc/components");
+                                navigate("/docs/doc/components");
                                 setMenu(false);
                             }}
                             className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all mb-2
@@ -103,7 +102,6 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                                     <span className="capitalize font-bold text-sm">Components</span>
                                 </div>
                             </button>
-                        )}
                         {/* Categories */}
                         {categories.map((cat: string) => {
                             const hasMatchingItems = docArray
@@ -142,7 +140,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                                                     return (
                                                         <Link
                                                             key={item.slug}
-                                                            to={`${docComponents ? "/doc/" : "/doc/learning/"}${item.category}/${item.slug}`}
+                                                            to={`${"/docs/learning/"}${item.category}/${item.slug}`}
                                                             onClick={() => setMenu(false)}
                                                             className={`pl-4 py-1.5 text-sm transition-all border-l-2 -ml-1
                                                             ${fileName === item.slug 

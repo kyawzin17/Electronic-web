@@ -3,8 +3,11 @@ import "./page.css";
 import { Link } from "react-router-dom";
 import { useAppContext } from "../hooks/useAppContext.tsx";
 import { motion } from "framer-motion";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 export default function Register() {
+    const navigate = useNavigate();
 
 
     const nameRef = useRef<HTMLInputElement>(null);
@@ -33,6 +36,11 @@ export default function Register() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
                 className="w-full h-screen flex flex-col justify-center items-center bg-gray-900 text-white">
+        
+            <button onClick={() => navigate("/")} className="absolute top-4 left-4 md:top-6 md:left-6">
+                <FontAwesomeIcon icon={faCircleArrowLeft} className='font-bold text-2xl md:text-3xl text-text-muted hover:-translate-y-1 hover:text-text-main cursor-pointer duration-75' />
+            </button>
+
         <div className="w-100 h-auto pb-6 bg-[#111111] rounded-lg">
             <div className="register-image">
             </div>

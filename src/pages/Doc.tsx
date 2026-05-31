@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom"; // Dynamic route အတွက်
 import { useAppContext } from "../hooks/useAppContext";
-import MarkdownView from "../components/MarkdownView";
+import MarkdownView from "../docs/MarkdownView.tsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronRight, faMicrochip, faSearch } from '@fortawesome/free-solid-svg-icons';
 import RightSidebar from "../components/RightSideBar";
-import Components from "../components/Components.tsx";
-import MobileLeftSidebar from "../components/MobileLeftSidebar";
+import Components from "../docs/Components.tsx";
+import MobileLeftSidebar from "../docs/MobileLeftSidebar.tsx";
 import LearnSidebarMode from "../components/LearnSidebarMode";
 
 interface FormattedHeading {
@@ -27,7 +27,7 @@ export default function Docs() {
   
 
   useEffect(() => {
-    // Markdown မှ h2 ခေါင်းစဉ်များကို ဆွဲထုတ်ခြင်း
+    // Markdown မှ h3 ခေါင်းစဉ်များကို ဆွဲထုတ်ခြင်း
 
     const rawHeadings = content.match(/^###\s+(.*)$/gm) || [];
     const formattedHeadings: FormattedHeading[] = rawHeadings.map(h => {
@@ -365,7 +365,7 @@ export default function Docs() {
                             <div>
                                 {prevDoc && (
                                     <button 
-                                        onClick={() => navigate(`/doc/${prevDoc.category}/${prevDoc.slug}`)}
+                                        onClick={() => navigate(`/docs/doc/${prevDoc.category}/${prevDoc.slug}`)}
                                         className="px-2 py-1 md:px-4 md:py-2 ms-2 text-sm md:text-base border md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         ← {prevDoc.name}
@@ -375,7 +375,7 @@ export default function Docs() {
                             <div>
                                 {nextDoc && (
                                     <button 
-                                        onClick={() => navigate(`/doc/${nextDoc.category}/${nextDoc.slug}`)}
+                                        onClick={() => navigate(`/docs/doc/${nextDoc.category}/${nextDoc.slug}`)}
                                         className="px-2 py-1 md:px-4 md:py-2 me-2 text-sm md:text-base border md:border-2 border-text-main text-text-main rounded-lg shadow hover:bg-text-main hover:text-bg transition-all"
                                     >
                                         {nextDoc.name} →

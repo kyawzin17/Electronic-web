@@ -67,7 +67,7 @@ export default function ElectronicsInfoSection() {
   return (
     <section
       ref={sectionRef}
-      className="bg-bg text-text-main py-4 md:py-20 px-6 md:px-12 font-padauk"
+      className="bg-bg text-text-main py-16 md:py-20 px-6 md:px-12 font-padauk"
     >
       <div className="max-w-6xl mx-auto">
         {/* Title */}

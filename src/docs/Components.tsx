@@ -38,37 +38,37 @@ export default function Components() {
     // ]
 
     const passives= [
-            { name: "Resistor", url: Resistor, link: "/doc/passives/resistor", about: "Limit Current and Voltage Division", des: "Values: 100Ω, 1kΩ, 10kΩ, 1/4W" },
-            { name: "Capacitor", url: Capacitor, link: "/doc/passives/capacitor", about: "Energy Storage, Filtering and Coupling", des: "Values: 10uF, 0.1uF, 22pF" },
-            { name: "Diode", url: Diode, link: "/doc/passives/diode", about: "One-way Current Flow (Rectification)", des: "Models: 1N4007, 1N4148" },
-            { name: "Inductor", url: Inductor, link: "/doc/passives/inductor", about: "Magnetic Energy Storage and RF Filtering", des: "Values: 10uH, 100uH, 1mH" },
+            { name: "Resistor", url: Resistor, link: "/docs/doc/passives/resistor", about: "Limit Current and Voltage Division", des: "Values: 100Ω, 1kΩ, 10kΩ, 1/4W" },
+            { name: "Capacitor", url: Capacitor, link: "/docs/doc/passives/capacitor", about: "Energy Storage, Filtering and Coupling", des: "Values: 10uF, 0.1uF, 22pF" },
+            { name: "Diode", url: Diode, link: "/docs/doc/passives/diode", about: "One-way Current Flow (Rectification)", des: "Models: 1N4007, 1N4148" },
+            { name: "Inductor", url: Inductor, link: "/docs/doc/passives/inductor", about: "Magnetic Energy Storage and RF Filtering", des: "Values: 10uH, 100uH, 1mH" },
     ]
 
     const diodes= [
-            { name: "LED", url: Led, link: "/doc/diodes/led", about: "Visual Indicators and Illumination", des: "Colors: Red, Green, Blue, RGB" },
-            { name: "Photodiode", url: PhotoDiode, link: "/doc/diodes/photo", about: "Light Detection", des: "Usage: IR Receivers, Lux Meters" },
+            { name: "LED", url: Led, link: "/docs/doc/diodes/led", about: "Visual Indicators and Illumination", des: "Colors: Red, Green, Blue, RGB" },
+            { name: "Photodiode", url: PhotoDiode, link: "/docs/doc/diodes/photo", about: "Light Detection", des: "Usage: IR Receivers, Lux Meters" },
     ]
 
     const transistors= [
-            { name: "BJT Transistor",url: BjtTransistor, link: "/doc/transistors/bipolarJunction", about: "Switching and Signal Amplification", des: "Models: BC547 (NPN), BC557 (PNP)" },
-            { name: "MOSFET", url: Mosfet, link: "/doc/transistors/mosfet", about: "High-speed Power Switching", des: "Models: IRF540N, 2N7000" },
+            { name: "BJT Transistor",url: BjtTransistor, link: "/docs/doc/transistors/bipolarJunction", about: "Switching and Signal Amplification", des: "Models: BC547 (NPN), BC557 (PNP)" },
+            { name: "MOSFET", url: Mosfet, link: "/docs/doc/transistors/mosfet", about: "High-speed Power Switching", des: "Models: IRF540N, 2N7000" },
     ]
 
     const analogIcs= [
-            { name: "Voltage Regulator", url: Vreg, link: "/doc/analogIc/voltageRegulator", about: "Stable Power Supply Output", des: "Models: 7805 (5V), LM1117 (3.3V)" },
-            { name: "555 Timer", url: Ic, link: "/doc/analogIc/555Timer", about: "Pulse Generation and Timing", des: "Modes: Astable, Monostable" },
-            { name: "Operational Amplifier", url: OAmpfil, link: "/doc/analogIc/operationalAmplifier", about: "Signal Conditioning and Math Ops", des: "Models: LM358, UA741" },
+            { name: "Voltage Regulator", url: Vreg, link: "/docs/doc/analogIc/voltageRegulator", about: "Stable Power Supply Output", des: "Models: 7805 (5V), LM1117 (3.3V)" },
+            { name: "555 Timer", url: Ic, link: "/docs/doc/analogIc/555Timer", about: "Pulse Generation and Timing", des: "Modes: Astable, Monostable" },
+            { name: "Operational Amplifier", url: OAmpfil, link: "/docs/doc/analogIc/operationalAmplifier", about: "Signal Conditioning and Math Ops", des: "Models: LM358, UA741" },
     ]
 
     const microcontrollers= [
-         { name: "Arduino UNO", url: Arduino, link: "/doc/microcontrollers/arduino", about: "Something, arduino use to write code with ide", des: "Models: R3, uno board"},    ]
+         { name: "Arduino UNO", url: Arduino, link: "/docs/doc/microcontrollers/arduino", about: "Something, arduino use to write code with ide", des: "Models: R3, uno board"},    ]
 
     const interfaces= [
-        { name: "Relay", url: Relay, link: "/doc/interfaces/relay", about: "Low Power controls High Power AC/DC", des: "Coil: 5V, 12V | Load: 10A" },
+        { name: "Relay", url: Relay, link: "/docs/doc/interfaces/relay", about: "Low Power controls High Power AC/DC", des: "Coil: 5V, 12V | Load: 10A" },
     ]
    
     const protections= [
-        { name: "Fuse", url: Fuse, link: "/doc/protections/fuse", about: "Overcurrent Protection", des: "Types: Glass, Resettable (PTC)" },
+        { name: "Fuse", url: Fuse, link: "/docs/doc/protections/fuse", about: "Overcurrent Protection", des: "Types: Glass, Resettable (PTC)" },
     ]
 
 const ComponentsCard= ({header, array}: {header: string, array: any[]}) => {
@@ -106,7 +106,7 @@ const ComponentsCard= ({header, array}: {header: string, array: any[]}) => {
                         {/* Corner Accent (Optional for extra detail) */}
                         <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-purple-500/50 rounded-tl-xl"></div>
                     </div>
-                        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div>
+                        <div className="h-0.5 w-full bg-linear-to-r from-transparent via-primary to-transparent opacity-30"></div>
                 </div>
              )
             )}

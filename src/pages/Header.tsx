@@ -5,8 +5,8 @@ import { Link, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faBars, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { useAppContext } from "../hooks/useAppContext";
-import Nav from "./Nav";
-import ThemeButton from "./ThemeButton";
+import Nav from "../headers/Nav";
+import ThemeButton from "../headers/ThemeButton";
 
 export default function Header() {
   

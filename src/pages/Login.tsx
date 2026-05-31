@@ -1,11 +1,14 @@
 import React, { useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./page.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Login() {
-
+    const navigate = useNavigate();
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -24,6 +27,10 @@ export default function Login() {
             initial={{ opacity: 0, y: 30 }} 
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}  className="w-full h-screen flex flex-col justify-center items-center bg-gray-900 text-white px-12">
+
+            <button onClick={() => navigate("/")} className="absolute top-4 left-4 md:top-6 md:left-6">
+                <FontAwesomeIcon icon={faCircleArrowLeft} className='font-bold text-2xl md:text-3xl text-text-muted hover:-translate-y-1 hover:text-text-main cursor-pointer duration-75' />
+            </button>
             <div className="w-100 h-auto pb-6 bg-[#111111] rounded-lg">
                 <div className="login-image">
 

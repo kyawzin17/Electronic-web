@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './forDocs.css'; // အပေါ်က css ကို လှမ်းခေါ်မယ်
+import '../../docs/forDocs.css'; // အပေါ်က css ကို လှမ်းခေါ်မယ်
 
 interface QuizProps {
   question: string;
