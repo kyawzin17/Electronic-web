@@ -18,7 +18,7 @@ export default function ThemeSwitcher() {
       {/* Main Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:ring-2 ring-blue-500 transition-all flex items-center justify-center min-w-[40px]"
+        className="p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:ring-2 ring-blue-500 transition-all flex items-center justify-center min-w-10"
       >
         {currentTheme === 'light' && <FontAwesomeIcon icon={faSun} className="text-orange-500 text-lg" />}
         {currentTheme === 'dark' && <FontAwesomeIcon icon={faMoon} className="text-blue-400 text-lg" />}

@@ -55,7 +55,7 @@ export default function Header() {
         
       <div className="flex gap-4 items-center ">
         <button className={`bg-primary hidden lg:block px-4 py-2 rounded-lg shadow hover:bg-primary/80 transition duration-100 ${login ? "hidden" : "block"}`}>
-            <Link to="/login" className="text-white font-serif font-semibold">
+            <Link to="/auth" className="text-white font-serif font-semibold">
               Login
             </Link>
         </button>

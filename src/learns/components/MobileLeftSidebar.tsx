@@ -92,14 +92,14 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                         <button 
                             onClick={() => {
                                 setOpenCategory("components");
-                                navigate("/docs/doc/components");
+                                navigate("/docs/learning");
                                 setMenu(false);
                             }}
                             className={`flex items-center justify-between w-full px-3 py-2 rounded-md transition-all mb-2
                                 ${openCategory === "components" ? "bg-slate-100 dark:bg-slate-800 text-purple-500" : "text-text-secondary hover:bg-slate-50 dark:hover:bg-slate-900"}`}>
                                 <div className="flex items-center gap-2">
                                     <FontAwesomeIcon icon={faMicrochip} size="xs" />
-                                    <span className="capitalize font-bold text-sm">Components</span>
+                                    <span className="capitalize font-bold text-sm">Introduction</span>
                                 </div>
                             </button>
                         {/* Categories */}

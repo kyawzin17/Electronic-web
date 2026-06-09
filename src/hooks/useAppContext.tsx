@@ -1,5 +1,15 @@
 import React, { createContext, useContext, useState } from "react";
 
+// ၁။ ပထမဦးဆုံး Object ထဲမှာပါမယ့် Data Type ကို သတ်မှတ်ပါမယ်
+interface UserType {
+  name: string;
+  email: string;
+  avatarUrl: string;
+  role: string;
+  createAt: string;
+  updateAt: string;
+}
+
 
 interface AppContext {
     login: boolean;
@@ -18,6 +28,8 @@ interface AppContext {
     setLanguage: (language: 'EN' | 'MM') => void;
     docComponents: string;
     setDocComponents: (docComponents: string) => void;
+    user: UserType | null;
+    setUser: React.Dispatch<React.SetStateAction<UserType | null>>; // state ပြင်မယ့် function type
 }
 
 
@@ -44,10 +56,11 @@ export function AppProvider({ children } : { children: React.ReactNode}) {
     const [headerHeight, setHeaderHeight]= useState<number>(0);      //Header height for main container
     const [language, setLanguage]= useState<'EN' | 'MM'>('EN');
     const [docComponents, setDocComponents] = useState<string>(docLocalStorage);
+    const [user, setUser]= useState<UserType | null>(null);
 
 
     return (
-        <Context.Provider value={{ login, setLogin, globalMessage, setGlobalMessage, menu, setMenu, rightMenu, setRightMenu, error, setError, headerHeight, setHeaderHeight, language, setLanguage, docComponents, setDocComponents }}>
+        <Context.Provider value={{ login, setLogin, globalMessage, setGlobalMessage, menu, setMenu, rightMenu, setRightMenu, error, setError, headerHeight, setHeaderHeight, language, setLanguage, docComponents, setDocComponents, user, setUser }}>
             {children}
         </Context.Provider>
     )

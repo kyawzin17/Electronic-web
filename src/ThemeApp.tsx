@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App.tsx";
 import Home from "./pages/Home.tsx";
-import Login from "./pages/Login.tsx";
-import Register from "./pages/Register.tsx";
+import Login from "./registerAndLogin/Login.tsx";
+import Register from "./registerAndLogin/Register.tsx";
 import DocLayar from "./pages/DocLayar.tsx";
 import Docs from "./pages/Doc.tsx";
 import About from "./pages/About.jsx";
@@ -16,11 +16,15 @@ import Request from "./support/Request.tsx";
 import Report from "./support/Report.tsx";
 import Privacy from "./support/Privacy";
 import Learn from "./pages/Learn.tsx";
+import Auth from "./registerAndLogin/Auth.tsx";
+import EditProfile from "./pages/EditProfile.tsx";
+import OtpFill from "./registerAndLogin/OtpFill.tsx";
+import PasswordFill from "./registerAndLogin/PasswordFill.tsx";
+
 import { AppProvider } from "./hooks/useAppContext.tsx";
 
 
 export default function ThemeApp() {
-
 
     const router= createBrowserRouter([
         {
@@ -66,12 +70,30 @@ export default function ThemeApp() {
             ]
         },
         {
-            path: "/login",
-            element: <Login />,
+            path: "/auth",
+            element: <Auth />,
+            children: [
+                {
+                    path: "/auth",
+                    element: <Login />,
+                },
+                {
+                    path: "/auth/register",
+                    element: <Register />
+                },
+                {
+                    path: "/auth/otp-fill",
+                    element: <OtpFill />
+                },
+                {
+                    path: "/auth/password-fill",
+                    element: <PasswordFill />
+                }
+            ]
         },
         {
-            path: "/register",
-            element: <Register />
+            path: "/edit-profile",
+            element: <EditProfile />
         },
         { 
             path: "/contact",

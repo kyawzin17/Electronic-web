@@ -4,7 +4,7 @@
     background-image: url("../../public/assets/forLogin.webp");
     background-size: cover;
     background-position: center;
-    box-shadow: inset 0 -70px 100px #111111;
+    box-shadow: inset 0 -20px 40px var(--bg);
     border-radius: 8px;
 }
 .register-image {
@@ -14,7 +14,8 @@
     background-image: url("../../public/assets/forRegister.webp");
     background-size: cover;
     background-position: center;
-    box-shadow: inset 0 -89px 80px #111111;
+    box-shadow: inset 0 -20px 40px var(--bg);
+    border-radius: 8px;
 }
 
 @keyframes change {

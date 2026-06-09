@@ -20,6 +20,7 @@
     "@mdx-js/rollup": "^3.1.1",
     "@monaco-editor/react": "^4.7.0",
     "@react-icons/all-files": "^4.1.0",
+    "@react-oauth/google": "^0.13.5",
     "@tailwindcss/vite": "^4.2.0",
     "@wokwi/elements": "^1.9.2",
     "avr8js": "^0.21.0",

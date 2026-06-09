@@ -4,9 +4,12 @@ import './index.css'
 import ThemeApp from './ThemeApp.js'
 import '@wokwi/elements';
 import 'katex/dist/katex.min.css'
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-   <ThemeApp />
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <ThemeApp />
+    </GoogleOAuthProvider>
   </StrictMode>,
 )

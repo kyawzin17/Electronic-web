@@ -150,7 +150,7 @@ const Home= forwardRef<HTMLElement>(() => {
             </div>
 
             {/* Image */}
-            <div ref={imageRef} className="w-full h-auto relative mt-12 z-10" >
+            <div ref={imageRef} className="w-full hidden md:block h-auto relative mt-12 z-10" >
                 <img src={Legent} className="w-full min-w-100 relative left-[50%] translate-x-[-50%] h-auto" />
                 {language === 'EN' ? 
                             <p className="font-extrabold w-full text-md md:text-2xl font-serif text-white/90 text-center absolute top-[5%] text-shadow-amber-200">The Legends of Electricity</p>
