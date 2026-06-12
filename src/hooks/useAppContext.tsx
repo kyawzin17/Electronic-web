@@ -2,12 +2,16 @@ import React, { createContext, useContext, useState } from "react";
 
 // ၁။ ပထမဦးဆုံး Object ထဲမှာပါမယ့် Data Type ကို သတ်မှတ်ပါမယ်
 interface UserType {
+    id: number;
   name: string;
   email: string;
+  bio: string;
+  hobby: string;
+  gender: string;
   avatarUrl: string;
   role: string;
-  createAt: string;
-  updateAt: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 

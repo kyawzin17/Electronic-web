@@ -24,8 +24,7 @@ export default function Register() {
             return false;
         }
         try {
-            const apiUrl = import.meta.env.VITE_API_URL + "http://localhost:3335";
-            const response = await fetch(`${apiUrl}/api/otp`, {
+            const response = await fetch("http://localhost:3335/api/otp", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -44,7 +43,7 @@ export default function Register() {
             const data= await response.json();
             setGlobalMessage("Register success!");
             localStorage.setItem("otpEmail", data?.email || '');
-            navigate("/otp-fill");
+            navigate("/auth/otp-fill", {state: {email: email, name: name}});
             setLogin(true);
         } catch (error) {
             console.error("Register error:", error);

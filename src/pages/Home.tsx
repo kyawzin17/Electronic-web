@@ -23,6 +23,8 @@ import TrendComponents from "../homes/TrendComponents.tsx";
 import ElectronicsInfoSection from "../homes/ElectronicsInfoSection.tsx";
 import ElectronicHistory from "../homes/ElectronicHistory.tsx";
 import { useAppContext } from "../hooks/useAppContext.tsx";
+import { useEffect } from "react";
+import { autoLoginService } from "../registerAndLogin/services/auth.ts";
 
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -50,6 +52,26 @@ const Home= forwardRef<HTMLElement>(() => {
     const cardRef= useRef<{ [key: string]: HTMLElement | null }>({}); 
     const imageRef= useRef<HTMLDivElement>(null);
     const {language}= useAppContext();
+    const { setUser, setLogin }= useAppContext();
+
+    useEffect(() => {
+        const checkUserAuth = async () => {
+          const authData = await autoLoginService();
+          
+          if (authData) {
+            // Backend က User ရှိတယ်လို့ ပြောရင် State ထဲ ထည့်မယ်
+            console.log("This user:", authData.noPassword);
+            setUser(authData.noPassword as any);
+            setLogin(true);
+          } else {
+            // Token မရှိရင် သို့မဟုတ် သက်တမ်းကုန်ရင် Login Page သို့ လွှတ်နိုင်သည်
+            // ဥပမာ - window.location.href = "/login";
+            setLogin(false);
+          }
+        };
+    
+        checkUserAuth();
+      }, []);
 
    useGSAP(() => {
     const tl= gsap.timeline({

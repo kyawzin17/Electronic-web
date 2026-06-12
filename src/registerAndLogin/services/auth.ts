@@ -4,12 +4,16 @@ interface UserData {
   id: string;
   name: string;
   email: string;
+  hobby: string;
+  gender: string;
+  bio: string;
+  createdAt: string;
   role: string;
 }
 
 interface AuthResponse {
   success: boolean;
-  user: UserData;
+  noPassword: UserData;
   token: string;
 }
 

@@ -13,7 +13,7 @@ export default function Login() {
     const navigate = useNavigate();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const { setUser }= useAppContext()
+    const { setUser, setLogin }= useAppContext()
     
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -43,8 +43,9 @@ export default function Login() {
                 const data = await response.json();
                 localStorage.setItem("token", data.token); // Store the token in localStorage
                 console.log(data);
-                setUser(data.user || []);
-                navigate("/auth");
+                setLogin(true);
+                setUser(data.noPassword || []);
+                navigate("/auth/profile");
             } else {
                 console.error("Login failed");
                 alert("Login failed");

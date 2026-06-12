@@ -10,7 +10,7 @@ import ThemeButton from "../headers/ThemeButton";
 
 export default function Header() {
   
-    const { menu, setMenu, rightMenu, setRightMenu, login, setHeaderHeight }= useAppContext();    
+    const { menu, setMenu, rightMenu, setRightMenu, login, user, setHeaderHeight }= useAppContext();    
     const headerRef= useRef<HTMLElement | null>(null);
     const location= useLocation();
     const isDocActive= location.pathname.startsWith('/doc');
@@ -54,16 +54,24 @@ export default function Header() {
       </div>
         
       <div className="flex gap-4 items-center ">
+        { login ?
+              <Link to="/auth/profile">
+                  <div className="w-12 h-12 cursor-pointer rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
+                  {user ? (
+                    <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    user!.name.charAt(0).toUpperCase()
+                  )}
+                </div>
+              </Link>
+            :
         <button className={`bg-primary hidden lg:block px-4 py-2 rounded-lg shadow hover:bg-primary/80 transition duration-100 ${login ? "hidden" : "block"}`}>
-            <Link to="/auth" className="text-white font-serif font-semibold">
+            <Link to="/auth/login" className="text-white font-serif font-semibold">
               Login
             </Link>
         </button>
-        <div className={`w-px h-8 border hidden lg:block border-(--text-main) rounded-2xl mx-px ${login ? "hidden" : "block"}`}></div>
-
+}        <div className={`w-px h-8 font-semibold font-serif border border-(--text-primary) rounded-2xl mx-px" : "hidden"}`}></div>
       <ThemeButton />
-        <div className={`w-px h-8 font-semibold font-serif border border-(--text-primary) rounded-2xl mx-px ${login ? "block" : "hidden"}`}></div>
-
         <button 
           className="cursor-pointer block lg:hidden"
           onClick={() => {

@@ -17,9 +17,10 @@ import Report from "./support/Report.tsx";
 import Privacy from "./support/Privacy";
 import Learn from "./pages/Learn.tsx";
 import Auth from "./registerAndLogin/Auth.tsx";
-import EditProfile from "./pages/EditProfile.tsx";
+import EditProfile from "./registerAndLogin/EditProfile.tsx";
 import OtpFill from "./registerAndLogin/OtpFill.tsx";
 import PasswordFill from "./registerAndLogin/PasswordFill.tsx";
+import UserProfile from "./registerAndLogin/UserProfile.tsx";
 
 import { AppProvider } from "./hooks/useAppContext.tsx";
 
@@ -74,7 +75,11 @@ export default function ThemeApp() {
             element: <Auth />,
             children: [
                 {
-                    path: "/auth",
+                    path: "/auth/profile",
+                    element: <UserProfile />
+                },
+                {
+                    path: "/auth/login",
                     element: <Login />,
                 },
                 {
@@ -88,12 +93,12 @@ export default function ThemeApp() {
                 {
                     path: "/auth/password-fill",
                     element: <PasswordFill />
+                },
+                {
+                    path: "/auth/editprofile",
+                    element: <EditProfile />
                 }
             ]
-        },
-        {
-            path: "/edit-profile",
-            element: <EditProfile />
         },
         { 
             path: "/contact",

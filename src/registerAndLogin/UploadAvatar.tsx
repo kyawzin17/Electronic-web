@@ -1,20 +1,15 @@
 import { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router";
 import { useAppContext } from "../hooks/useAppContext";
-import { FaPencilAlt } from "react-icons/fa";
-import { ArrowLeft } from 'lucide-react';
 
 
 
-const Profile = () => {
+const UploadAvatar = () => {
   const { user } = useAppContext();
   
-  const navigate= useNavigate();
-
   const [isUploading, setIsUploading] = useState(false);
   const [update, setUpdate] = useState(false);
-  const { setUser, setLogin }= useAppContext()
-
+  const [preview, setPreview]= useState<string>("");
+  const [previewUpdate, setPreviewUpdate]= useState<boolean>(false);
   // 🛠️ Manual Crop & Zoom အတွက် လိုအပ်သော States များ
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
   const [zoom, setZoom] = useState<number>(1);
@@ -117,8 +112,10 @@ const Profile = () => {
 
         if (response.ok) {
           alert("Profile ပုံ ပြောင်းလဲပြီးပါပြီ။");
+          const data= await response.json();
+          setPreview(data.data);
+          setPreviewUpdate(true);
           setUpdate(false);
-          
           // 💡 မူလဖိုင်ဟောင်းတွေကို Memory ထဲကနေ လုံးဝဖျက်ထုတ်ပစ်လိုက်တဲ့ အပိုင်း (State Reset)
           setImageObj(null);
         } else {
@@ -133,36 +130,9 @@ const Profile = () => {
     }, "image/webp", 0.85); // 👈 အဓိကအချက်: "image/webp" ပြောင်းပြီး Quality ကို 85% (0.85) အဖြစ် Compress လုပ်လိုက်တာပါ
   };
 
-  // ၅။ Facebook Bio အတွက် လုပ်ဆောင်ချက်များ
-  const [isEditing, setIsEditing] = useState(false);
-  const [bioText, setBioText] = useState(user!.bio || "");
-  const [savedBio, setSavedBio] = useState(user!.bio || "");
-  const CHARACTER_LIMIT = 101;
 
-  const handleSaveBio = async () => {
-    setSavedBio(bioText);
-    setIsEditing(false);
-    try {
-      const response = await fetch(`http://localhost:3335/api/profile_bio/${user!.id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bio: bioText }),
-      });
-      const data = await response.json();
-      if (data.success) {
-        alert("Bio updated successfully!");
-      } else {
-        alert(data.message || "Bio update failed");
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
-  const handleCancelBio = () => {
-    setBioText(savedBio);
-    setIsEditing(false);
-  };
+
 
   if (user) {
     user.createdAt = user.createdAt?.split("T")[0];
@@ -170,31 +140,23 @@ const Profile = () => {
   }
 
   return (
-    <div className="w-full h-auto relative bg-bg select-none">
-      <div className="max-w-2xl border-x-2 border-border h-full px-6 md:px-12 py-18 flex flex-col items-center mx-auto relative">
-          <div className="w-full h-auto flex justify-between items-center px-4 absolute left-0 top-6">
-            <button 
-            type="button"
-            className="p-2 hover:bg-text-muted/40 rounded-full transition-colors duration-200"
-            onClick={() => navigate("/")}
-          >
-            <ArrowLeft className="w-6 h-6 text-text-secondary" />
-          </button>
-            <button onClick={() => navigate("/auth/editprofile")} className="flex cursor-pointer px-2 py-1 bg-soft/80 hover:bg-soft rounded-lg border-2 border-border">
-                  <FaPencilAlt className="text-lg text-text-main/90 hover:-translate-y-1 hover:text-text-main cursor-pointer duration-75" />
-                  <span className="text-md ml-1 font-medium text-text-main/90">Edit Profile</span>
-            </button>
-          </div>
+    <div className="w-full h-auto rounded-b-xl relative bg-bg select-none">
+      <div className="max-w-2xl h-full px-6 md:px-12 py-18 flex flex-col items-center mx-auto relative">
           {/* Profile Image View Area */}
           <div className="relative group mb-2">
-            <div className="w-26 h-26 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
+            {!previewUpdate ?
+            <div className="w-30 h-30 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
               {user ? (
                 <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
                 user!.name.charAt(0).toUpperCase()
               )}
             </div>
-
+            :
+            <div className="w-30 h-30 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
+                <img src={preview} alt="Avatar" className="w-full h-full object-cover" />
+            </div>
+            }
             {/* Camera Button */}
             <button
               onClick={() => fileInputRef.current?.click()}
@@ -208,91 +170,6 @@ const Profile = () => {
             </button>
 
             <input type="file" ref={fileInputRef} onChange={handleFileChange} accept="image/*" className="hidden" />
-          </div>
-
-          <div className="mb-4">
-            <div className="w-full h-auto flex justify-center items-center mt-4">
-              <h2 className="text-2xl md:text-3xl text-text-main font-extrabold font-serif">{user!.name}</h2>
-            </div>
-            <div className="w-full h-auto flex justify-center items-center mb-4">
-              <p className="text-base md:text-md font-medium font-serif text-text-secondary">{user!.email}</p>
-            </div>
-          </div>
-
-          {/* Facebook Style Bio Section */}
-          <div className="w-full bg-card p-4 rounded-xl border border-border mb-4">
-            {isEditing ? (
-              <div className="flex flex-col items-center w-full">
-                <textarea
-                  value={bioText}
-                  onChange={(e) => setBioText(e.target.value.slice(0, CHARACTER_LIMIT))}
-                  placeholder="သင့်အကြောင်း အကျဉ်းချုပ် ရေးပေးပါ..."
-                  className="w-full p-3 text-sm text-center bg-transparent text-text-main rounded-lg border border-border focus:outline-none focus:border-blue-500 resize-none h-20"
-                />
-                <div className="w-full text-right text-xs text-text-secondary mt-1">
-                  ကျန်ရှိစာလုံးရေ: {CHARACTER_LIMIT - bioText.length} လုံး
-                </div>
-                <div className="flex gap-2 mt-3 justify-end w-full text-xs">
-                  <button onClick={handleCancelBio} className="px-4 py-2 bg-transparent border border-border hover:bg-secondary text-text-secondary hover:text-bg rounded-md transition">
-                    Cancel
-                  </button>
-                  <button onClick={handleSaveBio} className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-md transition">
-                    Save
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="text-center relative py-2">
-                {savedBio ? (
-                  <p className="text-sm text-text-main italic">"{savedBio}"</p>
-                ) : (
-                  <p className="text-sm text-zinc-500 italic">Bio မရှိသေးပါ</p>
-                )}
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="absolute -bottom-4 -right-4 hover:bg-text-secondary px-2 py-2 rounded-md transition text-text-main text-xl hover:text-bg font-medium"
-                >
-                  {/* {savedBio ? "Edit Bio" : "Add Bio"} */}
-                  <FaPencilAlt />
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* User Details Info */}
-          <div className="w-full h-auto mt-6 md:mt-8">
-            <h2 className="text-text-main font-serif font-semibold mb-6 text-2xl">User Account Information!</h2>
-            <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Role: </span>
-              <p className="text-base font-serif text-text-main/90 lowercase first-letter:uppercase">{user!.role}</p>
-            </div>
-            <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Hobby: </span>
-              <p className="text-base font-serif text-text-main/90 lowercase first-letter:uppercase">{user!.hobby}</p>
-            </div>
-            <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Gender: </span>
-              <p className="text-base font-serif text-text-main/90 lowercase first-letter:uppercase">{user!.gender}</p>
-            </div>
-            <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Create Time: </span>
-              <p className="text-base font-serif text-warning">{user!.createdAt}</p>
-            </div>
-            <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Update Time: </span>
-              <p className="text-base font-serif text-success">{user!.updatedAt}</p>
-            </div>
-            <div className="w-full h-px bg-text-secondary my-6"></div>
-            <div className="w-full h-auto flex justify-end">
-                <button onClick={() => {
-                  localStorage.removeItem("token");
-                  setUser(null);
-                  navigate("/")
-                  setLogin(false);
-                }} className="px-3 py-1.5 mt-4 cursor-pointer bg-error rounded-lg border-2 border-border text-text-main hover:text-bg font-bold font-serif text-md">
-                  Logout!
-                </button>
-            </div>
           </div>
       </div>
 
@@ -360,4 +237,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default UploadAvatar;
