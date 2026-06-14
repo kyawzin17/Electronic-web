@@ -1,11 +1,12 @@
 import React, { useState, } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  ArrowLeft, Edit2, Lock, Trash2, ChevronDown, Check 
+   Edit2, Trash2, ChevronDown, Check 
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../hooks/useAppContext';
 import UploadAvatar from './UploadAvatar';
+import { toast } from "react-hot-toast";
 
 
 export default function EditProfile() {
@@ -15,13 +16,17 @@ export default function EditProfile() {
   const { user, setUser }= useAppContext();
   const [isHobbyOpen, setIsHobbyOpen] = useState(false);
   const [isGenderOpen, setIsGenderOpen] = useState(false);
-
+  const [bioText, setBioText] = useState(user!.bio || "");
+  const CHARACTER_LIMIT = 101;
   const hobbies = ['Electronics', 'Coding', 'Robotics', 'Physics'];
   const genders = ['Male', 'Female', 'Rather not say'];
+    const api=import.meta.env.VITE_API_URL_PRODUCTION;
+  const [isDeleteAccountOpen, setIsDeleteAccountOpen] = useState(false);
 
   // Form Handlers
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    setBioText(e.target.value.slice(0, CHARACTER_LIMIT));
     setUser((prev: any) => ({ ...prev, [name]: value }));
   };
 
@@ -35,7 +40,7 @@ export default function EditProfile() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-        const response = await fetch(`http://localhost:3335/api/edit_user/${user!.id}`, {
+        const response = await fetch(`${api}/edit_user/${user!.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
@@ -48,20 +53,37 @@ export default function EditProfile() {
         const data= await response.json();
         console.log("edit user", data);
         setUser(data);
-        alert('Changes saved successfully!');
+        toast.success("Changes saved successfully", {
+            duration: 4000, 
+            style: {
+              fontFamily: 'sans-serif',
+              borderRadius: '12px',
+              background: '#333',
+              color: '#fff',
+            },
+          });
         navigate("/auth/profile");
     } catch (error) {
         console.error('Error saving changes:', error);
         alert('Failed to save changes. Please try again.');
+        toast.error("Failed to save changes. Please try again.", {
+            duration: 4000, 
+            style: {
+              fontFamily: 'sans-serif',
+              borderRadius: '12px',
+              background: '#333',
+              color: '#fff',
+            },
+          });
         return;
     }
   };
 
-  // Handler for deactivating account
+  // * Handler for deactivating account
   const handlerDeactiveAccount= async () => {
 
     try {
-        const response= await fetch(`http://localhost:3335/api/delete_account/${user!.id}`, {
+        const response= await fetch(`${api}/user_delete/${user!.id}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"
@@ -71,14 +93,31 @@ export default function EditProfile() {
         throw new Error("Failed to delete user profile");
     }
     setUser(null);
-    alert('Account deleted successfully!');
+    toast.success("Account deleted successfully", {
+        duration: 4000, 
+        style: {
+          fontFamily: 'sans-serif',
+          borderRadius: '12px',
+          background: '#333',
+          color: '#fff',
+        },
+      });
     navigate("/auth/login");
     } catch (error: any) {
         console.error("This is profile delete:", error);
+        toast.error(error.message || "This is error!", {
+            duration: 4000, 
+        style: {
+          fontFamily: 'sans-serif',
+          borderRadius: '12px',
+          background: '#333',
+          color: '#fff',
+        },
+        })
     }
   }
   return (
-    <div className="w-full min-h-screen bg-bg">
+    <div className={`w-full min-h-screen bg-bg ${isDeleteAccountOpen ? 'overflow-hidden' : ''}`}>
         <div className="h-auto max-w-3xl bg-card mx-auto flex items-center justify-center p-4 sm:p-6 font-sans antialiased text-text-main">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -145,13 +184,21 @@ export default function EditProfile() {
                     <div className="space-y-1.5">
                     <label className="text-sm font-semibold text-gray-600">Bio / Profile Summary</label>
                     <div className="relative">
+                        <div className={`w-full text-right text-xs text-text-secondary mt-1 flex justify-end ${CHARACTER_LIMIT - bioText.length <= 0 ? 'text-red-500' : ''}`}>
+                            <p>
+                                ကျန်ရှိစာလုံးရေ: {CHARACTER_LIMIT - bioText.length} လုံး
+                            </p>
+                        </div>
                         <textarea 
                         name="bio"
-                        value={user!.bio}
+                        value={bioText}
                         onChange={handleInputChange}
                         rows={3}
-                        className="w-full px-4 py-3 rounded-xl border border-border focus:ring-2 focus:ring-[#3498db]/20 focus:border-[#3498db] focus:outline-none resize-none transition-all duration-200 text-sm"
+                        className={`w-full px-4 py-3 rounded-xl border border-border focus:ring-2 focus:ring-[#3498db]/20 focus:border-[#3498db] focus:outline-none resize-none transition-all duration-200 text-sm`}
                         />
+                        { !user!.bio &&
+                            <p className="text-sm text-text-muted italic">သင့် အကြောင်း ကို ရိုက်ထည့်ပါ . . .</p>
+                        }
                     </div>
                     </div>
 
@@ -277,27 +324,51 @@ export default function EditProfile() {
 
                 </div> */}
                 <div className='w-full bg-text-muted h-px my-16'></div>
-                <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <div className="pt-2">
                     <button 
                         type="button"
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold border border-text-main/60 rounded-xl hover:bg-bg active:scale-95 transition-all text-text-main/90"
-                    >
-                        <Lock className="w-4 h-4" />
-                        Change Password
-                    </button>
-                    
-                    <button 
-                        type="button"
-                        onClick={handlerDeactiveAccount}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold bg-red-50 hover:bg-red-100 text-red-600 rounded-xl active:scale-95 transition-all"
+                        onClick={() => setIsDeleteAccountOpen(true)}
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold border border-text-main/60 rounded-xl hover:bg-soft cursor-pointer active:scale-95 transition-all text-red-600 hover:border-red-500"
                     >
                         <Trash2 className="w-4 h-4" />
-                        Deactivate Account
+                        Delete Account
                     </button>
                     </div>
 
                 </form>
             </motion.div>
+        </div>
+        <div className={`w-screen h-screen fixed top-0 left-0 bg-text-main opacity-30 ${isDeleteAccountOpen ? 'block' : 'hidden'}`}></div>
+        <div className={`max-w-3xl h-auto flex flex-col gap-4 bg-card z-500 border-2 border-red-700 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md ${isDeleteAccountOpen ? 'block' : 'hidden'}`}>
+                    <div className='w-full h-auto px-4 py-6'>
+                        <h2 className="text-lg md:text-xl font-bold border-b border-text-secondary pb-2 text-text-main text-center mb-4">DELETE Account!</h2>
+                        <div className="w-full h-auto py-4 flex flex-col gap-4">
+                            <div className="w-26 h-26 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90 mx-auto mb-4">
+                            {user ? (
+                                <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                            ) : (
+                                user!.name.charAt(0).toUpperCase()
+                            )}
+                            </div>
+                        <p className="text-base text-text-secondary">Are you sure you want to delete your account?</p>
+                        </div>
+                    </div>
+                    <div className="w-full grid grid-cols-2 bg-text-main/90 gap-px rounded-b-md pt-px">
+                        <button 
+                            type="button"
+                            onClick={() => setIsDeleteAccountOpen(false)}
+                            className="bg-card font-semibold hover:bg-sky-300 rounded-bl-md text-text-main/90 text-center py-2 cursor-pointer border-t-0.5 border-text-main/90"
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="button"
+                            onClick={handlerDeactiveAccount}
+                            className="bg-card font-semibold hover:bg-error rounded-br-md text-text-main text-center py-2 cursor-pointer"
+                        >
+                            Delete
+                        </button>
+                    </div>
         </div>
     </div>
   );

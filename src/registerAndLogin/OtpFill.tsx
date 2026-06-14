@@ -4,10 +4,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, KeyRound, RefreshCw, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useLocation } from 'react-router-dom';
+import { toast } from "react-hot-toast";
+
 
 
 export default function OtpFill() {
      const { setUser }= useAppContext();
+     const api=import.meta.env.VITE_API_URL_PRODUCTION;
   // 6-digit OTP အတွက် Array State (['', '', '', '', '', ''])
   const [otp, setOtp] = useState<string[]>(new Array(6).fill(''));
   const [timer, setTimer] = useState<number>(60); // 60 Seconds Countdown
@@ -83,7 +86,7 @@ export default function OtpFill() {
 
     if (!canResend) return;
     try {
-            const response = await fetch("http://localhost:3335/api/otp", {
+            const response = await fetch(`${api}/otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -104,7 +107,15 @@ export default function OtpFill() {
             setError(null);
             inputRefs.current[0]?.focus();
 
-            alert("OTP အသစ်ကို ပို့ပေးလိုက်ပါပြီဗျာ။");
+            toast.success('OTP အသစ်ကို ပို့ပေးလိုက်ပါပြီဗျာ။!', {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
         } catch (error) {
             console.error("Register error:", error);
             // Handle register errors
@@ -116,7 +127,15 @@ export default function OtpFill() {
     setError(null);
     inputRefs.current[0]?.focus();
 
-    alert("OTP အသစ်ကို ပို့ပေးလိုက်ပါပြီဗျာ။");
+     toast.success('OTP အသစ်ကို ပို့ပေးလိုက်ပါပြီဗျာ။!', {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
   };
 
   // Form Submit Handler
@@ -142,7 +161,7 @@ export default function OtpFill() {
         }
 
         // OTP submission logic
-        const response = await fetch(`http://localhost:3335/api/verify-otp`, {
+        const response = await fetch(`${api}/verify-otp`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -152,14 +171,30 @@ export default function OtpFill() {
         const data = await response.json();
         if (data.success) {
             // Handle success
-            alert("OTP verification successful!");
+            toast.success('OTP verification successful!', {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
             setUser(data.user || []);
             window.location.href = "/auth/password-fill";
             localStorage.removeItem("otpEmail");
             localStorage.setItem("token", data.signupToken);
         } else {
             // Handle error
-            alert(data.message || "OTP verification failed");
+            toast.error(data.message || "OTP verification failed", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
             setIsLoading(false);
         }
     };

@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { useAppContext } from "../hooks/useAppContext";
+import { toast } from 'react-hot-toast';
 
 
 
 const UploadAvatar = () => {
   const { user } = useAppContext();
-  
+   const api=import.meta.env.VITE_API_URL_PRODUCTION;
   const [isUploading, setIsUploading] = useState(false);
   const [update, setUpdate] = useState(false);
   const [preview, setPreview]= useState<string>("");
@@ -83,8 +84,8 @@ const UploadAvatar = () => {
 
   const handleMouseUp = () => setIsDragging(false);
 
-  // ၄။ Save နှိပ်လျှင် Canvas ရှိ လက်ရှိအနေအထားအတိုင်း ဖြတ်ယူပြီး Backend ပို့မည့်စနစ်
-  // ၄။ Save နှိပ်လျှင် Canvas ရှိ လက်ရှိအနေအထားအတိုင်း .webp ပြောင်းပြီး Backend ပို့မည့်စနစ်
+  // * ၄။ Save နှိပ်လျှင် Canvas ရှိ လက်ရှိအနေအထားအတိုင်း ဖြတ်ယူပြီး Backend ပို့မည့်စနစ်
+  // * ၄။ Save နှိပ်လျှင် Canvas ရှိ လက်ရှိအနေအထားအတိုင်း .webp ပြောင်းပြီး Backend ပို့မည့်စနစ်
   const handleUpload = async () => {
     if (!editCanvasRef.current) return;
 
@@ -98,20 +99,32 @@ const UploadAvatar = () => {
         return;
       }
 
-      // ဖိုင်အသစ်ဆောက်တဲ့အခါ Extension ကို .webp နဲ့ Type ကို image/webp လို့ သတ်မှတ်ပါမယ်
+      // * ဖိုင်အသစ်ဆောက်တဲ့အခါ Extension ကို .webp နဲ့ Type ကို image/webp လို့ သတ်မှတ်ပါမယ်
       const processedFile = new File([blob], "avatar.webp", { type: "image/webp" });
       
       const formData = new FormData();
       formData.append("image", processedFile); // Backend ဆီကို .webp ဖိုင်ပဲ အသစ်ပို့တော့မှာပါ
 
       try {
-        const response = await fetch(`http://localhost:3335/api/avatar/upload/${user!.id}`, {
+        const response = await fetch(`${api}/avatar/upload/${user!.id}`, {
           method: "PATCH",
           body: formData,
         });
 
         if (response.ok) {
-          alert("Profile ပုံ ပြောင်းလဲပြီးပါပြီ။");
+          setTimeout(() => {        
+        // ၁။ ၃ စက္ကန့်ကြာမယ့် Success Toast ကို ပြမယ်
+        toast.success('Profile ပုံ ပြောင်းလဲပြီးပါပြီ။', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
+
+      }, 1000);
           const data= await response.json();
           setPreview(data.data);
           setPreviewUpdate(true);
@@ -119,11 +132,27 @@ const UploadAvatar = () => {
           // 💡 မူလဖိုင်ဟောင်းတွေကို Memory ထဲကနေ လုံးဝဖျက်ထုတ်ပစ်လိုက်တဲ့ အပိုင်း (State Reset)
           setImageObj(null);
         } else {
-          alert("Upload လုပ်ရတာ အဆင်မပြေပါဘူး။");
+          toast.error('Upload လုပ်ရတာ အဆင်မပြေပါဘူး။', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
         }
       } catch (error) {
         console.error("Error uploading file:", error);
-        alert("Error တက်သွားပါတယ်။");
+        toast.error('Error တက်သွားပါတယ်။', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
       } finally {
         setIsUploading(false);
       }

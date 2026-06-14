@@ -3,8 +3,11 @@ import { GoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAppContext } from "../hooks/useAppContext";
+import { toast } from "react-hot-toast";
+
 
 const GoogleAuthButton = () => {
+    const api=import.meta.env.VITE_API_URL_PRODUCTION;
     const { setUser, setLogin } = useAppContext();
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,7 +24,7 @@ const GoogleAuthButton = () => {
         
         try {
             // Backend ကို Token လှမ်းပို့မယ်
-            const response = await fetch("http://localhost:3335/api/google_login", {
+            const response = await fetch(`${api}/google_login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -35,15 +38,42 @@ const GoogleAuthButton = () => {
             // 💡 data.ok အစား response.ok ကို သုံးတာ ပိုမှန်ပါတယ်
             if (response.ok && data.success) {
                 // Login အောင်မြင်သွားပြီ (Token နဲ့ User Info ကို သိမ်းပါမယ်)
+                toast.success("Login successful", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
                 localStorage.setItem("token", data.token);
                 setUser(data.user as any);
                 setLogin(true);
-                navigate("/auth/profile");
+                navigate("/");
             } else {
+                toast.error("Login failed", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
                 // Backend က လက်မခံရင် Error ပြမယ်
                 setErrorMsg(data.message || "Google Authentication Failed.");
             }
         } catch (error: any) {
+            toast.error(error.message || "Server connection error.", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
             // Network error သို့မဟုတ် အခြား error များ
             setErrorMsg(error.message || "Server connection error.");
         } finally {

@@ -7,10 +7,13 @@ import { useAppContext } from "../hooks/useAppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import GoogleAuthButton from "./GoogleAuthButton";
+import { toast } from "react-hot-toast";
+
 
 
 export default function Login() {
     const navigate = useNavigate();
+    const api=import.meta.env.VITE_API_URL_PRODUCTION;
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const { setUser, setLogin }= useAppContext()
@@ -21,14 +24,23 @@ export default function Login() {
         // Handle login logic here
         if (!email || !password) {
             // Handle validation errors
-            alert("Please enter email and password");
+            toast.error("Please enter email and password", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
+            
             return;
         }
 
         // Login logic
         try {
             
-            const response = await fetch("http://localhost:3335/api/login", {
+            const response = await fetch(`${api}/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -44,11 +56,27 @@ export default function Login() {
                 localStorage.setItem("token", data.token); // Store the token in localStorage
                 console.log(data);
                 setLogin(true);
+                toast.success(data.message || "Login successful", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
                 setUser(data.noPassword || []);
-                navigate("/auth/profile");
+                navigate("/");
             } else {
-                console.error("Login failed");
-                alert("Login failed");
+                toast.error("Login failed", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
             }
         } catch (error) {
             console.error("Login error:", error);

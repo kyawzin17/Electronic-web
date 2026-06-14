@@ -1,4 +1,7 @@
 import { useAppContext } from "../hooks/useAppContext";
+import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from 'lucide-react';
 
 
 import React, { useState } from 'react';
@@ -6,6 +9,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Eye, EyeOff, CheckCircle2, AlertCircle, ShieldCheck, Check } from 'lucide-react';
 
 export default function PasswordFill() {
+     const api=import.meta.env.VITE_API_URL_PRODUCTION;
+  const navigate = useNavigate();
   const { setUser } = useAppContext();
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
@@ -38,24 +43,43 @@ export default function PasswordFill() {
     setError(null);
 
     // Mock API Call (ဒီနေရာမှာ မင်းရဲ့ Backend Prisma API ဆီ ပို့ရပါမယ်)
-    const response = await fetch("http://localhost:3335/api/register", {
+    const response = await fetch(`${api}/register`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + localStorage.getItem("token"),
                 },
-                body: JSON.stringify({ password: password,  }),
+                body: JSON.stringify({ password: password }),
             });
             const data = await response.json();
             if (data.success) {
                 // Handle success
-                alert("Registration successful!");
+                 toast.success(data.message || 'Registration successful!', {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
                 setUser(data.user);
-                window.location.href = "/auth/profile";
+                window.location.href = "/";
             } else {
                 // Handle error
                 setIsSuccess(false);
-                alert(data.message || "Registration failed");
+                console.error(data.message || "Registration failed!");
+                setIsLoading(false);
+                 toast.error(data.message || "Registration failed!", {
+                    duration: 4000, 
+                    style: {
+                      fontFamily: 'sans-serif',
+                      borderRadius: '12px',
+                      background: '#333',
+                      color: '#fff',
+                    },
+                  });
+                
             }
   };
 
@@ -66,6 +90,15 @@ export default function PasswordFill() {
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sm:p-8 relative overflow-hidden"
       >
+        <div className="w-full h-auto flex justify-start items-center px-4 absolute left-0 top-6">
+            <button 
+            type="button"
+            className="p-2 hover:bg-text-muted/40 rounded-full transition-colors duration-200"
+            onClick={() => navigate("/auth/register")}
+          >
+            <ArrowLeft className="w-6 h-6 text-text-secondary" />
+          </button>
+        </div>
         
         {/* Success Screen Wrapper */}
         <AnimatePresence>

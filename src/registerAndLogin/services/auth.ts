@@ -7,6 +7,8 @@ interface UserData {
   hobby: string;
   gender: string;
   bio: string;
+  avatarUrl: string;
+  updatedAt: string;
   createdAt: string;
   role: string;
 }
@@ -19,33 +21,33 @@ interface AuthResponse {
 
 export const autoLoginService = async () => {
   const oldToken = localStorage.getItem("token");
-  console.log(oldToken);
+  const api=import.meta.env.VITE_API_URL_PRODUCTION;
   if (!oldToken) return null;
 
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:3335";
-    const response = await fetch(`${apiUrl}/api/auto_login`, {
+    const response = await fetch(`${api}/auto_login`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${oldToken}`,
       },
     });
 
-    if (response.ok) {
+    if (!response.ok) {
+      console.log(response);
+      throw new Error(response.statusText);
+      
+    }
       const data: AuthResponse = await response.json();
       // Token သစ်ကို ထပ်မံသိမ်းဆည်းခြင်း
-      console.log(data);
-
       localStorage.setItem("token", data.token);
       return data; // User data ရော Token ပါဝင်တဲ့ Object ကို ပြန်ပေးမယ်
-    }
     //  else {
     //   // Token သက်တမ်းကုန်ရင် ပယ်ဖျက်မယ်
     //   localStorage.removeItem("token");
     //   return null;
     // }
-  } catch (error) {
-    console.error("Network Error:", error);
+  } catch (error: any) {
+    console.error("Network Error:", error.message);
     return null;
   }
 };

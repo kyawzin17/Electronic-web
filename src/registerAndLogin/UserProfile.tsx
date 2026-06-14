@@ -3,18 +3,18 @@ import { useNavigate } from "react-router";
 import { useAppContext } from "../hooks/useAppContext";
 import { FaPencilAlt } from "react-icons/fa";
 import { ArrowLeft } from 'lucide-react';
-
+import { toast } from 'react-hot-toast';
 
 
 const Profile = () => {
   const { user } = useAppContext();
-  
+   const api=import.meta.env.VITE_API_URL_PRODUCTION;
   const navigate= useNavigate();
 
   const [isUploading, setIsUploading] = useState(false);
   const [update, setUpdate] = useState(false);
   const { setUser, setLogin }= useAppContext()
-
+ const [isLogout, setIsLogout] = useState(false);
   // 🛠️ Manual Crop & Zoom အတွက် လိုအပ်သော States များ
   const [imageObj, setImageObj] = useState<HTMLImageElement | null>(null);
   const [zoom, setZoom] = useState<number>(1);
@@ -98,7 +98,17 @@ const Profile = () => {
     // 💡 HTML5 Canvas ရဲ့ toBlob မှာ "image/webp" လို့ ပြောင်းလဲသတ်မှတ်လိုက်တာပါ
     editCanvasRef.current.toBlob(async (blob) => {
       if (!blob) {
-        alert("ပုံဖော်ရတာ အဆင်မပြေပါဘူး");
+        // ၁။ ၃ စက္ကန့်ကြာမယ့် Success Toast ကို ပြမယ်
+        toast.error('ပုံဖော်ရတာ အဆင်မပြေပါဘူး', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
+
         setIsUploading(false);
         return;
       }
@@ -110,23 +120,47 @@ const Profile = () => {
       formData.append("image", processedFile); // Backend ဆီကို .webp ဖိုင်ပဲ အသစ်ပို့တော့မှာပါ
 
       try {
-        const response = await fetch(`http://localhost:3335/api/avatar/upload/${user!.id}`, {
+        const response = await fetch(`${api}/avatar/upload/${user!.id}`, {
           method: "PATCH",
           body: formData,
         });
 
         if (response.ok) {
-          alert("Profile ပုံ ပြောင်းလဲပြီးပါပြီ။");
+          toast.success('Profile ပုံ ပြောင်းလဲပြီးပါပြီ။', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
           setUpdate(false);
           
           // 💡 မူလဖိုင်ဟောင်းတွေကို Memory ထဲကနေ လုံးဝဖျက်ထုတ်ပစ်လိုက်တဲ့ အပိုင်း (State Reset)
           setImageObj(null);
         } else {
-          alert("Upload လုပ်ရတာ အဆင်မပြေပါဘူး။");
+            toast.error('Upload လုပ်ရတာ အဆင်မပြေပါဘူး။', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
         }
-      } catch (error) {
-        console.error("Error uploading file:", error);
-        alert("Error တက်သွားပါတယ်။");
+      } catch (error: any) {
+         toast.error(error.message || 'Error တက်သွားပါတယ်။', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
+        
       } finally {
         setIsUploading(false);
       }
@@ -143,16 +177,32 @@ const Profile = () => {
     setSavedBio(bioText);
     setIsEditing(false);
     try {
-      const response = await fetch(`http://localhost:3335/api/profile_bio/${user!.id}`, {
+      const response = await fetch(`${api}/profile_bio/${user!.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bio: bioText }),
       });
       const data = await response.json();
       if (data.success) {
-        alert("Bio updated successfully!");
+         toast.success(data.message || 'Bio updated successfully!', {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
       } else {
-        alert(data.message || "Bio update failed");
+         toast.error(data.message || "Bio update failed", {
+          duration: 4000, 
+          style: {
+            fontFamily: 'sans-serif',
+            borderRadius: '12px',
+            background: '#333',
+            color: '#fff',
+          },
+        });
       }
     } catch (err) {
       console.error(err);
@@ -211,7 +261,7 @@ const Profile = () => {
           </div>
 
           <div className="mb-4">
-            <div className="w-full h-auto flex justify-center items-center mt-4">
+            <div className="w-full h-auto flex justify-center items-center mt-4 mb-2">
               <h2 className="text-2xl md:text-3xl text-text-main font-extrabold font-serif">{user!.name}</h2>
             </div>
             <div className="w-full h-auto flex justify-center items-center mb-4">
@@ -229,7 +279,7 @@ const Profile = () => {
                   placeholder="သင့်အကြောင်း အကျဉ်းချုပ် ရေးပေးပါ..."
                   className="w-full p-3 text-sm text-center bg-transparent text-text-main rounded-lg border border-border focus:outline-none focus:border-blue-500 resize-none h-20"
                 />
-                <div className="w-full text-right text-xs text-text-secondary mt-1">
+                <div className={`w-full text-right text-xs text-text-secondary mt-1 ${CHARACTER_LIMIT - bioText.length <= 0 ? 'text-red-500' : ''}`}>
                   ကျန်ရှိစာလုံးရေ: {CHARACTER_LIMIT - bioText.length} လုံး
                 </div>
                 <div className="flex gap-2 mt-3 justify-end w-full text-xs">
@@ -244,9 +294,9 @@ const Profile = () => {
             ) : (
               <div className="text-center relative py-2">
                 {savedBio ? (
-                  <p className="text-sm text-text-main italic">"{savedBio}"</p>
+                  <p className="text-sm text-text-main italic">{savedBio}</p>
                 ) : (
-                  <p className="text-sm text-zinc-500 italic">Bio မရှိသေးပါ</p>
+                  <p className="text-sm text-zinc-500 italic">Bio မရှိသေးပါ!</p>
                 )}
                 <button
                   onClick={() => setIsEditing(true)}
@@ -285,10 +335,7 @@ const Profile = () => {
             <div className="w-full h-px bg-text-secondary my-6"></div>
             <div className="w-full h-auto flex justify-end">
                 <button onClick={() => {
-                  localStorage.removeItem("token");
-                  setUser(null);
-                  navigate("/")
-                  setLogin(false);
+                  setIsLogout(true);
                 }} className="px-3 py-1.5 mt-4 cursor-pointer bg-error rounded-lg border-2 border-border text-text-main hover:text-bg font-bold font-serif text-md">
                   Logout!
                 </button>
@@ -356,6 +403,44 @@ const Profile = () => {
           </div>
         </div>
       )}
+      <div className={`w-screen h-screen fixed top-0 left-0 bg-text-main opacity-30 ${isLogout ? 'block' : 'hidden'}`}></div>
+        <div className={`max-w-3xl h-auto flex flex-col gap-4 bg-card z-500 border-2 border-red-700 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md ${isLogout ? 'block' : 'hidden'}`}>
+                    <div className='w-full h-auto px-4 py-6'>
+                        <h2 className="text-lg md:text-xl font-bold border-b border-text-secondary pb-2 text-text-main text-center mb-4">Logout Account!</h2>
+                        <div className="w-full h-auto py-4 flex flex-col gap-4">
+                            <div className="w-26 h-26 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90 mx-auto mb-4">
+                            {user ? (
+                                <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                            ) : (
+                                user!.name.charAt(0).toUpperCase()
+                            )}
+                            </div>
+                        <p className="text-base text-text-secondary">Are you sure you want to logout your account?</p>
+                        </div>
+                    </div>
+                    <div className="w-full grid grid-cols-2 bg-text-main/90 gap-px rounded-b-md pt-px">
+                        <button 
+                            type="button"
+                            onClick={() => setIsLogout(false)}
+                            className="bg-card font-semibold hover:bg-sky-300 rounded-bl-md text-text-main/90 text-center py-2 cursor-pointer border-t-0.5 border-text-main/90"
+                        >
+                            Cancel
+                        </button>
+                        <button 
+                            type="button"
+                            onClick={() => {
+                              localStorage.removeItem("token");
+                              setUser(null);
+                              navigate("/")
+                              setLogin(false);
+                              setIsLogout(false);
+                            }}
+                            className="bg-card font-semibold hover:bg-error rounded-br-md text-text-main text-center py-2 cursor-pointer"
+                        >
+                            Logout
+                        </button>
+                    </div>
+        </div>
     </div>
   );
 };

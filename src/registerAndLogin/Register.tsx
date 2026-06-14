@@ -7,8 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import GoogleAuthButton from "./GoogleAuthButton.tsx";
+import { toast } from "react-hot-toast";
+
 export default function Register() {
     const navigate = useNavigate();
+     const api=import.meta.env.VITE_API_URL_PRODUCTION;
 
 
     const [name, setName]= useState<string>("");
@@ -24,7 +27,7 @@ export default function Register() {
             return false;
         }
         try {
-            const response = await fetch("http://localhost:3335/api/otp", {
+            const response = await fetch(`${api}/otp`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -36,18 +39,45 @@ export default function Register() {
             });
 
             if (!response.ok) {
-                setGlobalMessage("Register failed!");
+                 toast.error('Register failed!', {
+                    duration: 4000, 
+                    style: {
+                        fontFamily: 'sans-serif',
+                        borderRadius: '12px',
+                        background: '#333',
+                        color: '#fff',
+                    },
+                    });
                 return false;
             }
 
             const data= await response.json();
             setGlobalMessage("Register success!");
+             toast.success(data.message || 'Register success!', {
+                duration: 4000, 
+                style: {
+                    fontFamily: 'sans-serif',
+                    borderRadius: '12px',
+                    background: '#333',
+                    color: '#fff',
+                },
+                });
             localStorage.setItem("otpEmail", data?.email || '');
             navigate("/auth/otp-fill", {state: {email: email, name: name}});
             setLogin(true);
         } catch (error) {
             console.error("Register error:", error);
             // Handle register errors
+            toast.error('Register failed!', {
+                duration: 4000, 
+                style: {
+                    fontFamily: 'sans-serif',
+                    borderRadius: '12px',
+                    background: '#333',
+                    color: '#fff',
+                },
+                });
+            return false;
         }
         setGlobalMessage("");
         setLogin(true);
