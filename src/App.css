@@ -9,6 +9,11 @@
     transition: all 0.3s ease-in;
 }
 
+em {
+  font-weight: 500;
+  color: var(--color-text-main);
+}
+
 /* Wire Styling */
         .wire {
             fill: none;

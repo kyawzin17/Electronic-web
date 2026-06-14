@@ -70,7 +70,7 @@ export default function Header() {
               Login
             </Link>
         </button>
-}        <div className={`w-px h-8 font-semibold font-serif border border-(--text-primary) rounded-2xl mx-px" : "hidden"}`}></div>
+}        <div className={`w-px h-8 font-semibold font-serif border border-(--text-primary) rounded-2xl mx-px ${login ? "block" : "hidden lg:block"}`}></div>
       <ThemeButton />
         <button 
           className="cursor-pointer block lg:hidden"

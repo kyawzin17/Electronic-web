@@ -2,12 +2,15 @@ import { useAppContext } from "../hooks/useAppContext.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function MobileRightSidebar() {
-    const { rightMenu, setRightMenu, login, setLogin } = useAppContext();
+    const { rightMenu, setRightMenu, login, setLogin, user, setUser } = useAppContext();
 
+    const navigate = useNavigate();
     // Lock body scroll when right menu is open
+    const [ isLogout, setIsLogout ] = useState<boolean>(false);
     useEffect(() => {
         if (rightMenu) {
             document.body.style.overflow = 'hidden';
@@ -101,7 +104,7 @@ export default function MobileRightSidebar() {
                         <div className="mt-6 pt-4 border-t border-border">
                             {!login ? (
                                 <Link 
-                                    to="/login" 
+                                    to="/auth/login" 
                                     onClick={() => setRightMenu(false)}
                                     className="w-full bg-primary text-white px-4 py-2 rounded-lg shadow hover:bg-primary/80 transition duration-100 font-serif font-semibold text-center block"
                                 >
@@ -109,13 +112,12 @@ export default function MobileRightSidebar() {
                                 </Link>
                             ) : (
                                 <div className="text-center text-text-secondary">
-                                    <p className="text-sm">Welcome back!</p>
+                                    <p className="text-base font-medium mb-2">Welcome back!</p>
                                     <button 
                                         onClick={() => {
-                                            setLogin(false);
-                                            setRightMenu(false);
+                                            setIsLogout(true);
                                         }}
-                                        className="text-sm text-red-500 hover:text-red-600 mt-1"
+                                        className="text-base font-semibold border border-red-500 w-full py-2 rounded-md transition-colors duration-300 bg-transparent hover:bg-card text-red-500 hover:text-red-600 mt-1"
                                     >
                                         Logout
                                     </button>
@@ -124,6 +126,48 @@ export default function MobileRightSidebar() {
                         </div>
                     </div>
                 </div>
+                <div className={`w-screen h-screen fixed top-0 left-0 bg-text-main opacity-30 ${isLogout ? 'block' : 'hidden'}`}></div>
+                    <div className={`max-w-3xl h-auto flex flex-col gap-4 bg-card z-500 border-2 border-red-700 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md ${isLogout ? 'block' : 'hidden'}`}>
+                                <div className='w-full h-auto px-4 py-6'>
+                                    <h2 className="text-lg md:text-xl font-bold border-b border-text-secondary pb-2 text-text-main text-center mb-4">Logout Account!</h2>
+                                    <div className="w-full h-auto py-4 flex flex-col gap-4">
+                                        <div className="w-26 h-26 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90 mx-auto mb-4">
+                                        {user && (
+                                            user.avatarUrl ? (
+                                            <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+                                        ) : (
+                                            user!.name.charAt(0).toUpperCase()
+                                        ))
+                                    }
+                                        </div>
+                                    <p className="text-base text-text-secondary">Are you sure you want to logout your account?</p>
+                                    </div>
+                                </div>
+                                <div className="w-full grid grid-cols-2 bg-text-main/90 gap-px rounded-b-md pt-px">
+                                    <button 
+                                        type="button"
+                                        onClick={() => setIsLogout(false)}
+                                        className="bg-card font-semibold hover:bg-sky-300 rounded-bl-md text-text-main/90 text-center py-2 cursor-pointer border-t-0.5 border-text-main/90"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button 
+                                        type="button"
+                                        onClick={() => {
+                                        localStorage.removeItem("token");
+                                        setUser(null);
+                                        setLogin(false);
+                                        setRightMenu(false);
+                                        navigate("/")
+                                        setLogin(false);
+                                        setIsLogout(false);
+                                        }}
+                                        className="bg-card font-semibold hover:bg-error rounded-br-md text-text-main text-center py-2 cursor-pointer"
+                                    >
+                                        Logout
+                                    </button>
+                                </div>
+                    </div>
             </div>
     )
 }

@@ -31,9 +31,9 @@ const QuizComponent: React.FC<QuizProps> = ({ question, options, correctAnswer }
         onChange={handleSelectChange}
         className={`w-full p-2.5 mt-2.5 rounded-md border border-text-secondary outline-none text-[14px] ${getStatusClass()}`}
       >
-        <option value="" disabled className="text-text-main">အဖြေတစ်ခု ရွေးချယ်ပါ</option>
+        <option value="" disabled className="text-text-main bg-card">အဖြေတစ်ခု ရွေးချယ်ပါ</option>
         {options.map((option, index) => (
-          <option key={index} value={option}>
+          <option key={index} value={option} className="bg-card">
             {option}
           </option>
         ))}

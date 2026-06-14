@@ -1,36 +1,522 @@
 import QuizComponent from '../components/QuizComponent';
 
-## Chapter 1: Resistor (caption)
+## Chapter 1: Capacitor (လျှပ်သိုပစ္စည်း)
 
-### မိတ်ဆက်
+## မိတ်ဆက်
 
-Resistor (ခုခံမှုပစ္စည်း) ဆိုသည်မှာ လျှပ်စစ်ပတ်လမ်းတစ်ခုအတွင်း လျှပ်စီးကြောင်း (Current) စီးဆင်းမှုကို အဟန့်အတားပြုရန် သို့မဟုတ် ကန့်သတ်ရန် အသုံးပြုသော အခြေခံအကျဆုံး component တစ်ခု ဖြစ်ပါသည်။ Resistor တစ်လုံးရဲ့ အလုပ်လုပ်ပုံကို အလုံးစုံနားလည်ရန် ဥပမာတစ်ခုနဲ့ ကြည့်ရန်...
+သင် ဖုန်း *Charger* ကို ဖြုတ်လိုက်ပြီးနောက်
+*LED* တစ်လုံး စက္ကန့်အနည်းငယ် ဆက်လင်းနေဖူးပါသလား?
 
-ပထမဆုံး ရေပိုက်တစ်ခုကို စိတ်ကူးကြည့်ပါ။ ရေပိုက်ထဲမှာ ရေတွေစီးဆင်းနေသလို လျှပ်စစ်ကြိုးထဲမှာ လျှပ်စီးကြောင်း (Current) စီးဆင်းနေပါမည်။ ကျွန်တော်တို့က ရေပိုက်ကို ရေစီးဆင်းမှုလျော့ချချင်လျှင် ပိုက်ကို ညှစ်လိုက်လျှင်ဖြစ်စေ၊ အဖွင့်အပိတ်လုပ်လို့ရသော bar တစ်ခုတပ်လိုက်ခြင်းဖြင့် ရေစီးဆင်းမှုကို ထိန်းချုပ်နိုင်ပါသည်။ ထိုကဲ့သို့ Resistor ကိုလည်း လျှပ်စီးကြိုးမှာ တပ်လိုက်ခြင်းအားဖြင့် လျှပ်စစ်စီးဆင်းမှု (Current) ကို မိမိစိတ်ကြိုက် ထိန်းချုပ်နိုင်ပါသည်။
+ဒါမှမဟုတ် *Camera Flash* တစ်ခု
+ရုတ်တရက် အလင်းအားကြီးစွာ ထွက်လာတာ
+မြင်ဖူးပါသလား?
 
-Resistor ကို အဓိကအားဖြင့် အီလက်ထရောနစ် ပစ္စည်းတွေဆီကို လျှပ်စစ်အားအလွန်အကျွံစီးဝင်ပြီး မလောင်ကျွမ်းသွားအောင် ကာကွယ်ဖို့ အဓိကအသုံးပြုပါသည်။
+အဲ့ဒီအလုပ်တွေကို *Capacitor* က
+အဓိက လုပ်ဆောင်ပေးတာ ဖြစ်ပါတယ်။
 
-**ဥပမာ:** 9V ထုတ်ပေးနိုင်သော Battery တစ်လုံးဖြင့် 2V သာလက်ခံနိုင်သော LED မီးလုံးတစ်လုံးကို မီးလင်းစေချင်လျှင် 350 $\Omega$ ရှိသော Resistor ကို ကြားခံဆက်သွယ်ပေးရန်လိုအပ်ပါသည်။ အကယ်၍ မခံဘဲဆက်ပါက LED မီးလောင်ကျွမ်းသွားနိုင်ပါသည်။
+*Capacitor* ဆိုသည်မှာ လျှပ်စစ်စွမ်းအင်ကို *လျှပ်စစ်စက်ကွင်း (Electric Field)* အဖြစ် ခေတ္တသိုလှောင်ပေးနိုင်သော ပစ္စည်းတစ်ခုဖြစ်ပါသည်။ ဘက်ထရီကို ရေအမြောက်အမြား သိုလှောင်ထားသော ရေကန်ကြီးတစ်ခုနှင့် နှိုင်းယှဉ်ပါက *Capacitor* သည် လိုအပ်သောအခါ စွမ်းအင်ကို တခဏချင်း အလုံးအရင်းနှင့် ထုတ်လွှတ်ပေးနိုင်သော ဖိအားမြှင့်ဘူးငယ်တစ်ခုနှင့် တူပါသည်။
+
+*Resistor → Current Control*
+
+*Capacitor → Charge Storage*
+
+---  
+
+## 📦 Capacitance ဆိုတာဘာလဲ?
+
+Capacitor နဲ့ Capacitance ကို လူအများစုက ရောထွေးလေ့ရှိကြပါတယ်။
+
+**Capacitor** ဆိုတာ လျှပ်စစ်အား (Electrical Charge) ကို ယာယီသိုလှောင်နိုင်တဲ့ Electronic Component တစ်ခု ဖြစ်ပါတယ်။
+
+**Capacitance** ဆိုတာတော့ Capacitor တစ်လုံးက လျှပ်စစ်အား ဘယ်လောက်အထိ သိုလှောင်ထားနိုင်သလဲ ဆိုတာကို ဖော်ပြတဲ့ အရည်အချင်း (Property) တစ်ခု ဖြစ်ပါတယ်။
+
+တစ်နည်းအားဖြင့် -
+
+* Capacitor = Component
+* Capacitance = Storage Ability
+
+ဖြစ်ပါတယ်။
 
 ---
 
-### Theory
+### 💧 ရေတိုင်ကီ ဥပမာ
 
-1. 📐 အုမ်းစ်နိယာမ (Ohm's Law) နှင့် အခြေခံပုံသေနည်း:
-$V = I \times R$ ဆိုတဲ့ အရေးအကြီးဆုံး ပုံသေနည်းကို သုံးပြီး Resistor က လျှပ်စစ်အားကို ဘယ်လိုထိန်းချုပ်လဲဆိုတာ စတင်လေ့လာရန်။
+Capacitance ကို နားလည်လွယ်အောင် ရေတိုင်ကီ (Water Tank) နဲ့ ဥပမာပေးကြည့်ရအောင်။
 
-* **V (Voltage - ဗို့အား):** ရေစုပ်စက် (Pump) ရဲ့ တွန်းအားနဲ့ တူပါတယ်။ Unit က ဗို့ (Volts - V) ဖြစ်ပါတယ်။
-* **I (Current - လျှပ်စစ်စီးကြောင်း):** စီးဆင်းသွားတဲ့ ရေပမာဏနဲ့ တူပါတယ်။ Unit က အမ်ပီယာ (Amperes - A) ဖြစ်ပါတယ်။
-* **R (Resistance - ခုခံမှု):** ရေစီးတာကို နှေးသွားအောင် ပိုက်ကို ညှစ်ထားတဲ့နေရာနဲ့ တူပါတယ်။ Unit က အုမ်း (Ohms - $\Omega$) ဖြစ်ပါတယ်။
+ရေတိုင်ကီ အသေးတစ်လုံးဟာ ရေနည်းနည်းပဲ သိမ်းထားနိုင်ပါတယ်။
 
-**Exp:** ကျွန်တော်တို့ဆီမှာ $9\text{V}$ ရှိတဲ့ ဘက်ထရီအိုး တစ်လုံးရှိတယ် ဆိုပါစို့။ စီးဆင်းနေတဲ့ လျှပ်စစ်စီးကြောင်း (Current) က $3\text{A}$ ရှိတယ်ဆိုရင်၊ ခုခံမှု (Resistance - R) တန်ဖိုး ဘယ်လောက်ဖြစ်မလဲ။
+ဒါပေမယ့် ရေတိုင်ကီ အကြီးတစ်လုံးက ရေများများ သိမ်းထားနိုင်ပါတယ်။
+
+အလားတူပဲ
+
+* Capacitance နည်းတဲ့ Capacitor → Charge နည်းနည်းပဲ သိမ်းနိုင်တယ်
+* Capacitance များတဲ့ Capacitor → Charge များများ သိမ်းနိုင်တယ်
 
 ---
 
-### Physics Lesson: Quiz
+### 🔋 ဥပမာ
+
+Capacitor နှစ်လုံး ရှိတယ်ဆိုပါစို့။
+
+```text
+100µF Capacitor
+1000µF Capacitor
+```
+
+1000µF Capacitor က 100µF Capacitor ထက် Charge ပိုများများ သိုလှောင်နိုင်ပါတယ်။
+
+ဒါကြောင့်
+
+```text
+Capacitance များလေ
+→ Charge ပိုသိုလှောင်နိုင်လေ
+```
+
+ဖြစ်ပါတယ်။
+
+---
+
+### 📏 Capacitance ၏ Unit
+
+Capacitance ကို **Farad (F)** ဖြင့် တိုင်းတာပါတယ်။
+
+သို့သော် 1 Farad ဟာ အလွန်ကြီးမားတဲ့ တန်ဖိုးဖြစ်တဲ့အတွက် လက်တွေ့ Electronics Circuit တွေမှာ အောက်ပါ Unit တွေကို ပိုမိုအသုံးပြုကြပါတယ်။
+
+<table>
+  <thead>
+    <tr style={{ backgroundColor: '#f0f0f0' }}>
+      <th>Unit</th>
+      <th>Full Name</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>mF</td>
+      <td>Millifarad</td>
+      <td>0.001 F</td>
+    </tr>
+    <tr>
+      <td>µF</td>
+      <td>Microfarad</td>
+      <td>0.000001 F</td>
+    </tr>
+    <tr>
+      <td>nF</td>
+      <td>Nanofarad</td>
+      <td>0.000000001 F</td>
+    </tr>
+    <tr>
+      <td>pF</td>
+      <td>Picofarad</td>
+      <td>0.000000000001 F</td>
+    </tr>
+  </tbody>
+</table> 
+---
+
+### 💡 မှတ်သားရန်
+
+Resistor Lesson မှာ
+
+* Resistor = Component
+* Resistance = Current ကို ဆန့်ကျင်နိုင်သော အရည်အချင်း
+
+ဖြစ်သလို
+
+Capacitor Lesson မှာ
+
+* Capacitor = Component
+* Capacitance = Charge သိုလှောင်နိုင်သော အရည်အချင်း
+
+ဖြစ်ပါတယ်။
+
+ဒါကြောင့် Capacitance ဆိုတာ Capacitor တစ်လုံးက လျှပ်စစ်အား ဘယ်လောက်အထိ သိမ်းထားနိုင်သလဲ ဆိုတာကို ဖော်ပြတဲ့ တန်ဖိုး ဖြစ်ပါတယ်။
+
+---  
+
+## ⚡ How Does a Capacitor Work?
+
+Capacitor တစ်လုံးရဲ့ အဓိက အလုပ်က လျှပ်စစ်အား (Electrical Charge) ကို ယာယီသိုလှောင်ထားပြီး လိုအပ်တဲ့အချိန်မှာ ပြန်ထုတ်ပေးခြင်း ဖြစ်ပါတယ်။
+
+Capacitor ရဲ့ အလုပ်လုပ်ပုံကို နားလည်ဖို့ **Charging** နဲ့ **Discharging** ဆိုတဲ့ အဆင့်နှစ်ဆင့်ကို နားလည်ရပါမယ်။
+
+---
+
+## 🔋 Step 1: Charging (အားသွင်းခြင်း)
+
+Capacitor ကို Battery တစ်လုံးနဲ့ ချိတ်ဆက်လိုက်တဲ့အခါ Capacitor ဟာ Charge ကို စတင်သိုလှောင်ပါတော့တယ်။
+
+အစပိုင်းမှာ Current က အလွယ်တကူ စီးဆင်းနိုင်ပါတယ်။
+
+ဒါပေမယ့် Capacitor ထဲမှာ Charge တွေ များလာတာနဲ့အမျှ Current စီးဆင်းမှုက တဖြည်းဖြည်း လျော့နည်းလာပါတယ်။
+
+နောက်ဆုံး Capacitor ပြည့်သွားတဲ့အချိန်မှာ Current စီးဆင်းမှုဟာ သုည (0A) နီးပါး ဖြစ်သွားပါတယ်။
+
+```text
+Battery Connected
+        ↓
+Capacitor Starts Charging
+        ↓
+Charge Increases
+        ↓
+Current Decreases
+        ↓
+Capacitor Fully Charged
+```
+
+---
+
+### 📊 Charging Process
+
+```text
+Time = 0s
+Charge = 0%
+
+Time = 1s
+Charge = 25%
+
+Time = 2s
+Charge = 50%
+
+Time = 3s
+Charge = 75%
+
+Time = 4s
+Charge = 100%
+```
+
+Capacitor ပြည့်သွားတဲ့အခါ Battery Voltage နဲ့ Capacitor Voltage တူညီသွားပါတယ်။
+
+---
+
+### 💧 ရေတိုင်ကီ ဥပမာ
+
+Capacitor ကို ရေတိုင်ကီတစ်လုံးလို စဉ်းစားကြည့်ပါ။
+
+ရေတိုင်ကီ အလွတ်တစ်လုံးကို ရေဖြည့်တဲ့အခါ
+
+* အစပိုင်းမှာ ရေများများ ဝင်တယ်
+* တဖြည်းဖြည်း ပြည့်လာတယ်
+* ပြည့်သွားရင် ရေထပ်မဝင်တော့ဘူး
+
+Capacitor လည်း အတူတူပါပဲ။
+
+---
+
+## 🔌 Step 2: Discharging (အားထုတ်ခြင်း)
+
+Battery ကို ဖြုတ်လိုက်ပြီး Capacitor ကို Load တစ်ခု (ဥပမာ LED) နဲ့ ချိတ်လိုက်တဲ့အခါ Capacitor ထဲမှာ သိမ်းထားတဲ့ Charge တွေကို ပြန်ထုတ်ပေးပါတယ်။
+
+ဒီဖြစ်စဉ်ကို Discharging လို့ ခေါ်ပါတယ်။
+
+```text
+Battery Removed
+        ↓
+Capacitor Stores Energy
+        ↓
+LED Connected
+        ↓
+Stored Charge Flows Out
+        ↓
+Capacitor Becomes Empty
+```
+
+---
+
+### 📊 Discharging Process
+
+```text
+Time = 0s
+Charge = 100%
+
+Time = 1s
+Charge = 75%
+
+Time = 2s
+Charge = 50%
+
+Time = 3s
+Charge = 25%
+
+Time = 4s
+Charge = 0%
+```
+
+Charge လျော့နည်းလာတာနဲ့အမျှ Voltage လည်း လျော့နည်းလာပါတယ်။
+
+---
+
+### 💡 Real World Example
+
+Phone Charger ကို Plug ဖြုတ်လိုက်ပြီးနောက် LED Indicator က ခဏဆက်လင်းနေတာ မြင်ဖူးပါသလား?
+
+အဲ့ဒါက Capacitor ထဲမှာ ကျန်နေတဲ့ Charge တွေကို တဖြည်းဖြည်း ထုတ်သုံးနေတာ ဖြစ်ပါတယ်။
+
+---
+
+### 📸 Camera Flash Example
+
+Camera Flash တွေမှာ Capacitor ကြီးတွေ အသုံးပြုထားပါတယ်။
+
+Capacitor ဟာ Charge ကို တဖြည်းဖြည်း စုဆောင်းထားပြီး Flash ရိုက်တဲ့အချိန်မှာ စက္ကန့်ပိုင်းအတွင်း အားလုံးကို တစ်ခါတည်း ထုတ်ပေးပါတယ်။
+
+```text
+Charging for Several Seconds
+             ↓
+Stored Energy
+             ↓
+Flash Button Pressed
+             ↓
+Huge Burst of Light
+```
+
+---
+
+### ⚠️ အရေးကြီးသော မှတ်ချက်
+
+Capacitor တစ်လုံးဟာ Power Supply ကို ဖြုတ်ပြီးနောက်မှာတောင် Charge ကျန်ရှိနေနိုင်ပါတယ်။
+
+အထူးသဖြင့်
+
+* Power Supply Circuits
+* Amplifiers
+* Camera Flash Circuits
+
+တွေမှာ Capacitor ကြီးတွေက အန္တရာယ်ရှိတဲ့ Voltage ကို သိမ်းထားနိုင်ပါတယ်။
+
+ဒါကြောင့် Capacitor ကို မကိုင်ခင် Discharge လုပ်သင့်ပါတယ်။
+
+---
+
+### 📌 မှတ်သားရန်
+
+✅ Capacitor သည် Charge ကို ယာယီ သိုလှောင်နိုင်သည်။
+
+✅ Battery ချိတ်လိုက်သောအခါ Charging ဖြစ်သည်။
+
+✅ Capacitor ပြည့်သွားသောအခါ Current စီးဆင်းမှု လျော့နည်းသွားသည်။
+
+✅ Load ချိတ်လိုက်သောအခါ Discharging ဖြစ်သည်။
+
+✅ Capacitor သည် Energy ကို သိမ်းထားပြီး လိုအပ်သောအချိန်တွင် ပြန်ထုတ်ပေးနိုင်သည်။
+
+---
+
+## 🔍 Types of Capacitors
+
+Capacitor များကို တည်ဆောက်ပုံ၊ အသုံးပြုသော ပစ္စည်းနှင့် အသုံးပြုရမည့် နေရာများပေါ် မူတည်၍ အမျိုးအစားများစွာ ခွဲခြားနိုင်ပါသည်။
+
+သို့သော် Electronics Beginner များအတွက် အများဆုံး တွေ့ရမည့် Capacitor အမျိုးအစားများမှာ
+
+1. **Ceramic Capacitor**
+2. **Electrolytic Capacitor**
+3. **Tantalum Capacitor**
+
+တို့ ဖြစ်ကြသည်။
+
+### 1️⃣ Ceramic Capacitor
+
+Ceramic Capacitor သည် အီလက်ထရွန်းနစ် Circuit များတွင် အများဆုံး တွေ့ရသော Capacitor အမျိုးအစား ဖြစ်သည်။
+
+Capacitance တန်ဖိုး နည်းငယ်မှ အလယ်အလတ်အထိ ရရှိနိုင်ပြီး အရွယ်အစား သေးငယ်သည်။
+
+**လက္ခဏာများ**
+
+✅ အရွယ်အစား သေးငယ်သည်။
+
+✅ စျေးနှုန်း သက်သာသည်။
+
+✅ Polarity မရှိသောကြောင့် ဘယ်ဘက်ကိုမဆို တပ်ဆင်နိုင်သည်။
+
+✅ High Frequency Circuit များတွင် အသုံးများသည်။
+
+**ပုံစံ**
+
+Ceramic Capacitor များကို အများအားဖြင့်  
+
+```text
+104
+103
+472
+```
+
+ကဲ့သို့ နံပါတ်များဖြင့် ဖော်ပြထားတတ်သည်။
+
+**ဥပမာ*
+
+```text
+104
+```
+
+ဆိုသည်မှာ
+
+```text
+100000 pF = 100 nF = 0.1 µF
+```
+
+ဖြစ်သည်။
+
+**အသုံးပြုသောနေရာများ**
+
+* *Noise Filtering*
+* *Signal Coupling*
+* *Microcontroller Circuits*
+* *Arduino Projects*  
+
+### 2️⃣ Electrolytic Capacitor
+
+Electrolytic Capacitor သည် Charge များများ သိုလှောင်နိုင်သော Capacitor အမျိုးအစား ဖြစ်သည်။
+
+Ceramic Capacitor ထက် Capacitance တန်ဖိုး အများကြီး ကြီးမားနိုင်သည်။
+
+**လက္ခဏာများ**
+
+✅ Capacitance တန်ဖိုး ကြီးမားသည်။
+
+✅ Power Supply Circuit များတွင် အသုံးများသည်။
+
+✅ Energy Storage အတွက် သင့်တော်သည်။
+
+⚠️ Polarity ရှိသည်။
+
+**Polarity**
+
+Electrolytic Capacitor တွင်
+
+```text
++
+-
+```  
+
+ဘက်များ ရှိသည်။
+
+Capacitor ကို ပြောင်းပြန် တပ်ဆင်ပါက
+
+* *အပူတက်နိုင်သည်။*
+* *ပျက်စီးနိုင်သည်။*
+* *အချို့အခြေအနေများတွင် ပေါက်ကွဲနိုင်သည်။*
+
+*အသုံးပြုသောနေရာများ -*
+
+* *Power Supply Filtering*
+* *Voltage Smoothing*
+* *Audio Amplifier Circuits*
+* *Energy Storage*  
+
+**ဥပမာ တန်ဖိုးများ**  
+
+```text
+10µF
+100µF
+470µF
+1000µF
+2200µF
+```
+
+### 3️⃣ Tantalum Capacitor
+
+Tantalum Capacitor သည် Electrolytic Capacitor နှင့် ဆင်တူသော်လည်း ပိုမိုတိကျပြီး Stability ပိုကောင်းသော Capacitor အမျိုးအစား ဖြစ်သည်။
+
+**လက္ခဏာများ**
+
+✅ အရွယ်အစား သေးငယ်သည်။
+
+✅ တည်ငြိမ်မှု (Stability) ကောင်းသည်။
+
+✅ Leakage Current နည်းသည်။
+
+✅ Precision Circuit များတွင် အသုံးများသည်။
+
+⚠️ Polarity ရှိသည်။
+
+**အသုံးပြုသောနေရာများ**
+
+* *Mobile Phones*
+* *Laptops*
+* *Embedded Systems*
+* *Medical Devices*  
+
+#### 📊 Capacitor Types Comparison
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Ceramic</th>
+      <th>Electrolytic</th>
+      <th>Tantalum</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Polarity</td>
+      <td>❌ No</td>
+      <td>✅ Yes</td>
+      <td>✅ Yes</td>
+    </tr>
+    <tr>
+      <td>Capacitance</td>
+      <td>Small–Medium</td>
+      <td>Large</td>
+      <td>Medium-Large</td>
+    </tr>
+    <tr>
+      <td>Size</td>
+      <td>Small</td>
+      <td>Large</td>
+      <td>Small</td>
+    </tr>
+    <tr>
+      <td>Cost</td>
+      <td>Cheap</td>
+      <td>Medium</td>
+      <td>Expensive</td>
+    </tr>
+    <tr>
+      <td>Stability</td>
+      <td>Good</td>
+      <td>Medium</td>
+      <td>Excellent</td>
+    </tr>
+  </tbody>
+</table>
+
+#### 🎯 ဘယ် Capacitor ကို ဘယ်အချိန် သုံးမလဲ?  
+
+**Ceramic Capacitor**
+
+Noise Filtering နှင့် High Frequency Circuit များတွင် အသုံးပြုပါ။
+
+**Electrolytic Capacitor**
+
+Power Supply နှင့် Energy Storage အတွက် အသုံးပြုပါ။
+
+**Tantalum Capacitor**
+
+တိကျမှုနှင့် Stability လိုအပ်သော Circuit များတွင် အသုံးပြုပါ။
+
+#### 📌 မှတ်သားရန်
+
+✅ Ceramic Capacitor သည် အများဆုံး အသုံးပြုသော Capacitor ဖြစ်သည်။
+
+✅ Electrolytic Capacitor သည် Capacitance တန်ဖိုး ကြီးမားပြီး Polarity ရှိသည်။
+
+✅ Tantalum Capacitor သည် Stability ပိုကောင်းပြီး Precision Circuit များတွင် အသုံးများသည်။
+
+✅ Polarized Capacitor များကို ပြောင်းပြန် မတပ်ဆင်သင့်ပါ။
+
+## Theory
+
+
+---
 
 <QuizComponent 
   question="Force ရဲ့ unit က ဘာလဲဆိုတာ အောက်မှာ ဖြေကြည့်ပါ။"
   options={['Newton', 'Pascal', 'Ohms']}
   correctAnswer="Newton"
 />
+
+---
+
+## 📌 အကျဉ်းချုပ် (Summary)
