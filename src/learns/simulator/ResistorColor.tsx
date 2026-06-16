@@ -53,9 +53,9 @@ export default function ColorCodeCalculator() {
   }, [band1, band2, multiplier]);
 
   return (
-    <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-card p-6 text-text-main">
+    <div className="mx-auto max-w-5xl rounded-2xl border border-border bg-card px-6 py-2 text-text-main">
 
-      <h2 className="mb-6 text-3xl font-bold">
+      <h2 className="mb-12 text-3xl font-bold">
         Color Code Calculator
       </h2>
 

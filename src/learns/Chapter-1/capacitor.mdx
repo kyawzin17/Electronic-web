@@ -1,6 +1,8 @@
 import QuizComponent from '../components/QuizComponent';
+import CloudImage from '../../components/CloudImage.tsx';
+import Capacitor from "../simulator/Capacitor.tsx";
 
-## Chapter 1: Capacitor (လျှပ်သိုပစ္စည်း)
+# Chapter 1: Capacitor (လျှပ်သိုပစ္စည်း)
 
 ## မိတ်ဆက်
 
@@ -14,11 +16,14 @@ import QuizComponent from '../components/QuizComponent';
 အဲ့ဒီအလုပ်တွေကို *Capacitor* က
 အဓိက လုပ်ဆောင်ပေးတာ ဖြစ်ပါတယ်။
 
+<CloudImage src="https://res.cloudinary.com/dn4jczzgu/image/upload/v1781618015/capacitor_vji6b2.png"
+              alt="Capacitor"
+              className="max-w-80 mx-auto" />
 *Capacitor* ဆိုသည်မှာ လျှပ်စစ်စွမ်းအင်ကို *လျှပ်စစ်စက်ကွင်း (Electric Field)* အဖြစ် ခေတ္တသိုလှောင်ပေးနိုင်သော ပစ္စည်းတစ်ခုဖြစ်ပါသည်။ ဘက်ထရီကို ရေအမြောက်အမြား သိုလှောင်ထားသော ရေကန်ကြီးတစ်ခုနှင့် နှိုင်းယှဉ်ပါက *Capacitor* သည် လိုအပ်သောအခါ စွမ်းအင်ကို တခဏချင်း အလုံးအရင်းနှင့် ထုတ်လွှတ်ပေးနိုင်သော ဖိအားမြှင့်ဘူးငယ်တစ်ခုနှင့် တူပါသည်။
 
-*Resistor → Current Control*
+*Resistor → Current Control (လျှပ်စီးကြောင်းကို ထိန်းချုပ်)*
 
-*Capacitor → Charge Storage*
+*Capacitor → Charge Storage (လျှပ်စစ်အားကို ယာယီသိုလှောင်)*
 
 ---  
 
@@ -33,7 +38,7 @@ Capacitor နဲ့ Capacitance ကို လူအများစုက ရေ�
 တစ်နည်းအားဖြင့် -
 
 * Capacitor = Component
-* Capacitance = Storage Ability
+* Capacitance = Storage Ability (သိုလှောင်နိုင်စွမ်း)
 
 ဖြစ်ပါတယ်။
 
@@ -54,7 +59,7 @@ Capacitance ကို နားလည်လွယ်အောင် ရေတိ
 
 ---
 
-### 🔋 ဥပမာ
+#### 🔋 ဥပမာ
 
 Capacitor နှစ်လုံး ရှိတယ်ဆိုပါစို့။
 
@@ -63,7 +68,7 @@ Capacitor နှစ်လုံး ရှိတယ်ဆိုပါစို့
 1000µF Capacitor
 ```
 
-1000µF Capacitor က 100µF Capacitor ထက် Charge ပိုများများ သိုလှောင်နိုင်ပါတယ်။
+1000µF(မိုက်ခရို ‌ဖာရက်ဒ်) Capacitor က 100µF Capacitor ထက် Charge ပိုများများ သိုလှောင်နိုင်ပါတယ်။
 
 ဒါကြောင့်
 
@@ -140,6 +145,8 @@ Capacitor Lesson မှာ
 Capacitor တစ်လုံးရဲ့ အဓိက အလုပ်က လျှပ်စစ်အား (Electrical Charge) ကို ယာယီသိုလှောင်ထားပြီး လိုအပ်တဲ့အချိန်မှာ ပြန်ထုတ်ပေးခြင်း ဖြစ်ပါတယ်။
 
 Capacitor ရဲ့ အလုပ်လုပ်ပုံကို နားလည်ဖို့ **Charging** နဲ့ **Discharging** ဆိုတဲ့ အဆင့်နှစ်ဆင့်ကို နားလည်ရပါမယ်။
+
+<Capacitor />
 
 ---
 
@@ -309,13 +316,19 @@ Capacitor များကို တည်ဆောက်ပုံ၊ အသု�
 
 သို့သော် Electronics Beginner များအတွက် အများဆုံး တွေ့ရမည့် Capacitor အမျိုးအစားများမှာ
 
-1. **Ceramic Capacitor**
-2. **Electrolytic Capacitor**
+1. **Ceramic Capacitor ( ကြွေထည် capacitor )**
+2. **Electrolytic Capacitor ( အီလက်ထရိုလိုက် capacitor )**
 3. **Tantalum Capacitor**
 
-တို့ ဖြစ်ကြသည်။
+တို့ ဖြစ်ကြသည်။  
+
+---
 
 ### 1️⃣ Ceramic Capacitor
+
+<CloudImage src="https://res.cloudinary.com/dn4jczzgu/image/upload/v1781620807/Electronic-Component-Ceramic-Capacitor_ebr0es.jpg"
+              alt="Ceramic Capacitor"
+              className="max-w-80 mx-auto" />  
 
 Ceramic Capacitor သည် အီလက်ထရွန်းနစ် Circuit များတွင် အများဆုံး တွေ့ရသော Capacitor အမျိုးအစား ဖြစ်သည်။
 
@@ -327,7 +340,7 @@ Capacitance တန်ဖိုး နည်းငယ်မှ အလယ်အလ
 
 ✅ စျေးနှုန်း သက်သာသည်။
 
-✅ Polarity မရှိသောကြောင့် ဘယ်ဘက်ကိုမဆို တပ်ဆင်နိုင်သည်။
+✅ Polarity (အပေါင်း/အနုတ် စွန်းသတ်မှတ်ချက်) မရှိသောကြောင့် ဘယ်ဘက်ကိုမဆို တပ်ဆင်နိုင်သည်။
 
 ✅ High Frequency Circuit များတွင် အသုံးများသည်။
 
@@ -359,12 +372,18 @@ Ceramic Capacitor များကို အများအားဖြင့်
 
 **အသုံးပြုသောနေရာများ**
 
-* *Noise Filtering*
-* *Signal Coupling*
-* *Microcontroller Circuits*
-* *Arduino Projects*  
+* *Noise Filtering (ဆူညံသံစစ်ထုပ်ခြင်း)*
+* *Signal Coupling (အချက်ပြ ချိတ်ဆက်မှု)*
+* *Microcontroller Circuits (မိုက်ခရိုကွန်ထရိုလာ ဆားကစ်များ)*
+* *Arduino Projects (အာဂျူနို projects)*  
+
+---   
 
 ### 2️⃣ Electrolytic Capacitor
+
+<CloudImage src="https://res.cloudinary.com/dn4jczzgu/image/upload/v1781621557/a767bb5fa691a9198b174c5fa3cb28b6_suatyr.png"
+              alt="Electrolytic Capacitor"
+              className="max-w-80 mx-auto" />  
 
 Electrolytic Capacitor သည် Charge များများ သိုလှောင်နိုင်သော Capacitor အမျိုးအစား ဖြစ်သည်။
 
@@ -378,7 +397,7 @@ Ceramic Capacitor ထက် Capacitance တန်ဖိုး အများက
 
 ✅ Energy Storage အတွက် သင့်တော်သည်။
 
-⚠️ Polarity ရှိသည်။
+⚠️ Polarity (အပေါင်း/အနုတ် စွန်းသတ်မှတ်ချက်) ရှိသည်။
 
 **Polarity**
 
@@ -399,7 +418,7 @@ Capacitor ကို ပြောင်းပြန် တပ်ဆင်ပါ�
 
 *အသုံးပြုသောနေရာများ -*
 
-* *Power Supply Filtering*
+* *Power Supply Filtering (ပါဝါထောက်ပံ့မှု စစ်ထုတ်ခြင်း)*
 * *Voltage Smoothing*
 * *Audio Amplifier Circuits*
 * *Energy Storage*  
@@ -413,9 +432,13 @@ Capacitor ကို ပြောင်းပြန် တပ်ဆင်ပါ�
 1000µF
 2200µF
 ```
+---  
 
 ### 3️⃣ Tantalum Capacitor
 
+<CloudImage src="https://res.cloudinary.com/dn4jczzgu/image/upload/v1781628387/Tantalum_capacitors_su05eb.jpg"
+              alt="Tantalum Capacitor"
+              className="max-w-80 mx-auto" />  
 Tantalum Capacitor သည် Electrolytic Capacitor နှင့် ဆင်တူသော်လည်း ပိုမိုတိကျပြီး Stability ပိုကောင်းသော Capacitor အမျိုးအစား ဖြစ်သည်။
 
 **လက္ခဏာများ**
@@ -428,7 +451,7 @@ Tantalum Capacitor သည် Electrolytic Capacitor နှင့် ဆင်တ
 
 ✅ Precision Circuit များတွင် အသုံးများသည်။
 
-⚠️ Polarity ရှိသည်။
+⚠️ Polarity (အပေါင်း/အနုတ် စွန်းသတ်မှတ်ချက်) ရှိသည်။
 
 **အသုံးပြုသောနေရာများ**
 
@@ -482,21 +505,25 @@ Tantalum Capacitor သည် Electrolytic Capacitor နှင့် ဆင်တ
   </tbody>
 </table>
 
-#### 🎯 ဘယ် Capacitor ကို ဘယ်အချိန် သုံးမလဲ?  
+---  
 
-**Ceramic Capacitor**
+### 🎯 ဘယ် Capacitor ကို ဘယ်အချိန် သုံးမလဲ?  
+
+* **Ceramic Capacitor**
 
 Noise Filtering နှင့် High Frequency Circuit များတွင် အသုံးပြုပါ။
 
-**Electrolytic Capacitor**
+* **Electrolytic Capacitor**
 
 Power Supply နှင့် Energy Storage အတွက် အသုံးပြုပါ။
 
-**Tantalum Capacitor**
+* **Tantalum Capacitor**
 
-တိကျမှုနှင့် Stability လိုအပ်သော Circuit များတွင် အသုံးပြုပါ။
+တိကျမှုနှင့် Stability လိုအပ်သော Circuit များတွင် အသုံးပြုပါ။  
 
-#### 📌 မှတ်သားရန်
+---
+
+### 📌 မှတ်သားရန်
 
 ✅ Ceramic Capacitor သည် အများဆုံး အသုံးပြုသော Capacitor ဖြစ်သည်။
 
@@ -506,17 +533,678 @@ Power Supply နှင့် Energy Storage အတွက် အသုံးပ�
 
 ✅ Polarized Capacitor များကို ပြောင်းပြန် မတပ်ဆင်သင့်ပါ။
 
+---  
+
 ## Theory
 
+## 🔗 Capacitors in Series
+
+Capacitor နှစ်လုံး သို့မဟုတ် နှစ်လုံးထက်ပိုသော Capacitors များကို တစ်လုံးပြီးတစ်လုံး ဆက်သွယ်ထားခြင်းကို Series Connection လို့ ခေါ်ပါတယ်။
+
++ ──||──||── -  
+     C1  C2
+
+Series Connection မှာ Capacitor တစ်လုံးချင်းစီပေါ်မှာ Charge ပမာဏ တူညီစွာ ရှိနေပြီး စုစုပေါင်း Capacitance တန်ဖိုးက လျော့နည်းသွားပါတယ်။
+
+---  
+
+🤔 ဘာကြောင့် Capacitance လျော့သွားတာလဲ?
+
+Series Connection မှာ Capacitor တွေကို တစ်ဆင့်ချင်း ဖြတ်သန်းရတဲ့အတွက် Charge သိုလှောင်နိုင်စွမ်း စုစုပေါင်းဟာ Capacitor အသေးဆုံးတန်ဖိုးထက်တောင် နည်းသွားနိုင်ပါတယ်။
+
+ဒါကြောင့်
+
+Capacitors in Series
+        ↓
+Capacitance Decreases
+
+ဖြစ်ပါတယ်။  
+
+---
+
+📐 Formula
+
+Series Connection အတွက် Equivalent Capacitance $${C_{\text{eq}}}$$ ကို အောက်ပါ Formula ဖြင့် တွက်ချက်နိုင်ပါတယ်။
+
+$$\frac{1}{C_{\text{eq}}} = \frac{1}{C_{\text{1}}} + \frac{1}{C_{\text{2}}}$$ 
+
+Capacitor သုံးလုံးရှိလျှင်
+
+$$\frac{1}{C_{\text{eq}}} = \frac{1}{C_{\text{1}}} + \frac{1}{C_{\text{2}}} + \frac{1}{C_{\text{3}}}$$ 
+
+---  
+
+🧮 Example 1
+
+Capacitor နှစ်လုံးကို Series ချိတ်ထားတယ်ဆိုပါစို့။
+
+C1 = 10µF  
+
+C2 = 20µF
+
+Formula ထဲ အစားထိုးပါ။
+
+$$\frac{1}{C_{\text{eq}}} = \frac{1}{10} + \frac{1}{20}$$ 
+
+=0.1+0.05=0.15  
+
+$${C_{\text{eq}}} = \frac{1}{0.15} = 6.67μF$$ 
+
+**Answer:**  
+```text
+Ceq = 6.67µF
+```  
+
+Capacitor နှစ်လုံးပေါင်းထားပေမယ့် စုစုပေါင်း Capacitance က 10µF ထက်တောင် နည်းသွားတာကို တွေ့နိုင်ပါတယ်။
+
+---  
+
+🧮 Example 2  
+
+```text  
+C1 = 100µF  
+
+C2 = 100µF  
+```  
+
+$$\frac{1}{C_{\text{eq}}} = \frac{1}{100} + \frac{1}{100}$$ 
+
+$$\frac{1}{C_{\text{eq}}}$$ = 0.02  
+
+$${C_{\text{eq}}}$$ = 50µF  
+
+**Answer:**  
+
+```text
+Ceq = 50µF
+```  
+
+---  
+
+#### **💡 မှတ်သားရန်**
+
+Capacitor နှစ်လုံး တန်ဖိုးတူ Series ချိတ်ထားရင်
+
+$${C_{\text{eq}}} = \frac{C}{2}$$
+	​
+
+ဖြစ်ပါတယ်။
+
+**ဥပမာ:**
+
+```text
+100µF + 100µF (Series)
+```
+
+↓
+
+```text
+50µF
+```  
+
+---  
+
+### 📌 Series Connection Summary
+
+✅ Charge တန်ဖိုး တူညီသည်။
+
+✅ Total Capacitance လျော့နည်းသွားသည်။
+
+✅ Voltage Rating တိုးလာနိုင်သည်။
+
+✅ Power Supply Circuit များတွင် Voltage မြင့်လိုသောအခါ အသုံးပြုကြသည်။
+
+---  
+
+## 🔀 Capacitors in Parallel
+
+Capacitor များကို ဘေးချင်းယှဉ်၍ Positive ကို Positive၊ Negative ကို Negative ချိတ်ဆက်ထားခြင်းကို Parallel Connection လို့ ခေါ်ပါတယ်။
+
+
+Parallel Connection မှာ Capacitor များသည် Charge ကို ပိုမို သိုလှောင်နိုင်သောကြောင့် စုစုပေါင်း Capacitance တန်ဖိုး တိုးလာပါတယ်။
+
+---  
+
+🤔 ဘာကြောင့် Capacitance တိုးလာတာလဲ?
+
+ရေတိုင်ကီ နှစ်လုံးကို ဘေးချင်းယှဉ်ထားသလို စဉ်းစားနိုင်ပါတယ်။
+
+Tank နှစ်လုံး ပေါင်းလိုက်ရင် ရေပိုသိုလှောင်နိုင်သလို Capacitor နှစ်လုံး Parallel ချိတ်လိုက်ရင် Charge ပိုသိုလှောင်နိုင်ပါတယ်။
+
+```text  
+Capacitors in Parallel
+        ↓
+Capacitance Increases  
+```  
+--- 
+
+📐 Formula
+
+Parallel Connection အတွက် Equivalent Capacitance ကို Capacitor တန်ဖိုးများ ပေါင်းရုံဖြင့် ရနိုင်ပါတယ်။
+
+$${C_{\text{eq}}} = {C_{\text{1}}} + {C_{\text{1}}} + ...$$
+
+---  
+
+🧮 Example 1  
+
+```text
+C1 = 10µF
+C2 = 20µF
+```
+
+$${C_{\text{eq}}} = 10 + 20$$  
+
+$${C_{\text{eq}}} = 30$$  
+
+**Answer:**  
+
+```text
+Ceq = 30µF
+```  
+---  
+
+🧮 Example 2  
+
+```text
+C1 = 100µF
+C2 = 220µF
+C3 = 470µF
+```  
+
+$${C_{\text{eq}}} = 100 + 220 + 470$$  
+
+$${C_{\text{eq}}} = 790µF$$  
+
+**Answer:**  
+
+```text
+Ceq = 30µF
+```  
+---  
+
+💡 မှတ်သားရန်
+
+တန်ဖိုးတူ Capacitor များကို Parallel ချိတ်ထားလျှင်
+
+$${C_{\text{eq}}} = nC$$  
+
+ဖြစ်ပါတယ်။
+
+**ဥပမာ:**
+
+```text
+100µF + 100µF + 100µF
+```
+↓
+```text
+300µF
+```  
+---  
+
+### 📌 Parallel Connection Summary
+
+✅ Voltage တန်ဖိုး တူညီသည်။
+
+✅ Total Capacitance တိုးလာသည်။
+
+✅ Charge ပိုမို သိုလှောင်နိုင်သည်။
+
+✅ Power Supply Filtering Circuit များတွင် အသုံးများသည်။
+
+---  
+
+### 🎯 Series vs Parallel  
+
+<table>
+  <thead>
+    <tr>
+      <th>Feature</th>
+      <th>Series</th>
+      <th>Parallel</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Total Capacitance</td>
+      <td>Decreases</td>
+      <td>Increases</td>
+    </tr>
+    <tr>
+      <td>Charge</td>
+      <td>Same</td>
+      <td>Different</td>
+    </tr>
+    <tr>
+      <td>Voltage</td>
+      <td>Shared</td>
+      <td>Same</td>
+    </tr>
+    <tr>
+      <td>Main Use</td>
+      <td>Increase Voltage Rating</td>
+      <td>Increase Capacitance</td>
+    </tr>
+  </tbody>
+</table>  
+
+---    
+
+### 📌 မှတ်သားရန်
+
+✅ Capacitors in Series → Capacitance လျော့သည်။
+
+✅ Capacitors in Parallel → Capacitance တိုးသည်။
+
+✅ Series Formula သည် Resistors in Parallel Formula နှင့် ဆင်တူသည်။
+
+✅ Parallel Formula သည် Resistors in Series Formula နှင့် ဆင်တူသည်။
+
+✅ Capacitor Circuit တွက်ချက်ရာတွင် Series နှင့် Parallel Connection ကို ခွဲခြားသိရှိရန် အရေးကြီးသည်။
+
+---
+
+# 🛠️ Practical Uses of Capacitors
+
+Capacitor များသည် Electronic Circuit များတွင် အလွန်အရေးကြီးသော Component များဖြစ်ပြီး နေရာအမျိုးမျိုးတွင် အသုံးပြုကြပါသည်။
+
+Capacitor ၏ အဓိက လုပ်ဆောင်ချက်များမှာ Charge သိုလှောင်ခြင်း၊ Voltage ကို တည်ငြိမ်စေခြင်း၊ Signal Filtering ပြုလုပ်ခြင်းနှင့် Timing Control ပြုလုပ်ခြင်းတို့ ဖြစ်ပါသည်။
+
+အောက်တွင် လက်တွေ့အသုံးများသော Application များကို လေ့လာကြပါစို့။
+
+---
+
+### 1️⃣ Power Supply Filtering
+
+Power Supply Circuit များတွင် Capacitor ကို အများဆုံး အသုံးပြုကြသည်။
+
+AC Voltage ကို DC Voltage အဖြစ် ပြောင်းလဲသောအခါ Output တွင် Ripple ဟုခေါ်သော Voltage အတက်အကျများ ကျန်ရှိနေနိုင်ပါသည်။
+
+Capacitor သည် Voltage မြင့်နေချိန်တွင် Charge ကို သိမ်းဆည်းထားပြီး Voltage ကျနေချိန်တွင် ပြန်ထုတ်ပေးသဖြင့် Output Voltage ကို ပိုမို တည်ငြိမ်စေပါသည်။
+
+```text
+AC Input
+    ↓
+Rectifiers
+    ↓
+Ripple DC
+    ↓
+Capacitor Filter
+    ↓
+Smooth DC Output
+```
+---  
+
+#### အသုံးများသောနေရာများ
+
+* Phone Chargers
+* Computer Power Supplies
+* TV Power Circuits
+* Amplifiers
+
+---
+
+### 2️⃣ Camera Flash
+
+Camera Flash များတွင် Capacitor ကြီးများကို အသုံးပြုထားပါသည်။
+
+Capacitor သည် Charge ကို တဖြည်းဖြည်း စုဆောင်းထားပြီး Flash ရိုက်သည့်အချိန်တွင် အားလုံးကို အချိန်တိုအတွင်း ထုတ်ပေးနိုင်ပါသည်။
+
+```text
+Charging
+    ↓
+Energy Storage
+    ↓
+Flash Trigger
+    ↓
+Instant Bright Light
+```
+
+ဒါကြောင့် Camera Flash သည် အလွန်တောက်ပသော အလင်းကို ခဏအတွင်း ထုတ်ပေးနိုင်ခြင်း ဖြစ်ပါသည်။
+
+---
+
+### 3️⃣ Timing Circuits
+
+Capacitor များကို Timing နှင့် Delay Circuits များတွင် အသုံးပြုကြပါသည်။
+
+Capacitor သည် Charge တက်ရန်နှင့် Charge ကျရန် အချိန်ယူရသောကြောင့် အချိန်ထိန်းချုပ်မှု (Time Delay) များ ပြုလုပ်နိုင်ပါသည်။
+
+ဥပမာ
+
+* LED Blink Circuit
+* Timer Circuit
+* Alarm Circuit
+* Automatic Delay Circuit
+
+```text
+Power ON
+    ↓
+Capacitor Charging
+    ↓
+Specified Delay
+    ↓
+Output Activated
+```
+
+555 Timer IC Circuit များတွင် Capacitor သည် အရေးကြီးသော အစိတ်အပိုင်းတစ်ခု ဖြစ်ပါသည်။
+
+---
+
+### 4️⃣ Audio Circuits
+
+Audio Circuit များတွင် Capacitor ကို Signal Filtering နှင့် Noise Reduction အတွက် အသုံးပြုကြပါသည်။
+
+Capacitor သည် မလိုအပ်သော Noise Signal များကို လျော့ချပေးပြီး အသံအရည်အသွေးကို ပိုမိုကောင်းမွန်စေပါသည်။
+
+အသုံးများသောနေရာများ
+
+* Audio Amplifiers
+* Speakers
+* Microphone Circuits
+* Sound Systems
+
+```text
+Audio Signal
+      +
+Electrical Noise
+        ↓
+Capacitor Filter
+        ↓
+Cleaner Audio Signal
+```
+
+---
+
+## 🎯 အကျဉ်းချုပ်
+
+Capacitor များ၏ အဓိက အသုံးပြုမှုများမှာ -
+
+✅ Power Supply Filtering
+
+✅ Energy Storage
+
+✅ Timing & Delay Circuits
+
+✅ Audio Signal Filtering
+
+✅ Voltage Stabilization
+
+တို့ ဖြစ်ကြပါသည်။
+
+Capacitor များကို Phone Charger မှစ၍ Computer၊ TV၊ Camera နှင့် Audio Equipment များအထိ နေရာတိုင်းတွင် တွေ့ရှိနိုင်ပါသည်။
+
+---
+
+### ⚠️ Safety Note
+
+Capacitor များသည် Battery ကဲ့သို့ Charge ကို ယာယီ သိုလှောင်ထားနိုင်ပါသည်။
+
+ဒါကြောင့် Power Supply ကို ဖြုတ်ထားပြီးနောက်တွင်ပင် Capacitor အတွင်း၌ Voltage ကျန်ရှိနေနိုင်ပါသည်။
+
+အထူးသဖြင့် Large Capacitors များတွင် သတိထားရန် လိုအပ်ပါသည်။
+
+---
+
+### 🔋 Stored Charge
+
+Capacitor တစ်လုံးသည် Circuit ကို Power OFF လုပ်ထားသော်လည်း Charge ကို ဆက်လက် သိမ်းထားနိုင်ပါသည်။
+
+ဥပမာ
+
+```text
+Power ON
+    ↓
+Capacitor Charges
+    ↓
+Power OFF
+    ↓
+Charge Still Stored
+```
+
+ဒါကြောင့် Capacitor ကို တိုက်ရိုက်ထိတွေ့မိပါက Shock ရနိုင်ပါသည်။
+
+---
+
+### ⚠️ Large Capacitors Are Dangerous
+
+အောက်ပါ Capacitor များသည် Energy ပမာဏ များစွာ သိုလှောင်ထားနိုင်ပါသည်။
+
+```text
+470µF
+1000µF
+2200µF
+4700µF
+10000µF
+```
+
+အထူးသဖြင့်
+
+* SMPS Power Supplies
+* Audio Amplifiers
+* UPS Systems
+* Camera Flash Circuits
+
+များတွင် အသုံးပြုသော Capacitor များသည် အန္တရာယ်ရှိသော Voltage ကို သိမ်းထားနိုင်ပါသည်။
+
+---
+
+### 🔧 Discharging a Capacitor
+
+Capacitor ကို မကိုင်မီ Discharge ပြုလုပ်သင့်ပါသည်။
+
+Discharge ဆိုသည်မှာ Capacitor ထဲတွင် ကျန်ရှိနေသော Charge များကို ဘေးကင်းစွာ ထုတ်ပစ်ခြင်း ဖြစ်ပါသည်။
+
+လက်တွေ့တွင် Resistor တစ်လုံးကို အသုံးပြု၍ Discharge ပြုလုပ်လေ့ ရှိပါသည်။
+
+```text
+Capacitor
+     │
+ Resistor
+     │
+Discharge
+```
+
+---
+
+### ❌ မလုပ်သင့်သောအရာများ
+
+Capacitor ကို Screwdriver သို့မဟုတ် Wire ဖြင့် တိုက်ရိုက် Short Circuit မလုပ်သင့်ပါ။
+
+အကြောင်းမှာ
+
+* Spark ဖြစ်နိုင်သည်။
+* Capacitor ပျက်စီးနိုင်သည်။
+* Circuit ထိခိုက်နိုင်သည်။
+
+---
+
+### 📌 Safety Rules
+
+✅ Capacitor ကို မကိုင်မီ Charge ကျန်/မကျန် စစ်ဆေးပါ။
+
+✅ Large Capacitor များကို Discharge လုပ်ပြီးမှ ကိုင်တွယ်ပါ။
+
+✅ Voltage Rating ကို လေးစားပါ။
+
+✅ Reverse Polarity မတပ်ဆင်ပါနှင့်။
+
+✅ Power Supply Circuit များတွင် အထူးသတိထားပါ။
 
 ---
 
 <QuizComponent 
-  question="Force ရဲ့ unit က ဘာလဲဆိုတာ အောက်မှာ ဖြေကြည့်ပါ။"
-  options={['Newton', 'Pascal', 'Ohms']}
-  correctAnswer="Newton"
+  question="Capacitance Unit က ဘာလဲ?"
+  options={['Voltage', 'Watt', 'Farad']}
+  correctAnswer="Farad"
+/>
+
+
+<QuizComponent 
+  question="Capacitor က ဘာကို သိုလှောင်သလဲ?"
+  options={['Current', 'Charge', 'Power']}
+  correctAnswer="Farad"
 />
 
 ---
+## 📌 Chapter Summary
 
-## 📌 အကျဉ်းချုပ် (Summary)
+ဒီ Chapter မှာ Capacitor ၏ အခြေခံသဘောတရားများ၊ အလုပ်လုပ်ပုံနှင့် လက်တွေ့အသုံးပြုမှုများကို လေ့လာခဲ့ပြီး ဖြစ်ပါသည်။
+
+Capacitor သည် Electronics Circuit များတွင် အလွန်အရေးကြီးသော Component တစ်ခုဖြစ်ပြီး Charge ကို ယာယီသိုလှောင်ထားနိုင်ပါသည်။
+
+အောက်တွင် ဒီ Chapter မှ အရေးကြီးဆုံး အချက်များကို ပြန်လည်စုစည်းထားပါသည်။  
+
+<CloudImage src="https://res.cloudinary.com/dn4jczzgu/image/upload/v1781629609/Gemini_Generated_Image_nizbvznizbvznizb_bg2glj.png"
+              alt="Tantalum Capacitor"
+              className="max-w-80 mx-auto" /> 
+
+---
+
+### ⚡ Capacitor Stores Electrical Charge
+
+Capacitor သည် Electrical Charge ကို ယာယီသိုလှောင်ထားနိုင်သော Electronic Component တစ်ခု ဖြစ်ပါသည်။
+
+Battery မဟုတ်သော်လည်း Charge ကို အချိန်အတိုင်းအတာတစ်ခုအထိ သိမ်းထားနိုင်ပါသည်။
+
+---
+
+### 📏 Unit = Farad (F)
+
+Capacitance ကို Farad (F) ဖြင့် တိုင်းတာပါသည်။
+
+လက်တွေ့ Circuit များတွင်
+
+* Microfarad (µF)
+* Nanofarad (nF)
+* Picofarad (pF)
+
+တို့ကို ပိုမိုအသုံးပြုကြပါသည်။
+
+---
+
+### 📦 Capacitance Is the Storage Ability
+
+Capacitance ဆိုသည်မှာ Capacitor တစ်လုံး၏ Charge သိုလှောင်နိုင်စွမ်းကို ဖော်ပြသော Property ဖြစ်ပါသည်။
+
+```text
+Capacitor = Component
+
+Capacitance = Storage Ability
+```
+
+Capacitance တန်ဖိုး များလေလေ Charge ပိုမို သိုလှောင်နိုင်လေလေ ဖြစ်ပါသည်။
+
+---
+
+### 🔋 Capacitors Charge and Discharge
+
+Battery နှင့် ချိတ်ဆက်သောအခါ Capacitor သည် Charge ကို သိမ်းဆည်းပါသည်။
+
+Load နှင့် ချိတ်ဆက်သောအခါ သိမ်းထားသော Charge ကို ပြန်လည်ထုတ်ပေးပါသည်။
+
+```text
+Charging
+     ↓
+Stored Energy
+     ↓
+Discharging
+```
+
+ဒါသည် Capacitor ၏ အခြေခံ အလုပ်လုပ်ပုံ ဖြစ်ပါသည်။
+
+---
+
+### ⚠️ Electrolytic Capacitors Have Polarity
+
+Electrolytic Capacitor နှင့် Tantalum Capacitor များတွင်
+
+```text
+Positive (+)
+Negative (-)
+```
+
+ဘက်များ ရှိပါသည်။
+
+Reverse Polarity ဖြင့် ချိတ်ဆက်ပါက Capacitor ပျက်စီးနိုင်သောကြောင့် သတိထားရပါမည်။
+
+---
+
+### 🔀 Parallel Connection → Capacitance Increases
+
+Capacitor များကို Parallel ချိတ်ဆက်ပါက Total Capacitance တိုးလာပါသည်။
+
+```text
+10µF + 20µF
+      ↓
+30µF
+```
+
+Parallel Connection သည် Charge ပိုမို သိုလှောင်လိုသောအခါ အသုံးဝင်ပါသည်။
+
+---
+
+### 🔗 Series Connection → Capacitance Decreases
+
+Capacitor များကို Series ချိတ်ဆက်ပါက Total Capacitance လျော့နည်းသွားပါသည်။
+
+```text
+10µF Series 20µF
+          ↓
+6.67µF
+```
+
+Series Connection ကို Voltage Rating မြှင့်လိုသော Circuit များတွင် အသုံးပြုလေ့ ရှိပါသည်။
+
+---
+
+### 🛠️ Capacitors Are Used in Filtering and Timing Circuits
+
+Capacitor များကို Electronic Devices များစွာတွင် အသုံးပြုကြပါသည်။
+
+အသုံးများသော Application များမှာ
+
+* Power Supply Filtering
+* Camera Flash
+* Timing Circuits
+* Delay Circuits
+* Audio Circuits
+* Noise Filtering
+
+တို့ ဖြစ်ပါသည်။
+
+---
+
+## 🧠 Remember
+
+✅ Capacitor stores electrical charge.
+
+✅ Capacitance is measured in Farads (F).
+
+✅ Capacitors charge and discharge over time.
+
+✅ Ceramic Capacitors are non-polarized.
+
+✅ Electrolytic Capacitors are polarized.
+
+✅ Parallel connection increases capacitance.
+
+✅ Series connection decreases capacitance.
+
+✅ Capacitors are widely used in filtering, timing and energy storage applications.
+
+---
+
+## 🚀 What's Next?
+
+ယခု Chapter တွင် Capacitor ၏ အခြေခံများကို လေ့လာပြီးဖြစ်ပါသည်။
+
+နောက် Chapter တွင် **Diode** ကို လေ့လာမည်ဖြစ်ပြီး Current ကို Direction တစ်ခုတည်းသို့သာ စီးဆင်းခွင့်ပြုသော Semiconductor Component တစ်ခုအကြောင်းကို ဆက်လက် လေ့လာသွားမည် ဖြစ်ပါသည်။
+
+
+## 💡 မှတ်သားရန်
+
+Capacitor သည် Power ဖြုတ်ပြီးနောက်တွင်ပင် Energy ကို သိမ်းထားနိုင်သောကြောင့် Electronics Component များထဲတွင် Safety အထူးဂရုစိုက်ရသော Component များထဲမှ တစ်ခု ဖြစ်ပါသည်။
+
+
+---

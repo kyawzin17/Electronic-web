@@ -24,14 +24,13 @@ export default function OhmsLawSimulator() {
   const [voltage, setVoltage] = useState(12);
   const [resistance, setResistance] = useState(6);
 
-  const [ theme, setTheme ] = useState<string>(localStorage.getItem("theme") || "auto") 
   const current = useMemo(() => {
     return resistance === 0 ? 0 : voltage / resistance;
   }, [voltage, resistance]);
 
   return (
-    <div className="w-full rounded-2xl border border-border dark:border-zinc-700 bg-card dark:bg-zinc-900 p-6 text-text-main dark:text-white">
-      <h2 className="mb-6 text-2xl font-bold">
+    <div className="w-full rounded-2xl border border-border dark:border-zinc-700 bg-card dark:bg-zinc-900 py-2 mt-6 px-6 text-text-main dark:text-white">
+      <h2 className="mb-12 text-2xl font-bold">
         Ohm's Law Simulator
       </h2>
 
@@ -74,10 +73,10 @@ export default function OhmsLawSimulator() {
             />
           </div>
 
-          <div className="rounded-xl bg-soft dark:bg-zinc-800 p-4">
-            <h3 className="mb-3 text-lg font-semibold">
+          <div className="rounded-xl bg-soft dark:bg-zinc-800 py-2 px-4">
+            <h4 className="mb-4 text-xl font-serif font-semibold">
               Formula
-            </h3>
+            </h4>
 
             <p className="text-2xl">
               V = I × R

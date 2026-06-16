@@ -23,6 +23,7 @@ import PasswordFill from "./registerAndLogin/PasswordFill.tsx";
 import UserProfile from "./registerAndLogin/UserProfile.tsx";
 
 import { AppProvider } from "./hooks/useAppContext.tsx";
+import Circuit from "./circuits/Circuit.tsx";
 
 
 export default function ThemeApp() {
@@ -43,6 +44,10 @@ export default function ThemeApp() {
                 {
                     path: "/docs",
                     element: <DocLayar />,
+                },
+                {
+                    path: "/circuit",
+                    element: <Circuit />
                 },
                 {
                     path: '/docs/doc/components',

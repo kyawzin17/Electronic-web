@@ -45,3 +45,6 @@ Resistor တစ်ခုသည် လျှပ်စစ်စွမ်းအင�
  *Resistor မှ ထွက်ပေါ်လာသော အပူစွမ်းအင် (Power) ကို တွက်ချက်လိုလျှင်*
    
  &emsp; $$P = I^2 \times R  \quad \text{သို့မဟုတ်} \quad  P = \frac{V^2}{R}$$  
+
+
+ [ပိုမို လေ့လာရန်...](/docs/learning/Chapter-1/resistor)

@@ -22,7 +22,7 @@ const QuizComponent: React.FC<QuizProps> = ({ question, options, correctAnswer }
   };
 
   return (
-    <div className="border border-border p-2 rounded-lg max-w-100 my-5 bg-card">
+    <div className="border border-border p-2 rounded-lg max-w-100 my-8 md:my-12 bg-card mx-auto">
 
       <h4 className="font-semibold text-text-main">{question}</h4>
       
