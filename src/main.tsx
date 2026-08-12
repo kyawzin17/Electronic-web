@@ -6,7 +6,7 @@ import '@wokwi/elements';
 import 'katex/dist/katex.min.css'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { Toaster } from 'react-hot-toast';
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from '@vercel/analytics/react'; // ✅ React / Vite အတွက်
 
 
 createRoot(document.getElementById('root')!).render(
