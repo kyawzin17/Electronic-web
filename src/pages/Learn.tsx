@@ -128,7 +128,8 @@ export default function Learn() {
     }[]= [
         { name: "Resistor", slug: "resistor", category: "Chapter-1" },
         { name: "Capacitor", slug: "capacitor", category: "Chapter-1" }, 
-        { name: "Diode", slug: "diode", category: "Chapter-1" },      
+        { name: "Diode", slug: "diode", category: "Chapter-1" },   
+        { name: "Transistor", slug: "transistor", category: "Chapter-1" },   
     ];
 
     const componentsForSidebar= [

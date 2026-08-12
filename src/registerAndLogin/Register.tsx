@@ -123,7 +123,7 @@ export default function Register() {
             <div className="w-full mb-5">
                 <GoogleAuthButton />
                 <div className="w-full text-center">
-                    <p className="text-text-muted">Already have an account? <Link to="/auth" className="text-blue-600 font-semibold hover:underline">Login</Link></p>
+                    <p className="text-text-muted">Already have an account? <Link to="/auth/login" className="text-blue-600 font-semibold hover:underline">Login</Link></p>
                 </div>
                 </div>
         </div>

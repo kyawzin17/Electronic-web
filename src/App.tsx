@@ -2,7 +2,6 @@ import { Outlet, ScrollRestoration } from "react-router-dom";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
 import MobileRightSidebar from "./components/MobileRightSidebar";
-
 export default function App() {
 
   return (

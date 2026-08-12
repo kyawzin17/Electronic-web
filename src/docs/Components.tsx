@@ -1,18 +1,4 @@
 
-import Resistor from "../../public/docs/images/resistor.webp";
-import Capacitor from "../../public/docs/images/capacitor.webp";
-import Inductor from "../../public/docs/images/inductor.webp";
-import Vreg from "../../public/docs/images/transistor.webp";
-import Led from "../../public/docs/images/led1.webp";
-import Arduino from "../../public/docs/images/arduino.webp";
-import Diode from "../../public/docs/images/diode.webp";
-import Ic from "../../public/docs/images/ic.webp";
-import BjtTransistor from "../../public/docs/images/bjt-transistor.webp";
-import Mosfet from "../../public/docs/images/mosfet.webp";
-import PhotoDiode from "../../public/docs/images/photo-diode.webp";
-import OAmpfil from "../../public/docs/images/o-ampfil.webp";
-import Fuse from "../../public/docs/images/fuse.webp";
-import Relay from "../../public/docs/images/relay.webp";
 import { useNavigate } from "react-router-dom";
 
 export default function Components() {
@@ -38,37 +24,37 @@ export default function Components() {
     // ]
 
     const passives= [
-            { name: "Resistor", url: Resistor, link: "/docs/doc/passives/resistor", about: "Limit Current and Voltage Division", des: "Values: 100Ω, 1kΩ, 10kΩ, 1/4W" },
-            { name: "Capacitor", url: Capacitor, link: "/docs/doc/passives/capacitor", about: "Energy Storage, Filtering and Coupling", des: "Values: 10uF, 0.1uF, 22pF" },
-            { name: "Diode", url: Diode, link: "/docs/doc/passives/diode", about: "One-way Current Flow (Rectification)", des: "Models: 1N4007, 1N4148" },
-            { name: "Inductor", url: Inductor, link: "/docs/doc/passives/inductor", about: "Magnetic Energy Storage and RF Filtering", des: "Values: 10uH, 100uH, 1mH" },
+            { name: "Resistor", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740131/resistor_ib1sps.webp", link: "/docs/doc/passives/resistor", about: "Limit Current and Voltage Division", des: "Values: 100Ω, 1kΩ, 10kΩ, 1/4W" },
+            { name: "Capacitor", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740056/capacitor_qhpozf.webp", link: "/docs/doc/passives/capacitor", about: "Energy Storage, Filtering and Coupling", des: "Values: 10uF, 0.1uF, 22pF" },
+            { name: "Diode", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740056/diode_cbth3m.webp", link: "/docs/doc/passives/diode", about: "One-way Current Flow (Rectification)", des: "Models: 1N4007, 1N4148" },
+            { name: "Inductor", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740076/inductor_yigwbv.webp", link: "/docs/doc/passives/inductor", about: "Magnetic Energy Storage and RF Filtering", des: "Values: 10uH, 100uH, 1mH" },
     ]
 
     const diodes= [
-            { name: "LED", url: Led, link: "/docs/doc/diodes/led", about: "Visual Indicators and Illumination", des: "Colors: Red, Green, Blue, RGB" },
-            { name: "Photodiode", url: PhotoDiode, link: "/docs/doc/diodes/photo", about: "Light Detection", des: "Usage: IR Receivers, Lux Meters" },
+            { name: "LED", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740076/led1_clqgsd.webp", link: "/docs/doc/diodes/led", about: "Visual Indicators and Illumination", des: "Colors: Red, Green, Blue, RGB" },
+            { name: "Photodiode", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740106/photo-diode_xwoyhw.webp", link: "/docs/doc/diodes/photo", about: "Light Detection", des: "Usage: IR Receivers, Lux Meters" },
     ]
 
     const transistors= [
-            { name: "BJT Transistor",url: BjtTransistor, link: "/docs/doc/transistors/bipolarJunction", about: "Switching and Signal Amplification", des: "Models: BC547 (NPN), BC557 (PNP)" },
-            { name: "MOSFET", url: Mosfet, link: "/docs/doc/transistors/mosfet", about: "High-speed Power Switching", des: "Models: IRF540N, 2N7000" },
+            { name: "BJT Transistor",url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740056/bjt-transistor_f4q4nk.webp", link: "/docs/doc/transistors/bipolarJunction", about: "Switching and Signal Amplification", des: "Models: BC547 (NPN), BC557 (PNP)" },
+            { name: "MOSFET", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740084/mosfet_ibsi6u.webp", link: "/docs/doc/transistors/mosfet", about: "High-speed Power Switching", des: "Models: IRF540N, 2N7000" },
     ]
 
     const analogIcs= [
-            { name: "Voltage Regulator", url: Vreg, link: "/docs/doc/analogIc/voltageRegulator", about: "Stable Power Supply Output", des: "Models: 7805 (5V), LM1117 (3.3V)" },
-            { name: "555 Timer", url: Ic, link: "/docs/doc/analogIc/555Timer", about: "Pulse Generation and Timing", des: "Modes: Astable, Monostable" },
-            { name: "Operational Amplifier", url: OAmpfil, link: "/docs/doc/analogIc/operationalAmplifier", about: "Signal Conditioning and Math Ops", des: "Models: LM358, UA741" },
+            { name: "Voltage Regulator", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782739915/transistor_hxrese.webp", link: "/docs/doc/analogIc/voltageRegulator", about: "Stable Power Supply Output", des: "Models: 7805 (5V), LM1117 (3.3V)" },
+            { name: "555 Timer", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740044/555-ic_cxrowx.webp", link: "/docs/doc/analogIc/555Timer", about: "Pulse Generation and Timing", des: "Modes: Astable, Monostable" },
+            { name: "Operational Amplifier", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740097/o-ampfil_ukoxuy.webp", link: "/docs/doc/analogIc/operationalAmplifier", about: "Signal Conditioning and Math Ops", des: "Models: LM358, UA741" },
     ]
 
     const microcontrollers= [
-         { name: "Arduino UNO", url: Arduino, link: "/docs/doc/microcontrollers/arduino", about: "Something, arduino use to write code with ide", des: "Models: R3, uno board"},    ]
+         { name: "Arduino UNO", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740057/arduino_slhkyy.webp", link: "/docs/doc/microcontrollers/arduino", about: "Something, arduino use to write code with ide", des: "Models: R3, uno board"},    ]
 
     const interfaces= [
-        { name: "Relay", url: Relay, link: "/docs/doc/interfaces/relay", about: "Low Power controls High Power AC/DC", des: "Coil: 5V, 12V | Load: 10A" },
+        { name: "Relay", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740122/relay_fmypq5.webp", link: "/docs/doc/interfaces/relay", about: "Low Power controls High Power AC/DC", des: "Coil: 5V, 12V | Load: 10A" },
     ]
    
     const protections= [
-        { name: "Fuse", url: Fuse, link: "/docs/doc/protections/fuse", about: "Overcurrent Protection", des: "Types: Glass, Resettable (PTC)" },
+        { name: "Fuse", url: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1782740066/fuse_mwq1nx.webp", link: "/docs/doc/protections/fuse", about: "Overcurrent Protection", des: "Types: Glass, Resettable (PTC)" },
     ]
 
 const ComponentsCard= ({header, array}: {header: string, array: any[]}) => {

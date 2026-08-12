@@ -1,5 +1,7 @@
 import QuizComponent from '../components/QuizComponent';
-import CloudImage from '../../components/CloudImage.tsx';  
+import CloudImage from '../../components/CloudImage.tsx';
+import LEDIcon from '../components/Cathod.tsx';  
+import Diode from "../simulator/Diode.tsx";
 
 # Chapter 1: Diode (နှစ်ခုခံမှုပစ္စည်း)  
 
@@ -11,6 +13,7 @@ import CloudImage from '../../components/CloudImage.tsx';
 
 Phone Charger များ၊ Power Supply များ၊ LED Lights များ၊ Solar Systems များနှင့် Computer Circuit များတွင် Diode များကို အလွန်ကျယ်ပြန့်စွာ အသုံးပြုကြပါသည်။
 
+<LEDIcon />
 ---
 
 ## 🤔 Diode ဆိုတာ ဘာလဲ?
@@ -28,6 +31,8 @@ One Direction Only
 ```
 
 Diode ကို Electronic Circuit များတွင် Current Flow ကို ထိန်းချုပ်ရန် အသုံးပြုကြပါသည်။
+
+<Diode />
 
 ---
 
@@ -92,28 +97,6 @@ Blocked ←
 တံခါးတစ်ချပ်သည် Direction တစ်ဖက်တည်းမှသာ ဖွင့်နိုင်သလို
 
 Diode သည်လည်း Current ကို Direction တစ်ဖက်တည်းသို့သာ စီးဆင်းခွင့်ပြုပါသည်။
-
----
-
-## 🚰 Water Valve Analogy
-
-Diode ကို ရေပိုက်ထဲမှ Valve တစ်ခုနှင့်လည်း နှိုင်းယှဉ်နိုင်ပါသည်။
-
-```text
-Water Flow →
-
-Valve Opens
-```
-
-```text
-← Water Flow
-
-Valve Closed
-```
-
-Valve သည် ရေကို Direction တစ်ဖက်တည်းသို့သာ စီးခွင့်ပြုသလို
-
-Diode သည် Current ကို Direction တစ်ဖက်တည်းသို့သာ စီးခွင့်ပြုပါသည်။
 
 ---
 
@@ -247,7 +230,7 @@ Circuit Diagram များတွင် Diode ကို အောက်ပါ S
 ```text
 Anode      Cathode
   │            │
-──|>|──────────
+ ────────|>|──────────
 ```
 
 ဒီ Symbol တွင်
@@ -294,20 +277,6 @@ Cathode
 
 ဖြစ်ပါသည်။
 
-```text
-Anode      Cathode
-  │            │
-──|>|──────────
-```
-
-Current Flow Direction
-
-```text
-→
-```
-
-ဖြစ်ပါသည်။
-
 ---
 
 ## 🔵 Anode ဆိုတာ ဘာလဲ?
@@ -331,12 +300,6 @@ Forward Bias အခြေအနေတွင် Current သည် Anode မှ �
 Cathode သည် Diode ၏ Negative Side ဖြစ်ပါသည်။
 
 Current သည် Cathode ဘက်မှ ထွက်သွားပါသည်။
-
-```text
-Cathode
-    ↓
-Current Out
-```
 
 Diode အလုပ်လုပ်သောအခါ Current Flow Direction သည်
 
@@ -417,8 +380,8 @@ Current ကို Direction တစ်ခုတည်းသို့သာ စီ
 Physical Diode တစ်လုံးကို အောက်ပါအတိုင်း မြင်နိုင်ပါသည်။
 
 ```text
-        Band
-         ↓
+     Band
+      ↓
  ┌────────────┐
  │   Diode    │
  └────────────┘
@@ -427,6 +390,8 @@ Physical Diode တစ်လုံးကို အောက်ပါအတို�
 ```
 
 Diode Body ပေါ်တွင် အမှတ်အသား Band တစ်ကြောင်း ပါရှိပါသည်။
+
+<img src="../images/schotty.jpg" className="w-full h-auto" />
 
 ---
 
@@ -509,92 +474,6 @@ Cathode
 ကို မှန်ကန်စွာ ချိတ်ဆက်ရပါမည်။
 
 ပြောင်းပြန် တပ်ဆင်ပါက Circuit သည် အလုပ်မလုပ်နိုင်ပါ။
-
----
-
-## 🎯 Summary
-
-Diode Symbol
-
-```text
-──|>|──
-```
-
-Current Direction
-
-```text
-Anode → Cathode
-```
-
-Diode Structure
-
-```text
-P-Type + N-Type
-      ↓
-PN Junction
-```
-
-Cathode Identification
-
-```text
-Band Side = Cathode
-```
-
----
-
-## 📌 မှတ်သားရန်
-
-✅ Diode တွင် Anode နှင့် Cathode Terminal နှစ်ခု ရှိသည်။
-
-✅ Circuit Diagram တွင် Diode ကို
-
-```text
-──|>|──
-```
-
-ဖြင့် ဖော်ပြသည်။
-
-✅ Current သည် Anode မှ Cathode သို့ စီးဆင်းသည်။
-
-✅ Diode ကို PN Junction ဖြင့် တည်ဆောက်ထားသည်။
-
-✅ Band ပါသောဘက်သည် Cathode ဖြစ်သည်။
-
-✅ Diode သည် Polarized Component ဖြစ်သောကြောင့် Direction မှန်ကန်စွာ တပ်ဆင်ရမည်။
-
-
----  
-
-
-## 🔷 How a Diode Works
-
-Diode ၏ အဓိက အလုပ်မှာ Current ကို Direction တစ်ခုတည်းသို့သာ စီးဆင်းခွင့်ပြုပြီး ဆန့်ကျင်ဘက် Direction တွင် Current စီးဆင်းခြင်းကို တားဆီးပေးခြင်း ဖြစ်ပါသည်။
-
-Diode သည်
-
-```text
-Forward Direction
-      ↓
-Current Allowed
-```
-
-ဖြစ်သော်လည်း
-
-```text
-Reverse Direction
-      ↓
-Current Blocked
-```
-
-ဖြစ်ပါသည်။
-
-ဒါကြောင့် Diode ကို
-
-```text
-One-Way Electronic Valve
-```
-
-ဟု ခေါ်ဆိုကြပါသည်။
 
 ---
 
@@ -931,29 +810,62 @@ Current Blocked
 
 ---
 
-## 🌍 Real-World Applications
-
-Diode ၏ ဒီ One-Way Property ကို
-
-* Phone Chargers
-* Power Supplies
-* Solar Systems
-* LED Circuits
-* Battery Protection Circuits
-
-တို့တွင် အသုံးပြုကြပါသည်။
-
----
-
 ## 📌 Key Differences
 
-| Forward Bias       | Reverse Bias       |
-| ------------------ | ------------------ |
-| Anode = Positive   | Anode = Negative   |
-| Cathode = Negative | Cathode = Positive |
-| Current Flows      | Current Blocked    |
-| Diode ON           | Diode OFF          |
-| LED Lights         | LED OFF            |
+<table>
+     <thead>
+          <tr style={{ backgroundColor: '#f0f0f0' }}>
+               <th>
+                    Forward Bias 
+               </th>
+               <th>
+                    Reverse Bias
+               </th>
+          </tr>
+     </thead>
+     <tbody>
+          <tr>
+               <td>
+               Anode = Positive
+               </td>
+               <td>
+               Anode = Negative
+               </td>
+          </tr>
+          <tr>
+               <td>
+               Cathode = Negative
+               </td>
+               <td>
+               Cathode = Positive
+               </td>
+          </tr>
+          <tr>
+               <td>
+               Current Flows 
+               </td>
+               <td>
+               Current Blocked
+               </td>
+          </tr>
+          <tr>
+               <td>
+               Diode ON
+               </td>
+               <td>
+               Diode OFF 
+               </td>
+          </tr>
+          <tr>
+               <td>
+               LED Lights
+               </td>
+               <td>
+               LED OFF
+               </td>
+          </tr>
+     </tbody>
+</table>
 
 ---
 
@@ -988,6 +900,28 @@ Electrical One-Way Valve
 ဟု ခေါ်ဆိုကြပါသည်။
 
 ---
+
+## 📌 မှတ်သားရန်
+
+✅ Diode တွင် Anode နှင့် Cathode Terminal နှစ်ခု ရှိသည်။
+
+✅ Circuit Diagram တွင် Diode ကို
+
+```text
+──|>|──
+```
+
+ဖြင့် ဖော်ပြသည်။
+
+✅ Current သည် Anode မှ Cathode သို့ စီးဆင်းသည်။
+
+✅ Diode ကို PN Junction ဖြင့် တည်ဆောက်ထားသည်။
+
+✅ Band ပါသောဘက်သည် Cathode ဖြစ်သည်။
+
+✅ Diode သည် Polarized Component ဖြစ်သောကြောင့် Direction မှန်ကန်စွာ တပ်ဆင်ရမည်။
+
+--- 
 
 ### 📌 Remember
 
