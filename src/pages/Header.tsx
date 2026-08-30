@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import "../App.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import SearchBar from "../headers/MainSearchBar";
+
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { faBars, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
@@ -10,6 +12,7 @@ import ThemeButton from "../headers/ThemeButton";
 
 export default function Header() {
   
+   const navigate= useNavigate();
     const { menu, setMenu, rightMenu, setRightMenu, login, user, setHeaderHeight }= useAppContext();    
     const headerRef= useRef<HTMLElement | null>(null);
     const location= useLocation();
@@ -31,7 +34,7 @@ export default function Header() {
     }, []);
 
  return (
-    <header ref={headerRef} className={`bg-bg/50 ${scrollHeader ? "shadow-[0_1px_8px_var(--text-secondary)]" : ""} px-3 md:px-6 lg:px-10 py-1 flex justify-between items-center z-100 sticky top-0 left-0 transition duration-100 backdrop-blur-md`}>
+    <header ref={headerRef} className="px-3 border-b border-text-main/10 md:px-6 lg:px-10 py-2 flex justify-between items-center z-100 sticky top-0 left-0 transition duration-100 backdrop-blur-md">
       {isDocActive && 
       <button
        className="cursor-pointer block lg:hidden"
@@ -44,16 +47,20 @@ export default function Header() {
       </button>
       }
 
-      <div className={`flex lg:flex-row ${isDocActive ? "flex-col items-center" : "flex-row items-end"} lg:gap-1 lg:items-end`}>
-        <h2 className="header-logo text-shadow-lg/20">RD</h2>
-        <p className="text-text-main font-serif text-base lg:text-sm -mt-4 lg:mt-0 lg:-ml-1 lg:mb-2">electronic!</p>
-      </div>
+      <div className="flex gap-8 items-end">
+        <div onClick={() => navigate("/")} className="w-18 lg:w-18 overflow-visible" >
+          <img src="/RDE-logo.svg" alt="Logo" className="w-full h-full object-cover object-center" />
+          {/* <h2 className="header-logo text-shadow-lg/20">RD</h2>
+          <p className="text-text-main font-serif text-base lg:text-sm -mt-4 lg:mt-0 lg:-ml-1 lg:mb-2">electronic!</p> */}
+        </div>
 
-      <div className="hidden lg:block">
-          <Nav />
+        <div className="hidden lg:block">
+            <Nav />
+        </div>
       </div>
         
       <div className="flex gap-4 items-center ">
+        <SearchBar />
         { login ?
               <Link to="/auth/profile">
                   <div className="w-12 h-12 cursor-pointer rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">

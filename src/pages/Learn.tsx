@@ -3,14 +3,14 @@ import { useParams, useNavigate, Link } from "react-router-dom"; // Dynamic rout
 import { useAppContext } from "../hooks/useAppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronRight, faMicrochip, faSearch } from '@fortawesome/free-solid-svg-icons';
-import RightSidebarLearn from "../learns/RightSideBarLearn";
-import MobileLeftSidebar from "../learns/components/MobileLeftSidebar";
+import RightSidebarLearn from "../learning/RightSideBarLearn";
+import MobileLeftSidebar from "../learning/components/MobileLeftSidebar";
 import LearnSidebarMode from "../components/LearnSidebarMode";
-import LearnViewer from "../learns/components/LearnViewer";
+import LearnViewer from "../learning/components/LearnViewer";
 
 import "../docs/forDocs.css";
 // ၁။ ဒါကို file ရဲ့ ထိပ်ဆုံးမှာ ထားပါ
-const allLessons = import.meta.glob('../learns/**/*.mdx');
+const allLessons = import.meta.glob('../learning/**/*.mdx');
 
 // 🌟 ပြင်ဆင်ထားသော Interface (h3 အောက်မှာ h4 တွေထည့်ဖို့ children ပါလာပါမယ်)
 interface FormattedHeading {
@@ -40,7 +40,7 @@ export default function Learn() {
 
             // ၃။ လမ်းကြောင်း တည်ဆောက်ခြင်း
             const categoryPath = activeCategory ? `${activeCategory}/` : "";
-            const path = `../learns/${categoryPath}${fileName}.mdx`;
+            const path = `../learning/${categoryPath}${fileName}.mdx`;
             if (allLessons[path]) {
                 try {
                     const mod: any = await allLessons[path]();

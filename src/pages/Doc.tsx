@@ -232,7 +232,7 @@ export default function Docs() {
 
     useEffect(() => {
         // File path ကို public folder အောက်ကနေ တိုက်ရိုက် fetch လုပ်မယ်
-        const fetchPath = `/docs/${activeCategory}/${fileName}.md`;
+        const fetchPath = `/doc/${activeCategory}/${fileName}.md`;
         fetch(fetchPath)
             .then(res => {
                 if (!res.ok) throw new Error("File not found");

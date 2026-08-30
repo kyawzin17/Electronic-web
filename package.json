@@ -4,6 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/generateSearch.js",
+    "prebuild": "node scripts/generateSearch.js",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -26,7 +28,9 @@
     "@wokwi/elements": "^1.9.2",
     "avr8js": "^0.21.0",
     "framer-motion": "^12.38.0",
+    "fuse.js": "^7.5.0",
     "gasp": "^0.0.2",
+    "gray-matter": "^4.0.3",
     "gsap": "^3.14.2",
     "lucide-react": "^1.8.0",
     "pathfinding": "^0.4.18",

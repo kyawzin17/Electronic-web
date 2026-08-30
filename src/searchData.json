@@ -1,0 +1,968 @@
+[
+  {
+    "id": 1,
+    "title": "555Timer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/555Timer"
+  },
+  {
+    "id": 2,
+    "title": "audioPowerAmplifier",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/audioPowerAmplifier"
+  },
+  {
+    "id": 3,
+    "title": "instrumentationAmplifier",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/instrumentationAmplifier"
+  },
+  {
+    "id": 4,
+    "title": "ldor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/ldor"
+  },
+  {
+    "id": 5,
+    "title": "linearRegulator",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/linearRegulator"
+  },
+  {
+    "id": 6,
+    "title": "operationalAmplifier",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/operationalAmplifier"
+  },
+  {
+    "id": 7,
+    "title": "pwmc",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/pwmc"
+  },
+  {
+    "id": 8,
+    "title": "switchingRegulator",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/switchingRegulator"
+  },
+  {
+    "id": 9,
+    "title": "voltageComparator",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/voltageComparator"
+  },
+  {
+    "id": 10,
+    "title": "voltageRegulator",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/analogIc/voltageRegulator"
+  },
+  {
+    "id": 11,
+    "title": "andGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/andGate"
+  },
+  {
+    "id": 12,
+    "title": "counter",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/counter"
+  },
+  {
+    "id": 13,
+    "title": "decoder",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/decoder"
+  },
+  {
+    "id": 14,
+    "title": "demultiplexer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/demultiplexer"
+  },
+  {
+    "id": 15,
+    "title": "encoder",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/encoder"
+  },
+  {
+    "id": 16,
+    "title": "flipFlop",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/flipFlop"
+  },
+  {
+    "id": 17,
+    "title": "latch",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/latch"
+  },
+  {
+    "id": 18,
+    "title": "multiplexer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/multiplexer"
+  },
+  {
+    "id": 19,
+    "title": "nandGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/nandGate"
+  },
+  {
+    "id": 20,
+    "title": "norGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/norGate"
+  },
+  {
+    "id": 21,
+    "title": "notGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/notGate"
+  },
+  {
+    "id": 22,
+    "title": "orGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/orGate"
+  },
+  {
+    "id": 23,
+    "title": "shiftRegister",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/shiftRegister"
+  },
+  {
+    "id": 24,
+    "title": "xnorGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/xnorGate"
+  },
+  {
+    "id": 25,
+    "title": "xorGate",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/digitalIc/xorGate"
+  },
+  {
+    "id": 26,
+    "title": "avalanche",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/avalanche"
+  },
+  {
+    "id": 27,
+    "title": "bridgeRectifier",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/bridgeRectifier"
+  },
+  {
+    "id": 28,
+    "title": "fastRecovery",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/fastRecovery"
+  },
+  {
+    "id": 29,
+    "title": "highPower",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/highPower"
+  },
+  {
+    "id": 30,
+    "title": "infrared",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/infrared"
+  },
+  {
+    "id": 31,
+    "title": "laser",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/laser"
+  },
+  {
+    "id": 32,
+    "title": "led",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/led"
+  },
+  {
+    "id": 33,
+    "title": "photo",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/photo"
+  },
+  {
+    "id": 34,
+    "title": "pnJunction",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/pnJunction"
+  },
+  {
+    "id": 35,
+    "title": "rectifier",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/rectifier"
+  },
+  {
+    "id": 36,
+    "title": "schottky",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/schottky"
+  },
+  {
+    "id": 37,
+    "title": "tvs",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/tvs"
+  },
+  {
+    "id": 38,
+    "title": "varactor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/varactor"
+  },
+  {
+    "id": 39,
+    "title": "zener",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/diodes/zener"
+  },
+  {
+    "id": 40,
+    "title": "7Segment",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/7Segment"
+  },
+  {
+    "id": 41,
+    "title": "buzzer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/buzzer"
+  },
+  {
+    "id": 42,
+    "title": "crystalOscillator",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/crystalOscillator"
+  },
+  {
+    "id": 43,
+    "title": "dipSwitch",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/dipSwitch"
+  },
+  {
+    "id": 44,
+    "title": "electricMotor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/electricMotor"
+  },
+  {
+    "id": 45,
+    "title": "lcd",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/lcd"
+  },
+  {
+    "id": 46,
+    "title": "oled",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/oled"
+  },
+  {
+    "id": 47,
+    "title": "piezoBuzzer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/piezoBuzzer"
+  },
+  {
+    "id": 48,
+    "title": "pushButton",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/pushButton"
+  },
+  {
+    "id": 49,
+    "title": "quartzCrystal",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/quartzCrystal"
+  },
+  {
+    "id": 50,
+    "title": "relay",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/relay"
+  },
+  {
+    "id": 51,
+    "title": "rotaryEncoder",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/rotaryEncoder"
+  },
+  {
+    "id": 52,
+    "title": "servoMotor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/servoMotor"
+  },
+  {
+    "id": 53,
+    "title": "solidStateRelay",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/solidStateRelay"
+  },
+  {
+    "id": 54,
+    "title": "stepperMotor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/stepperMotor"
+  },
+  {
+    "id": 55,
+    "title": "toggleSwitch",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/toggleSwitch"
+  },
+  {
+    "id": 56,
+    "title": "arduino",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/arduino"
+  },
+  {
+    "id": 57,
+    "title": "eeprom",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/eeprom"
+  },
+  {
+    "id": 58,
+    "title": "esp32",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/esp32"
+  },
+  {
+    "id": 59,
+    "title": "esp8266",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/esp8266"
+  },
+  {
+    "id": 60,
+    "title": "flashMemory",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/flashMemory"
+  },
+  {
+    "id": 61,
+    "title": "microcontroller",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/microcontroller"
+  },
+  {
+    "id": 62,
+    "title": "microprocessor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/microprocessor"
+  },
+  {
+    "id": 63,
+    "title": "picMicroncontroller",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/picMicroncontroller"
+  },
+  {
+    "id": 64,
+    "title": "raspberryPi",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/raspberryPi"
+  },
+  {
+    "id": 65,
+    "title": "rtcModule",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/rtcModule"
+  },
+  {
+    "id": 66,
+    "title": "sram",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/sram"
+  },
+  {
+    "id": 67,
+    "title": "stm32",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/microcontrollers/stm32"
+  },
+  {
+    "id": 68,
+    "title": "autoTransformer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/autoTransformer"
+  },
+  {
+    "id": 69,
+    "title": "capacitor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/capacitor"
+  },
+  {
+    "id": 70,
+    "title": "chokeCoil",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/chokeCoil"
+  },
+  {
+    "id": 71,
+    "title": "diode",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/diode"
+  },
+  {
+    "id": 72,
+    "title": "ferriteBead",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/ferriteBead"
+  },
+  {
+    "id": 73,
+    "title": "inductor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/inductor"
+  },
+  {
+    "id": 74,
+    "title": "integrated-circuit",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/integrated-circuit"
+  },
+  {
+    "id": 75,
+    "title": "potentiometer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/potentiometer"
+  },
+  {
+    "id": 76,
+    "title": "resistor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/resistor"
+  },
+  {
+    "id": 77,
+    "title": "rheostat",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/rheostat"
+  },
+  {
+    "id": 78,
+    "title": "stepDownTransformer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/stepDownTransformer"
+  },
+  {
+    "id": 79,
+    "title": "stepUpTransformer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/stepUpTransformer"
+  },
+  {
+    "id": 80,
+    "title": "timmer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/timmer"
+  },
+  {
+    "id": 81,
+    "title": "transformer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/transformer"
+  },
+  {
+    "id": 82,
+    "title": "transistor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/transistor"
+  },
+  {
+    "id": 83,
+    "title": "variableResistor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/variableResistor"
+  },
+  {
+    "id": 84,
+    "title": "battery",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/battery"
+  },
+  {
+    "id": 85,
+    "title": "bms",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/bms"
+  },
+  {
+    "id": 86,
+    "title": "dcdcConverter",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/dcdcConverter"
+  },
+  {
+    "id": 87,
+    "title": "inverter",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/inverter"
+  },
+  {
+    "id": 88,
+    "title": "lithiumIon",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/lithiumIon"
+  },
+  {
+    "id": 89,
+    "title": "lithiumIonPolymer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/lithiumIonPolymer"
+  },
+  {
+    "id": 90,
+    "title": "powerSupply",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/powerSupply"
+  },
+  {
+    "id": 91,
+    "title": "solarPanel",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/solarPanel"
+  },
+  {
+    "id": 92,
+    "title": "switchedMode",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/switchedMode"
+  },
+  {
+    "id": 93,
+    "title": "ups",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/powers/ups"
+  },
+  {
+    "id": 94,
+    "title": "circuitBreaker",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/circuitBreaker"
+  },
+  {
+    "id": 95,
+    "title": "esd",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/esd"
+  },
+  {
+    "id": 96,
+    "title": "fuse",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/fuse"
+  },
+  {
+    "id": 97,
+    "title": "resettableFuse",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/resettableFuse"
+  },
+  {
+    "id": 98,
+    "title": "surgeProtector",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/surgeProtector"
+  },
+  {
+    "id": 99,
+    "title": "tvsDiode",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/tvsDiode"
+  },
+  {
+    "id": 100,
+    "title": "varistor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/protections/varistor"
+  },
+  {
+    "id": 101,
+    "title": "accelerometer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/accelerometer"
+  },
+  {
+    "id": 102,
+    "title": "gasSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/gasSensor"
+  },
+  {
+    "id": 103,
+    "title": "gyroscope",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/gyroscope"
+  },
+  {
+    "id": 104,
+    "title": "hallEffectSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/hallEffectSensor"
+  },
+  {
+    "id": 105,
+    "title": "humiditySensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/humiditySensor"
+  },
+  {
+    "id": 106,
+    "title": "irSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/irSensor"
+  },
+  {
+    "id": 107,
+    "title": "lightSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/lightSensor"
+  },
+  {
+    "id": 108,
+    "title": "loadCell",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/loadCell"
+  },
+  {
+    "id": 109,
+    "title": "magnetometer",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/magnetometer"
+  },
+  {
+    "id": 110,
+    "title": "pirSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/pirSensor"
+  },
+  {
+    "id": 111,
+    "title": "pressureSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/pressureSensor"
+  },
+  {
+    "id": 112,
+    "title": "proximitySensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/proximitySensor"
+  },
+  {
+    "id": 113,
+    "title": "temperatureSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/temperatureSensor"
+  },
+  {
+    "id": 114,
+    "title": "ultrasonicSensor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/sensors/ultrasonicSensor"
+  },
+  {
+    "id": 115,
+    "title": "bipolarJunction",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/bipolarJunction"
+  },
+  {
+    "id": 116,
+    "title": "darlingtonPair",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/darlingtonPair"
+  },
+  {
+    "id": 117,
+    "title": "diac",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/diac"
+  },
+  {
+    "id": 118,
+    "title": "igbt",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/igbt"
+  },
+  {
+    "id": 119,
+    "title": "jfet",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/jfet"
+  },
+  {
+    "id": 120,
+    "title": "mosfet",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/mosfet"
+  },
+  {
+    "id": 121,
+    "title": "nChannelMosfet",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/nChannelMosfet"
+  },
+  {
+    "id": 122,
+    "title": "npn",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/npn"
+  },
+  {
+    "id": 123,
+    "title": "optocoupler",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/optocoupler"
+  },
+  {
+    "id": 124,
+    "title": "pChannelMosfet",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/pChannelMosfet"
+  },
+  {
+    "id": 125,
+    "title": "photoTransistor",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/photoTransistor"
+  },
+  {
+    "id": 126,
+    "title": "pnp",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/pnp"
+  },
+  {
+    "id": 127,
+    "title": "scr",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/scr"
+  },
+  {
+    "id": 128,
+    "title": "triac",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/triac"
+  },
+  {
+    "id": 129,
+    "title": "ujt",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/transistors/ujt"
+  },
+  {
+    "id": 130,
+    "title": "arduino-clap-switch",
+    "tags": "",
+    "category": "projects",
+    "link": "/projects/arduino-clap-switch"
+  },
+  {
+    "id": 131,
+    "title": "digital-thermometer",
+    "tags": "",
+    "category": "projects",
+    "link": "/projects/digital-thermometer"
+  },
+  {
+    "id": 132,
+    "title": "smart-home-automation",
+    "tags": "",
+    "category": "projects",
+    "link": "/projects/smart-home-automation"
+  },
+  {
+    "id": 133,
+    "title": "ultrasonic-distance-detector",
+    "tags": "",
+    "category": "projects",
+    "link": "/projects/ultrasonic-distance-detector"
+  },
+  {
+    "id": 134,
+    "title": "capacitor",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/Chapter-1/capacitor"
+  },
+  {
+    "id": 135,
+    "title": "diode",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/Chapter-1/diode"
+  },
+  {
+    "id": 136,
+    "title": "resistor",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/Chapter-1/resistor"
+  },
+  {
+    "id": 137,
+    "title": "transistor",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/Chapter-1/transistor"
+  },
+  {
+    "id": 138,
+    "title": "introduction",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/Introduction/introduction"
+  }
+]

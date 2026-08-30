@@ -2,11 +2,7 @@ import { useRef, forwardRef } from "react";
 import "../App.css";
 import "./page.css";
 import { useNavigate } from "react-router-dom";
-import Legent from "../../public/assets/legend.webp";
 import "@wokwi/elements";
-
-
-
 
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import ReadCard from "../homes/ReadCard.tsx";
@@ -137,8 +133,7 @@ const Home= forwardRef<HTMLElement>(() => {
                     <div className="floating-shape absolute bottom-22 left-1/4 w-5 h-1 bg-cyan-400/50 -rotate-12"></div>
                     <wokwi-led className="floating-shape absolute bottom-26 right-[12%] -rotate-12" color='red' value={true}></wokwi-led>
                     <wokwi-resistor className="floating-shape absolute top-18 left-[20%] -rotate-12"></wokwi-resistor>
-                    <wokwi-led className="floating-shape absolute top-10 left-[42%] -rotate-12" color='yellow' value={true}></wokwi-led>
-                
+
                 {language === 'EN' ? 
                 <div className="flex max-w-220 justify-between items-end px-3 md:px-0">
                     <div className="w-full h-auto flex flex-col items-center text-center font-serif py-5 px-3 rounded-lg gap-1">
@@ -170,30 +165,8 @@ const Home= forwardRef<HTMLElement>(() => {
                     </div>
                 </div>}
             </div>
-
-            {/* Image */}
-            <div ref={imageRef} className="w-full hidden md:block h-auto relative mt-12 z-10" >
-                <img src={Legent} className="w-full min-w-100 relative left-[50%] translate-x-[-50%] h-auto" />
-                {language === 'EN' ? 
-                            <p className="font-extrabold w-full text-md md:text-2xl font-serif text-white/90 text-center absolute top-[5%] text-shadow-amber-200">The Legends of Electricity</p>
-                            : 
-                            <p className="font-extrabold w-full text-md md:text-2xl font-serif text-white/90 text-center absolute top-[5%] text-shadow-amber-200">လျှပ်စစ်လောကမှ ဂန္တဝင်ပုဂ္ဂိုလ်များ</p>
-                            }
-                <span className="font-bold text-base md:text-lg font-serif text-secondary absolute top-[26%] left-[41.5%]">AC</span>
-                <span className="font-bold text-base md:text-lg font-serif text-(--warning) absolute top-[31%] right-[43.5%]">DC</span>
-                <div className="w-full flex justify-center absolute bottom-[10%] md:bottom-[20%] gap-14 md:gap-20 lg:gap-38 transition-all ease-linear duration-150">
-                    <div className="flex flex-col items-center">
-                        <p className="font-bold text-xs md:text-base lg:text-md font-serif text-white/90">NIKOLA TESLA</p>
-                        <p className="font-serif text-[10px] md:text-base text-white/60 text-center">The Father of Alternating Current (AC)</p>
-                    </div>                
-                    <div className="flex flex-col items-center">
-                        <p className="font-bold text-xs md:text-base lg:text-md font-serif text-white/90">THOMAS EDISON</p>
-                        <p className="font-serif text-[10px] md:text-base text-white/60 text-center">The Wizard of Menlo Park, DC Power (DC)</p>
-                    </div> 
-                </div>                               
-            </div>
             {/* Information div */}
-            <div ref={containerRef} className="w-full mx-auto px-4 h-auto -mt-4 md:-mt-8 lg:-mt-20 flex justify-center flex-wrap gap-8 font-serif z-12">
+            <div ref={containerRef} className="w-full mx-auto px-4 h-auto flex justify-center flex-wrap gap-8 font-serif z-12">
                 
                 <ReadCard ref={(el) => {cardRef.current[0] = el}} icon={faAddressCard} title="About Us"
                              description="ဒီ website ရဲ့ ရည်ရွယ်ချက်မှာ အီလက်ထရွန်းနစ်နည်းပညာကို မြန်မာစာဖြင့် လွယ်ကူစွာ လေ့လာနိုင်စေရန်ဖြစ်သည်။ website အကြောင်းပိုမိုလေ့လာရန်--"
