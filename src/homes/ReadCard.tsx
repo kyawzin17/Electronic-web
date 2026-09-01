@@ -33,14 +33,14 @@ const ReadCard= forwardRef<HTMLDivElement, PropsCard>((
   return (
     <motion.div 
       whileHover={{ 
-        y: "-16px",
-        scale: 1.03,
+        y: "-12px",
+        scale: 1.02,
       }} 
       transition={{ 
         duration: 0.6,
         ease: "backOut",
       }}
-      ref={ref} className={`max-w-sm bg-card/40 backdrop-blur-md flex flex-col justify-between rounded-lg overflow-hidden shadow-md shadow-text-muted border-3 border-border hover:border-${color} py-4 z-12`}>
+      ref={ref} className={`max-w-sm bg-card/40 backdrop-blur-md flex flex-col justify-between rounded-lg overflow-hidden border-2 border-border hover:border-${color} py-4 z-12`}>
       {/* Icon Section */}
       
        <div className="px-4">

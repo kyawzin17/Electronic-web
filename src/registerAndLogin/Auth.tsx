@@ -26,7 +26,7 @@ export default function Auth() {
             checkUserAuth();
           }, []);
     return (
-        <div className="w-full h-auto bg-bg flex items-center justify-center">
+        <div className="w-full h-auto bg-[#050B1E] flex items-center justify-center">
            <Outlet />
         </div>
     )
