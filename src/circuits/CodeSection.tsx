@@ -31,7 +31,7 @@ const CodeSection = ({
   return (
     <div
       className={`flex w-full ${
-        fullScreen ? "h-screen" : "h-125"
+        fullScreen ? "h-full" : "h-125"
       } flex-col overflow-hidden z-51 rounded-lg absolute left-0 border border-slate-700 bg-slate-900 transition-all duration-300 ease-in-out ${
         show ? "bottom-0" : "-bottom-full"
       }`}

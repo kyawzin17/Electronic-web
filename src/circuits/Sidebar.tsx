@@ -703,7 +703,7 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
       className={`
         relative
         shrink-0
-        h-screen
+        h-full
         bg-[#081426]
         border-r
         border-[#18304c]

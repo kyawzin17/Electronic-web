@@ -34,7 +34,7 @@ export default function ProjectsPage() {
   }, []);
 
   const openProject = (id: string) => {
-    navigate("/circuit/?projects=" + encodeURIComponent(id));
+    navigate("/circuit/?project=" + encodeURIComponent(id));
   };
 
   const createProject = () => {

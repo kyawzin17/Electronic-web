@@ -47,7 +47,8 @@ import { oledSsd13068PinPins } from "./pins/ssd1306Pins.ts";
 import { batteryPins } from "./pins/battery9VPins.ts";
 
 // * ----------> Icons <----------
-import { ChevronDown, ZoomIn, ZoomOut, Maximize, Check, Undo, Redo } from "lucide-react";
+import { ChevronDown, ZoomIn, ZoomOut, Maximize, Check, Undo, Redo, Menu as MenuIcon,
+  X } from "lucide-react";
 import { MdDeleteForever } from "react-icons/md";
 import { VscDebugAll, VscNewFolder } from "react-icons/vsc";
 import { FaRegSave } from "react-icons/fa";
@@ -608,7 +609,8 @@ const CircuitEditor = () => {
   // ! SIMULATION ENGINE
   const simulationEngine =
   useRef<SimulationEngine | null>(null);
-
+const [isToolbarMenuOpen, setIsToolbarMenuOpen] =
+  useState(false);
 
   useEffect(() => {
   const engine =
@@ -2643,7 +2645,7 @@ const toggleCode = useCallback(() => {
   ======================================================= */
 
   return (
-    <div className="flex h-screen w-full overflow-hidden bg-slate-100">
+    <div className="flex h-full w-full overflow-hidden bg-slate-100">
       <Sidebar onComponentClick={onSidebarComponentClick} />
       {/* Main Canvas */}
       <div
@@ -2652,14 +2654,14 @@ const toggleCode = useCallback(() => {
       >
 
         {/* TOP TOOLBAR */}
-        <div className="absolute left-1/2 top-4 z-50 flex -translate-x-1/2 items-center gap-1 rounded-xl border border-slate-300 bg-white/95 p-1.5 shadow-lg backdrop-blur">
+        <div className="absolute left-2 sm:left-1/2 top-1 md:top-2 z-50 flex sm:-translate-x-1/2 items-center gap-2 sm:gap-1 rounded-xl border border-slate-300 bg-white/95 p-1.5 shadow-lg backdrop-blur">
 
           {/* Undo */}
           <button
             type="button"
             onClick={undo}
             disabled={history.index <= 0}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
             title="Undo"
           >
             <Undo size={17} />
@@ -2673,13 +2675,13 @@ const toggleCode = useCallback(() => {
               history.index >=
               history.stack.length - 1
             }
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
             title="Redo"
           >
             <Redo size={17} />
           </button>
 
-          <div className="mx-1 h-6 w-px bg-slate-200" />
+          <div className="hidden sm:block mx-1 h-6 w-px bg-slate-200" />
 
           {/* Grid */}
           <button
@@ -2687,7 +2689,7 @@ const toggleCode = useCallback(() => {
             onClick={() =>
               setGrid((prev) => !prev)
             }
-            className={`flex h-9 w-9 items-center justify-center rounded-lg transition ${
+            className={`hidden sm:flex h-9 w-9 items-center justify-center rounded-lg transition ${
               grid
                 ? "bg-slate-100 text-slate-900"
                 : "text-slate-400 hover:bg-slate-100"
@@ -2714,7 +2716,7 @@ const toggleCode = useCallback(() => {
                 selectedNode.id
               );
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
             title="Rotate"
           >
             <FaArrowsRotate size={16} />
@@ -2733,13 +2735,13 @@ const toggleCode = useCallback(() => {
                 selectedNode.id
               );
             }}
-            className="flex h-9 w-9 items-center justify-center rounded-lg text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-30"
             title="Delete selected component"
           >
             <MdDeleteForever size={20} />
           </button>
 
-          <div className="mx-1 h-6 w-px bg-slate-200" />
+          <div className="hidden sm:block mx-1 h-6 w-px bg-slate-200" />
 
           {/* Code */}
           <button
@@ -2752,13 +2754,13 @@ const toggleCode = useCallback(() => {
             <span className="text-xs hidden lg:inline-block">Code</span>
           </button>
 
-        <div className="mx-1 h-6 w-px bg-slate-200" />
+        <div className="hidden sm:block mx-1 h-6 w-px bg-slate-200" />
 
           {/* Save */}
           <button
             type="button"
             onClick={handleSaveProject}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
             title="Save circuit project"
           >
             <FaRegSave className="lg:hidden" size={16} />
@@ -2767,8 +2769,8 @@ const toggleCode = useCallback(() => {
 
           <button
             type="button"
-            onClick={() => navigate("/circuit/projects")}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            onClick={() => navigate("/circuit/project")}
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
             title="Open saved projects"
           >
             <FolderOpen className="lg:hidden" size={18} />
@@ -2778,7 +2780,7 @@ const toggleCode = useCallback(() => {
           <button
             type="button"
             onClick={handleNewProject}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800"
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800"
             title="Create a new circuit"
           >
            <VscNewFolder className="lg:hidden" size={18} />
@@ -2790,7 +2792,7 @@ const toggleCode = useCallback(() => {
           <button
             type="button"
             onClick={() => setShowDebugger((value) => !value)}
-            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-xs font-medium transition ${
+            className={`hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-xs font-medium transition ${
               showDebugger ? "bg-slate-900 text-white" : "text-slate-700 hover:bg-slate-100"
             }`}
             title="Simulation debugger"
@@ -2836,6 +2838,173 @@ const toggleCode = useCallback(() => {
             )}
           </button>
 
+            {/* Mobile Menu */}
+        <div className="relative sm:hidden">
+          <button
+            type="button"
+            onClick={() =>
+              setIsToolbarMenuOpen((open) => !open)
+            }
+            className="flex h-9 items-center gap-2 rounded-lg
+              px-3 text-sm font-medium text-slate-900
+              transition hover:bg-slate-100"
+            aria-label="Toggle toolbar menu"
+            aria-expanded={isToolbarMenuOpen}
+            title="Toggle toolbar menu"
+          >
+            {isToolbarMenuOpen ? (
+              <X size={18} />
+            ) : (
+              <MenuIcon size={18} />
+            )}
+          </button>
+
+          {isToolbarMenuOpen && (
+            <div
+              className="absolute right-0 top-full mt-2
+                flex flex-col gap-1 rounded-xl
+                border border-slate-200 bg-white p-2
+                shadow-xl"
+            >
+              {/* Dropdown ထဲမှာ ကျန်တဲ့ toolbar action တွေ ထည့်ရန် */}
+                {/* Undo */}
+          <button
+            type="button"
+            onClick={undo}
+            disabled={history.index <= 0}
+            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transitio disabled:cursor-not-allowed disabled:opacity-30"
+            title="Undo"
+          >
+            <Undo size={17} />
+            <span className="text-xs inline-block sm:hidden">Undo</span>
+          </button>
+
+          {/* Redo */}
+          <button
+            type="button"
+            onClick={redo}
+            disabled={
+              history.index >=
+              history.stack.length - 1
+            }
+            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100  rounded-lg transition disabled:cursor-not-allowed disabled:opacity-30"
+            title="Redo"
+          >
+            <Redo size={17} />
+            <span className="text-xs block sm:hidden">Redo</span>
+          </button>
+
+ {/* Grid */}
+          <button
+            type="button"
+            onClick={() =>
+              setGrid((prev) => !prev)
+            }
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800 ${
+              grid
+                ? "bg-slate-100 text-slate-900"
+                : "text-slate-400 hover:bg-slate-100"
+            }`}
+            title="Toggle grid"
+          >
+            {grid ? (
+              <LuGrid2X2X size={18} />
+            ) : (
+              <LuGrid2X2Plus size={18} />
+            )}
+            <span className="text-xs block sm:hidden">Grid</span>
+          </button>
+
+          {/* Rotate */}
+          <button
+            type="button"
+            disabled={!selectedNode}
+            onClick={() => {
+              if (!selectedNode) {
+                return;
+              }
+
+              rotateNode(
+                selectedNode.id
+              );
+            }}
+            className="flex h-9 gap-2 px-3 text-sm font-medium text-slate-700 transition items-center rounded-lg hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Rotate"
+          >
+            <FaArrowsRotate size={16} />
+            <span className="text-xs block sm:hidden">Rotate</span>
+          </button>
+
+          {/* Delete */}
+          <button
+            type="button"
+            disabled={!selectedNode}
+            onClick={() => {
+              if (!selectedNode) {
+                return;
+              }
+
+              deleteNode(
+                selectedNode.id
+              );
+            }}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Delete selected component"
+          >
+            <MdDeleteForever size={20} />
+            <span className="text-xs block sm:hidden">Delete</span>
+          </button>
+
+                    {/* Save */}
+          <button
+            type="button"
+            onClick={handleSaveProject}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            title="Save circuit project"
+          >
+            <FaRegSave className="lg:hidden" size={16} />
+            <span className="text-xs block sm:hidden lg:inline-block">Save</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/circuit/project")}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            title="Open saved projects"
+          >
+            <FolderOpen className="lg:hidden" size={18} />
+            <span className="text-xs block sm:hidden lg:inline-block">Projects</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleNewProject}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800"
+            title="Create a new circuit"
+          >
+           <VscNewFolder className="lg:hidden" size={18} />
+            <span className="text-xs block sm:hidden lg:inline-block">
+              New
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowDebugger((value) => !value)}
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-xs font-medium transition ${
+              showDebugger ? "bg-slate-900 text-white" : "text-slate-900 hover:bg-slate-100"
+            }`}
+            title="Simulation debugger"
+          >
+            <VscDebugAll className="lg:hidden" size={18} />
+            <span className="text-xs block sm:hidden lg:inline-block">
+              Debug
+            </span>
+          </button>
+
+            </div>
+          )}
+        </div>
           
         </div>
 

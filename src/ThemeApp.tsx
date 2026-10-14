@@ -77,7 +77,7 @@ export default function ThemeApp() {
                     element: <Circuit />,
                 },
                 {
-                    path: "/circuit/projects",
+                    path: "/circuit/project",
                     element: <CircuitProjects/>
                 }
             ]

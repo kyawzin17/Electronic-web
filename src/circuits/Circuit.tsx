@@ -6,7 +6,7 @@ import { ReactFlowProvider } from "reactflow";
 const Circuit = () => {
 
 return (
-  <div className="w-full min-h-screen overflow-hidden relative flex flex-col">
+  <div className={`w-full h-[calc(100vh-65px)] overflow-hidden relative flex flex-col`}>
     <ReactFlowProvider>
         <CircuitEditor />
      </ReactFlowProvider>

@@ -54,6 +54,7 @@ export default function MobileRightSidebar() {
 
     const navItems = [
     { name: 'Home', path: '/' },
+    { name: 'Circuit', path: '/circuit' },
     { name: 'About', path: '/about' },
     { name: 'Doc', path: docLocalStorage }, // /doc/components/passive ဆိုရင်လည်း ဒါက Active ဖြစ်နေမှာပါ
     { name: 'Project', path: '/project' },
