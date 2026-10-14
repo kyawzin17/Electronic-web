@@ -56,7 +56,7 @@ export default function EditProfile() {
         toast.success("Changes saved successfully", {
             duration: 4000, 
             style: {
-              fontFamily: 'sans-serif',
+              fontFamily: 'monospace',
               borderRadius: '12px',
               background: '#333',
               color: '#fff',
@@ -69,7 +69,7 @@ export default function EditProfile() {
         toast.error("Failed to save changes. Please try again.", {
             duration: 4000, 
             style: {
-              fontFamily: 'sans-serif',
+              fontFamily: 'monospace',
               borderRadius: '12px',
               background: '#333',
               color: '#fff',
@@ -96,7 +96,7 @@ export default function EditProfile() {
     toast.success("Account deleted successfully", {
         duration: 4000, 
         style: {
-          fontFamily: 'sans-serif',
+          fontFamily: 'monospace',
           borderRadius: '12px',
           background: '#333',
           color: '#fff',
@@ -108,7 +108,7 @@ export default function EditProfile() {
         toast.error(error.message || "This is error!", {
             duration: 4000, 
         style: {
-          fontFamily: 'sans-serif',
+          fontFamily: 'monospace',
           borderRadius: '12px',
           background: '#333',
           color: '#fff',
@@ -117,8 +117,8 @@ export default function EditProfile() {
     }
   }
   return (
-    <div className={`w-full min-h-screen bg-bg ${isDeleteAccountOpen ? 'overflow-hidden' : ''}`}>
-        <div className="h-auto max-w-3xl bg-card mx-auto flex items-center justify-center p-4 sm:p-6 font-sans antialiased text-text-main">
+    <div className={`w-full min-h-screen font-mono bg-bg ${isDeleteAccountOpen ? 'overflow-hidden' : ''}`}>
+        <div className="h-auto max-w-3xl bg-card mx-auto flex items-center justify-center p-4 sm:p-6 font-mono antialiased text-text-main">
             <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -182,9 +182,9 @@ export default function EditProfile() {
                     
                     {/* Bio Field */}
                     <div className="space-y-1.5">
-                    <label className="text-sm font-semibold text-gray-600">Bio / Profile Summary</label>
+                    <label className="text-sm font-semibold text-text-main/80">Bio / Profile Summary</label>
                     <div className="relative">
-                        <div className={`w-full text-right text-xs text-text-secondary mt-1 flex justify-end ${CHARACTER_LIMIT - bioText.length <= 0 ? 'text-red-500' : ''}`}>
+                        <div className={`w-full text-right text-xs flex justify-end ${CHARACTER_LIMIT - bioText.length <= 0 ? 'text-error' : 'text-success'}`}>
                             <p>
                                 ကျန်ရှိစာလုံးရေ: {CHARACTER_LIMIT - bioText.length} လုံး
                             </p>
@@ -328,10 +328,10 @@ export default function EditProfile() {
                     <button 
                         type="button"
                         onClick={() => setIsDeleteAccountOpen(true)}
-                        className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold border border-text-main/60 rounded-xl hover:bg-soft cursor-pointer active:scale-95 transition-all text-red-600 hover:border-red-500"
+                        className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold border border-text-main/60 hover:border-error hover:text-error rounded-xl hover:bg-soft cursor-pointer active:scale-95 transition-all"
                     >
-                        <Trash2 className="w-4 h-4" />
-                        Delete Account
+                        <Trash2 className="w-4 h-4 text-error" />
+                        <span>Delete Account</span>
                     </button>
                     </div>
 

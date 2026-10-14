@@ -24,8 +24,7 @@ import UserProfile from "./registerAndLogin/UserProfile.tsx";
 
 import { AppProvider } from "./hooks/useAppContext.tsx";
 import Circuit from "./circuits/Circuit.tsx";
-
-
+import CircuitProjects from "./circuits/ProjectsPage.tsx";
 export default function ThemeApp() {
 
     const router= createBrowserRouter([
@@ -72,6 +71,14 @@ export default function ThemeApp() {
                 {
                     path: "/project/:id",
                     element: <ProjectDetail />,
+                },
+                {
+                    path: "/circuit",
+                    element: <Circuit />,
+                },
+                {
+                    path: "/circuit/projects",
+                    element: <CircuitProjects/>
                 }
             ]
         },

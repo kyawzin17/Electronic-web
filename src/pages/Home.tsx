@@ -10,6 +10,7 @@ import HeroCircle from "../homes/HeroCircle.tsx";
 import Timeline from "../homes/Timeline.tsx";
 import LanguageToggle from "../homes/LanguageToogle.tsx";
 import FeatureShowcase from "../homes/FeatureShowcase.tsx";
+// import WhatEle from "../docs/WhatEle.tsx";
 
 
 import gsap from 'gsap';
@@ -165,6 +166,10 @@ const Home= forwardRef<HTMLElement>(() => {
                     </div>
                 </div>}
             </div>
+
+            {/* What is Electronics? */}
+            {/* <WhatEle /> */}
+
             {/* Information div */}
             <div ref={containerRef} className="w-full mx-auto px-4 h-auto flex justify-center flex-wrap gap-8 font-serif z-12">
                 

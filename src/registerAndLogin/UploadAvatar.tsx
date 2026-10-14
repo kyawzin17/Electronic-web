@@ -117,7 +117,7 @@ const UploadAvatar = () => {
         toast.success('Profile ပုံ ပြောင်းလဲပြီးပါပြီ။', {
           duration: 4000, 
           style: {
-            fontFamily: 'sans-serif',
+            fontFamily: 'monospace',
             borderRadius: '12px',
             background: '#333',
             color: '#fff',
@@ -135,7 +135,7 @@ const UploadAvatar = () => {
           toast.error('Upload လုပ်ရတာ အဆင်မပြေပါဘူး။', {
           duration: 4000, 
           style: {
-            fontFamily: 'sans-serif',
+            fontFamily: 'monospace',
             borderRadius: '12px',
             background: '#333',
             color: '#fff',
@@ -147,7 +147,7 @@ const UploadAvatar = () => {
         toast.error('Error တက်သွားပါတယ်။', {
           duration: 4000, 
           style: {
-            fontFamily: 'sans-serif',
+            fontFamily: 'monospace',
             borderRadius: '12px',
             background: '#333',
             color: '#fff',
@@ -174,7 +174,7 @@ const UploadAvatar = () => {
           {/* Profile Image View Area */}
           <div className="relative group mb-2">
             {!previewUpdate ?
-            <div className="w-30 h-30 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
+            <div className="w-36 h-36 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
               {user ? (
                 <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
@@ -182,7 +182,7 @@ const UploadAvatar = () => {
               )}
             </div>
             :
-            <div className="w-30 h-30 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
+            <div className="w-36 h-36 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
                 <img src={preview} alt="Avatar" className="w-full h-full object-cover" />
             </div>
             }
@@ -204,10 +204,10 @@ const UploadAvatar = () => {
 
       {/* ==================== 🛠️ MANUAL IMAGE CROP/ZOOM MODAL OVERLAY ==================== */}
       {update && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className="w-85 bg-zinc-900 border border-zinc-800 p-6 rounded-2xl shadow-2xl flex flex-col items-center max-w-sm">
-            <h3 className="text-lg font-bold text-zinc-200 mb-1">Adjust Profile Picture</h3>
-            <p className="text-xs text-zinc-400 mb-6 text-center">ပုံကို ဖိဆွဲပြီး ရွှေ့နိုင်သလို၊ အောက်က Slider ဖြင့် ချဲ/ချုံ လုပ်နိုင်ပါတယ်</p>
+        <div className="fixed inset-0 bg-bg/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="w-85 bg-card border border-border p-6 rounded-2xl shadow-2xl flex flex-col items-center max-w-sm">
+            <h3 className="text-xl font-bold text-text-main/90 mb-4 border-b-2 border-text-main/70">Adjust Profile Picture</h3>
+            <p className="text-sm text-text-main/80 mb-8 text-center leading-6.5">ပုံကို ဖိဆွဲပြီး ရွှေ့နိုင်သလို၊ အောက်က Slider ဖြင့် ချဲ/ချုံ လုပ်နိုင်ပါတယ်!</p>
             
             {/* Round Interactive Photo Canvas Container */}
             <div className="w-44 h-44 rounded-full border-4 border-blue-500 overflow-hidden shadow-2xl bg-zinc-950 flex items-center justify-center relative group active:scale-[0.99] transition-transform duration-150">
@@ -224,8 +224,8 @@ const UploadAvatar = () => {
             </div>
 
             {/* Manual Slider for Zoom Adjustment */}
-            <div className="w-full mt-6 px-2">
-              <div className="flex justify-between text-xs text-zinc-400 mb-2">
+            <div className="w-full mt-6 px-1">
+              <div className="flex justify-between text-sm text-text-main/70">
                 <span className="font-medium">Zoom Level</span>
                 <span className="text-blue-400 font-bold">{Math.round(zoom * 100)}%</span>
               </div>

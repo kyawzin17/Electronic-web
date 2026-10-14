@@ -90,7 +90,7 @@ export default function Register() {
             transition={{ duration: 0.5 }}
             className="w-full min-h-screen flex flex-col justify-center items-center px-4 sm:px-12"
         >
-            <div className="w-full max-w-md h-auto pb-8 bg-card/80 backdrop-blur-md border border-text-muted/30 rounded-2xl relative overflow-hidden shadow-2xl">
+            <div className="w-full max-w-md font-mono h-auto pb-8 bg-card/80 backdrop-blur-md border border-text-muted/30 rounded-2xl relative overflow-hidden shadow-2xl">
                 
                 {/* Back Button */}
                 <button onClick={() => navigate("/")} className="absolute top-3 left-3 z-10">
@@ -103,7 +103,7 @@ export default function Register() {
                 {/* Image Section */}
                 <div className="register-image w-full h-40 sm:h-48 bg-cover bg-center">
                     {/* CSS မှာ .register-image background ပေးထားတယ်လို့ ယူဆပါတယ် */}
-                    <div className="w-full h-full bg-linear-to-t from-card/90 to-transparent"></div>
+                    <div className="w-full h-full bg-linear-to-t from-card/80 to-transparent"></div>
                 </div>
 
                 {/* Header Section */}

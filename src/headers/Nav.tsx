@@ -8,6 +8,7 @@ export default function Nav() {
   
   const navItems = [
     { name: 'Docs', path: docLocalStorage }, 
+    { name: 'Circuit', path: '/circuit' },
     { name: 'Project', path: '/project' },
     { name: 'About', path: '/about' },
   ];

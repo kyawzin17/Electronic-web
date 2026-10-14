@@ -1,0 +1,391 @@
+// =====================================================
+// SIMULATOR TYPES
+// =====================================================
+
+export type SimulationStatus =
+  | "idle"
+  | "compiling"
+  | "running"
+  | "paused"
+  | "stopped"
+  | "error";
+
+// =====================================================
+// PIN LEVEL
+// =====================================================
+
+export type PinLevel = 0 | 1;
+
+// =====================================================
+// PIN MODE
+// =====================================================
+
+export type PinMode =
+  | "input"
+  | "output"
+  | "input_pullup";
+
+// =====================================================
+// POWER SYSTEM
+// =====================================================
+
+export type ArduinoPowerRailName =
+  | "5V"
+  | "3.3V"
+  | "IOREF"
+  | "GND"
+  | "VIN";
+
+export interface ArduinoPowerRailState {
+  name: ArduinoPowerRailName;
+  voltage: number;
+  enabled: boolean;
+  direction: "source" | "reference" | "ground" | "input";
+  maxCurrentMa?: number;
+}
+
+export interface ArduinoPowerPinVoltage {
+  pin: string;
+  voltage: number;
+  rail: ArduinoPowerRailName;
+}
+
+// =====================================================
+// RUNTIME PIN
+// =====================================================
+
+export interface RuntimePin {
+  pin: number;
+  mode: PinMode;
+  level: PinLevel;
+  pwmDuty?: number;
+  analogValue?: number;
+}
+
+// =====================================================
+// RUNTIME COMPONENT
+// =====================================================
+
+export interface RuntimeComponent {
+  id: string;
+  type: string;
+  update(): void;
+  reset(): void;
+}
+
+// =====================================================
+// LED RUNTIME STATE
+// =====================================================
+
+export interface LedRuntimeState {
+  id: string;
+  isOn: boolean;
+  brightness?: number;
+  color?: string;
+}
+
+// =====================================================
+// RESISTOR RUNTIME STATE
+// =====================================================
+
+export interface ResistorRuntimeState {
+  id: string;
+  resistance: number;
+  unit?: "Ω" | "kΩ" | "MΩ";
+}
+
+export interface SevenSegmentRuntimeState {
+  id: string;
+  digits: number;
+  common: "anode" | "cathode";
+  /**
+   * Segment states in A,B,C,D,E,F,G,DP order.
+   * For multi-digit displays the arrays are concatenated
+   * digit-by-digit in DIG1..DIG4 order.
+   */
+  values: number[];
+  colon: boolean;
+}
+
+export interface BuzzerRuntimeState {
+  id: string;
+  active: boolean;
+  currentMa?: number;
+  frequencyHz?: number;
+  dutyCycle?: number;
+}
+
+export interface UltrasonicRuntimeState {
+  id: string;
+  distanceCm: number;
+  echoHigh: boolean;
+  triggerActive: boolean;
+  echoPulseUs?: number;
+}
+
+export interface ServoRuntimeState {
+  id: string;
+  angle: number;
+  pulseWidthUs?: number;
+  signalPin?: string;
+  powered: boolean;
+}
+
+export interface PirRuntimeState {
+  id: string;
+  motion: boolean;
+  outputHigh: boolean;
+  powered: boolean;
+  delayTimeSec: number;
+  inhibitTimeSec: number;
+  retrigger: boolean;
+  lastTriggerId: number;
+}
+
+export interface Ssd1306RuntimeState {
+  id: string;
+  width: 128;
+  height: 64;
+  pixels: number[];
+  displayOn: boolean;
+  invert: boolean;
+  contrast: number;
+  interfaceType: "spi";
+  powered: boolean;
+  frame: number;
+}
+
+export interface NeoPixelRuntimeState {
+  id: string;
+  red: number;
+  green: number;
+  blue: number;
+  color: string;
+  brightness: number;
+  powered: boolean;
+  latched: boolean;
+  frame: number;
+  dataBits: number;
+  interfaceType: "ws2812b";
+}
+
+export interface Ds1307RuntimeState {
+  id: string;
+  powered: boolean;
+  year: number;
+  month: number;
+  day: number;
+  hour: number;
+  minute: number;
+  second: number;
+  dayOfWeek: number;
+  sqwMode: number;
+  sqwLevel: 0 | 1;
+}
+
+export interface Lcd1602RuntimeState {
+  id: string;
+  text: string;
+  characters: number[];
+  rows: 2;
+  cols: 16;
+  cursorX: number;
+  cursorY: number;
+  displayOn: boolean;
+  cursorOn: boolean;
+  blink: boolean;
+  backlight: boolean;
+  mode: "4bit" | "8bit" | "i2c";
+  i2cAddress?: number;
+}
+
+// =====================================================
+// WIRE RUNTIME STATE
+// =====================================================
+
+/**
+ * Visual/electrical state for a physical wire.
+ *
+ * isActive means the current-flow solver found this
+ * wire on a valid source -> component -> GND path.
+ *
+ * It is deliberately separate from a voltage level:
+ * a HIGH net can exist without current flowing.
+ */
+export interface WireRuntimeState {
+  isActive: boolean;
+  currentMa?: number;
+  netId?: string;
+}
+
+// =====================================================
+// ARDUINO UNO RUNTIME
+// =====================================================
+
+export interface SimulationPinMeasurement {
+  pin: string;
+  voltage?: number;
+  currentMa?: number;
+  digitalLevel?: PinLevel;
+  mode?: PinMode;
+}
+
+export interface SimulationNetMeasurement {
+  netId: string;
+  voltage?: number;
+  currentMa?: number;
+  active: boolean;
+  pins: string[];
+}
+
+export interface SimulationComponentMeasurement {
+  id: string;
+  type: string;
+  voltageDrop?: number;
+  currentMa?: number;
+  powerMw?: number;
+  active: boolean;
+}
+
+export type SimulationTraceKind =
+  | "pin"
+  | "net"
+  | "component"
+  | "fault";
+
+export interface SimulationTraceStep {
+  kind: SimulationTraceKind;
+  id: string;
+  label: string;
+  voltage?: number;
+  currentMa?: number;
+  active?: boolean;
+}
+
+export interface SimulationTrace {
+  target: string;
+  status: "complete" | "blocked" | "floating";
+  summary: string;
+  steps: SimulationTraceStep[];
+  netIds: string[];
+  componentIds: string[];
+  faults: string[];
+}
+
+export interface SimulationDiagnostics {
+  simulatedCycles: number;
+  simulatedMs: number;
+  frameCount: number;
+  pins: SimulationPinMeasurement[];
+  nets: SimulationNetMeasurement[];
+  components: SimulationComponentMeasurement[];
+  faults: string[];
+  trace?: SimulationTrace;
+}
+
+export interface ArduinoBoardRuntimeState {
+  led13: boolean;
+  ledRX: boolean;
+  ledTX: boolean;
+  ledPower: boolean;
+  resetPressed: boolean;
+}
+
+export interface ArduinoUnoRuntimeState {
+  digitalPins: Record<number, RuntimePin>;
+
+  powerRails: Record<
+    ArduinoPowerRailName,
+    ArduinoPowerRailState
+  >;
+
+  pinVoltages: Record<string, ArduinoPowerPinVoltage>;
+
+  /**
+   * Resolved analog input state in volts and 10-bit ADC units.
+   * Values are produced by the electrical solver, not by
+   * calling analogRead() from JavaScript.
+   */
+  analogPinVoltages: Record<string, number>;
+  analogPinValues: Record<string, number>;
+
+  /** Resolved analog/digital sensor values used by the runtime. */
+  sensorPinVoltages?: Record<string, number>;
+  sensorDigitalOutputs?: Record<string, 0 | 1>;
+
+  ledStates: Record<string, LedRuntimeState>;
+
+  /** Presentation state for the Wokwi Arduino Uno board UI. */
+  arduinoBoard: ArduinoBoardRuntimeState;
+
+  resistorStates: Record<string, ResistorRuntimeState>;
+
+  sevenSegmentStates: Record<string, SevenSegmentRuntimeState>;
+
+  buzzerStates: Record<string, BuzzerRuntimeState>;
+
+  ultrasonicStates: Record<string, UltrasonicRuntimeState>;
+
+  servoStates: Record<string, ServoRuntimeState>;
+
+  pirStates: Record<string, PirRuntimeState>;
+
+  lcdStates: Record<string, Lcd1602RuntimeState>;
+
+  ssd1306States: Record<string, Ssd1306RuntimeState>;
+
+  neopixelStates: Record<string, NeoPixelRuntimeState>;
+
+  ds1307States: Record<string, Ds1307RuntimeState>;
+
+  /** Bytes emitted by the AVR UART TX path, decoded as Serial Monitor text. */
+  serialOutput: string;
+
+  wireStates: Record<string, WireRuntimeState>;
+
+  diagnostics: SimulationDiagnostics;
+}
+
+// =====================================================
+// SIMULATION RESULT
+// =====================================================
+
+export interface SimulationResult {
+  success: boolean;
+
+  status: SimulationStatus;
+
+  message?: string;
+
+  ledStates?: Record<string, LedRuntimeState>;
+
+  wireStates?: Record<string, WireRuntimeState>;
+}
+
+// =====================================================
+// SIMULATION CONFIG
+// =====================================================
+
+export interface SimulationConfig {
+  frequency?: number;
+
+  maxCycles?: number;
+
+  debug?: boolean;
+}
+
+// =====================================================
+// SIMULATION ENGINE
+// =====================================================
+
+export interface SimulationEngineOptions {
+  config?: SimulationConfig;
+
+  onStateChange?: (
+    state: ArduinoUnoRuntimeState
+  ) => void;
+
+  onError?: (
+    error: Error
+  ) => void;
+}
