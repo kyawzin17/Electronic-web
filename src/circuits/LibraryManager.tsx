@@ -71,8 +71,8 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
 
   const activeLibrary = LIBRARIES.find((library) => library.id === selected) ?? filtered[0];
   const addInclude = (library: Library) => {
-    const alreadyExists = code.split("\\n").some((line) => line.trim() === library.include);
-    if (!alreadyExists) onCodeChange(code.trim() ? `${library.include}\\n${code}` : `${library.include}\\n`);
+    const alreadyExists = code.split("\n").some((line) => line.trim() === library.include);
+    if (!alreadyExists) onCodeChange(code.trim() ? `${library.include}\n${code}` : `${library.include}\n`);
     setAdded((current) => current.includes(library.id) ? current : [...current, library.id]);
   };
 
@@ -135,7 +135,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
             {activeLibrary ? <>
               <div className="mb-4 flex items-start gap-3">
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500"><Cpu size={20} /></div>
-                <div><div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-violet-500">{activeLibrary.category} library</div><h3 className="text-lg font-bold leading-snug">{activeLibrary.name}</h3><p className={`mt-1 text-xs ${subtle}`}>Maintainer: {activeLibrary.author}</p></div>
+                <div><div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-violet-500">{activeLibrary.category} library · not integrated</div><h3 className="text-lg font-bold leading-snug">{activeLibrary.name}</h3><p className={`mt-1 text-xs ${subtle}`}>Maintainer: {activeLibrary.author}</p></div>
               </div>
               <p className={`text-sm leading-6 ${muted}`}>{activeLibrary.description}</p>
               <div className={`mt-5 rounded-xl border p-3 ${panel}`}>
