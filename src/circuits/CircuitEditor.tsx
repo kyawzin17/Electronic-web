@@ -1,5 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import html2canvas from "@html2canvas/html2canvas";
+import React, { lazy, Suspense, useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import ReactFlow, {
@@ -61,7 +60,6 @@ import EditableEdge from "./EditableEdge"; // Editable Edge Component (Custom Ed
 import Sidebar from "./Sidebar.tsx";  // Left Sidebar Component (For drag and drop nodes)
 import PropertiesPanel from "./PropertiesPanel"; // Properties Panel Component (Right Sidebar)
 import ElectronicNode from "./ElectronicNode.tsx"; // Electronic Custom Node Component (For Pin Handling)
-import CodeSection from "./CodeSection.tsx"; // Code Section Component (For Code Editing & C++)
 import SimulationDebugger from "./SimulationDebugger";
 
 // * ----------> Components Custom Nodes (For Component Handling & Design) <----------
@@ -197,6 +195,7 @@ async function captureCircuitThumbnail(
      * editor. This keeps the saved preview focused on the circuit
      * canvas and avoids saving the toolbar/sidebar UI.
      */
+    const { default: html2canvas } = await import("@html2canvas/html2canvas");
     const canvas = await html2canvas(
       renderer,
       {
@@ -603,6 +602,8 @@ const ZoomControls = () => {
 };
 
 // ? ==========> MAIN COMPONENT <==========
+
+const CodeSection = lazy(() => import("./CodeSection.tsx"));
 
 const CircuitEditor = () => {
 
@@ -3267,12 +3268,22 @@ const toggleCode = useCallback(() => {
         />
       )}
 
-      <CodeSection
-        show={showCode}
-        setShow={setShowCode}
-        onRun={handleRunSimulation}
-        onStop={handleStopSimulation}
-      />
+      {showCode && (
+        <Suspense
+          fallback={(
+            <div className="absolute bottom-0 left-0 z-51 flex h-125 w-full items-center justify-center rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300">
+              Loading code editor...
+            </div>
+          )}
+        >
+          <CodeSection
+            show={showCode}
+            setShow={setShowCode}
+            onRun={handleRunSimulation}
+            onStop={handleStopSimulation}
+          />
+        </Suspense>
+      )}
 
     </div>
 
