@@ -1210,6 +1210,7 @@ const stop =
     });
 
     useSimulationStore.getState().setCode(project.code);
+    useSimulationStore.getState().setSelectedLibraries(project.selectedLibraries ?? []);
 
     setCurrentProjectId(project.id);
     setCurrentProjectName(project.name);
@@ -2453,6 +2454,7 @@ const toggleCode = useCallback(() => {
       nodes: nodesRef.current,
       edges: edgesRef.current,
       code: useSimulationStore.getState().code,
+      selectedLibraries: useSimulationStore.getState().selectedLibraries,
       viewport,
       thumbnail,
     });
@@ -2624,6 +2626,7 @@ const toggleCode = useCallback(() => {
     loadedProjectRef.current = null;
 
     useSimulationStore.getState().setCode("");
+    useSimulationStore.getState().setSelectedLibraries([]);
 
     navigate("/circuit", { replace: true });
 
