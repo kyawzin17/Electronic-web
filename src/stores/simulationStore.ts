@@ -14,6 +14,8 @@ export type SimulationStatus =
 type SimulationStore = {
   code: string;
   setCode: (code: string) => void;
+  selectedLibraries: string[];
+  setSelectedLibraries: (libraries: string[]) => void;
 
   status: SimulationStatus;
   hex: string | null;
@@ -45,6 +47,8 @@ void loop() {
 export const useSimulationStore =
   create<SimulationStore>((set, get) => ({
     code: DEFAULT_CODE,
+    selectedLibraries: [],
+    setSelectedLibraries: (libraries) => set({ selectedLibraries: [...new Set(libraries)] }),
 
     setCode: (code) => {
       set({
@@ -64,6 +68,7 @@ export const useSimulationStore =
       const {
         code,
         fqbn,
+        selectedLibraries,
       } = get();
 
       set({
@@ -77,6 +82,7 @@ export const useSimulationStore =
           await compileArduinoSketch({
             code,
             fqbn,
+            libraries: selectedLibraries,
           });
 
         if (!result.success || !result.hex) {
