@@ -1,10 +1,10 @@
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import Header from "./pages/Header";
 import Footer from "./pages/Footer";
 import MobileRightSidebar from "./components/MobileRightSidebar";
 export default function App() {
-  const pathname = window.location.pathname;
- console.log("Current pathname:", pathname); // Debugging line to check the current pathname
+  const location = useLocation();
+ console.log("Current pathname:", location.pathname); // Debugging line to check the current pathname
   return (
     <div className="min-h-screen max-w-screen bg-bg text-text-main relative">
       <Header />
@@ -13,7 +13,7 @@ export default function App() {
         <Outlet />
         <ScrollRestoration />
       </main>
-      {pathname === "/circuit" ? null : <Footer />}
+      {location.pathname === "/circuit" ? null : <Footer />}
     </div>
   );
 }

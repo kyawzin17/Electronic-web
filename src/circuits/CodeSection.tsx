@@ -63,7 +63,7 @@ const CodeSection = ({
           </button>
           <button
             type="button"
-            onClick={() => setFullScreen((value) => !value)
+            onClick={() => setFullScreen((value) => !value)}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-500 hover:text-slate-100"
             title="Fullscreen"
           >
