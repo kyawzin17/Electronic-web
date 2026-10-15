@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  BookOpen, Check, Code2, Cpu, Moon, Package, Plus, Search, Sun, X,
+  BookOpen, Check, Code2, Cpu, Moon, Package, Plus, Search, Sun, Trash2, X,
 } from "lucide-react";
 
 type Library = {
@@ -70,10 +70,15 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
   }, [query, category]);
 
   const activeLibrary = LIBRARIES.find((library) => library.id === selected) ?? filtered[0];
+  const addLibraryToProject = (library: Library) => {
+    setAdded((current) => current.includes(library.id) ? current : [...current, library.id]);
+  };
+  const removeLibraryFromProject = (library: Library) => {
+    setAdded((current) => current.filter((id) => id !== library.id));
+  };
   const addInclude = (library: Library) => {
     const alreadyExists = code.split("\n").some((line) => line.trim() === library.include);
     if (!alreadyExists) onCodeChange(code.trim() ? `${library.include}\n${code}` : `${library.include}\n`);
-    setAdded((current) => current.includes(library.id) ? current : [...current, library.id]);
   };
 
   const surface = isDark ? "bg-[#080E1D] text-slate-100" : "bg-white text-slate-900";
@@ -117,46 +122,63 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
               <div className={`flex items-center justify-between text-[11px] ${subtle}`}><span>{filtered.length} libraries</span><span>{added.length} includes added</span></div>
             </div>
             <div className="min-h-0 flex-1 space-y-2 overflow-y-auto px-4 pb-4 sm:px-5">
-              {filtered.map((library) => <button key={library.id} type="button" onClick={() => setSelected(library.id)} className={`w-full rounded-xl border p-3 text-left transition ${activeLibrary?.id === library.id ? activeCard : card}`}>
-                <div className="flex items-start gap-3">
-                  <div className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${activeLibrary?.id === library.id ? "bg-cyan-500/10 text-cyan-600" : isDark ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"}`}><BookOpen size={17} /></div>
-                  <div className="min-w-0 flex-1">
-                    <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-semibold">{library.name}</span>{added.includes(library.id) && <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600"><Check size={11} /> Include added</span>}</div>
-                    <p className={`mt-1 text-xs leading-5 ${muted}`}>{library.description}</p>
-                    <div className={`mt-2 flex items-center gap-1.5 text-[10px] ${subtle}`}><span>{library.category}</span><span>·</span><span>{library.author}</span></div>
-                  </div>
-                </div>
-              </button>)}
+              {filtered.map((library) => {
+                const inProject = added.includes(library.id);
+                return <div key={library.id} className={`flex items-center gap-2 rounded-xl border p-3 transition ${inProject ? activeCard : card}`}>
+                  <button type="button" onClick={() => setSelected(library.id)} className="flex min-w-0 flex-1 items-start gap-3 text-left">
+                    <div className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${inProject ? "bg-cyan-500/10 text-cyan-600" : isDark ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"}`}><BookOpen size={17} /></div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-semibold">{library.name}</span>{inProject && <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600"><Check size={11} /> In project</span>}</div>
+                      <p className={`mt-1 text-xs leading-5 ${muted}`}>{library.description}</p>
+                      <div className={`mt-2 flex items-center gap-1.5 text-[10px] ${subtle}`}><span>{library.category}</span><span>·</span><span>{library.author}</span></div>
+                    </div>
+                  </button>
+                  <button type="button" onClick={() => inProject ? removeLibraryFromProject(library) : addLibraryToProject(library)} aria-label={inProject ? `Remove ${library.name} from project` : `Add ${library.name} to project`} title={inProject ? "Remove from project" : "Add to project"} className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${inProject ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-500" : "border-cyan-500/30 bg-cyan-500/10 text-cyan-600 hover:border-cyan-500 hover:bg-cyan-500/20"}`}>
+                    {inProject ? <Check size={17} /> : <Plus size={18} />}
+                  </button>
+                </div>;
+              })}
               {filtered.length === 0 && <div className={`rounded-xl border border-dashed px-4 py-10 text-center text-sm ${subtle}`}>No libraries match your search.</div>}
             </div>
           </div>
 
           <aside className={`flex min-h-0 flex-col overflow-y-auto p-4 sm:p-5 ${isDark ? "bg-black/10" : "bg-slate-50/70"}`}>
-            {activeLibrary ? <>
-              <div className="mb-4 flex items-start gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500"><Cpu size={20} /></div>
-                <div><div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-violet-500">{activeLibrary.category} library · not integrated</div><h3 className="text-lg font-bold leading-snug">{activeLibrary.name}</h3><p className={`mt-1 text-xs ${subtle}`}>Maintainer: {activeLibrary.author}</p></div>
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-violet-500">Current sketch</div>
+                <h3 className="text-lg font-bold">Project Libraries</h3>
+                <p className={`mt-1 text-xs leading-5 ${muted}`}>Press + on the left to add a library to this project.</p>
               </div>
-              <p className={`text-sm leading-6 ${muted}`}>{activeLibrary.description}</p>
-              <div className={`mt-5 rounded-xl border p-3 ${panel}`}>
-                <div className={`mb-2 text-[10px] font-bold uppercase tracking-wider ${subtle}`}>Include directive</div>
-                <code className="block break-all rounded-lg bg-black/5 px-2 py-2 font-mono text-xs text-cyan-600">{activeLibrary.include}</code>
-                <button type="button" onClick={() => addInclude(activeLibrary)} className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500/15 to-violet-500/15 px-3 py-2.5 text-xs font-bold text-cyan-700 ring-1 ring-cyan-500/30 transition hover:from-cyan-500/25 hover:to-violet-500/25">
-                  {added.includes(activeLibrary.id) ? <Check size={15} /> : <Plus size={15} />}{added.includes(activeLibrary.id) ? "Include added to sketch" : "Add include to code"}
-                </button>
+              <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 text-xs font-bold text-cyan-600">{added.length}</span>
+            </div>
+            <div className="mt-4 space-y-2">
+              {added.length ? added.map((id) => {
+                const library = LIBRARIES.find((item) => item.id === id);
+                if (!library) return null;
+                return <div key={library.id} className={`rounded-xl border p-3 ${card}`}>
+                  <div className="flex items-start gap-2">
+                    <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-600"><Package size={16} /></div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-semibold">{library.name}</div>
+                      <div className={`mt-1 text-[10px] ${subtle}`}>{library.category} · not integrated with compiler</div>
+                    </div>
+                    <button type="button" onClick={() => removeLibraryFromProject(library)} aria-label={`Remove ${library.name}`} title="Remove library" className={`rounded-md p-1.5 ${muted} transition hover:bg-red-500/10 hover:text-red-500`}><Trash2 size={15} /></button>
+                  </div>
+                  <code className={`mt-3 block break-all rounded-lg px-2 py-2 font-mono text-[11px] ${isDark ? "bg-black/30 text-cyan-300" : "bg-slate-100 text-cyan-700"}`}>{library.include}</code>
+                  <button type="button" onClick={() => addInclude(library)} className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500/15 to-violet-500/15 px-3 py-2 text-xs font-bold text-cyan-700 ring-1 ring-cyan-500/30 transition hover:from-cyan-500/25 hover:to-violet-500/25"><Code2 size={14} /> Add include to code</button>
+                </div>;
+              }) : <div className={`flex flex-col items-center rounded-xl border border-dashed px-4 py-10 text-center ${isDark ? "border-slate-700" : "border-slate-300"}`}>
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500"><Package size={21} /></div>
+                <p className="mt-3 text-sm font-semibold">No libraries added yet</p>
+                <p className={`mt-1 max-w-[220px] text-xs leading-5 ${muted}`}>Choose a library on the left and press + to add it to this project.</p>
+              </div>}
+            </div>
+            <div className="mt-auto pt-4">
+              <div className={`flex items-start gap-2 rounded-xl border p-3 ${isDark ? "border-amber-500/25 bg-amber-500/5" : "border-amber-300 bg-amber-50"}`}>
+                <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+                <p className="text-[11px] leading-5 text-amber-700">This list tracks the libraries selected for this project. Adding one here does not install it into the online compiler yet.</p>
               </div>
-              <div className={`mt-4 rounded-xl border p-3 ${panel}`}>
-                <div className="mb-2 flex items-center gap-2 text-xs font-bold"><Code2 size={14} className="text-violet-500" /> Compatibility</div>
-                <p className={`text-xs leading-5 ${muted}`}>{activeLibrary.note}</p>
-                <div className="mt-3 flex items-start gap-2 rounded-lg border border-amber-500/25 bg-amber-500/5 p-2.5">
-                  <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
-                  <p className="text-[11px] leading-5 text-amber-700">Adding an include only edits your sketch. It does not install or activate this library in the online compiler.</p>
-                </div>
-              </div>
-              <div className="mt-auto pt-5">
-                <div className={`flex items-center gap-2 rounded-xl border px-3 py-3 text-xs ${isDark ? "border-slate-700 bg-slate-900/60 text-slate-300" : "border-slate-200 bg-white text-slate-600"}`}><Package size={16} className="shrink-0 text-cyan-600" /><span>ZIP download removed. Only libraries verified as simulator-compatible should be marked supported.</span></div>
-              </div>
-            </> : <div className={`flex flex-1 items-center justify-center text-center text-sm ${subtle}`}>Choose a library to view details.</div>}
+            </div>
           </aside>
         </div>
         <footer className={`flex items-center justify-between gap-3 border-t px-4 py-3 sm:px-5 ${panel}`}>
