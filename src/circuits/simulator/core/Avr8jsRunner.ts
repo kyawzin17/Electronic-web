@@ -104,6 +104,12 @@ export class Avr8jsRunner {
     D: 0,
   };
 
+  // Track PORT and DDR separately. Input pull-ups and matrix-keypad
+  // column scans can change electrical behavior without changing the
+  // driven output level (e.g. INPUT -> OUTPUT LOW).
+  private lastPort = { B: 0, C: 0, D: 0 };
+  private lastDdr = { B: 0, C: 0, D: 0 };
+
   private timer0: AVRTimer | null = null;
   private timer1: AVRTimer | null = null;
   private timer2: AVRTimer | null = null;
@@ -133,6 +139,8 @@ export class Avr8jsRunner {
       C: 0,
       D: 0,
     };
+    this.lastPort = { B: 0, C: 0, D: 0 };
+    this.lastDdr = { B: 0, C: 0, D: 0 };
 
     this.installGpioWriteHooks();
 
@@ -427,50 +435,83 @@ export class Avr8jsRunner {
        * removing six register reads/comparisons from every instruction.
        */
       if (this.gpioDirty.B) {
-        const output =
-          (this.cpu.data[PORTB] ?? 0) &
-          (this.cpu.data[DDRB] ?? 0);
+        const portValue = this.cpu.data[PORTB] ?? 0;
+        const ddrValue = this.cpu.data[DDRB] ?? 0;
+        const output = portValue & ddrValue;
+
+        // Notify the circuit solver when output level, direction, or
+        // PORT latch changes. INPUT_PULLUP relies on PORT=1 while DDR=0,
+        // and matrix keypad scans frequently switch a column between
+        // INPUT and OUTPUT LOW without a HIGH/LOW output edge.
+        const changedMask =
+          (this.lastOutput.B ^ output) |
+          (this.lastPort.B ^ portValue) |
+          (this.lastDdr.B ^ ddrValue);
 
         this.recordPortChanges(
           "B",
-          this.lastOutput.B ^ output,
+          changedMask,
           output,
           onGpioChange,
         );
 
         this.lastOutput.B = output;
+        this.lastPort.B = portValue;
+        this.lastDdr.B = ddrValue;
         this.gpioDirty.B = false;
       }
 
       if (this.gpioDirty.C) {
-        const output =
-          (this.cpu.data[PORTC] ?? 0) &
-          (this.cpu.data[DDRC] ?? 0);
+        const portValue = this.cpu.data[PORTC] ?? 0;
+        const ddrValue = this.cpu.data[DDRC] ?? 0;
+        const output = portValue & ddrValue;
+
+        // Notify the circuit solver when output level, direction, or
+        // PORT latch changes. INPUT_PULLUP relies on PORT=1 while DDR=0,
+        // and matrix keypad scans frequently switch a column between
+        // INPUT and OUTPUT LOW without a HIGH/LOW output edge.
+        const changedMask =
+          (this.lastOutput.C ^ output) |
+          (this.lastPort.C ^ portValue) |
+          (this.lastDdr.C ^ ddrValue);
 
         this.recordPortChanges(
           "C",
-          this.lastOutput.C ^ output,
+          changedMask,
           output,
           onGpioChange,
         );
 
         this.lastOutput.C = output;
+        this.lastPort.C = portValue;
+        this.lastDdr.C = ddrValue;
         this.gpioDirty.C = false;
       }
 
       if (this.gpioDirty.D) {
-        const output =
-          (this.cpu.data[PORTD] ?? 0) &
-          (this.cpu.data[DDRD] ?? 0);
+        const portValue = this.cpu.data[PORTD] ?? 0;
+        const ddrValue = this.cpu.data[DDRD] ?? 0;
+        const output = portValue & ddrValue;
+
+        // Notify the circuit solver when output level, direction, or
+        // PORT latch changes. INPUT_PULLUP relies on PORT=1 while DDR=0,
+        // and matrix keypad scans frequently switch a column between
+        // INPUT and OUTPUT LOW without a HIGH/LOW output edge.
+        const changedMask =
+          (this.lastOutput.D ^ output) |
+          (this.lastPort.D ^ portValue) |
+          (this.lastDdr.D ^ ddrValue);
 
         this.recordPortChanges(
           "D",
-          this.lastOutput.D ^ output,
+          changedMask,
           output,
           onGpioChange,
         );
 
         this.lastOutput.D = output;
+        this.lastPort.D = portValue;
+        this.lastDdr.D = ddrValue;
         this.gpioDirty.D = false;
       }
 
