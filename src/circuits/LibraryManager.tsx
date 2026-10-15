@@ -12,8 +12,9 @@ type Library = {
   author: string;
   category: "Display" | "Sensor" | "Input" | "LED" | "Time" | "Core";
   include: string;
-  note: string;
+  note?: string;
   sourceAvailable: boolean;
+  runtimeStatus?: "implemented" | "not-verified";
 };
 
 const LIBRARIES: Library[] = [
@@ -30,7 +31,7 @@ const LIBRARIES: Library[] = [
 
 const CATEGORIES = ["All", "Display", "Sensor", "Input", "LED", "Time", "Core"] as const;
 const API_BASE_URL = import.meta.env.VITE_API_URL_PRODUCTION ?? "http://localhost:3335/api";
-type LibraryCatalogResponse = { success: boolean; libraries?: Array<Library & { sourceAvailable: boolean; runtimeStatus?: string }> };
+type LibraryCatalogResponse = { success: boolean; libraries?: Array<Library & { sourceKind?: string }> };
 type Props = { onClose: () => void; code: string; onCodeChange: (code: string) => void };
 
 function readTheme() {
@@ -186,7 +187,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-500/10 text-cyan-600"><Package size={16} /></div>
                     <div className="min-w-0 flex-1">
                       <div className="text-sm font-semibold">{library.name}</div>
-                      <div className={`mt-1 text-[10px] ${subtle}`}>{library.category} · {library.sourceAvailable ? "source available" : "not installed"} · runtime not verified</div>
+                      <div className={`mt-1 text-[10px] ${subtle}`}>{library.category} · {library.sourceAvailable ? "source available" : "not installed"} · {library.runtimeStatus === "implemented" ? "runtime adapter implemented" : "runtime not verified"}</div>
                     </div>
                     <button type="button" onClick={() => removeLibraryFromProject(library)} aria-label={`Remove ${library.name}`} title="Remove library" className={`rounded-md p-1.5 ${muted} transition hover:bg-red-500/10 hover:text-red-500`}><Trash2 size={15} /></button>
                   </div>
@@ -202,7 +203,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
             <div className="mt-auto pt-4">
               <div className={`flex items-start gap-2 rounded-xl border p-3 ${isDark ? "border-amber-500/25 bg-amber-500/5" : "border-amber-300 bg-amber-50"}`}>
                 <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
-                <p className="text-[11px] leading-5 text-amber-700">Selected libraries are sent to the backend compiler. Only bundled/core sources can compile; runtime hardware behavior still needs separate verification.</p>
+                <p className="text-[11px] leading-5 text-amber-700">Selected libraries are sent to the backend compiler. A source-available label means the compiler has the header; runtime adapters are shown separately and still need real compile/run checks.</p>
               </div>
             </div>
           </aside>
