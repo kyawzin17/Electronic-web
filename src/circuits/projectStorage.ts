@@ -10,6 +10,8 @@ export type SavedCircuitProject = {
   nodes: Node[];
   edges: Edge[];
   code: string;
+  /** Selected compiler libraries for this project. Optional for older saves. */
+  selectedLibraries?: string[];
   viewport?: {
     x: number;
     y: number;
@@ -85,6 +87,7 @@ export function saveCircuitProject(input: {
   nodes: Node[];
   edges: Edge[];
   code: string;
+  selectedLibraries?: string[];
   viewport?: SavedCircuitProject["viewport"];
   thumbnail?: string;
 }): SavedCircuitProject {
@@ -111,6 +114,7 @@ export function saveCircuitProject(input: {
     nodes: sanitizeNodes(input.nodes),
     edges: clone(input.edges),
     code: input.code,
+    selectedLibraries: [...new Set(input.selectedLibraries ?? (existingIndex >= 0 ? projects[existingIndex].selectedLibraries ?? [] : []))],
     viewport: input.viewport ? { ...input.viewport } : undefined,
     thumbnail:
       input.thumbnail ??
