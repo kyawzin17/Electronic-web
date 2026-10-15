@@ -39,7 +39,6 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<(typeof CATEGORIES)[number]>("All");
   const [added, setAdded] = useState<string[]>([]);
-  const [selected, setSelected] = useState("liquidcrystal-i2c");
   const [isDark, setIsDark] = useState(readTheme);
 
   useEffect(() => {
@@ -69,7 +68,6 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
     });
   }, [query, category]);
 
-  const activeLibrary = LIBRARIES.find((library) => library.id === selected) ?? filtered[0];
   const addLibraryToProject = (library: Library) => {
     setAdded((current) => current.includes(library.id) ? current : [...current, library.id]);
   };
@@ -125,14 +123,14 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
               {filtered.map((library) => {
                 const inProject = added.includes(library.id);
                 return <div key={library.id} className={`flex items-center gap-2 rounded-xl border p-3 transition ${inProject ? activeCard : card}`}>
-                  <button type="button" onClick={() => setSelected(library.id)} className="flex min-w-0 flex-1 items-start gap-3 text-left">
+                  <div className="flex min-w-0 flex-1 items-start gap-3 text-left">
                     <div className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${inProject ? "bg-cyan-500/10 text-cyan-600" : isDark ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"}`}><BookOpen size={17} /></div>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-semibold">{library.name}</span>{inProject && <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600"><Check size={11} /> In project</span>}</div>
                       <p className={`mt-1 text-xs leading-5 ${muted}`}>{library.description}</p>
                       <div className={`mt-2 flex items-center gap-1.5 text-[10px] ${subtle}`}><span>{library.category}</span><span>·</span><span>{library.author}</span></div>
                     </div>
-                  </button>
+                  </div>
                   <button type="button" onClick={() => inProject ? removeLibraryFromProject(library) : addLibraryToProject(library)} aria-label={inProject ? `Remove ${library.name} from project` : `Add ${library.name} to project`} title={inProject ? "Remove from project" : "Add to project"} className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition ${inProject ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 hover:border-red-400/40 hover:bg-red-500/10 hover:text-red-500" : "border-cyan-500/30 bg-cyan-500/10 text-cyan-600 hover:border-cyan-500 hover:bg-cyan-500/20"}`}>
                     {inProject ? <Check size={17} /> : <Plus size={18} />}
                   </button>
