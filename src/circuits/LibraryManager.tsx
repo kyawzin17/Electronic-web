@@ -95,8 +95,8 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
   const addLibraryToProject = (library: Library) => {
     if (!library.sourceAvailable) return;
     setSelectedLibraries(selectedLibraries.includes(library.id) ? selectedLibraries : [...selectedLibraries, library.id]);
-    const alreadyExists = code.split("\\n").some((line) => line.trim() === library.include);
-    if (!alreadyExists) onCodeChange(code.trim() ? `${library.include}\\n${code}` : `${library.include}\\n`);
+    const alreadyExists = code.split("\n").some((line) => line.trim() === library.include);
+    if (!alreadyExists) onCodeChange(code.trim() ? `${library.include}\n${code}` : `${library.include}\n`);
   };
   const removeLibraryFromProject = (library: Library) => {
     setSelectedLibraries(selectedLibraries.filter((id) => id !== library.id));
