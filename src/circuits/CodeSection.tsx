@@ -56,14 +56,14 @@ const CodeSection = ({
             type="button"
             onClick={() => setShowLibraryManager(true)}
             className="flex items-center gap-1.5 rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-2 text-xs font-medium text-cyan-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/20"
-            title="Browse and download Arduino libraries"
+            title="Browse Arduino libraries supported by the simulator"
           >
             <Package size={15} />
             <span className="hidden sm:inline">Libraries</span>
           </button>
           <button
             type="button"
-            onClick={() => setFullScreen((value) => !value)
+            onClick={() => setFullScreen((value) => !value)}
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-500 hover:text-slate-100"
             title="Fullscreen"
           >
