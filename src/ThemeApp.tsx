@@ -23,11 +23,30 @@ import PasswordFill from "./registerAndLogin/PasswordFill.tsx";
 import UserProfile from "./registerAndLogin/UserProfile.tsx";
 
 import { AppProvider } from "./hooks/useAppContext.tsx";
-const Circuit = lazy( () => import("./circuits/Circuit.tsx"));
-const CircuitProjects = lazy( () => import("./circuits/ProjectsPage.tsx"));
-export default function ThemeApp() {
 
-    const router= createBrowserRouter([
+const Circuit = lazy(() => import("./circuits/Circuit.tsx"));
+const CircuitProjects = lazy(() => import("./circuits/ProjectsPage.tsx"));
+
+function RouteLoading({ label }: { label: string }) {
+    return (
+        <div
+            className="flex min-h-[50vh] w-full items-center justify-center"
+            role="status"
+            aria-live="polite"
+        >
+            <div className="flex flex-col items-center gap-3 text-center">
+                <span
+                    className="h-9 w-9 animate-spin rounded-full border-4 border-current border-r-transparent"
+                    aria-hidden="true"
+                />
+                <span className="text-sm text-current/70">{label}</span>
+            </div>
+        </div>
+    );
+}
+
+export default function ThemeApp() {
+    const router = createBrowserRouter([
         {
             path: "/",
             element: <App />,
@@ -46,10 +65,22 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/circuit",
-                    element: <Circuit />
+                    element: (
+                        <Suspense fallback={<RouteLoading label="Loading Circuit Simulator..." />}>
+                            <Circuit />
+                        </Suspense>
+                    ),
                 },
                 {
-                    path: '/docs/doc/components',
+                    path: "/circuit/project",
+                    element: (
+                        <Suspense fallback={<RouteLoading label="Loading Circuit Projects..." />}>
+                            <CircuitProjects />
+                        </Suspense>
+                    ),
+                },
+                {
+                    path: "/docs/doc/components",
                     element: <Docs />,
                 },
                 {
@@ -72,23 +103,7 @@ export default function ThemeApp() {
                     path: "/project/:id",
                     element: <ProjectDetail />,
                 },
-                {
-                    path: "/circuit",
-                    element: (
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <Circuit />
-                        </Suspense>
-                    ),
-                },
-                {
-                    path: "/circuit/project",
-                    element: (
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <CircuitProjects />
-                        </Suspense>
-                    ),
-                }
-            ]
+            ],
         },
         {
             path: "/auth",
@@ -96,7 +111,7 @@ export default function ThemeApp() {
             children: [
                 {
                     path: "/auth/profile",
-                    element: <UserProfile />
+                    element: <UserProfile />,
                 },
                 {
                     path: "/auth/login",
@@ -104,42 +119,43 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/auth/register",
-                    element: <Register />
+                    element: <Register />,
                 },
                 {
                     path: "/auth/otp-fill",
-                    element: <OtpFill />
+                    element: <OtpFill />,
                 },
                 {
                     path: "/auth/password-fill",
-                    element: <PasswordFill />
+                    element: <PasswordFill />,
                 },
                 {
                     path: "/auth/editprofile",
-                    element: <EditProfile />
-                }
-            ]
+                    element: <EditProfile />,
+                },
+            ],
         },
-        { 
+        {
             path: "/contact",
-            element: <ContactUs />
+            element: <ContactUs />,
         },
         {
             path: "/request",
-            element: <Request />
+            element: <Request />,
         },
         {
             path: "/report",
-            element: <Report />
+            element: <Report />,
         },
         {
             path: "/privacy",
-            element: <Privacy />
-        }
-    ])
+            element: <Privacy />,
+        },
+    ]);
+
     return (
-            <AppProvider>
-                 <RouterProvider router={router} />
-            </AppProvider>
-    )
+        <AppProvider>
+            <RouterProvider router={router} />
+        </AppProvider>
+    );
 }
