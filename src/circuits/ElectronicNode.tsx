@@ -403,9 +403,7 @@ const ElectronicNode = ({
         !key ||
         !keypadLabels.some(
           (label: string) => label.toUpperCase() === key,
-        ) ||
-        !Number.isInteger(rowIndex) ||
-        !Number.isInteger(columnIndex)
+        )
       ) {
         return;
       }
