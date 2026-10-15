@@ -1,6 +1,7 @@
 export type ArduinoCompileRequest = {
   code: string;
   fqbn?: string;
+  libraries?: string[];
 };
 
 export type ArduinoCompileResult = {
@@ -40,6 +41,7 @@ export async function compileArduinoSketch(
       },
       body: JSON.stringify({
         code: request.code,
+        libraries: request.libraries ?? [],
         fqbn:
           request.fqbn ??
           "arduino:avr:uno",
