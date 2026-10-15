@@ -1,6 +1,7 @@
 import Editor from "@monaco-editor/react";
-import { Maximize, ArrowDown } from "lucide-react";
+import { Maximize, ArrowDown, Package } from "lucide-react";
 import { useState } from "react";
+import LibraryManager from "./LibraryManager.tsx";
 import { useSimulationStore } from "../stores/simulationStore";
 
 type CodeSectionProps = {
@@ -17,6 +18,7 @@ const CodeSection = ({
   onStop,
 }: CodeSectionProps) => {
   const [fullScreen, setFullScreen] = useState(false);
+  const [showLibraryManager, setShowLibraryManager] = useState(false);
 
   const code = useSimulationStore((state) => state.code);
   const setCode = useSimulationStore((state) => state.setCode);
@@ -52,7 +54,16 @@ const CodeSection = ({
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={() => setFullScreen((value) => !value)}
+            onClick={() => setShowLibraryManager(true)}
+            className="flex items-center gap-1.5 rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-2 text-xs font-medium text-cyan-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/20"
+            title="Browse and download Arduino libraries"
+          >
+            <Package size={15} />
+            <span className="hidden sm:inline">Libraries</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setFullScreen((value) => !value)
             className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-500 hover:text-slate-100"
             title="Fullscreen"
           >
@@ -101,6 +112,14 @@ const CodeSection = ({
           }}
         />
       </div>
+
+      {showLibraryManager && (
+        <LibraryManager
+          code={code}
+          onCodeChange={setCode}
+          onClose={() => setShowLibraryManager(false)}
+        />
+      )}
 
       <div className="border-t border-slate-700 bg-slate-950 px-4 py-2">
         <div className="flex items-center gap-2 text-xs">
