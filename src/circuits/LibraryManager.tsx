@@ -168,8 +168,8 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
       : undefined;
 
   return (
-    <div className="absolute inset-0 z-[80] flex items-center justify-center bg-slate-950/75 p-3 backdrop-blur-sm sm:p-6" role="dialog" aria-modal="true" aria-labelledby="library-manager-title">
-      <section className="flex max-h-[min(760px,92%)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-cyan-400/25 bg-[#080E1D] text-slate-100 shadow-[0_0_60px_rgba(0,209,255,0.12)]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/75 p-3 backdrop-blur-sm sm:p-6" role="dialog" aria-modal="true" aria-labelledby="library-manager-title">
+      <section className="flex max-h-[min(760px,92vh)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border border-cyan-400/25 bg-[#080E1D] text-slate-100 shadow-[0_0_60px_rgba(0,209,255,0.12)]">
         <header className="flex items-center justify-between gap-4 border-b border-slate-700/80 bg-gradient-to-r from-[#101B35] to-[#15102C] px-5 py-4 sm:px-6">
           <div className="flex min-w-0 items-center gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-cyan-300/20 bg-cyan-300/10 text-cyan-300">
