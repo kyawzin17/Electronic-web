@@ -1,5 +1,5 @@
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lazy, Suspense } from "react";
 
 import "./index.css";
 import App from "./App.tsx";
@@ -23,8 +23,8 @@ import PasswordFill from "./registerAndLogin/PasswordFill.tsx";
 import UserProfile from "./registerAndLogin/UserProfile.tsx";
 
 import { AppProvider } from "./hooks/useAppContext.tsx";
-import Circuit from "./circuits/Circuit.tsx";
-import CircuitProjects from "./circuits/ProjectsPage.tsx";
+const Circuit = lazy( () => import("./circuits/Circuit.tsx"));
+const CircuitProjects = lazy( () => import("./circuits/ProjectsPage.tsx"));
 export default function ThemeApp() {
 
     const router= createBrowserRouter([
@@ -74,11 +74,19 @@ export default function ThemeApp() {
                 },
                 {
                     path: "/circuit",
-                    element: <Circuit />,
+                    element: (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Circuit />
+                        </Suspense>
+                    ),
                 },
                 {
                     path: "/circuit/project",
-                    element: <CircuitProjects/>
+                    element: (
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <CircuitProjects />
+                        </Suspense>
+                    ),
                 }
             ]
         },
