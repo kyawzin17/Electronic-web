@@ -1,5 +1,6 @@
 import { AVRTWI, type TWIEventHandler } from "avr8js";
 import { Lcd1602Runtime } from "./Lcd1602Runtime";
+import { Ds1307Runtime, Ds1307I2cDevice } from "./Ds1307Runtime";
 
 export interface Ssd1306RuntimeState {
   id: string;
@@ -539,7 +540,7 @@ export class I2cPeripheralEventHandler implements TWIEventHandler {
     }
 
     this.twi.completeConnect(
-      Boolean((this.selected || this.selectedRtc) && write),
+      Boolean(this.selected || this.selectedRtc),
     );
   }
 
