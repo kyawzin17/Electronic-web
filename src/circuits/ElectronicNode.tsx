@@ -2084,7 +2084,13 @@ const ElectronicNode = ({
                   absolute
                 "
 
-                title={pin.name}
+                title={
+                  isSsd1306 && pin.name === "DATA"
+                    ? "DATA (MOSI / Arduino D11)"
+                    : isSsd1306 && pin.name === "CLK"
+                      ? "CLK (SCK / Arduino D13)"
+                      : pin.name
+                }
 
                 style={{
                   transform:
