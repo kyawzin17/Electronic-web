@@ -21,8 +21,8 @@ export interface Ssd1306RuntimeState {
  * edges by SimulationEngine.
  *
  * SPI mode 0:
- *   DATA = MOSI / D1
- *   CLK  = SCK  / D0
+ *   DATA = MOSI / Arduino Uno D11
+ *   CLK  = SCK  / Arduino Uno D13
  *   DC   = 0 command, 1 data
  *   CS   = active low
  *   RST  = active low
