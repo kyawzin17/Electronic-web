@@ -13,6 +13,7 @@ import {
   listSavedProjects,
   type SavedCircuitProject,
 } from "./projectStorage";
+import "./circuit.css";
 
 function formatDate(timestamp: number): string {
   return new Intl.DateTimeFormat("en-US", {
@@ -56,7 +57,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <main className="h-screen bg-[#070b12] text-slate-100 overflow-auto">
+    <main className="h-[calc(100vh-65px)] project-scrollbar-width m-0 custom-scrollbar bg-[#070b12] text-slate-100 overflow-auto">
       <header className="sticky top-0 z-20 border-b border-slate-800/80 bg-[#070b12]/95 px-5 py-4 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -70,7 +71,7 @@ export default function ProjectsPage() {
             </button>
 
             <div>
-              <h1 className="text-lg font-semibold">My Projects</h1>
+              <h1 className="text-lg font-semibold mb-4">My Projects</h1>
               <p className="text-xs text-slate-500">
                 Saved circuits and Arduino sketches
               </p>

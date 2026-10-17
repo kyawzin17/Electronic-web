@@ -2464,7 +2464,7 @@ const toggleCode = useCallback(() => {
     loadedProjectRef.current = project.id;
 
     navigate(
-      "/?project=" +
+      "/circuit/?project=" +
         encodeURIComponent(project.id),
       { replace: true },
     );
