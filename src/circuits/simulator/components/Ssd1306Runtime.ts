@@ -1,6 +1,5 @@
 import { AVRTWI, type TWIEventHandler } from "avr8js";
 import { Lcd1602Runtime } from "./Lcd1602Runtime";
-import { Ds1307Runtime, Ds1307I2cDevice } from "./Ds1307Runtime";
 
 export interface Ssd1306RuntimeState {
   id: string;
@@ -487,12 +486,11 @@ export class Ssd1306SoftwareSpiDecoder {
 
 
 /*
- * Shared I2C handler for LCD1602 I2C and DS1307 RTC peripherals.
- * The SSD1306 8-pin breakout remains SPI-only.
+ * Shared I2C handler kept for the existing LCD1602 I2C component.
+ * SSD1306 8-pin is deliberately NOT included here; it is SPI-only.
  */
 export class I2cPeripheralEventHandler implements TWIEventHandler {
   private selected: Lcd1602Runtime | null = null;
-  private selectedRtc: Ds1307I2cDevice | null = null;
 
   constructor(
     private readonly displays: () => Lcd1602Runtime[],
@@ -500,65 +498,48 @@ export class I2cPeripheralEventHandler implements TWIEventHandler {
     private readonly canConnect?: (
       display: Lcd1602Runtime,
     ) => boolean,
-    private readonly rtcs: () => Ds1307Runtime[] = () => [],
-    private readonly canConnectRtc?: (
-      rtc: Ds1307Runtime,
-    ) => boolean,
   ) {}
 
   start(): void {
     this.selected = null;
-    this.selectedRtc = null;
     this.twi.completeStart();
   }
 
   stop(): void {
     this.selected = null;
-    this.selectedRtc = null;
     this.twi.completeStop();
   }
 
-  connectToSlave(addr: number, write: boolean): void {
+  connectToSlave(
+    addr: number,
+    write: boolean,
+  ): void {
     const display = this.displays().find(
       (item) =>
         item.acceptsI2cAddress(addr) &&
-        (this.canConnect ? this.canConnect(item) : true),
-    );
-
-    const rtc = this.rtcs().find(
-      (item) =>
-        item.acceptsI2cAddress(addr) &&
-        (this.canConnectRtc ? this.canConnectRtc(item) : true),
+        (this.canConnect
+          ? this.canConnect(item)
+          : true),
     );
 
     this.selected = display ?? null;
-    this.selectedRtc = rtc ? new Ds1307I2cDevice(rtc) : null;
-
-    if (this.selectedRtc && write) {
-      this.selectedRtc.connect(true);
-      this.selectedRtc.resetTransaction();
-    }
 
     this.twi.completeConnect(
-      Boolean(this.selected || this.selectedRtc),
+      Boolean(this.selected && write),
     );
   }
 
   writeByte(value: number): void {
     if (this.selected) {
       this.selected.processI2cExpanderByte(value);
-    } else if (this.selectedRtc) {
-      this.selectedRtc.writeByte(value);
     }
 
     this.twi.completeWrite(
-      this.selected !== null || this.selectedRtc !== null,
+      this.selected !== null,
     );
   }
 
   readByte(): void {
-    this.twi.completeRead(
-      this.selectedRtc ? this.selectedRtc.readByte() : 0,
-    );
+    this.twi.completeRead(0);
   }
 }
