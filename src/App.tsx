@@ -4,6 +4,8 @@ import Footer from "./pages/Footer";
 import MobileRightSidebar from "./components/MobileRightSidebar";
 import { useEffect } from "react";
 import "./index.css";
+import "./App.css";
+
 export default function App() {
 
   const location = useLocation();
@@ -12,12 +14,12 @@ export default function App() {
     const isCircuit = location.pathname.startsWith("/circuit");
 
     document.documentElement.classList.toggle(
-      "circuit-page",
+      "canvas-container",
       isCircuit
     );
 
     return () => {
-      document.documentElement.classList.remove("circuit-page");
+      document.documentElement.classList.remove("canvas-container");
     };
   }, [location.pathname]);
 

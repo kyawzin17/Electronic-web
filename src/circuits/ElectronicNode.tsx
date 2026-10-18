@@ -355,13 +355,13 @@ const ElectronicNode = ({
       : defaults;
   })();
 
-  const keypadPressedKeys = Array.isArray(data.keypadPressedKeys)
-    ? data.keypadPressedKeys.map((value: unknown) => String(value).toUpperCase())
-    : (
-        data.keypadPressedKey
-          ? [String(data.keypadPressedKey).toUpperCase()]
-          : []
-      );
+  // const keypadPressedKeys = Array.isArray(data.keypadPressedKeys)
+  //   ? data.keypadPressedKeys.map((value: unknown) => String(value).toUpperCase())
+  //   : (
+  //       data.keypadPressedKey
+  //         ? [String(data.keypadPressedKey).toUpperCase()]
+  //         : []
+  //     );
 
   /*
    * The Wokwi membrane keypad is the actual interactive component.
@@ -998,10 +998,10 @@ const ElectronicNode = ({
       ? Math.max(0, Math.min(60, data.pirDelayTime))
       : 5;
 
-  const pirInhibitTimeSec =
-    typeof data.pirInhibitTime === "number"
-      ? Math.max(0, Math.min(60, data.pirInhibitTime))
-      : 1.2;
+  // const pirInhibitTimeSec =
+  //   typeof data.pirInhibitTime === "number"
+  //     ? Math.max(0, Math.min(60, data.pirInhibitTime))
+  //     : 1.2;
 
   const pirRetrigger =
     data.pirRetrigger !== false;

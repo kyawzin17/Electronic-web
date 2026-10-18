@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../hooks/useAppContext';
+import '../App.css';
 
 interface Heading {
   id: string;
@@ -32,7 +33,7 @@ const RightSidebar = ({ headings }: { headings: Heading[] }) => {
   }, [headings]);
 
   return (
-    <aside className="sticky overflow-y-auto bg-soft hidden xl:block py-12 px-4"
+    <aside className="sticky overflow-y-auto custom-scrollbar bg-soft hidden xl:block py-12 px-4"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
       <p className="text-base font-semibold text-text-main tracking-widest mb-4">
         On this page

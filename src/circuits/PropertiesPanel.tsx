@@ -53,7 +53,6 @@ type Props = {
 export default function PropertiesPanel({
   selectedNode,
   onRename,
-  onUpdateNode,
   onDelete,
   onDocumentation,
   rotateNode,
@@ -122,11 +121,6 @@ export default function PropertiesPanel({
   const componentType =
     data.componentType || selectedNode.type;
 
-  const position =
-    selectedNode.position || {
-      x: 0,
-      y: 0,
-    };
 
   const rotation =
     data.rotation ?? 0;
@@ -240,18 +234,6 @@ export default function PropertiesPanel({
   return componentType?.toLowerCase().includes("resistor");
 }
 
-const COLOR_MAP: Record<number, string> = {
-  0: "bg-black",
-  1: "bg-amber-900", // Brown
-  2: "bg-red-600",
-  3: "bg-orange-500",
-  4: "bg-yellow-400",
-  5: "bg-green-600",
-  6: "bg-blue-600",
-  7: "bg-purple-600",
-  8: "bg-gray-500",
-  9: "bg-white",
-};
 
 
   return (
@@ -1389,58 +1371,58 @@ function PropertyRow({
 }
 
 
-function NumberInput({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: number;
-  onChange: (value: string) => void;
-}) {
+// function NumberInput({
+//   label,
+//   value,
+//   onChange,
+// }: {
+//   label: string;
+//   value: number;
+//   onChange: (value: string) => void;
+// }) {
 
-  return (
+//   return (
 
-    <div>
+//     <div>
 
-      <p
-        className="
-          text-xs
-          text-slate-400
-          mb-2
-        "
-      >
-        {label}
-      </p>
+//       <p
+//         className="
+//           text-xs
+//           text-slate-400
+//           mb-2
+//         "
+//       >
+//         {label}
+//       </p>
 
 
-      <input
-        type="number"
-        value={value}
-        onChange={(event) =>
-          onChange(
-            event.target.value
-          )
-        }
-        className="
-          w-full
-          px-3
-          py-2
-          text-xs
-          text-slate-200
-          bg-[#111e2f]
-          border
-          border-[#29405b]
-          rounded-md
-          outline-none
-          focus:border-blue-500
-        "
-      />
+//       <input
+//         type="number"
+//         value={value}
+//         onChange={(event) =>
+//           onChange(
+//             event.target.value
+//           )
+//         }
+//         className="
+//           w-full
+//           px-3
+//           py-2
+//           text-xs
+//           text-slate-200
+//           bg-[#111e2f]
+//           border
+//           border-[#29405b]
+//           rounded-md
+//           outline-none
+//           focus:border-blue-500
+//         "
+//       />
 
-    </div>
+//     </div>
 
-  );
-}
+//   );
+// }
 
 
 function SelectLike({
@@ -1500,92 +1482,92 @@ function SelectLike({
    PINS TAB
 ===================================== */
 
-function PinsTab({
-  selectedNode,
-}: {
-  selectedNode: any;
-}) {
+// function PinsTab({
+//   selectedNode,
+// }: {
+//   selectedNode: any;
+// }) {
 
-  const pins =
-    selectedNode.data?.pins || [];
+//   const pins =
+//     selectedNode.data?.pins || [];
 
-  return (
+//   return (
 
-    <div>
+//     <div>
 
-      <SectionTitle>
-        Pins
-      </SectionTitle>
-
-
-      {pins.length === 0 ? (
-
-        <div
-          className="
-            py-10
-            text-center
-            text-sm
-            text-slate-500
-          "
-        >
-          No pin data available
-        </div>
-
-      ) : (
-
-        <div className="space-y-2">
-
-          {pins.map(
-            (pin: any) => (
-
-              <div
-                key={pin.id}
-                className="
-                  flex
-                  items-center
-                  justify-between
-                  p-3
-                  rounded-md
-                  bg-[#111e2f]
-                  border
-                  border-[#263b55]
-                "
-              >
-
-                <span className="text-xs text-white">
-                  {pin.name}
-                </span>
+//       <SectionTitle>
+//         Pins
+//       </SectionTitle>
 
 
-                <span
-                  className={`
-                    text-[10px]
+//       {pins.length === 0 ? (
 
-                    ${
-                      pin.connected
-                        ? "text-emerald-400"
-                        : "text-slate-500"
-                    }
-                  `}
-                >
-                  {pin.connected
-                    ? "Connected"
-                    : "Available"}
-                </span>
+//         <div
+//           className="
+//             py-10
+//             text-center
+//             text-sm
+//             text-slate-500
+//           "
+//         >
+//           No pin data available
+//         </div>
 
-              </div>
+//       ) : (
 
-            )
-          )}
+//         <div className="space-y-2">
 
-        </div>
+//           {pins.map(
+//             (pin: any) => (
 
-      )}
+//               <div
+//                 key={pin.id}
+//                 className="
+//                   flex
+//                   items-center
+//                   justify-between
+//                   p-3
+//                   rounded-md
+//                   bg-[#111e2f]
+//                   border
+//                   border-[#263b55]
+//                 "
+//               >
 
-    </div>
+//                 <span className="text-xs text-white">
+//                   {pin.name}
+//                 </span>
 
-  );
-}
+
+//                 <span
+//                   className={`
+//                     text-[10px]
+
+//                     ${
+//                       pin.connected
+//                         ? "text-emerald-400"
+//                         : "text-slate-500"
+//                     }
+//                   `}
+//                 >
+//                   {pin.connected
+//                     ? "Connected"
+//                     : "Available"}
+//                 </span>
+
+//               </div>
+
+//             )
+//           )}
+
+//         </div>
+
+//       )}
+
+//     </div>
+
+//   );
+// }
 
 
 /* =====================================

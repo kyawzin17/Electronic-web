@@ -8,6 +8,7 @@ import RightSidebar from "../components/RightSideBar";
 import Components from "../docs/Components.tsx";
 import MobileLeftSidebar from "../docs/MobileLeftSidebar.tsx";
 import LearnSidebarMode from "../components/LearnSidebarMode";
+import '../App.css'
 
 interface FormattedHeading {
     title: string;
@@ -253,7 +254,7 @@ export default function Docs() {
             
              <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
-            <div className="sticky bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4"
+            <div className="sticky custom-scrollbar bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
                     <LearnSidebarMode />
                      {/* Search Bar */}

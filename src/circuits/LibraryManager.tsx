@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSimulationStore } from "../stores/simulationStore";
 import {
-  BookOpen, Check, Code2, Cpu, Moon, Package, Plus, Search, Sun, Trash2, X,
+  BookOpen, Check, Code2, Moon, Package, Plus, Search, Sun, Trash2, X,
 } from "lucide-react";
 
 type Library = {
@@ -116,9 +116,9 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
   const field = isDark ? "border-slate-700 bg-slate-950 text-white placeholder:text-slate-500" : "border-slate-200 bg-white text-slate-900 placeholder:text-slate-400";
 
   return createPortal(
-    <div className={`fixed inset-0 z-[100] flex items-center justify-center p-3 backdrop-blur-sm sm:p-6 ${isDark ? "bg-slate-950/75" : "bg-slate-900/35"}`} role="dialog" aria-modal="true" aria-labelledby="library-manager-title">
+    <div className={`fixed inset-0 z-100 flex items-center justify-center p-3 backdrop-blur-sm sm:p-6 ${isDark ? "bg-slate-950/75" : "bg-slate-900/35"}`} role="dialog" aria-modal="true" aria-labelledby="library-manager-title">
       <section className={`flex max-h-[min(780px,94vh)] w-full max-w-5xl flex-col overflow-hidden rounded-2xl border shadow-2xl ${surface} ${isDark ? "border-cyan-400/25 shadow-cyan-950/30" : "border-slate-200 shadow-slate-900/15"}`}>
-        <header className={`flex items-center justify-between gap-3 border-b px-4 py-4 sm:px-6 ${panel} ${isDark ? "bg-gradient-to-r from-[#101B35] to-[#15102C]" : "bg-gradient-to-r from-cyan-50 to-violet-50"}`}>
+        <header className={`flex items-center justify-between gap-3 border-b px-4 py-4 sm:px-6 ${panel} ${isDark ? "bg-linear-to-r from-[#101B35] to-[#15102C]" : "bg-linear-to-r from-cyan-50 to-violet-50"}`}>
           <div className="flex min-w-0 items-center gap-3">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-400/10 text-cyan-600"><Package size={22} /></div>
             <div className="min-w-0">
@@ -192,12 +192,12 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
                     <button type="button" onClick={() => removeLibraryFromProject(library)} aria-label={`Remove ${library.name}`} title="Remove library" className={`rounded-md p-1.5 ${muted} transition hover:bg-red-500/10 hover:text-red-500`}><Trash2 size={15} /></button>
                   </div>
                   <code className={`mt-3 block break-all rounded-lg px-2 py-2 font-mono text-[11px] ${isDark ? "bg-black/30 text-cyan-300" : "bg-slate-100 text-cyan-700"}`}>{library.include}</code>
-                  <button type="button" onClick={() => addInclude(library)} disabled={!library.sourceAvailable} className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-cyan-500/15 to-violet-500/15 px-3 py-2 text-xs font-bold text-cyan-700 ring-1 ring-cyan-500/30 transition hover:from-cyan-500/25 hover:to-violet-500/25 disabled:cursor-not-allowed disabled:opacity-40"><Code2 size={14} /> Add include to code</button>
+                  <button type="button" onClick={() => addInclude(library)} disabled={!library.sourceAvailable} className="mt-2 flex w-full items-center justify-center gap-2 rounded-lg bg-linear-to-r from-cyan-500/15 to-violet-500/15 px-3 py-2 text-xs font-bold text-cyan-700 ring-1 ring-cyan-500/30 transition hover:from-cyan-500/25 hover:to-violet-500/25 disabled:cursor-not-allowed disabled:opacity-40"><Code2 size={14} /> Add include to code</button>
                 </div>;
               }) : <div className={`flex flex-col items-center rounded-xl border border-dashed px-4 py-10 text-center ${isDark ? "border-slate-700" : "border-slate-300"}`}>
                 <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500"><Package size={21} /></div>
                 <p className="mt-3 text-sm font-semibold">No libraries added yet</p>
-                <p className={`mt-1 max-w-[220px] text-xs leading-5 ${muted}`}>Choose a library on the left and press + to add it to this project.</p>
+                <p className={`mt-1 max-w-55 text-xs leading-5 ${muted}`}>Choose a library on the left and press + to add it to this project.</p>
               </div>}
             </div>
             <div className="mt-auto pt-4">

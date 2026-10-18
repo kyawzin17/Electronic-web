@@ -1,4 +1,4 @@
-import { Cross, CrossIcon } from 'lucide-react';
+import { CrossIcon } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { type EdgeProps, BaseEdge, EdgeLabelRenderer, Position, useReactFlow, useStore } from 'reactflow';
 
