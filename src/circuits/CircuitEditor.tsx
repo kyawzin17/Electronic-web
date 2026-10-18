@@ -1096,6 +1096,7 @@ const handleResetSimulation = () => {
   const projectIdFromUrl = searchParams.get("project");
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
   const [currentProjectName, setCurrentProjectName] = useState("Untitled Circuit");
+  const [isSavingProject, setIsSavingProject] = useState(false);
   const loadedProjectRef = useRef<string | null>(null);
 
   /*
@@ -2415,6 +2416,8 @@ const toggleCode = useCallback(() => {
 }, [showCode]);
 
   const handleSaveProject = useCallback(async () => {
+    if (isSavingProject) return;
+
     const defaultName =
       currentProjectName ||
       "Untitled Circuit";
@@ -2434,43 +2437,49 @@ const toggleCode = useCallback(() => {
       enteredName.trim() ||
       defaultName;
 
-    const viewport =
-      reactFlowInstance?.getViewport();
+    setIsSavingProject(true);
 
-    /*
-     * Save a visual preview of the current circuit at the same
-     * moment as the project JSON. The thumbnail is only metadata;
-     * loading the project still uses nodes/edges/code as the source
-     * of truth.
-     */
-    const thumbnail =
-      await captureCircuitThumbnail(
-        reactFlowWrapper.current,
+    try {
+      // Let React render the saving state before writing to storage.
+      await new Promise<void>((resolve) => window.setTimeout(resolve, 0));
+
+      const viewport =
+        reactFlowInstance?.getViewport();
+
+      /*
+       * Thumbnail capture is intentionally skipped during Save:
+       * html2canvas can freeze large circuit canvases. Existing
+       * thumbnails are preserved by projectStorage when omitted.
+       */
+      const project = saveCircuitProject({
+        id: currentProjectId,
+        name,
+        nodes: nodesRef.current,
+        edges: edgesRef.current,
+        code: useSimulationStore.getState().code,
+        selectedLibraries: useSimulationStore.getState().selectedLibraries,
+        viewport,
+      });
+
+      setCurrentProjectId(project.id);
+      setCurrentProjectName(project.name);
+      loadedProjectRef.current = project.id;
+
+      navigate(
+        "/circuit/?project=" +
+          encodeURIComponent(project.id),
+        { replace: true },
       );
-
-    const project = saveCircuitProject({
-      id: currentProjectId,
-      name,
-      nodes: nodesRef.current,
-      edges: edgesRef.current,
-      code: useSimulationStore.getState().code,
-      selectedLibraries: useSimulationStore.getState().selectedLibraries,
-      viewport,
-      thumbnail,
-    });
-
-    setCurrentProjectId(project.id);
-    setCurrentProjectName(project.name);
-    loadedProjectRef.current = project.id;
-
-    navigate(
-      "/circuit/?project=" +
-        encodeURIComponent(project.id),
-      { replace: true },
-    );
+    } catch (error) {
+      console.error("[Circuit Project] Save failed:", error);
+      window.alert("Project save failed. Your circuit is still open; please try again.");
+    } finally {
+      setIsSavingProject(false);
+    }
   }, [
     currentProjectId,
     currentProjectName,
+    isSavingProject,
     reactFlowInstance,
     navigate,
   ]);
@@ -2764,11 +2773,12 @@ const toggleCode = useCallback(() => {
           <button
             type="button"
             onClick={handleSaveProject}
-            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            disabled={isSavingProject}
+            className="hidden sm:flex disabled:cursor-wait disabled:opacity-60 h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
             title="Save circuit project"
           >
             <FaRegSave className="lg:hidden" size={16} />
-            <span className="text-xs hidden lg:inline-block">Save</span>
+            <span className="text-xs hidden lg:inline-block">{isSavingProject ? "Saving..." : "Save"}</span>
           </button>
 
           <button
@@ -2963,11 +2973,12 @@ const toggleCode = useCallback(() => {
           <button
             type="button"
             onClick={handleSaveProject}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            disabled={isSavingProject}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60"
             title="Save circuit project"
           >
             <FaRegSave className="lg:hidden" size={16} />
-            <span className="text-xs block sm:hidden lg:inline-block">Save</span>
+            <span className="text-xs block sm:hidden lg:inline-block">{isSavingProject ? "Saving..." : "Save"}</span>
           </button>
 
           <button
