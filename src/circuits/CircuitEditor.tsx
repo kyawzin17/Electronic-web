@@ -1132,7 +1132,7 @@ const handleResetSimulation = () => {
     ];
 
     const match = docs.find(([pattern]) => pattern.test(type));
-    navigate(match?.[1] ?? "/docs/components");
+    navigate(match?.[1] ?? "/docs/doc/components");
   };
   const [searchParams] = useSearchParams();
   const projectIdFromUrl = searchParams.get("project");
