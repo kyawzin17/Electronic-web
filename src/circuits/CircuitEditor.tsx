@@ -1092,6 +1092,48 @@ const handleResetSimulation = () => {
     useEdgesState([]);
 
   const navigate = useNavigate();
+
+  // Map simulator component types to the matching RDE documentation page.
+  const handleComponentDocumentation = (rawType: string) => {
+    const type = String(rawType ?? "")
+      .toLowerCase()
+      .replace(/[_\s]+/g, "-")
+      .replace(/-+/g, "-");
+
+    const docs: Array<[RegExp, string]> = [
+      [/arduino|atmega328|uno/, "/docs/doc/microcontrollers/arduino"],
+      [/raspberry|pico/, "/docs/doc/microcontrollers/raspberryPi"],
+      [/esp32/, "/docs/doc/microcontrollers/esp32"],
+      [/esp8266/, "/docs/doc/microcontrollers/esp8266"],
+      [/resistor|\br[0-9]*\b/, "/docs/doc/passives/resistor"],
+      [/capacitor|\bcap\b/, "/docs/doc/passives/capacitor"],
+      [/potentiometer|variable-resistor|rheostat/, "/docs/doc/passives/potentiometer"],
+      [/inductor|coil/, "/docs/doc/passives/inductor"],
+      [/transistor|\bnpn\b|\bpnp\b|mosfet|bjt/, "/docs/doc/passives/transistor"],
+      [/led|neopixel|ws2812/, "/docs/doc/diodes/led"],
+      [/photodiode/, "/docs/doc/diodes/photo"],
+      [/diode/, "/docs/doc/passives/diode"],
+      [/battery|power-supply|9v/, "/docs/doc/powers/battery"],
+      [/breadboard|mini-board|half-board|full-board/, "/docs/doc/passives/resistor"],
+      [/lcd|1602/, "/docs/doc/interfaces/lcd"],
+      [/oled|ssd1306/, "/docs/doc/interfaces/oled"],
+      [/servo/, "/docs/doc/interfaces/servoMotor"],
+      [/buzzer|piezo/, "/docs/doc/interfaces/buzzer"],
+      [/push.?button|button|switch/, "/docs/doc/interfaces/pushButton"],
+      [/relay/, "/docs/doc/interfaces/relay"],
+      [/7.?segment|seven.?segment/, "/docs/doc/interfaces/7Segment"],
+      [/ultrasonic|hc-sr04/, "/docs/doc/sensors/ultrasonicSensor"],
+      [/pir|motion-sensor/, "/docs/doc/sensors/pirSensor"],
+      [/ldr|light-sensor|photoresistor/, "/docs/doc/sensors/lightSensor"],
+      [/dht|humidity|temperature/, "/docs/doc/sensors/temperatureSensor"],
+      [/rtc|ds1307|real-time-clock/, "/docs/doc/microcontrollers/rtcModule"],
+      [/keypad/, "/docs/doc/interfaces/pushButton"],
+      [/ir.?sensor|infrared/, "/docs/doc/sensors/irSensor"],
+    ];
+
+    const match = docs.find(([pattern]) => pattern.test(type));
+    navigate(match?.[1] ?? "/docs/components");
+  };
   const [searchParams] = useSearchParams();
   const projectIdFromUrl = searchParams.get("project");
   const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
@@ -3265,6 +3307,7 @@ const toggleCode = useCallback(() => {
         onDelete={deleteNode}
         selectedNode={selectedNode}
         updateResistorValue={updateResistorValue}
+        onDocumentation={handleComponentDocumentation}
       />
 
       {/* ===================================================
