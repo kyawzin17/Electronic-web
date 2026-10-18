@@ -2447,10 +2447,13 @@ const toggleCode = useCallback(() => {
         reactFlowInstance?.getViewport();
 
       /*
-       * Thumbnail capture is intentionally skipped during Save:
-       * html2canvas can freeze large circuit canvases. Existing
-       * thumbnails are preserved by projectStorage when omitted.
+       * Keep the existing circuit thumbnail behavior. Capture the
+       * canvas preview before persisting the project.
        */
+      const thumbnail = await captureCircuitThumbnail(
+        reactFlowWrapper.current,
+      );
+
       const project = saveCircuitProject({
         id: currentProjectId,
         name,
@@ -2459,6 +2462,7 @@ const toggleCode = useCallback(() => {
         code: useSimulationStore.getState().code,
         selectedLibraries: useSimulationStore.getState().selectedLibraries,
         viewport,
+        thumbnail,
       });
 
       setCurrentProjectId(project.id);
