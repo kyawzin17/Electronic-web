@@ -309,657 +309,678 @@
   },
   {
     "id": 45,
+    "title": "keypad",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/keypad"
+  },
+  {
+    "id": 46,
     "title": "lcd",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/lcd"
   },
   {
-    "id": 46,
+    "id": 47,
     "title": "oled",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/oled"
   },
   {
-    "id": 47,
+    "id": 48,
     "title": "piezoBuzzer",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/piezoBuzzer"
   },
   {
-    "id": 48,
+    "id": 49,
     "title": "pushButton",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/pushButton"
   },
   {
-    "id": 49,
+    "id": 50,
     "title": "quartzCrystal",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/quartzCrystal"
   },
   {
-    "id": 50,
+    "id": 51,
     "title": "relay",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/relay"
   },
   {
-    "id": 51,
+    "id": 52,
     "title": "rotaryEncoder",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/rotaryEncoder"
   },
   {
-    "id": 52,
+    "id": 53,
     "title": "servoMotor",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/servoMotor"
   },
   {
-    "id": 53,
+    "id": 54,
+    "title": "slideSwitch",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/interfaces/slideSwitch"
+  },
+  {
+    "id": 55,
     "title": "solidStateRelay",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/solidStateRelay"
   },
   {
-    "id": 54,
+    "id": 56,
     "title": "stepperMotor",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/stepperMotor"
   },
   {
-    "id": 55,
+    "id": 57,
     "title": "toggleSwitch",
     "tags": "",
     "category": "doc",
     "link": "/doc/interfaces/toggleSwitch"
   },
   {
-    "id": 56,
+    "id": 58,
     "title": "arduino",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/arduino"
   },
   {
-    "id": 57,
+    "id": 59,
     "title": "eeprom",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/eeprom"
   },
   {
-    "id": 58,
+    "id": 60,
     "title": "esp32",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/esp32"
   },
   {
-    "id": 59,
+    "id": 61,
     "title": "esp8266",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/esp8266"
   },
   {
-    "id": 60,
+    "id": 62,
     "title": "flashMemory",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/flashMemory"
   },
   {
-    "id": 61,
+    "id": 63,
     "title": "microcontroller",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/microcontroller"
   },
   {
-    "id": 62,
+    "id": 64,
     "title": "microprocessor",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/microprocessor"
   },
   {
-    "id": 63,
+    "id": 65,
     "title": "picMicroncontroller",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/picMicroncontroller"
   },
   {
-    "id": 64,
+    "id": 66,
     "title": "raspberryPi",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/raspberryPi"
   },
   {
-    "id": 65,
+    "id": 67,
     "title": "rtcModule",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/rtcModule"
   },
   {
-    "id": 66,
+    "id": 68,
     "title": "sram",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/sram"
   },
   {
-    "id": 67,
+    "id": 69,
     "title": "stm32",
     "tags": "",
     "category": "doc",
     "link": "/doc/microcontrollers/stm32"
   },
   {
-    "id": 68,
+    "id": 70,
     "title": "autoTransformer",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/autoTransformer"
   },
   {
-    "id": 69,
+    "id": 71,
+    "title": "breadboard",
+    "tags": "",
+    "category": "doc",
+    "link": "/doc/passives/breadboard"
+  },
+  {
+    "id": 72,
     "title": "capacitor",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/capacitor"
   },
   {
-    "id": 70,
+    "id": 73,
     "title": "chokeCoil",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/chokeCoil"
   },
   {
-    "id": 71,
+    "id": 74,
     "title": "diode",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/diode"
   },
   {
-    "id": 72,
+    "id": 75,
     "title": "ferriteBead",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/ferriteBead"
   },
   {
-    "id": 73,
+    "id": 76,
     "title": "inductor",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/inductor"
   },
   {
-    "id": 74,
+    "id": 77,
     "title": "integrated-circuit",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/integrated-circuit"
   },
   {
-    "id": 75,
+    "id": 78,
     "title": "potentiometer",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/potentiometer"
   },
   {
-    "id": 76,
+    "id": 79,
     "title": "resistor",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/resistor"
   },
   {
-    "id": 77,
+    "id": 80,
     "title": "rheostat",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/rheostat"
   },
   {
-    "id": 78,
+    "id": 81,
     "title": "stepDownTransformer",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/stepDownTransformer"
   },
   {
-    "id": 79,
+    "id": 82,
     "title": "stepUpTransformer",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/stepUpTransformer"
   },
   {
-    "id": 80,
+    "id": 83,
     "title": "timmer",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/timmer"
   },
   {
-    "id": 81,
+    "id": 84,
     "title": "transformer",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/transformer"
   },
   {
-    "id": 82,
+    "id": 85,
     "title": "transistor",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/transistor"
   },
   {
-    "id": 83,
+    "id": 86,
     "title": "variableResistor",
     "tags": "",
     "category": "doc",
     "link": "/doc/passives/variableResistor"
   },
   {
-    "id": 84,
+    "id": 87,
     "title": "battery",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/battery"
   },
   {
-    "id": 85,
+    "id": 88,
     "title": "bms",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/bms"
   },
   {
-    "id": 86,
+    "id": 89,
     "title": "dcdcConverter",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/dcdcConverter"
   },
   {
-    "id": 87,
+    "id": 90,
     "title": "inverter",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/inverter"
   },
   {
-    "id": 88,
+    "id": 91,
     "title": "lithiumIon",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/lithiumIon"
   },
   {
-    "id": 89,
+    "id": 92,
     "title": "lithiumIonPolymer",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/lithiumIonPolymer"
   },
   {
-    "id": 90,
+    "id": 93,
     "title": "powerSupply",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/powerSupply"
   },
   {
-    "id": 91,
+    "id": 94,
     "title": "solarPanel",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/solarPanel"
   },
   {
-    "id": 92,
+    "id": 95,
     "title": "switchedMode",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/switchedMode"
   },
   {
-    "id": 93,
+    "id": 96,
     "title": "ups",
     "tags": "",
     "category": "doc",
     "link": "/doc/powers/ups"
   },
   {
-    "id": 94,
+    "id": 97,
     "title": "circuitBreaker",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/circuitBreaker"
   },
   {
-    "id": 95,
+    "id": 98,
     "title": "esd",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/esd"
   },
   {
-    "id": 96,
+    "id": 99,
     "title": "fuse",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/fuse"
   },
   {
-    "id": 97,
+    "id": 100,
     "title": "resettableFuse",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/resettableFuse"
   },
   {
-    "id": 98,
+    "id": 101,
     "title": "surgeProtector",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/surgeProtector"
   },
   {
-    "id": 99,
+    "id": 102,
     "title": "tvsDiode",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/tvsDiode"
   },
   {
-    "id": 100,
+    "id": 103,
     "title": "varistor",
     "tags": "",
     "category": "doc",
     "link": "/doc/protections/varistor"
   },
   {
-    "id": 101,
+    "id": 104,
     "title": "accelerometer",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/accelerometer"
   },
   {
-    "id": 102,
+    "id": 105,
     "title": "gasSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/gasSensor"
   },
   {
-    "id": 103,
+    "id": 106,
     "title": "gyroscope",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/gyroscope"
   },
   {
-    "id": 104,
+    "id": 107,
     "title": "hallEffectSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/hallEffectSensor"
   },
   {
-    "id": 105,
+    "id": 108,
     "title": "humiditySensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/humiditySensor"
   },
   {
-    "id": 106,
+    "id": 109,
     "title": "irSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/irSensor"
   },
   {
-    "id": 107,
+    "id": 110,
     "title": "lightSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/lightSensor"
   },
   {
-    "id": 108,
+    "id": 111,
     "title": "loadCell",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/loadCell"
   },
   {
-    "id": 109,
+    "id": 112,
     "title": "magnetometer",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/magnetometer"
   },
   {
-    "id": 110,
+    "id": 113,
     "title": "pirSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/pirSensor"
   },
   {
-    "id": 111,
+    "id": 114,
     "title": "pressureSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/pressureSensor"
   },
   {
-    "id": 112,
+    "id": 115,
     "title": "proximitySensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/proximitySensor"
   },
   {
-    "id": 113,
+    "id": 116,
     "title": "temperatureSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/temperatureSensor"
   },
   {
-    "id": 114,
+    "id": 117,
     "title": "ultrasonicSensor",
     "tags": "",
     "category": "doc",
     "link": "/doc/sensors/ultrasonicSensor"
   },
   {
-    "id": 115,
+    "id": 118,
     "title": "bipolarJunction",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/bipolarJunction"
   },
   {
-    "id": 116,
+    "id": 119,
     "title": "darlingtonPair",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/darlingtonPair"
   },
   {
-    "id": 117,
+    "id": 120,
     "title": "diac",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/diac"
   },
   {
-    "id": 118,
+    "id": 121,
     "title": "igbt",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/igbt"
   },
   {
-    "id": 119,
+    "id": 122,
     "title": "jfet",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/jfet"
   },
   {
-    "id": 120,
+    "id": 123,
     "title": "mosfet",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/mosfet"
   },
   {
-    "id": 121,
+    "id": 124,
     "title": "nChannelMosfet",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/nChannelMosfet"
   },
   {
-    "id": 122,
+    "id": 125,
     "title": "npn",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/npn"
   },
   {
-    "id": 123,
+    "id": 126,
     "title": "optocoupler",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/optocoupler"
   },
   {
-    "id": 124,
+    "id": 127,
     "title": "pChannelMosfet",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/pChannelMosfet"
   },
   {
-    "id": 125,
+    "id": 128,
     "title": "photoTransistor",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/photoTransistor"
   },
   {
-    "id": 126,
+    "id": 129,
     "title": "pnp",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/pnp"
   },
   {
-    "id": 127,
+    "id": 130,
     "title": "scr",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/scr"
   },
   {
-    "id": 128,
+    "id": 131,
     "title": "triac",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/triac"
   },
   {
-    "id": 129,
+    "id": 132,
     "title": "ujt",
     "tags": "",
     "category": "doc",
     "link": "/doc/transistors/ujt"
   },
   {
-    "id": 130,
+    "id": 133,
     "title": "arduino-clap-switch",
     "tags": "",
     "category": "projects",
     "link": "/projects/arduino-clap-switch"
   },
   {
-    "id": 131,
+    "id": 134,
     "title": "digital-thermometer",
     "tags": "",
     "category": "projects",
     "link": "/projects/digital-thermometer"
   },
   {
-    "id": 132,
+    "id": 135,
     "title": "smart-home-automation",
     "tags": "",
     "category": "projects",
     "link": "/projects/smart-home-automation"
   },
   {
-    "id": 133,
+    "id": 136,
     "title": "ultrasonic-distance-detector",
     "tags": "",
     "category": "projects",
     "link": "/projects/ultrasonic-distance-detector"
   },
   {
-    "id": 134,
+    "id": 137,
     "title": "capacitor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/capacitor"
   },
   {
-    "id": 135,
+    "id": 138,
     "title": "diode",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/diode"
   },
   {
-    "id": 136,
+    "id": 139,
     "title": "resistor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/resistor"
   },
   {
-    "id": 137,
+    "id": 140,
     "title": "transistor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/transistor"
   },
   {
-    "id": 138,
+    "id": 141,
     "title": "introduction",
     "tags": "",
     "category": "learning",

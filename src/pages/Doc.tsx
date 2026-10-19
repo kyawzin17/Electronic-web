@@ -49,6 +49,7 @@ export default function Docs() {
         slug: string;
         category: string;
     }[] = [
+        { name: "Breadboard", slug: "breadboard", category: "passives" },
         { name: "Resistor", slug: "resistor", category: "passives" },
         { name: "Variable Resistor", slug: "variableResistor", category: "passives" },
         { name: "Capacitor", slug: "capacitor", category: "passives" },
@@ -187,6 +188,8 @@ export default function Docs() {
         { name: "Electric Motor", slug: "electricMotor", category: "interfaces" },
         { name: "Servo Motor", slug: "servoMotor", category: "interfaces" },
         { name: "Stepper Motor", slug: "stepperMotor", category: "interfaces" },
+        { name: "Keypad", slug: "keypad", category: "interfaces" },
+        { name: "SlideSwitch", slug: "slideSwitch", category: "interfaces" },
 
     ];
 
