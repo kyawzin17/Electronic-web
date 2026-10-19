@@ -82,18 +82,40 @@ Microcontroller သည် Row များကို အလှည့်ကျ စ
 ## Example: Arduino C++ Code
 
 ```cpp
-const int ledPin = 13;
+#include <Keypad.h>
+
+const byte ROWS = 4;
+const byte COLS = 4;
+
+char keys[ROWS][COLS] = {
+  {'1', '2', '3', 'A'},
+  {'4', '5', '6', 'B'},
+  {'7', '8', '9', 'C'},
+  {'*', '0', '#', 'D'}
+};
+
+byte rowPins[ROWS] = {9, 8, 7, 6};
+byte colPins[COLS] = {5, 4, 3, 2};
+
+Keypad keypad = Keypad(
+  makeKeymap(keys),
+  rowPins,
+  colPins,
+  ROWS,
+  COLS
+);
 
 void setup() {
-    pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
 }
 
 void loop() {
-    digitalWrite(ledPin, HIGH);
-    delay(1000);
+  char key = keypad.getKey();
 
-    digitalWrite(ledPin, LOW);
-    delay(1000);
+  if (key != NO_KEY) {
+    Serial.print("Pressed key: ");
+    Serial.println(key);
+  }
 }
 ```
 
@@ -108,7 +130,7 @@ void loop() {
 
 ### 7. Further Learning (ဆက်လက်လေ့လာရန်)
 
-- [Arduino Documentation](https://docs.arduino.cc/)
+- [Arduino Documentation](/docs/doc/microcontrollers/arduino)
 - [Arduino Keypad Library](https://github.com/Chris--A/Keypad)
 
 ### 8. Learning Outcomes (သင်ယူပြီးနောက် ရရှိမည့် အရည်အချင်းများ)
