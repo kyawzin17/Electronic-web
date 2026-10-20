@@ -375,14 +375,25 @@ export class Ssd1306Runtime {
  * ordinary, firmware-controlled pins exactly like the physical breakout.
  */
 export class Ssd1306SpiBridge {
+  private readonly displays: () => Ssd1306Runtime[];
+  private readonly getPinLevel: (pin: string) => 0 | 1;
+  private readonly getConnectedPin: (
+    display: Ssd1306Runtime,
+    terminal: string,
+  ) => string | null;
+
   constructor(
-    private readonly displays: () => Ssd1306Runtime[],
-    private readonly getPinLevel: (pin: string) => 0 | 1,
-    private readonly getConnectedPin: (
+    displays: () => Ssd1306Runtime[],
+    getPinLevel: (pin: string) => 0 | 1,
+    getConnectedPin: (
       display: Ssd1306Runtime,
       terminal: string,
     ) => string | null,
-  ) {}
+  ) {
+    this.displays = displays;
+    this.getPinLevel = getPinLevel;
+    this.getConnectedPin = getConnectedPin;
+  }
 
   transfer(value: number): number {
     for (const display of this.displays()) {
@@ -427,15 +438,25 @@ export class Ssd1306SoftwareSpiDecoder {
     value: number;
     lastClock: 0 | 1;
   }>();
+  private readonly displays: () => Ssd1306Runtime[];
+  private readonly getPinLevel: (pin: string) => 0 | 1;
+  private readonly getConnectedPin: (
+    display: Ssd1306Runtime,
+    terminal: string,
+  ) => string | null;
 
   constructor(
-    private readonly displays: () => Ssd1306Runtime[],
-    private readonly getPinLevel: (pin: string) => 0 | 1,
-    private readonly getConnectedPin: (
+    displays: () => Ssd1306Runtime[],
+    getPinLevel: (pin: string) => 0 | 1,
+    getConnectedPin: (
       display: Ssd1306Runtime,
       terminal: string,
     ) => string | null,
-  ) {}
+  ) {
+    this.displays = displays;
+    this.getPinLevel = getPinLevel;
+    this.getConnectedPin = getConnectedPin;
+  }
 
   reset(): void {
     this.state.clear();
@@ -491,14 +512,23 @@ export class Ssd1306SoftwareSpiDecoder {
  */
 export class I2cPeripheralEventHandler implements TWIEventHandler {
   private selected: Lcd1602Runtime | null = null;
+  private readonly displays: () => Lcd1602Runtime[];
+  private readonly twi: AVRTWI;
+  private readonly canConnect?: (
+    display: Lcd1602Runtime,
+  ) => boolean;
 
   constructor(
-    private readonly displays: () => Lcd1602Runtime[],
-    private readonly twi: AVRTWI,
-    private readonly canConnect?: (
+    displays: () => Lcd1602Runtime[],
+    twi: AVRTWI,
+    canConnect?: (
       display: Lcd1602Runtime,
     ) => boolean,
-  ) {}
+  ) {
+    this.displays = displays;
+    this.twi = twi;
+    this.canConnect = canConnect;
+  }
 
   start(): void {
     this.selected = null;
