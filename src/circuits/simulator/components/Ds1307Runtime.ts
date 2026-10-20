@@ -494,9 +494,11 @@ export class Ds1307Runtime {
  *   REPEATED START + 0x68R + data...
  */
 export class Ds1307I2cDevice {
-  constructor(
-    private readonly rtc: Ds1307Runtime,
-  ) {}
+  private readonly rtc: Ds1307Runtime;
+
+  constructor(rtc: Ds1307Runtime) {
+    this.rtc = rtc;
+  }
 
   acceptsAddress(address: number): boolean {
     return this.rtc.acceptsI2cAddress(address);
