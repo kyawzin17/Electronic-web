@@ -2231,10 +2231,29 @@ export class SimulationEngine {
         const pins =
           this.netlist!.netToPins.get(netId) ?? [];
 
-        const ref =
-          pins.find((candidate) =>
-            /^(?:D|A)\d+$/i.test(candidate.pinId),
+        // LCD terminals such as D4/D5 also match the Arduino GPIO
+        // naming pattern. Resolve only an actual Arduino Uno pin here;
+        // otherwise the LCD can accidentally read its own terminal name
+        // as an AVR pin and never receive the firmware data.
+        const ref = pins.find((candidate) => {
+          if (!/^(?:D|A)\d+$/i.test(candidate.pinId)) {
+            return false;
+          }
+
+          const connectedNode = this.circuitNodes.find(
+            (item) => item.id === candidate.nodeId,
           );
+          const connectedType = String(
+            connectedNode?.data?.componentType ??
+              connectedNode?.type ??
+              "",
+          ).toLowerCase();
+
+          return (
+            connectedType === "arduino-uno" ||
+            connectedType === "arduino"
+          );
+        });
 
         return ref?.pinId.toUpperCase() ?? null;
       };
