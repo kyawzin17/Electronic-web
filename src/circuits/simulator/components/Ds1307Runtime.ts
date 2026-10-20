@@ -48,11 +48,14 @@ export class Ds1307Runtime {
   private sqwBaseCycle = 0;
   private frequencyHz = 16_000_000;
 
+  readonly id: string;
+
   constructor(
-    public readonly id: string,
+    id: string,
     initTime?: unknown,
     frequencyHz = 16_000_000,
   ) {
+    this.id = id;
     this.frequencyHz = Math.max(1, frequencyHz);
     this.epochMs = this.parseInitTime(initTime);
     this.loadEpochIntoRegisters(this.epochMs);
