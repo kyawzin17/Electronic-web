@@ -52,7 +52,10 @@ export class Ssd1306Runtime {
   private pendingArgs: number[] = [];
   private frame = 0;
 
-  constructor(public readonly id: string) {
+  readonly id: string;
+
+  constructor(id: string) {
+    this.id = id;
     this.reset();
   }
 
