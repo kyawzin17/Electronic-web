@@ -43,11 +43,14 @@ export class Lcd1602Runtime {
   private state: Lcd1602RuntimeState;
   private readonly acceptedI2cAddresses: Set<number>;
 
+  readonly id: string;
+
   constructor(
-    public readonly id: string,
+    id: string,
     mode: "4bit" | "8bit" | "i2c",
     i2cAddress?: number,
   ) {
+    this.id = id;
     this.acceptedI2cAddresses =
       new Set(
         i2cAddress === undefined
