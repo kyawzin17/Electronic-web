@@ -18,17 +18,25 @@ export class I2cPeripheralEventHandler implements TWIEventHandler {
 
   private ds1307FirstWriteByte = false;
 
+  private readonly displays: () => Lcd1602Runtime[];
+  private readonly twi: AVRTWI;
+  private readonly canConnectLcd?: (display: Lcd1602Runtime) => boolean;
+  private readonly ds1307s: () => Ds1307Runtime[];
+  private readonly canConnectDs1307?: (rtc: Ds1307Runtime) => boolean;
+
   constructor(
-    private readonly displays: () => Lcd1602Runtime[],
-    private readonly twi: AVRTWI,
-    private readonly canConnectLcd?: (
-      display: Lcd1602Runtime,
-    ) => boolean,
-    private readonly ds1307s: () => Ds1307Runtime[] = () => [],
-    private readonly canConnectDs1307?: (
-      rtc: Ds1307Runtime,
-    ) => boolean,
-  ) {}
+    displays: () => Lcd1602Runtime[],
+    twi: AVRTWI,
+    canConnectLcd?: (display: Lcd1602Runtime) => boolean,
+    ds1307s: () => Ds1307Runtime[] = () => [],
+    canConnectDs1307?: (rtc: Ds1307Runtime) => boolean,
+  ) {
+    this.displays = displays;
+    this.twi = twi;
+    this.canConnectLcd = canConnectLcd;
+    this.ds1307s = ds1307s;
+    this.canConnectDs1307 = canConnectDs1307;
+  }
 
   start(): void {
     this.selected = null;
