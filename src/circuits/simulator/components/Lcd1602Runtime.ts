@@ -392,14 +392,23 @@ export class Lcd1602Runtime {
 export class Lcd1602I2cEventHandler
   implements TWIEventHandler {
   private selected: Lcd1602Runtime | null = null;
+  private readonly displays: () => Lcd1602Runtime[];
+  private readonly twi: AVRTWI;
+  private readonly canConnect?: (
+    display: Lcd1602Runtime,
+  ) => boolean;
 
   constructor(
-    private readonly displays: () => Lcd1602Runtime[],
-    private readonly twi: AVRTWI,
-    private readonly canConnect?: (
+    displays: () => Lcd1602Runtime[],
+    twi: AVRTWI,
+    canConnect?: (
       display: Lcd1602Runtime,
     ) => boolean,
-  ) {}
+  ) {
+    this.displays = displays;
+    this.twi = twi;
+    this.canConnect = canConnect;
+  }
 
   start(): void {
     this.selected = null;
