@@ -2211,11 +2211,32 @@ export class SimulationEngine {
         this.netlist.netToPins.get(enableNet) ?? [];
 
       const isEnablePin =
-        enablePins.some(
-          (ref) =>
+        enablePins.some((ref) => {
+          if (
             ref.pinId.toUpperCase() ===
-            pin.toUpperCase(),
-        );
+            pin.toUpperCase()
+          ) {
+            return true;
+          }
+
+          // GPIO callbacks report the Arduino pin (e.g. D11), while the
+          // LCD terminal on the same electrical net is named E. Match the
+          // Arduino endpoint explicitly instead of comparing only handle IDs.
+          const connectedNode = this.circuitNodes.find(
+            (item) => item.id === ref.nodeId,
+          );
+          const connectedType = String(
+            connectedNode?.data?.componentType ??
+              connectedNode?.type ??
+              "",
+          ).toLowerCase();
+
+          return (
+            (connectedType === "arduino-uno" ||
+              connectedType === "arduino") &&
+            ref.pinId.toUpperCase() === pin.toUpperCase()
+          );
+        });
 
       if (!isEnablePin) {
         continue;
