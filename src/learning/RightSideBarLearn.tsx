@@ -53,7 +53,7 @@ const RightSidebarLearn = ({ headings }: { headings: Heading[] }) => {
       <nav>
         <ul className="space-y-3 text-[14px] border-l border-slate-200 dark:border-slate-800">
           {headings.map((heading) => (
-            <li key={heading.id} className="flex flex-col">
+            <li key={heading.title} className="flex flex-col">
               {/* 🟢 H3 Header Link */}
               <a
                 href={`#${heading.id}`}

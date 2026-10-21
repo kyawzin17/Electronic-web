@@ -1,0 +1,135 @@
+# Arduino
+
+Arduino သည် physical-world inputs များကို ဖတ်ရှုပြီး program အရ outputs များကို ထိန်းချုပ်နိုင်သော open-source electronics platform တစ်ခုဖြစ်သည်။ ၎င်းတွင် microcontroller board များနှင့် code ရေးသား၊ compile လုပ်၊ board သို့ upload လုပ်ရန် အသုံးပြုသည့် software ecosystem ပါဝင်သည်။
+
+Arduino ကို sensor data ဖတ်ခြင်း၊ LED နှင့် motor များကို ထိန်းချုပ်ခြင်း၊ automation prototype များတည်ဆောက်ခြင်း၊ robotics နှင့် IoT project များ စမ်းသပ်ခြင်းတို့တွင် အသုံးများသည်။
+
+## Arduino ၏ အလုပ်လုပ်ပုံ
+
+Arduino project တစ်ခု၏ အခြေခံ workflow ကို အောက်ပါအတိုင်း နားလည်နိုင်သည်။
+
+1. **Sense** — sensor၊ switch သို့မဟုတ် အခြား input မှ signal ကို ဖတ်သည်။
+2. **Process** — microcontroller ပေါ်ရှိ program က input data ကို စစ်ဆေးတွက်ချက်သည်။
+3. **Act** — LED၊ buzzer၊ display၊ relay driver သို့မဟုတ် motor driver စသည့် output များကို ထိန်းချုပ်သည်။
+
+ဥပမာ၊ light sensor မှ အလင်းအမှောင်တန်ဖိုးကို ဖတ်ပြီး အမှောင်ဖြစ်လာသောအခါ LED ကို ဖွင့်နိုင်သည်။ သို့သော် motor နှင့် အခြား power-hungry load များကို microcontroller pin မှ တိုက်ရိုက်မောင်းနှင်ခြင်းမပြုသင့်ပါ။ သင့်လျော်သော driver circuit လိုအပ်နိုင်သည်။
+
+## Arduino Board များ  
+
+<table>
+  <thead>
+    <tr style={{ backgroundColor: '#f0f0f0' }}>
+      <th>Board</th>
+      <th>အဓိကလက္ခဏာ</th>
+      <th>သင့်တော်သောအသုံးပြုမှု</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Arduino Uno R3</td>
+      <td>စတင်လေ့လာရန်လွယ်ကူသော standard board</td>
+      <td>အခြေခံ electronics နှင့် prototype</td>
+    </tr>
+    <tr>
+      <td>Arduino Nano</td>
+      <td>အရွယ်အစားသေးငယ်သည်</td>
+      <td>Breadboard နှင့် compact project</td>
+    </tr>
+    <tr>
+      <td>Arduino Mega 2560</td>
+      <td>I/O pin နှင့် memory ပိုများသည်</td>
+      <td>I/O အများအပြားလိုအပ်သော project</td>
+    </tr>
+    <tr>
+      <td>Arduino Leonardo</td>
+      <td>ATmega32U4 ဖြင့် USB HID အချို့ကို native support လုပ်နိုင်သည်</td>
+      <td>Keyboard/mouse ကဲ့သို့ USB project များ</td>
+    </tr>
+  </tbody>
+</table>  
+
+Board တစ်ခုချင်းစီ၏ pin mapping၊ voltage၊ memory နှင့် processor တို့ မတူနိုင်ပါ။ ထို့ကြောင့် code သို့မဟုတ် circuit တစ်ခုကို board အမျိုးမျိုးတွင် အသုံးပြုမည်ဆိုလျှင် official specification ကို စစ်ဆေးပါ။
+
+## Arduino Uno R3 — အခြေခံ Specifications
+
+အောက်ပါအချက်များသည် **Arduino Uno R3** အတွက်ဖြစ်ပြီး Arduino board အားလုံးအတွက် တူညီသည်ဟု မယူဆရပါ။
+
+<table>
+  <thead>
+    <tr style={{ backgroundColor: '#f0f0f0' }}>
+      <th>Specification</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Microcontroller</td>
+      <td>ATmega328P</td>
+    </tr>
+    <tr>
+      <td>Logic operating voltage</td>
+      <td>5 V</td>
+    </tr>
+    <tr>
+      <td>Clock speed</td>
+      <td>16 MHz</td>
+    </tr>
+    <tr>
+      <td>Digital I/O pins</td>
+      <td>14</td>
+    </tr>
+    <tr>
+        <td>PWM-capable digital pins</td>
+        <td>6 (D3, D5, D6, D9, D10, D11)</td>
+    </tr>
+    <tr>
+        <td>Analog input pins</td>
+        <td>6 (A0–A5)</td>
+    </tr>
+    <tr>
+        <td>Flash memory</td>
+        <td>32 KB (bootloader အတွက် အချို့နေရာအသုံးပြုသည်)</td>
+    </tr>
+    <tr>
+        <td>SRAM</td>
+        <td>2 KB</td>
+    </tr>
+    <tr>
+        <td>EEPROM</td>
+        <td>1 KB</td>
+    </tr>
+    <tr>
+        <td>ADC resolution</td>
+        <td>10-bit</td>
+    </tr>
+    <tr>
+        <td>Interfaces</td>
+        <td>UART, I²C, SPI</td>
+    </tr>
+  </tbody>
+</table>  
+
+## စတင်လေ့လာရန် လမ်းကြောင်း
+
+အကြံပြုထားသော အစဉ်လိုက်မှာ—
+
+1. [Hardware နှင့် Pinout](/docs/learning/ArduinoUno/arduino-pinout)
+2. [Programming အခြေခံ](/docs/learning/ArduinoUno/arduino-programming)
+3. [လက်တွေ့ Project များ](/docs/learning/ArduinoUno/arduino-project)
+4. [Electrical Safety နှင့် Troubleshooting](/docs/learning/ArduinoUno/arduino-safety-troubleshooting)
+
+## Arduino ကို ဘယ်နေရာတွေမှာ အသုံးပြုနိုင်သလဲ?
+
+- **Education:** electronics၊ programming နှင့် embedded systems အခြေခံသင်ကြားခြင်း
+- **Automation:** sensor-based control နှင့် prototype automation
+- **Robotics:** motor driver၊ sensor နှင့် actuator များကို ပေါင်းစပ်ခြင်း
+- **IoT prototypes:** network module များနှင့် ပေါင်းစပ်၍ data collection သို့မဟုတ် monitoring ပြုလုပ်ခြင်း
+- **Measurement:** temperature၊ light၊ distance နှင့် အခြား physical quantities များကို sensor မှတစ်ဆင့် တိုင်းတာခြင်း
+
+Arduino သည် learning နှင့် prototyping အတွက် အလွန်အသုံးဝင်သော်လည်း safety-critical သို့မဟုတ် industrial application များတွင် လိုအပ်သော reliability၊ isolation၊ protection နှင့် certification တို့ကို သီးခြားဒီဇိုင်းဆွဲစစ်ဆေးရမည်။
+
+## တရားဝင်လေ့လာရန် အရင်းအမြစ်များ
+
+- [Arduino Documentation](https://docs.arduino.cc/)
+- [Arduino Uno Rev3 — Official Board Page](https://docs.arduino.cc/hardware/uno-rev3/)
+- [Arduino Language Reference](https://docs.arduino.cc/language-reference/)

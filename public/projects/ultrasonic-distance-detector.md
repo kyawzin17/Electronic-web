@@ -39,9 +39,8 @@ Ultrasonic Sensor မှ အသံလှိုင်း (Ultrasonic Waves) မ�
 
 ### ၅။ ပတ်လမ်းပုံစံ (Circuit Diagram Description)
 
-![Ultrasonic Distance Sensor System Circuit](https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774853661/distance-dig_msmiok.png)
-
-*   **Ultrasonic Sensor:** VCC -> 5V, GND -> GND, Trig -> Pin 9, Echo -> Pin 10.
+![Ultrasonic Distance Sensor System Circuit](https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1792430307/Screenshot_2026-10-19_234105_zprmb5.png)
+*   **Ultrasonic Sensor:** VCC -> 5V, GND -> GND, Trig -> Pin 6, Echo -> Pin 7.
 *   **I2C LCD:** VCC -> 5V, GND -> GND, SDA -> A4, SCL -> A5.
 *   **Buzzer:** Positive -> Pin 8, Negative -> GND.
 *   **LED:** Anode -> Pin 13 (via 220Ω resistor), Cathode -> GND.
@@ -51,68 +50,60 @@ Ultrasonic Sensor မှ အသံလှိုင်း (Ultrasonic Waves) မ�
 ### ၆။ Arduino Code
 
 ```cpp
-#include <Wire.h> 
+#include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-// Initialize LCD (Address 0x27 is common)
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-const int trigPin = 9;
-const int echoPin = 10;
-const int buzzer = 8;
-const int led = 13;
-
-long duration;
-int distance;
+const int TRIG_PIN = 6;
+const int ECHO_PIN = 7;
+const int BUZZER_PIN = 8;
+const int LED_PIN = 13;
 
 void setup() {
-  pinMode(trigPin, OUTPUT);
-  pinMode(echoPin, INPUT);
-  pinMode(buzzer, OUTPUT);
-  pinMode(led, OUTPUT);
-  
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(LED_PIN,  OUTPUT);
+  Serial.begin(9600);
+   Wire.begin();
+
   lcd.init();
   lcd.backlight();
-  
-  Serial.begin(9600);
+
+  lcd.setCursor(0, 0);
+  lcd.print("System is  start!");
+
+  digitalWrite(TRIG_PIN, LOW);
+  digitalWrite(LED_PIN, LOW);
 }
 
 void loop() {
-  // Clear the trigPin
-  digitalWrite(trigPin, LOW);
+  digitalWrite(TRIG_PIN, LOW);
   delayMicroseconds(2);
-  
-  // Set the trigPin on HIGH state for 10 micro seconds
-  digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(trigPin, LOW);
-  
-  // Read the echoPin, returns the sound wave travel time in microseconds
-  duration = pulseIn(echoPin, HIGH);
-  
-  // Calculating the distance (Speed of sound = 0.034 cm/us)
-  distance = duration * 0.034 / 2;
-  
-  // Display on LCD
-  lcd.setCursor(0, 0);
-  lcd.print("Distance: ");
-  lcd.print(distance);
-  lcd.print(" cm  "); // Extra spaces to clear old digits
 
-  // Alarm Logic
-  if (distance < 20) {
-    digitalWrite(led, HIGH);
-    tone(buzzer, 1000); // Send 1KHz sound signal
-    lcd.setCursor(0, 1);
-    lcd.print("Status: TOO CLOSE");
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+
+  unsigned long duration =
+    pulseIn(ECHO_PIN, HIGH);
+
+  int distance =
+    duration / 58;
+
+  lcd.setCursor(0, 1);
+  lcd.print("Distance:");
+  lcd.print(distance);
+  if (distance > 0 && distance < 20) {
+    tone(BUZZER_PIN, 1000);
+    digitalWrite(LED_PIN, HIGH);
   } else {
-    digitalWrite(led, LOW);
-    noTone(buzzer);
-    lcd.setCursor(0, 1);
-    lcd.print("Status: SAFE     ");
+    noTone(BUZZER_PIN);
+    digitalWrite(LED_PIN, LOW);
   }
-  
-  delay(200);
+
+
 }
 
 ```

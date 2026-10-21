@@ -1929,6 +1929,7 @@ export class SimulationEngine {
      * receiving text directly from the React UI.
      */
     this.processParallelLcdGpioChange(pin);
+   
     this.processServoGpioChange(pin, level, cycle);
 
     for (const component of this.netlist.components) {

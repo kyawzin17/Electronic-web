@@ -1,0 +1,131 @@
+# Arduino Electrical Safety နှင့် Troubleshooting
+
+Arduino board များသည် low-voltage prototyping အတွက် အသုံးဝင်သော်လည်း wiring မှားခြင်း၊ supply voltage မမှန်ခြင်း၊ short circuit ဖြစ်ခြင်း သို့မဟုတ် load ကို pin မှ တိုက်ရိုက်မောင်းနှင်ခြင်းတို့ကြောင့် board နှင့် component များ ပျက်စီးနိုင်သည်။
+
+## Current Limit နှင့် Load များ
+
+Microcontroller I/O pin များသည် signal အတွက် ဖြစ်ပြီး motor၊ relay coil၊ solenoid သို့မဟုတ် power LED ကဲ့သို့ current များစွာလိုအပ်သော load များကို တိုက်ရိုက်မောင်းနှင်ရန် မသင့်တော်ပါ။
+
+- သက်ဆိုင်ရာ board နှင့် microcontroller datasheet မှ per-pin current နှင့် total-port/total-device limits ကို စစ်ဆေးပါ။
+- LED တစ်လုံးကို pin မှမောင်းလျှင် current-limiting resistor ထည့်ပါ။
+- Motor နှင့် relay များအတွက် သင့်လျော်သော transistor/MOSFET driver သို့မဟုတ် motor-driver module ကို အသုံးပြုပါ။
+- Inductive load များတွင် သင့်လျော်သော flyback protection လိုအပ်နိုင်သည်။
+- External supply သုံးသော circuit များတွင် common ground လိုအပ်/မလိုအပ်ကို circuit design အရ ဆုံးဖြတ်ပါ။ Isolation လိုအပ်သော design တွင် ground များကို အလိုအလျောက်မချိတ်ပါနှင့်။
+
+## Ohm’s Law ဖြင့် LED Resistor ခန့်မှန်းခြင်း
+
+Series resistor အတွက် အခြေခံခန့်မှန်းချက်မှာ—
+
+$$R = \frac{V_{supply} - V_f}{I_{LED}}$$
+
+ဥပမာ 5 V supply၊ LED forward voltage 2 V နှင့် ရည်ရွယ်ထားသော current 10 mA (0.01 A) ဟု ယူဆလျှင်—
+
+
+$$R = \frac{5-2}{0.01} = 300\ \Omega$$
+
+လက်တွေ့တွင် 300 Ω နှင့် နီးစပ်သော သင့်လျော်သည့် standard resistor value ကို ရွေးနိုင်သော်လည်း LED datasheet၊ microcontroller output limits နှင့် resistor power rating ကို စစ်ဆေးရမည်။ ဤတွက်ချက်မှုသည် ဥပမာသာဖြစ်သည်။
+
+## Power Supply သုံးစွဲရာတွင်
+
+- Board model ၏ recommended input voltage နှင့် polarity ကို စစ်ဆေးပါ။
+- USB နှင့် external supply ကို တစ်ပြိုင်နက် အသုံးပြုရာတွင် board ၏ power-path design နှင့် documentation ကို လိုက်နာပါ။
+- Supply current capacity သည် board နှင့် ချိတ်ဆက်ထားသော load များအတွက် လုံလောက်ရမည်။
+- Circuit ကို ပြောင်းလဲချိတ်ဆက်မီ power ကို ဖြုတ်ပါ။
+- Mains voltage (ဥပမာ အိမ်သုံး AC) ကို breadboard သို့မဟုတ် Arduino I/O pin များနှင့် တိုက်ရိုက်မချိတ်ပါနှင့်။ Mains project များသည် သင့်လျော်သော isolation၊ enclosure၊ fuse/protection နှင့် ကျွမ်းကျင်သူ၏ ဒီဇိုင်းစစ်ဆေးမှု လိုအပ်သည်။
+
+## အဖြစ်များသော ပြဿနာများ  
+
+<table>
+    <thead style={{ backgroundColor: '#f0f0f0' }}>
+        <tr>
+            <th>
+                ပြဿနာ
+            </th>
+            <th>
+                စစ်ဆေးရမည့်အချက်များ
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+               Sketch upload မဖြစ်ခြင်း
+            </td>
+            <td>
+               Board selection၊ port၊ USB data cable၊ driver နှင့် error message
+            </td>
+        </tr>
+        <tr>
+            <td>
+               LED မလင်းခြင်း
+            </td>
+            <td>
+               LED polarity၊ resistor၊ pin number၊ GND နှင့် code
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Button reading မတည်ငြိမ်ခြင်း
+            </td>
+            <td>
+               `INPUT_PULLUP`/pull-down configuration၊ wiring နှင့် debounce
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Analog reading ပြောင်းလဲလွန်းခြင်း
+            </td>
+            <td>
+               Floating input၊ GND reference၊ wiring noise၊ sensor power နှင့် datasheet
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Serial Monitor စာမမှန်ခြင်း
+            </td>
+            <td>
+               Baud rate တူညီမှုနှင့် Serial configuration
+            </td>
+        </tr>
+        <tr>
+            <td>
+               Board ပူလာခြင်း သို့မဟုတ် reset ဖြစ်ခြင်း
+            </td>
+            <td>
+               Short circuit၊ supply capacity၊ polarity နှင့် load current — ချက်ချင်း power ဖြုတ်ပြီး စစ်ဆေးပါ
+            </td>
+        </tr>
+        <tr>
+            <td>
+                I²C device မတွေ့ခြင်း
+            </td>
+            <td>
+                SDA/SCL wiring၊ address၊ pull-up arrangement၊ voltage compatibility နှင့် power
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+## Debugging Workflow
+
+1. Power ကို ဖြုတ်ပြီး wiring ကို circuit diagram နှင့် တိုက်စစ်ပါ။
+2. Board model နှင့် voltage rail များကို အတည်ပြုပါ။
+3. အနည်းဆုံး circuit ဖြင့် စမ်းသပ်ပါ—ဥပမာ onboard Blink sketch။
+4. Sensor တစ်ခု သို့မဟုတ် module တစ်ခုချင်းစီကို ထပ်ပေါင်းပြီး စမ်းသပ်ပါ။
+5. Serial output ဖြင့် input နှင့် program state ကို စစ်ဆေးပါ။
+6. Error message အပြည့်အစုံ၊ board model၊ wiring နှင့် code ကို မှတ်တမ်းတင်ပါ။
+
+## Engineering Design Principles
+
+- **Correctness:** Pin mapping နှင့် component datasheet ကို စစ်ဆေးပါ။
+- **Protection:** Overcurrent၊ reverse polarity၊ inductive kickback နှင့် ESD ကဲ့သို့ risk များကို သက်ဆိုင်ရာ design အလိုက် စဉ်းစားပါ။
+- **Maintainability:** Pin number များကို named constants အဖြစ်ထားပြီး code ကို function များအဖြစ် ခွဲရေးပါ။
+- **Repeatability:** Sensor calibration၊ test condition နှင့် firmware version များကို မှတ်တမ်းတင်ပါ။
+- **Safety:** Prototype တစ်ခုသည် production-ready သို့မဟုတ် safety-certified system ဖြစ်သည်ဟု မယူဆပါနှင့်။
+
+## ဆက်လက်လေ့လာရန်
+
+- [Arduino Overview](/docs/learning/ArduinoUno/arduino-uno)
+- [Hardware နှင့် Pinout](/docs/learning/ArduinoUno/arduino-pinout)
+- [Programming အခြေခံ](/docs/learning/ArduinoUno/arduino-programming)
+- [Arduino Documentation](https://docs.arduino.cc/)

@@ -1,0 +1,124 @@
+# Arduino Hardware နှင့် Pinout
+
+Arduino board ကို circuit တစ်ခုနှင့် ချိတ်ဆက်ရာတွင် pin တစ်ခုချင်းစီ၏ function၊ voltage level နှင့် current limit ကို နားလည်ထားရန် လိုအပ်သည်။ ဤစာမျက်နှာတွင် အဓိကအားဖြင့် Arduino Uno R3 ကို ဥပမာယူထားသည်။ အခြား board များ၏ pinout သည် ကွာခြားနိုင်သည်။
+
+## Digital I/O Pins
+
+Digital pin တစ်ခုကို digital input သို့မဟုတ် digital output အဖြစ် အသုံးပြုနိုင်သည်။ Input အဖြစ် သတ်မှတ်ထားလျှင် HIGH/LOW logic state ကို ဖတ်နိုင်ပြီး output အဖြစ် သတ်မှတ်ထားလျှင် HIGH/LOW signal ကို ထုတ်ပေးနိုင်သည်။
+
+```cpp
+const int ledPin = 13;
+const int buttonPin = 2;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  pinMode(buttonPin, INPUT_PULLUP);
+}
+
+void loop() {
+  // INPUT_PULLUP အသုံးပြုထားသောကြောင့် ခလုတ်နှိပ်လျှင် LOW ဖြစ်သည်။
+  bool pressed = (digitalRead(buttonPin) == LOW);
+  digitalWrite(ledPin, pressed ? HIGH : LOW);
+}
+```
+
+`INPUT_PULLUP` သည် internal pull-up resistor ကို enable လုပ်ပေးသည်။ ဤဥပမာတွင် ခလုတ်ကို pin နှင့် GND ကြား ချိတ်ဆက်ရသည်။ External circuit ၏ wiring နှင့် logic ကို အမြဲစစ်ဆေးပါ။
+
+## Analog Inputs နှင့် ADC
+
+Uno R3 ၏ A0–A5 pins များကို analog input ဖတ်ရန် အသုံးပြုနိုင်သည်။ ၎င်း၏ ADC သည် 10-bit ဖြစ်သောကြောင့် ပုံမှန် `analogRead()` ရလဒ်သည် 0 မှ 1023 အတွင်းဖြစ်သည်။ Default reference ကို အသုံးပြုနေသည်ဟု ယူဆပါက 5 V reference အတွက် ခန့်မှန်း voltage ကို—
+
+$$V_{in} \approx \frac{N}{1023} V_{ref}$$
+
+ဖြင့် တွက်နိုင်သည်။ ဤသည် idealized estimate သာဖြစ်ပြီး reference voltage၊ sensor tolerance၊ noise နှင့် ADC characteristics တို့ကြောင့် အမှန်တကယ်တန်ဖိုး ကွာနိုင်သည်။ Input voltage သည် board ၏ ခွင့်ပြုထားသော range အတွင်းရှိရမည်။
+
+## PWM Output
+
+Uno R3 တွင် PWM-capable pins များမှာ D3, D5, D6, D9, D10 နှင့် D11 ဖြစ်သည်။ `analogWrite()` သည် အဆိုပါ pin များတွင် PWM duty cycle ကို သတ်မှတ်ပေးသည်။ ၎င်းသည် true analog voltage output မဟုတ်ပါ။ LED brightness ကဲ့သို့ application များတွင် PWM ကို အသုံးပြုနိုင်သည်။
+
+```cpp
+const int ledPin = 9;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  analogWrite(ledPin, 128); // 0–255 range တွင် အလယ်ခန့် duty value
+}
+```
+
+## Power Pins
+
+- **5V:** သတ်မှတ်ချက်နှင့် ကိုက်ညီသော 5 V supply/logic rail
+- **3.3V:** board ပေါ်တွင် ရရှိနိုင်သော 3.3 V output (available current ကို board documentation တွင် စစ်ပါ)
+- **GND:** circuit ၏ ground reference
+- **VIN:** board ကို external supply ဖြင့် power ပေးရာတွင် သက်ဆိုင်ရာ board specification အတိုင်း အသုံးပြုသည့် input
+- **RESET:** microcontroller ကို reset လုပ်ရန်
+
+Power pin တစ်ခုချင်းစီကို ဘယ်လိုအသုံးပြုရမည်ဆိုသည်မှာ board model နှင့် power configuration ပေါ်မူတည်သည်။ 5V pin သို့ external voltage ထည့်ခြင်း၊ VIN range မမှန်ခြင်း သို့မဟုတ် supply polarity ပြောင်းပြန်ချိတ်ခြင်းသည် board ကို ပျက်စီးစေနိုင်သည်။
+
+## Communication Interfaces  
+
+<table>
+    <thead style={{ backgroundColor: '#f0f0f0' }}>
+        <tr>
+            <th>
+                interface
+            </th>
+            <th>
+                Uno R3 pins
+            </th>
+            <th>
+                အသုံးများသောအလုပ်
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                UART
+            </td>
+            <td>
+                D0 (RX), D1 (TX)
+            </td>
+            <td>
+                Serial communication
+            </td>
+        </tr>
+        <tr>
+            <td>
+                I²C
+            </td>
+            <td>
+                A4 (SDA), A5 (SCL)
+            </td>
+            <td>
+                Sensor နှင့် peripheral များ
+            </td>
+        </tr>
+        <tr>
+            <td>
+                SPI
+            </td>
+            <td>
+                D10 (SS), D11 (MOSI), D12 (MISO), D13 (SCK)
+            </td>
+            <td>
+                Display၊ memory နှင့် high-speed peripheral များ
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+Board revision သို့မဟုတ် model အလိုက် pin label နှင့် connector arrangement ကွာနိုင်သည်။ Connection မလုပ်မီ သက်ဆိုင်ရာ board ၏ official pinout ကို စစ်ဆေးပါ။
+
+## Voltage Compatibility
+
+5 V logic နှင့် 3.3 V logic device များကို အပြန်အလှန်ချိတ်ဆက်ရာတွင် input high threshold နှင့် absolute maximum rating ကို စစ်ဆေးရမည်။ 5 V signal ကို 3.3 V-only input သို့ တိုက်ရိုက်ထည့်ခြင်းသည် device ကို ထိခိုက်စေနိုင်သဖြင့် level shifter သို့မဟုတ် သင့်လျော်သော interface circuit လိုအပ်နိုင်သည်။
+
+## ဆက်လက်လေ့လာရန်
+
+- [Arduino Overview](/docs/learning/ArduinoUno/arduino-uno)
+- [Programming အခြေခံ](/docs/learning/ArduinoUno/arduino-programming)
+- [Electrical Safety နှင့် Troubleshooting](/docs/learning/ArduinoUno/arduino-safety-troubleshooting)
