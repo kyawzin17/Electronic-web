@@ -1,6 +1,6 @@
 import Editor from "@monaco-editor/react";
 import { Maximize, ArrowDown, Package } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LibraryManager from "./LibraryManager.tsx";
 import { useSimulationStore } from "../stores/simulationStore";
 
@@ -29,23 +29,54 @@ const CodeSection = ({
 
   const isCompiling = status === "compiling";
   const isRunning = status === "running";
+  
+  const [editorTheme, setEditorTheme] = useState<
+  "light" | "vs-dark"
+>(() =>
+  document.documentElement.getAttribute("data-theme") === "light"
+    ? "light"
+    : "vs-dark"
+);
+
+useEffect(() => {
+  const root = document.documentElement;
+
+  const syncTheme = () => {
+    setEditorTheme(
+      root.getAttribute("data-theme") === "light"
+        ? "light"
+        : "vs-dark"
+    );
+  };
+
+  syncTheme();
+
+  const observer = new MutationObserver(syncTheme);
+
+  observer.observe(root, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+
+  return () => observer.disconnect();
+}, []);
 
   return (
     <div
       className={`flex w-full ${
         fullScreen ? "h-full" : "h-125"
-      } flex-col overflow-hidden z-51 rounded-lg absolute left-0 border border-slate-700 bg-slate-900 transition-all duration-300 ease-in-out ${
+      } flex-col overflow-hidden z-51 rounded-lg absolute left-0 border border-slate-700 dark:bg-slate-900 bg-card/80 transition-all duration-300 ease-in-out ${
         show ? "bottom-0" : "-bottom-full"
       }`}
     >
-      <div className="flex items-center justify-between border-b border-slate-700 bg-gray-800 px-4 py-2">
-        <span className="text-sm font-semibold text-white">
+      <div className="flex items-center justify-between border-b border-slate-700 dark:bg-gray-800 bg-soft px-4 py-2">
+        <span className="text-sm font-semibold text-text-main">
           ကုဒ်ရေးရန်နေရာ (Sketch.ino)
         </span>
 
         <button
           onClick={() => setShow(!show)}
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-500 hover:text-slate-100"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-text-main transition hover:dark:bg-slate-500 hover:bg-bg/80 hover:text-text-secondary"
           title="Close code editor"
         >
           <ArrowDown />
@@ -55,7 +86,7 @@ const CodeSection = ({
           <button
             type="button"
             onClick={() => setShowLibraryManager(true)}
-            className="flex items-center gap-1.5 rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-2 text-xs font-medium text-cyan-200 transition hover:border-cyan-300/60 hover:bg-cyan-400/20"
+            className="flex items-center gap-1.5 rounded-lg border border-cyan-400/30 bg-cyan-400/10 px-2.5 py-2 text-xs font-medium text-secondary transition hover:border-secondary hover:bg-secondary/2s0"
             title="Browse Arduino libraries supported by the simulator"
           >
             <Package size={15} />
@@ -64,7 +95,7 @@ const CodeSection = ({
           <button
             type="button"
             onClick={() => setFullScreen((value) => !value)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-slate-400 transition hover:bg-slate-500 hover:text-slate-100"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-text-secondary transition hover:dark:bg-slate-500 hover:bg-bg/80 hover:text-text-main"
             title="Fullscreen"
           >
             <Maximize size={17} />
@@ -103,7 +134,11 @@ const CodeSection = ({
           language="cpp"
           value={code}
           onChange={(value) => setCode(value ?? "")}
-          theme="vs-dark"
+          theme={
+            editorTheme === "vs-dark"
+              ? "vs-dark"
+              : "vs-light"
+          }
           options={{
             fontSize: 14,
             minimap: { enabled: false },
@@ -121,9 +156,9 @@ const CodeSection = ({
         />
       )}
 
-      <div className="border-t border-slate-700 bg-slate-950 px-4 py-2">
+      <div className="border-t border-slate-700 dark:bg-slate-950 bg-soft px-4 py-2">
         <div className="flex items-center gap-2 text-xs">
-          <span className="text-slate-400">Status:</span>
+          <span className="text-text-secondary">Status:</span>
           <span
             className={
               status === "error"
@@ -132,7 +167,7 @@ const CodeSection = ({
                   ? "text-green-400"
                   : status === "compiling"
                     ? "text-yellow-400"
-                    : "text-slate-300"
+                    : "text-text-main"
             }
           >
             {status}
@@ -146,16 +181,16 @@ const CodeSection = ({
         )}
 
         {!error && logs && (
-          <pre className="mt-2 max-h-24 overflow-auto whitespace-pre-wrap text-xs text-slate-400">
+          <pre className="mt-2 max-h-24 overflow-auto whitespace-pre-wrap text-xs text-text-secondary">
             {logs}
           </pre>
         )}
 
-        <div className="mt-2 rounded border border-slate-800 bg-black/40 p-2">
-          <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+        <div className="mt-2 rounded border dark:border-slate-800 border-text-secondary/40 dark:bg-black/40 bg-card/80 p-2">
+          <div className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-text-main">
             Serial Monitor
           </div>
-          <pre className="max-h-28 min-h-8 overflow-auto whitespace-pre-wrap font-mono text-xs text-emerald-300">
+          <pre className="max-h-28 min-h-8 overflow-auto whitespace-pre-wrap font-mono text-xs text-success">
             {serialOutput || "No serial output yet."}
           </pre>
         </div>

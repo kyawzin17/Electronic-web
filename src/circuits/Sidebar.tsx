@@ -130,10 +130,12 @@ function ComponentCard({
         p-2
         md:p-0
 
-        bg-[#0a192b]
+        dark:bg-[#0a192b]
+        bg-card/60
 
         border
-        border-[#1b3856]
+        dark:border-[#1b3856]
+        border-zinc-500
 
         rounded-xl
 
@@ -146,7 +148,8 @@ function ComponentCard({
         duration-200
 
         hover:border-blue-500/70
-        hover:bg-[#0d1e33]
+        hover:dark:bg-[#0d1e33]
+        hover:bg-soft
 
         hover:-translate-y-0.5
 
@@ -250,7 +253,8 @@ function ComponentCard({
           className="
             text-[11px]
             font-medium
-            text-slate-300
+            dark:text-slate-300
+            text-text-main
 
             text-center
             truncate
@@ -704,9 +708,11 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
         relative
         shrink-0
         h-full
-        bg-[#081426]
+        dark:bg-[#081426]
+        bg-bg
         border-r
-        border-[#18304c]
+        dark:border-[#18304c]
+        border-zinc-500
         shadow-2xl
         transition-all
         duration-300
@@ -788,7 +794,7 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
                 className="
                   text-sm
                   font-semibold
-                  text-slate-200
+                  text-text-secondary
                 "
               >
                 Components
@@ -841,9 +847,10 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
                 pl-10
                 pr-3
                 text-xs
-                text-slate-200
+                text-text-main
                 placeholder:text-slate-500
-                bg-[#0d1c30]
+                dark:bg-[#0d1c30]
+                bg-soft
                 border
                 border-[#203b5a]
                 rounded-md
@@ -1026,14 +1033,16 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
             gap-2
             px-4
             border-t
-            border-[#18304c]
-            bg-[#071223]
+            dark:border-[#18304c]
+            border-border
+            dark:bg-[#071223]
+            bg-soft
           "
         >
 
           <HiOutlineCube
             className="
-              text-slate-400
+              text-text-main
               text-lg
             "
           />
@@ -1043,7 +1052,7 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
             className="
               text-xs
               font-medium
-              text-slate-400
+              text-text-main
             "
           >
             Total Components:
@@ -1076,7 +1085,8 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
           w-6
           h-10
 
-          bg-[#0d1c30]
+          dark:bg-[#0d1c30]
+          bg-soft
           border
           border-[#254563]
 
@@ -1086,7 +1096,7 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
           items-center
           justify-center
 
-          text-slate-300
+          text-text-main
 
           hover:bg-[#13263e]
           hover:text-blue-400

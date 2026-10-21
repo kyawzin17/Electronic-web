@@ -3160,7 +3160,7 @@ const toggleCode = useCallback(() => {
 
           {grid && (
             <Background
-              color="#e2e8f0"
+              color="dark:#e2e8f0"
               gap={GRID_SIZE}
               size={1}
               variant={
