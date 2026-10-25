@@ -76,7 +76,7 @@ useEffect(() => {
 
         <button
           onClick={() => setShow(!show)}
-          className="flex h-8 w-8 items-center justify-center rounded-lg text-text-main transition hover:dark:bg-slate-500 hover:bg-bg/80 hover:text-text-secondary"
+          className="flex h-8 w-8 items-center justify-center rounded-lg text-text-main transition hover:bg-text-secondary/20 bg-transparent hover:text-text-main"
           title="Close code editor"
         >
           <ArrowDown />
@@ -95,7 +95,7 @@ useEffect(() => {
           <button
             type="button"
             onClick={() => setFullScreen((value) => !value)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-text-secondary transition hover:dark:bg-slate-500 hover:bg-bg/80 hover:text-text-main"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-text-main transition hover:bg-text-secondary/20 bg-transparent hover:text-text-main"
             title="Fullscreen"
           >
             <Maximize size={17} />

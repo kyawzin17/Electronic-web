@@ -244,12 +244,12 @@ export default function PropertiesPanel({
         fixed
         custom-scrollbar 
         -right-1 bottom-0 border-3 rounded-md border-green
-        bg-[#0d1726]
+        bg-card/90
         border-l
-        border-[#1e3148]
+        border-text-secondary/30
         overflow-y-auto
         custom-scrollbar
-        text-slate-200
+        text-text-main
       "
     >
 
@@ -257,7 +257,7 @@ export default function PropertiesPanel({
           HEADER
       ================================= */}
 
-      <div className="p-4 border-b border-[#1e3148]">
+      <div className="p-4 border-b border-text-secondary/30">
 
         <div className="flex items-center gap-2 mb-4">
 
@@ -268,7 +268,7 @@ export default function PropertiesPanel({
               flex
               items-center
               justify-center
-              text-slate-400
+              text-text-secondary
             "
           >
             ⚯
@@ -278,7 +278,7 @@ export default function PropertiesPanel({
             className="
               text-[10px]
               tracking-[0.15em]
-              text-slate-400
+              text-text-main/90
               uppercase
             "
           >
@@ -299,8 +299,8 @@ export default function PropertiesPanel({
               shrink-0
               rounded-md
               border
-              border-[#263b55]
-              bg-[#101d2e]
+              border-text-secondary/70
+              bg-card/90
               flex
               items-center
               justify-center
@@ -357,12 +357,12 @@ export default function PropertiesPanel({
                   w-10
                   h-10
                   rounded
-                  bg-[#17304a]
+                  bg-card/90
                   flex
                   items-center
                   justify-center
                   text-[10px]
-                  text-slate-400
+                  text-text-secondary
                 "
               >
                 {componentType
@@ -385,7 +385,7 @@ export default function PropertiesPanel({
                 className="
                   text-lg
                   font-bold
-                  text-white
+                  text-text-main
                   truncate
                 "
               >
@@ -398,8 +398,8 @@ export default function PropertiesPanel({
                 }
                 className="
                   shrink-0
-                  text-slate-400
-                  hover:text-blue-400
+                  text-text-secondary
+                  hover:text-secondary
                   transition
                 "
                 title="Rename component"
@@ -413,7 +413,7 @@ export default function PropertiesPanel({
             <p
               className="
                 text-xs
-                text-slate-500
+                text-text-secondary/80
                 mt-1
               "
             >
@@ -442,7 +442,7 @@ export default function PropertiesPanel({
               />
 
               <span
-                className={`${connected ? "text-emerald-400" : "text-red-400"} text-xs`}
+                className={`${connected ? "text-success" : "text-error"} text-xs`}
               >
                 {connected ? "Connected" : "Not Connected"}
               </span>
@@ -466,6 +466,7 @@ export default function PropertiesPanel({
           grid-cols-3
           border-b
           border-[#1e3148]
+          text-text-main/80
         "
       >
 
@@ -514,7 +515,7 @@ export default function PropertiesPanel({
 
         {activeTab === "properties" && (
 
-          <>
+          <div className="text-text-main/90">
 
             {/* BASIC */}
 
@@ -540,7 +541,7 @@ export default function PropertiesPanel({
                     px-3
                     py-2
                     rounded-md
-                    bg-[#111e2f]
+                    bg-soft
                     border
                     border-[#29405b]
                   "
@@ -549,7 +550,7 @@ export default function PropertiesPanel({
                   <span
                     className="
                       text-xs
-                      text-slate-200
+                      text-text-main
                       truncate
                     "
                   >
@@ -562,7 +563,7 @@ export default function PropertiesPanel({
                       setIsEditingName(true)
                     }
                     className="
-                      text-slate-400
+                      text-text-secondary
                       hover:text-blue-400
                     "
                   >
@@ -610,8 +611,8 @@ export default function PropertiesPanel({
                       px-3
                       py-2
                       text-xs
-                      text-white
-                      bg-[#111e2f]
+                      text-text-main
+                      bg-soft
                       border
                       border-blue-500
                       rounded-md
@@ -667,11 +668,11 @@ export default function PropertiesPanel({
                   py-2
                   mt-px
                   rounded-md
-                  bg-[#111e2f]
+                  bg-soft
                   border
                   border-[#29405b]
                   text-xs
-                  text-slate-300
+                  text-text-main
                 "
               >
 
@@ -707,11 +708,11 @@ export default function PropertiesPanel({
                     px-3
                     py-2
                     rounded-md
-                    bg-[#111e2f]
+                    bg-soft
                     border
                     border-[#29405b]
                     text-xs
-                    text-slate-400
+                    text-text-main
                     truncate
                   "
                 >
@@ -726,9 +727,9 @@ export default function PropertiesPanel({
                     rounded-md
                     border
                     border-[#29405b]
-                    text-slate-400
-                    hover:text-white
-                    hover:bg-[#17283d]
+                    text-text-secondary
+                    hover:text-text-main
+                    hover:bg-text-secondary/20
                   "
                 >
                   {copied
@@ -793,7 +794,7 @@ export default function PropertiesPanel({
                 <p
                   className="
                     text-xs
-                    text-slate-400
+                    text-text-secondary
                     mb-2
                   "
                 >
@@ -829,19 +830,21 @@ export default function PropertiesPanel({
                             py-2
                             rounded-md
                             text-[10px]
-                            border
                             transition
+                            border
+                            hover:border-2
                             ${
                               active
                                 ? `
                                   bg-blue-500/20
                                   border-blue-500
                                   text-blue-400
+                                  border-2
                                 `
                                 : `
-                                  bg-[#111e2f]
+                                  bg-soft/60
                                   border-[#29405b]
-                                  text-slate-400
+                                  text-text-secondary
                                   hover:border-blue-500/50
                                 `
                             }
@@ -883,7 +886,7 @@ export default function PropertiesPanel({
                     px-3
                     py-2
                     rounded-md
-                    bg-[#111e2f]
+                    bg-soft
                     border
                     border-[#29405b]
                   "
@@ -892,7 +895,7 @@ export default function PropertiesPanel({
                   <span
                     className="
                       text-xs
-                      text-slate-200
+                      text-text-main
                       truncate
                     "
                   >
@@ -962,8 +965,8 @@ export default function PropertiesPanel({
                       px-3
                       py-2
                       text-xs
-                      text-white
-                      bg-[#111e2f]
+                      text-text-main
+                      bg-soft/80
                       border
                       border-blue-500
                       rounded-md
@@ -1013,7 +1016,7 @@ export default function PropertiesPanel({
 
     {/* Preset Values (Quick Select) */}
     <div className="mt-3">
-      <p className="text-xs text-slate-400 mb-2">Quick Presets</p>
+      <p className="text-xs text-text-secondary mb-2">Quick Presets</p>
       <div className="grid grid-cols-4 gap-2">
         {["220", "1000", "4700", "10000"].map((val) => (
           <button
@@ -1031,14 +1034,15 @@ export default function PropertiesPanel({
               rounded-md
               text-[10px]
               border
+              hover:border-2
               transition
               ${
                 (data.props?.value || String(data.value)) === val
-                  ? "bg-blue-500/20 border-blue-500 text-blue-400"
-                  : "bg-[#111e2f] border-[#29405b] text-slate-400 hover:border-blue-500/50"
+                  ? "bg-blue-500/20 border-blue-500 text-blue-400 border-2"
+                  : "bg-soft/60 border-[#29405b] text-text-secondary hover:border-blue-500/50"
               }
             `}
-          >
+          > 
             {Number(val) >= 1000 ? `${Number(val) / 1000}kΩ` : `${val}Ω`}
           </button>
         ))}
@@ -1102,7 +1106,7 @@ export default function PropertiesPanel({
                 text-xs
                 uppercase
                 tracking-wide
-                text-slate-400
+                text-text-main
                 border-t
                 border-b
                 border-[#1e3148]
@@ -1126,7 +1130,7 @@ export default function PropertiesPanel({
                   mt-4
                   p-3
                   rounded-md
-                  bg-[#111e2f]
+                  bg-soft
                   border
                   border-[#263b55]
                 "
@@ -1135,7 +1139,7 @@ export default function PropertiesPanel({
                 <p
                   className="
                     text-xs
-                    text-slate-400
+                    text-text-secondary
                   "
                 >
                   Additional component
@@ -1198,9 +1202,9 @@ export default function PropertiesPanel({
                   py-3
                   rounded-md
                   border
-                  border-red-500/60
-                  text-red-400
-                  hover:bg-red-500/10
+                  border-error/60
+                  text-error
+                  hover:bg-error/10
                   text-sm
                   font-semibold
                   transition
@@ -1215,7 +1219,7 @@ export default function PropertiesPanel({
 
             </div>
 
-          </>
+          </div>
 
         )}
 
@@ -1329,7 +1333,7 @@ function SectionTitle({
         text-xs
         uppercase
         tracking-wider
-        text-slate-400
+        text-text-main
         font-semibold
         mb-4
       "
@@ -1356,7 +1360,7 @@ function PropertyRow({
       <p
         className="
           text-xs
-          text-slate-400
+          text-text-secondary
           mb-2
         "
       >
@@ -1440,7 +1444,7 @@ function SelectLike({
       <p
         className="
           text-xs
-          text-slate-400
+          text-text-secondary
           mb-2
         "
       >
@@ -1455,12 +1459,12 @@ function SelectLike({
           justify-between
           px-3
           py-2
-          bg-[#111e2f]
+          bg-soft
           border
           border-[#29405b]
           rounded-md
           text-xs
-          text-slate-300
+          text-text-main
         "
       >
 
@@ -1643,7 +1647,7 @@ function InfoRow({
       <p
         className="
           text-xs
-          text-slate-500
+          text-text-secondary
           mb-1
         "
       >
@@ -1653,8 +1657,13 @@ function InfoRow({
       <p
         className="
           text-sm
-          text-slate-200
+          text-text-main
           break-all
+          bg-soft/60
+          p-2
+          border
+         border-[#29405b]
+          rounded-md
         "
       >
         {value}

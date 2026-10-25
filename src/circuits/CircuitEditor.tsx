@@ -527,13 +527,13 @@ const ZoomControls = () => {
   };
   return (
     <div className="absolute bottom-5 left-1/2 z-50 -translate-x-1/2">
-      <div className="flex items-center gap-1 rounded-xl border border-slate-300 bg-white/95 p-1 shadow-xl backdrop-blur">
+      <div className="flex items-center gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1 shadow-xl backdrop-blur-md">
 
         {/* Zoom Out */}
         <button
           type="button"
           onClick={handleZoomOut}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/40 hover:text-text-main"
           title="Zoom out"
         >
           <ZoomOut size={18} />
@@ -545,7 +545,7 @@ const ZoomControls = () => {
           onClick={() =>
             setShowZoomLevels((prev) => !prev)
           }
-          className="flex h-9 min-w-16.25 items-center justify-center gap-1 rounded-lg px-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+          className="flex h-9 min-w-16.25 items-center justify-center gap-1 rounded-lg px-2 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/40 hover:text-text-main"
         >
           {zoomPercentage}%
           <ChevronDown size={14} />
@@ -555,7 +555,7 @@ const ZoomControls = () => {
         <button
           type="button"
           onClick={handleZoomIn}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/40 hover:text-slate-900"
           title="Zoom in"
         >
           <ZoomIn size={18} />
@@ -565,7 +565,7 @@ const ZoomControls = () => {
         <button
           type="button"
           onClick={handleFitView}
-          className="flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/40 hover:text-slate-900"
           title="Fit view"
         >
           <Maximize size={17} />
@@ -573,15 +573,15 @@ const ZoomControls = () => {
 
         {/* Zoom Menu */}
         {showZoomLevels && (
-          <div className="absolute bottom-12 left-1/2 w-28 -translate-x-1/2 rounded-xl border border-slate-200 bg-white p-1.5 shadow-xl">
+          <div className="absolute bottom-12 left-1/2 w-28 -translate-x-1/2 rounded-xl border border-primary/40 bg-soft/60 text-text-main p-1.5 shadow-xl">
             {zoomLevels.map((level) => (
               <button
                 key={level}
                 type="button"
                 onClick={() => handleZoomLevel(level)}
-                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition hover:bg-slate-100 ${
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition hover:bg-text-secondary/56 ${
                   Math.abs(currentZoom - level) < 0.01
-                    ? "bg-slate-100 font-semibold"
+                    ? "bg-text-secondary/50 font-semibold"
                     : ""
                 }`}
               >
@@ -612,6 +612,37 @@ const CircuitEditor = () => {
   useRef<SimulationEngine | null>(null);
 const [isToolbarMenuOpen, setIsToolbarMenuOpen] =
   useState(false);
+
+  const [editorTheme, setEditorTheme] = useState<
+  "light" | "vs-dark"
+>(() =>
+  document.documentElement.getAttribute("data-theme") === "light"
+    ? "light"
+    : "vs-dark"
+);
+
+useEffect(() => {
+  const root = document.documentElement;
+
+  const syncTheme = () => {
+    setEditorTheme(
+      root.getAttribute("data-theme") === "light"
+        ? "light"
+        : "vs-dark"
+    );
+  };
+
+  syncTheme();
+
+  const observer = new MutationObserver(syncTheme);
+
+  observer.observe(root, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+
+  return () => observer.disconnect();
+}, []);
 
   useEffect(() => {
   const engine =
@@ -2705,7 +2736,7 @@ const toggleCode = useCallback(() => {
   ======================================================= */
 
   return (
-    <div className="flex h-full w-full overflow-hidden bg-slate-100">
+    <div className="flex h-full w-full overflow-hidden bg-bg">
       <Sidebar onComponentClick={onSidebarComponentClick} />
       {/* Main Canvas */}
       <div
@@ -2714,14 +2745,15 @@ const toggleCode = useCallback(() => {
       >
 
         {/* TOP TOOLBAR */}
-        <div className="absolute left-2 sm:left-1/2 top-1 md:top-2 z-50 flex sm:-translate-x-1/2 items-center gap-2 sm:gap-1 rounded-xl border border-slate-300 bg-white/95 p-1.5 shadow-lg backdrop-blur">
+        <div className="absolute left-2 sm:left-1/2 top-1 md:top-2 z-50 flex sm:-translate-x-1/2 items-center gap-2 sm:gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1.5 shadow-lg backdrop-blur-md">
+          {/* Screen > M */}
 
           {/* Undo */}
           <button
             type="button"
             onClick={undo}
             disabled={history.index <= 0}
-            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
             title="Undo"
           >
             <Undo size={17} />
@@ -2735,13 +2767,13 @@ const toggleCode = useCallback(() => {
               history.index >=
               history.stack.length - 1
             }
-            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
             title="Redo"
           >
             <Redo size={17} />
           </button>
 
-          <div className="hidden sm:block mx-1 h-6 w-px bg-slate-200" />
+          <div className="hidden sm:block mx-1 h-6 w-px bg-text-secondary/90" />
 
           {/* Grid */}
           <button
@@ -2751,8 +2783,8 @@ const toggleCode = useCallback(() => {
             }
             className={`hidden sm:flex h-9 w-9 items-center justify-center rounded-lg transition ${
               grid
-                ? "bg-slate-100 text-slate-900"
-                : "text-slate-400 hover:bg-slate-100"
+                ? "bg-text-secondary/30 text-text-main"
+                : "text-slate-400 hover:bg-text-secondary/30 hover:text-text-main"
             }`}
             title="Toggle grid"
           >
@@ -2776,7 +2808,7 @@ const toggleCode = useCallback(() => {
                 selectedNode.id
               );
             }}
-            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-slate-600 transition hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
             title="Rotate"
           >
             <FaArrowsRotate size={16} />
@@ -2795,13 +2827,13 @@ const toggleCode = useCallback(() => {
                 selectedNode.id
               );
             }}
-            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-30"
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-red-500 transition hover:bg-error/30 disabled:cursor-not-allowed disabled:opacity-30"
             title="Delete selected component"
           >
             <MdDeleteForever size={20} />
           </button>
 
-          <div className="hidden sm:block mx-1 h-6 w-px bg-slate-200" />
+          <div className="hidden sm:block mx-1 h-6 w-px bg-text-secondary/90" />
 
           {/* Code */}
           <button
@@ -2814,34 +2846,36 @@ const toggleCode = useCallback(() => {
             <span className="text-xs hidden lg:inline-block">Code</span>
           </button>
 
-        <div className="hidden sm:block mx-1 h-6 w-px bg-slate-200" />
+        <div className="hidden sm:block mx-1 h-6 w-px bg-text-secondary/90" />
 
           {/* Save */}
           <button
             type="button"
             onClick={handleSaveProject}
             disabled={isSavingProject}
-            className="hidden sm:flex disabled:cursor-wait disabled:opacity-60 h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            className="hidden sm:flex disabled:cursor-wait disabled:opacity-60 h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
             title="Save circuit project"
           >
             <FaRegSave className="lg:hidden" size={16} />
             <span className="text-xs hidden lg:inline-block">{isSavingProject ? "Saving..." : "Save"}</span>
           </button>
 
+          {/* Projects */}
           <button
             type="button"
             onClick={() => navigate("/circuit/project")}
-            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
             title="Open saved projects"
           >
             <FolderOpen className="lg:hidden" size={18} />
             <span className="text-xs hidden lg:inline-block">Projects</span>
           </button>
 
+          {/* New */}
           <button
             type="button"
             onClick={handleNewProject}
-            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800"
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
             title="Create a new circuit"
           >
            <VscNewFolder className="lg:hidden" size={18} />
@@ -2850,11 +2884,12 @@ const toggleCode = useCallback(() => {
             </span>
           </button>
 
+          {/* Debug */}
           <button
             type="button"
             onClick={() => setShowDebugger((value) => !value)}
             className={`hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-xs font-medium transition ${
-              showDebugger ? "bg-slate-900 text-white" : "text-slate-700 hover:bg-slate-100"
+              showDebugger ? "bg-slate-900 text-white" : "text-text-secondary hover:bg-text-secondary/30 hover:text-text-main"
             }`}
             title="Simulation debugger"
           >
@@ -2907,8 +2942,8 @@ const toggleCode = useCallback(() => {
               setIsToolbarMenuOpen((open) => !open)
             }
             className="flex h-9 items-center gap-2 rounded-lg
-              px-3 text-sm font-medium text-slate-900
-              transition hover:bg-slate-100"
+              px-3 text-sm font-medium text-text-secondary
+              transition hover:bg-text-secondary/30"
             aria-label="Toggle toolbar menu"
             aria-expanded={isToolbarMenuOpen}
             title="Toggle toolbar menu"
@@ -2924,7 +2959,7 @@ const toggleCode = useCallback(() => {
             <div
               className="absolute right-0 top-full mt-2
                 flex flex-col gap-1 rounded-xl
-                border border-slate-200 bg-white p-2
+                border border-primary/40 bg-soft p-2
                 shadow-xl"
             >
               {/* Dropdown ထဲမှာ ကျန်တဲ့ toolbar action တွေ ထည့်ရန် */}
@@ -2933,7 +2968,7 @@ const toggleCode = useCallback(() => {
             type="button"
             onClick={undo}
             disabled={history.index <= 0}
-            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100 rounded-lg transitio disabled:cursor-not-allowed disabled:opacity-30"
+            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-text-secondary hover:bg-text-secondary/30 rounded-lg transition disabled:cursor-not-allowed disabled:opacity-30"
             title="Undo"
           >
             <Undo size={17} />
@@ -2948,7 +2983,7 @@ const toggleCode = useCallback(() => {
               history.index >=
               history.stack.length - 1
             }
-            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-slate-700 hover:bg-slate-100  rounded-lg transition disabled:cursor-not-allowed disabled:opacity-30"
+            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-text-secondary hover:bg-text-secondary/30 rounded-lg transition disabled:cursor-not-allowed disabled:opacity-30"
             title="Redo"
           >
             <Redo size={17} />
@@ -2961,10 +2996,10 @@ const toggleCode = useCallback(() => {
             onClick={() =>
               setGrid((prev) => !prev)
             }
-            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800 ${
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 ${
               grid
-                ? "bg-slate-100 text-slate-900"
-                : "text-slate-400 hover:bg-slate-100"
+                ? "bg-text-main/20 text-primary"
+                : "text-text-secondary hover:bg-text-secondary/30"
             }`}
             title="Toggle grid"
           >
@@ -2989,7 +3024,7 @@ const toggleCode = useCallback(() => {
                 selectedNode.id
               );
             }}
-            className="flex h-9 gap-2 px-3 text-sm font-medium text-slate-700 transition items-center rounded-lg hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-30"
+            className="flex h-9 gap-2 px-3 text-sm font-medium text-text-secondary transition items-center rounded-lg hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
             title="Rotate"
           >
             <FaArrowsRotate size={16} />
@@ -3021,7 +3056,7 @@ const toggleCode = useCallback(() => {
             type="button"
             onClick={handleSaveProject}
             disabled={isSavingProject}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 disabled:cursor-wait disabled:opacity-60"
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main disabled:cursor-wait disabled:opacity-60"
             title="Save circuit project"
           >
             <FaRegSave className="lg:hidden" size={16} />
@@ -3031,7 +3066,7 @@ const toggleCode = useCallback(() => {
           <button
             type="button"
             onClick={() => navigate("/circuit/project")}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
             title="Open saved projects"
           >
             <FolderOpen className="lg:hidden" size={18} />
@@ -3041,7 +3076,7 @@ const toggleCode = useCallback(() => {
           <button
             type="button"
             onClick={handleNewProject}
-            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-800"
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-main/70 transition hover:bg-text-secondary/30 hover:text-text-main"
             title="Create a new circuit"
           >
            <VscNewFolder className="lg:hidden" size={18} />
@@ -3077,7 +3112,7 @@ const toggleCode = useCallback(() => {
         <ReactFlow
           nodes={nodes}
           edges={validatedEdges}
-
+          className="bg-bg"
           onNodesChange={
             onNodesChange
           }
@@ -3157,15 +3192,17 @@ const toggleCode = useCallback(() => {
           {/* ===============================================
               GRID
           =============================================== */}
-
-          {grid && (
+            {grid && (
             <Background
-              color="dark:#e2e8f0"
+              color={
+                editorTheme === "light"
+                  ? "#cbd5e1"
+                  : "#334155"
+              }
+              className="bg-bg"
               gap={GRID_SIZE}
               size={1}
-              variant={
-                BackgroundVariant.Lines
-              }
+              variant={BackgroundVariant.Lines}
             />
           )}
 
@@ -3194,7 +3231,7 @@ const toggleCode = useCallback(() => {
 
         {edgeMenu && (
           <div
-            className="fixed z-100 w-48 rounded-xl border border-slate-200 bg-white p-2 shadow-2xl"
+            className="fixed z-100 w-48 rounded-xl border border-border bg-soft p-2 shadow-2xl"
             style={{
               left: edgeMenu.x,
               top: edgeMenu.y,
@@ -3205,7 +3242,7 @@ const toggleCode = useCallback(() => {
           >
             {/* Header */}
 
-            <div className="mb-2 px-2 py-1 text-xs font-semibold text-slate-500">
+            <div className="mb-2 px-2 py-1 text-xs font-semibold text-text-secondary">
               Wire
             </div>
 
@@ -3233,7 +3270,7 @@ const toggleCode = useCallback(() => {
                       color
                     )
                   }
-                  className="h-7 w-7 rounded-md border border-slate-200 transition hover:scale-110"
+                  className="h-7 w-7 rounded-md border border-border transition hover:scale-110"
                   style={{
                     backgroundColor:
                       color,
@@ -3279,13 +3316,13 @@ const toggleCode = useCallback(() => {
         {nodes.length === 0 && (
           <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
 
-            <div className="rounded-2xl border border-dashed border-slate-300 bg-white/80 px-8 py-6 shadow-sm backdrop-blur">
+            <div className="rounded-2xl border border-dashed border-primary bg-soft/40 m-2 px-8 py-6 shadow-sm backdrop-blur-md">
 
-              <div className="mb-2 text-sm font-semibold text-slate-600">
+              <div className="mb-2 text-sm font-semibold text-text-main">
                 Circuit Canvas
               </div>
 
-              <div className="text-xs text-slate-400">
+              <div className="text-xs text-text-secondary">
                 Drag components from the
                 sidebar to start building
                 your circuit.
@@ -3333,7 +3370,7 @@ const toggleCode = useCallback(() => {
       {showCode && (
         <Suspense
           fallback={(
-            <div className="absolute bottom-0 left-0 z-51 flex h-125 w-full items-center justify-center rounded-lg border border-slate-700 bg-slate-900 text-sm text-slate-300">
+            <div className="absolute bottom-0 left-0 z-51 flex h-125 w-full items-center justify-center rounded-lg border border-primary bg-soft text-sm text-text-secondary">
               Loading code editor...
             </div>
           )}

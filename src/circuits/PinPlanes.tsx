@@ -776,7 +776,7 @@ export default function PinPlanes({
     <div
       className="
         w-full
-        text-white
+        text-text-main
         pb-4
       "
     >
@@ -799,9 +799,9 @@ export default function PinPlanes({
             w-7
             h-7
             rounded-md
-            bg-cyan-500/10
+            bg-secondary/20
             border
-            border-cyan-500/20
+            border-secondary/30
             flex
             items-center
             justify-center
@@ -811,7 +811,7 @@ export default function PinPlanes({
           <Plug
             size={14}
             className="
-              text-cyan-400
+              text-secondary
             "
           />
 
@@ -825,7 +825,7 @@ export default function PinPlanes({
               text-xs
               font-bold
               tracking-wide
-              text-slate-200
+              text-text-main
             "
           >
             PIN MANAGEMENT
@@ -835,7 +835,7 @@ export default function PinPlanes({
           <p
             className="
               text-[10px]
-              text-slate-500
+              text-text-secondary/80
               mt-0.5
             "
           >
@@ -866,9 +866,9 @@ export default function PinPlanes({
 
         <div
           className="
-            bg-slate-800/60
+            bg-soft/60
             border
-            border-slate-700/60
+            border-secondary/30
             rounded-lg
             py-3
             text-center
@@ -879,7 +879,7 @@ export default function PinPlanes({
             className="
               text-lg
               font-bold
-              text-white
+              text-text-main
             "
           >
             {pins.length}
@@ -891,7 +891,7 @@ export default function PinPlanes({
               text-[9px]
               uppercase
               tracking-wide
-              text-slate-500
+              text-text-secondary/80
             "
           >
             Total
@@ -904,9 +904,9 @@ export default function PinPlanes({
 
         <div
           className="
-            bg-slate-800/60
+            bg-soft/60
             border
-            border-cyan-500/20
+            border-secondary/30
             rounded-lg
             py-3
             text-center
@@ -917,7 +917,7 @@ export default function PinPlanes({
             className="
               text-lg
               font-bold
-              text-cyan-400
+              text-secondary/80
             "
           >
             {connectedCount}
@@ -929,7 +929,7 @@ export default function PinPlanes({
               text-[9px]
               uppercase
               tracking-wide
-              text-slate-500
+              text-text-secondary/80
             "
           >
             Connected
@@ -942,9 +942,9 @@ export default function PinPlanes({
 
         <div
           className="
-            bg-slate-800/60
+            bg-soft/60
             border
-            border-slate-700/60
+            border-secondary/30
             rounded-lg
             py-3
             text-center
@@ -955,7 +955,7 @@ export default function PinPlanes({
             className="
               text-lg
               font-bold
-              text-emerald-400
+              text-success
             "
           >
             {freeCount}
@@ -967,7 +967,7 @@ export default function PinPlanes({
               text-[9px]
               uppercase
               tracking-wide
-              text-slate-500
+              text-text-secondary/80
             "
           >
             Free
@@ -996,7 +996,7 @@ export default function PinPlanes({
             left-3
             top-1/2
             -translate-y-1/2
-            text-slate-500
+            text-text-secondary
           "
         />
 
@@ -1015,15 +1015,15 @@ export default function PinPlanes({
           className="
             w-full
             h-9
-            bg-[#0B1424]
+            bg-soft/60
             border
-            border-slate-700
+            border-secondary/30
             rounded-lg
             pl-9
             pr-3
             text-xs
-            text-white
-            placeholder:text-slate-600
+            text-text-main
+            placeholder:text-text-secondary
             outline-none
             transition-all
             focus:border-cyan-500
@@ -1092,11 +1092,11 @@ export default function PinPlanes({
                       `
 
                       : `
-                        bg-slate-800/50
-                        border-slate-700/70
-                        text-slate-500
-                        hover:text-slate-300
-                        hover:border-slate-600
+                        bg-soft/50
+                        border-secondary/30
+                        text-text-secondary
+                        hover:text-text-main
+                        hover:border-text-main
                       `
                   }
                 `}
@@ -1164,7 +1164,7 @@ export default function PinPlanes({
                       text-[9px]
                       font-bold
                       tracking-[0.15em]
-                      text-slate-500
+                      text-text-secondary/80
                       uppercase
                       whitespace-nowrap
                     "
@@ -1177,7 +1177,7 @@ export default function PinPlanes({
                     className="
                       h-px
                       flex-1
-                      bg-slate-800
+                      bg-soft
                     "
                   />
 
@@ -1223,7 +1223,7 @@ export default function PinPlanes({
                           key={pin.id}
 
                           className={`
-                            bg-slate-800/50
+                            bg-soft/50
                             border
                             rounded-lg
                             p-3
@@ -1236,8 +1236,8 @@ export default function PinPlanes({
                                   hover:border-cyan-500/40
                                 `
                                 : `
-                                  border-slate-700/60
-                                  hover:border-slate-600
+                                  border-secondary/30
+                                  hover:border-text-main
                                 `
                             }
                           `}
@@ -1279,7 +1279,7 @@ export default function PinPlanes({
                                         shadow-[0_0_8px_rgba(34,211,238,0.7)]
                                       `
                                       : `
-                                        bg-slate-600
+                                        bg-text-secondary
                                       `
                                   }
                                 `}
@@ -1289,11 +1289,20 @@ export default function PinPlanes({
                               {/* PIN LABEL */}
 
                               <span
-                                className="
+                                className={`
                                   text-sm
                                   font-bold
-                                  text-white
-                                "
+                                 
+                                  ${
+                                    isConnected
+                                      ? `
+                                        text-secondary
+                                      `
+                                      : `
+                                        text-text-main/90
+                                      `
+                                  }
+                                `}
                               >
                                 {pin.label}
                               </span>
@@ -1309,10 +1318,10 @@ export default function PinPlanes({
                                     px-1.5
                                     py-0.5
                                     rounded
-                                    bg-slate-900
-                                    text-slate-500
+                                    bg-soft/60
+                                    text-text-secondary
                                     border
-                                    border-slate-800
+                                    border-secondary/30
                                     truncate
                                   "
                                 >
@@ -1340,13 +1349,13 @@ export default function PinPlanes({
                                   isConnected
 
                                     ? `
-                                      bg-cyan-500/10
-                                      text-cyan-400
+                                      bg-text-main/10
+                                      text-secondary
                                     `
 
                                     : `
-                                      bg-slate-700/60
-                                      text-slate-500
+                                      bg-secondary/30
+                                      text-text-secondary
                                     `
                                 }
                               `}
@@ -1388,10 +1397,10 @@ export default function PinPlanes({
                                       px-1.5
                                       py-0.5
                                       rounded
-                                      bg-violet-500/10
-                                      text-violet-400
+                                      bg-primary/10
+                                      text-primary
                                       border
-                                      border-violet-500/20
+                                      border-primary/20
                                       uppercase
                                     "
                                   >
@@ -1413,10 +1422,10 @@ export default function PinPlanes({
                                       px-1.5
                                       py-0.5
                                       rounded
-                                      bg-orange-500/10
-                                      text-orange-400
+                                      bg-warning/10
+                                      text-warning
                                       border
-                                      border-orange-500/20
+                                      border-warning/20
                                       uppercase
                                     "
                                   >
@@ -1442,7 +1451,7 @@ export default function PinPlanes({
                                 gap-1.5
                                 mt-2
                                 text-[10px]
-                                text-yellow-400
+                                text-warning
                               "
                             >
 
@@ -1469,7 +1478,7 @@ export default function PinPlanes({
                                 mt-2
                                 text-[10px]
                                 leading-relaxed
-                                text-slate-500
+                                text-text-secondary
                               "
                             >
                               {pin.description}
@@ -1487,7 +1496,7 @@ export default function PinPlanes({
                                 mt-3
                                 pt-3
                                 border-t
-                                border-slate-700/50
+                                border-text-secondary/50
                               "
                             >
 
@@ -1500,7 +1509,7 @@ export default function PinPlanes({
                                   text-[9px]
                                   font-medium
                                   tracking-wide
-                                  text-slate-500
+                                  text-text-secondary
                                 "
                               >
 
@@ -1534,7 +1543,7 @@ export default function PinPlanes({
                                         items-center
                                         justify-between
                                         gap-3
-                                        bg-slate-900/50
+                                        bg-text-secondary/20
                                         rounded-md
                                         px-2
                                         py-1.5
@@ -1555,14 +1564,14 @@ export default function PinPlanes({
 
                                           className="
                                             flex-none
-                                            text-slate-500
+                                            text-text-secondary
                                           "
                                         />
 
                                         <span
                                           className="
                                             text-[10px]
-                                            text-slate-300
+                                            text-text-secondary
                                             truncate
                                           "
                                         >
@@ -1580,8 +1589,8 @@ export default function PinPlanes({
                                         className="
                                           flex-none
                                           text-[9px]
-                                          text-cyan-400
-                                          bg-cyan-500/10
+                                          text-secondary
+                                          bg-soft
                                           px-1.5
                                           py-0.5
                                           rounded
@@ -1645,7 +1654,7 @@ export default function PinPlanes({
             size={26}
 
             className="
-              text-slate-700
+              text-text-secondary
               mb-3
             "
           />
@@ -1654,7 +1663,7 @@ export default function PinPlanes({
           <p
             className="
               text-xs
-              text-slate-500
+              text-text-secondary
             "
           >
             No pins found
@@ -1664,7 +1673,7 @@ export default function PinPlanes({
           <p
             className="
               text-[10px]
-              text-slate-600
+              text-text-secondary
               mt-1
             "
           >

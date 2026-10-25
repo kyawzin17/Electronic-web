@@ -953,34 +953,69 @@
   },
   {
     "id": 137,
+    "title": "arduino-pinout",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/ArduinoUno/arduino-pinout"
+  },
+  {
+    "id": 138,
+    "title": "arduino-programming",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/ArduinoUno/arduino-programming"
+  },
+  {
+    "id": 139,
+    "title": "arduino-project",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/ArduinoUno/arduino-project"
+  },
+  {
+    "id": 140,
+    "title": "arduino-safety-troubleshooting",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/ArduinoUno/arduino-safety-troubleshooting"
+  },
+  {
+    "id": 141,
+    "title": "arduino-uno",
+    "tags": "",
+    "category": "learning",
+    "link": "/learning/ArduinoUno/arduino-uno"
+  },
+  {
+    "id": 142,
     "title": "capacitor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/capacitor"
   },
   {
-    "id": 138,
+    "id": 143,
     "title": "diode",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/diode"
   },
   {
-    "id": 139,
+    "id": 144,
     "title": "resistor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/resistor"
   },
   {
-    "id": 140,
+    "id": 145,
     "title": "transistor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/transistor"
   },
   {
-    "id": 141,
+    "id": 146,
     "title": "introduction",
     "tags": "",
     "category": "learning",

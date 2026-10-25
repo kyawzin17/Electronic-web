@@ -32,26 +32,26 @@ const SimulationDebugger: React.FC<Props> = ({
   onClearTrace,
 }) => {
   return (
-    <div className="absolute bottom-20 right-4 z-50 w-90 max-h-[70vh] overflow-hidden rounded-2xl border border-slate-700 bg-slate-950/95 text-slate-100 shadow-2xl backdrop-blur">
-      <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
+    <div className="absolute bottom-20 right-4 z-50 w-90 max-h-[70vh] overflow-hidden rounded-2xl border border-text-secondary/80 bg-soft/60 text-text-main shadow-2xl backdrop-blur">
+      <div className="flex items-center justify-between border-b border-text-secondary/60 px-4 py-3">
         <div>
           <div className="text-sm font-semibold">Simulation Debugger</div>
-          <div className="text-[10px] text-slate-400">
+          <div className="text-[10px] text-text-secondary">
             {fmt(diagnostics.simulatedMs, 1)} ms · {diagnostics.frameCount} frames
           </div>
         </div>
-        <div className={running ? "h-2 w-2 rounded-full bg-emerald-400" : "h-2 w-2 rounded-full bg-slate-600"} />
+        <div className={running ? "h-2 w-2 rounded-full bg-success" : "h-2 w-2 rounded-full bg-error"} />
       </div>
 
-      <div className="flex gap-1 border-b border-slate-800 p-2">
+      <div className="flex gap-1 border-b border-text-secondary/60 p-2">
         {!running ? (
-          <button onClick={onRun} className="rounded-lg bg-emerald-600 px-2 py-1 text-xs">Run</button>
+          <button onClick={onRun} className="rounded-lg bg-success/80 px-2 py-1 text-xs hover:cursor-pointer">Run</button>
         ) : (
-          <button onClick={onPause} className="rounded-lg bg-amber-600 px-2 py-1 text-xs">Pause</button>
+          <button onClick={onPause} className="rounded-lg bg-warning/80 px-2 py-1 text-xs hover:cursor-pointer">Pause</button>
         )}
-        <button onClick={onStep} disabled={running} className="rounded-lg bg-slate-800 px-2 py-1 text-xs disabled:opacity-40">Step</button>
-        <button onClick={onStop} className="rounded-lg bg-slate-800 px-2 py-1 text-xs">Stop</button>
-        <button onClick={onReset} className="rounded-lg bg-slate-800 px-2 py-1 text-xs">Reset</button>
+        <button onClick={onStep} disabled={running} className="rounded-lg bg-text-secondary/30 px-2 py-1 text-xs disabled:opacity-40 hover:cursor-pointer">Step</button>
+        <button onClick={onStop} className="rounded-lg bg-error/80 px-2 py-1 text-xs hover:cursor-pointer">Stop</button>
+        <button onClick={onReset} className="rounded-lg bg-text-secondary/30 px-2 py-1 text-xs hover:cursor-pointer">Reset</button>
       </div>
 
       <div className="max-h-[calc(70vh-108px)] overflow-y-auto p-3 space-y-3">
@@ -69,13 +69,13 @@ const SimulationDebugger: React.FC<Props> = ({
         )}
 
         <section>
-          <div className="mb-1 text-xs font-semibold text-slate-300">Pins</div>
+          <div className="mb-1 text-xs font-semibold text-text-secondary">Pins</div>
           <div className="grid grid-cols-2 gap-1">
             {diagnostics.pins.slice(0, 24).map((pin) => (
-              <div key={pin.pin} className="rounded-lg bg-slate-900 px-2 py-1.5">
+              <div key={pin.pin} className="rounded-lg bg-bg border border-text-secondary/20 px-2 py-1.5">
                 <div className="flex justify-between text-[10px]">
-                  <span className="text-slate-300">{pin.pin}</span>
-                  <span className="text-slate-500">{pin.mode ?? ""}</span>
+                  <span className="text-text-main/80">{pin.pin}</span>
+                  <span className="text-text-secondary/80">{pin.mode ?? ""}</span>
                 </div>
                 <div className="text-xs">
                   {pin.voltage !== undefined ? `${fmt(pin.voltage)} V` : pin.digitalLevel !== undefined ? `D${pin.digitalLevel}` : "floating"}
@@ -86,13 +86,13 @@ const SimulationDebugger: React.FC<Props> = ({
         </section>
 
         <section>
-          <div className="mb-1 text-xs font-semibold text-slate-300">Nets</div>
+          <div className="mb-1 text-xs font-semibold text-text-main/80">Nets</div>
           <div className="space-y-1">
             {diagnostics.nets.map((net) => (
               <button
                 key={net.netId}
                 onClick={() => onTraceNet(net.netId)}
-                className={`block w-full rounded-lg bg-slate-900 px-2 py-1.5 text-left transition hover:bg-slate-800 ${diagnostics.trace?.netIds.includes(net.netId) ? "ring-1 ring-cyan-400/70" : ""}`}
+                className={`block w-full rounded-lg px-2 py-1.5 text-left transition bg-bg border border-text-secondary/20 ${diagnostics.trace?.netIds.includes(net.netId) ? "ring-1 ring-cyan-400/70" : ""}`}
                 title="Trace this net"
               >
                 <div className="flex justify-between text-[10px]">
@@ -109,23 +109,23 @@ const SimulationDebugger: React.FC<Props> = ({
           <section>
             <div className="mb-1 flex items-center justify-between text-xs font-semibold text-cyan-300">
               <span>Trace · {diagnostics.trace.target}</span>
-              <button onClick={onClearTrace} className="text-[10px] text-slate-400 hover:text-white">Clear</button>
+              <button onClick={onClearTrace} className="text-[10px] text-text-main/60 hover:text-text-main">Clear</button>
             </div>
             <div className="rounded-lg border border-cyan-900/60 bg-cyan-950/30 p-2">
-              <div className="text-[10px] text-slate-300">{diagnostics.trace.summary}</div>
+              <div className="text-[10px] text-text-main/80">{diagnostics.trace.summary}</div>
               <div className="mt-2 space-y-1">
                 {diagnostics.trace.steps.slice(0, 24).map((step, index) => (
                   <div key={step.kind + ":" + step.id + ":" + index} className="flex items-center gap-2 text-[10px]">
-                    <span className="w-16 shrink-0 uppercase text-slate-500">{step.kind}</span>
-                    <span className="truncate text-slate-200">{step.label}</span>
-                    {step.currentMa !== undefined && <span className="ml-auto text-slate-400">{fmt(step.currentMa)}mA</span>}
+                    <span className="w-16 shrink-0 uppercase text-text-secondary">{step.kind}</span>
+                    <span className="truncate text-text-main/90">{step.label}</span>
+                    {step.currentMa !== undefined && <span className="ml-auto text-text-main/60">{fmt(step.currentMa)}mA</span>}
                   </div>
                 ))}
               </div>
               {diagnostics.trace.faults.length > 0 && (
                 <div className="mt-2 space-y-1">
                   {diagnostics.trace.faults.map((fault) => (
-                    <div key={fault} className="text-[10px] text-red-300">{fault}</div>
+                    <div key={fault} className="text-[10px] text-error/90">{fault}</div>
                   ))}
                 </div>
               )}
@@ -134,18 +134,18 @@ const SimulationDebugger: React.FC<Props> = ({
         )}
 
         <section>
-          <div className="mb-1 text-xs font-semibold text-slate-300">Components</div>
+          <div className="mb-1 text-xs font-semibold text-text-main/80">Components</div>
           <div className="space-y-1">
             {diagnostics.components.map((component) => (
               <button
                 key={component.id}
                 onClick={() => onTraceComponent(component.id)}
-                className={`block w-full rounded-lg bg-slate-900 px-2 py-1.5 text-left transition hover:bg-slate-800 ${diagnostics.trace?.componentIds.includes(component.id) ? "ring-1 ring-cyan-400/70" : ""}`}
+                className={`block w-full rounded-lg px-2 py-1.5 text-left transition bg-bg border border-text-secondary/20 ${diagnostics.trace?.componentIds.includes(component.id) ? "ring-1 ring-cyan-400/70" : ""}`}
                 title="Trace this component"
               >
                 <div className="flex justify-between text-[10px]">
                   <span className="truncate pr-2">{component.type}</span>
-                  <span className={component.active ? "text-emerald-400" : "text-slate-500"}>{component.active ? "ON" : "OFF"}</span>
+                  <span className={component.active ? "text-success" : "text-text-secondary"}>{component.active ? "ON" : "OFF"}</span>
                 </div>
                 <div className="text-xs">{fmt(component.currentMa)} mA{component.powerMw !== undefined ? ` · ${fmt(component.powerMw)} mW` : ""}</div>
               </button>
