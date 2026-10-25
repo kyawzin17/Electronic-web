@@ -270,10 +270,6 @@ export default function PropertiesPanel({
     return componentType?.toLowerCase().includes("ds1307");
   }
 
-  function isOld(componentType: any) {
-    return componentType?.toLowerCase().includes("ssd1306");
-  }
-
   
 
   // useEffect မလိုဘဲ componentType ပြောင်းလဲတိုင်း true (သို့) false ကို တိုက်ရိုက် ထွက်စေရန်
@@ -282,8 +278,7 @@ export default function PropertiesPanel({
     isUltrasonic(componentType) ||
     isLdrSensor(componentType) ||
     isRipMotion(componentType) ||
-    isRtc(componentType) ||
-    isOld(componentType);
+    isRtc(componentType);
 
   return (
     <aside

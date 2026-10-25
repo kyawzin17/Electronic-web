@@ -66,23 +66,6 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
     return () => controller.abort();
   }, []);
 
-  useEffect(() => {
-    const previousTheme = document.documentElement.dataset.theme;
-    const storedTheme = window.localStorage.getItem("theme");
-    const dark = storedTheme ? storedTheme === "dark" : previousTheme === "dark";
-    setIsDark(dark);
-    if (dark) document.documentElement.dataset.theme = "dark";
-    else delete document.documentElement.dataset.theme;
-  }, []);
-
-  const toggleTheme = () => {
-    const nextDark = !isDark;
-    setIsDark(nextDark);
-    if (nextDark) document.documentElement.dataset.theme = "dark";
-    else delete document.documentElement.dataset.theme;
-    window.localStorage.setItem("theme", nextDark ? "dark" : "light");
-  };
-
   const filtered = useMemo(() => {
     const normalized = query.trim().toLowerCase();
     return libraries.filter((library) => {
@@ -127,9 +110,6 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
             </div>
           </div>
           <div className="flex shrink-0 items-center gap-2">
-            <button type="button" onClick={toggleTheme} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-xs font-semibold transition ${isDark ? "border-slate-600 text-slate-200 hover:bg-white/10" : "border-slate-200 text-slate-700 hover:bg-white"}`} aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"} title={isDark ? "Switch to light mode" : "Switch to dark mode"}>
-              {isDark ? <Sun size={15} /> : <Moon size={15} />}<span className="hidden sm:inline">{isDark ? "Light mode" : "Dark mode"}</span>
-            </button>
             <button type="button" onClick={onClose} aria-label="Close library manager" className={`rounded-lg p-2 transition ${muted} hover:bg-black/5`}><X size={20} /></button>
           </div>
         </header>

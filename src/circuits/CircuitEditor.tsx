@@ -142,7 +142,7 @@ type AutoWireKind =
   | "signal";
 
 const AUTO_WIRE_COLORS: Record<AutoWireKind, string> = {
-  ground: "#111827",
+  ground: "#000000",
   power5: "#ef4444",
   power33: "#f97316",
   analog: "#3b82f6",

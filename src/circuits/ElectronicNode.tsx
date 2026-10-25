@@ -1948,25 +1948,6 @@ const ElectronicNode = ({
           </div>
         )}
 
-        {isSsd1306 && (
-          <canvas
-            ref={ssd1306CanvasRef}
-            width={128}
-            height={64}
-            aria-label="SSD1306 OLED display"
-            className="pointer-events-none absolute text-sky-400 left-1/2 top-[22%] z-20 w-[86%] p-1 -translate-x-1/2 bg-black shadow-inner"
-            style={{
-              aspectRatio: "2 / 1",
-              imageRendering: "pixelated",
-              transform: "rotateY(180deg)",
-              opacity:
-                simulation?.ssd1306?.powered === false
-                  ? 0.35
-                  : 1,
-            }}
-          />
-        )}
-
         {isLdr && (
           <div
             className="absolute left-1/2 top-full z-40 mt-2 w-36 -translate-x-1/2 rounded-lg border border-slate-300 bg-white/95 px-2 py-2 shadow-lg backdrop-blur"
@@ -2055,6 +2036,25 @@ const ElectronicNode = ({
        </>)
       }
 
+         {isSsd1306 && (
+          <canvas
+            ref={ssd1306CanvasRef}
+            width={128}
+            height={64}
+            aria-label="SSD1306 OLED display"
+            className="pointer-events-none absolute text-sky-400 left-1/2 top-[22%] z-20 w-[86%] p-1 -translate-x-1/2 bg-black shadow-inner"
+            style={{
+              aspectRatio: "2 / 1",
+              imageRendering: "pixelated",
+              transform: "rotateY(180deg)",
+              opacity:
+                simulation?.ssd1306?.powered === false
+                  ? 0.35
+                  : 1,
+            }}
+          />
+        )}
+        
         {isBuzzer && buzzerActive && (
           <div className="absolute left-1/2 top-full z-40 mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-amber-300 bg-white/95 px-2 py-1 text-[8px] font-medium text-slate-700 shadow-lg">
             {"🔊 " + (buzzerFrequency ? Math.round(buzzerFrequency) + " Hz" : "ACTIVE")}
