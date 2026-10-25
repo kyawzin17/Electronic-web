@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useSimulationStore } from "../stores/simulationStore";
 import {
-  BookOpen, Check, Code2, Moon, Package, Plus, Search, Sun, Trash2, X,
+  BookOpen, Check, Code2, Package, Plus, Search, Trash2, X,
 } from "lucide-react";
 
 type Library = {
@@ -46,7 +46,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
   const [catalogError, setCatalogError] = useState("");
   const selectedLibraries = useSimulationStore((state) => state.selectedLibraries);
   const setSelectedLibraries = useSimulationStore((state) => state.setSelectedLibraries);
-  const [isDark, setIsDark] = useState(readTheme);
+  const isDark = readTheme();
 
   useEffect(() => {
     const controller = new AbortController();
