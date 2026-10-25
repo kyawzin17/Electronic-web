@@ -1809,7 +1809,85 @@ const ElectronicNode = ({
             }
           )}
 
-        {/* The Wokwi membrane-keypad element is the real UI/input source. */}
+      {data.isValid && 
+      (<>
+            {isPotentiometer && (
+                      <div
+                        className="absolute left-1/2 top-full z-40 mt-2 w-24 -translate-x-1/2 rounded-lg border border-slate-300 bg-white/95 px-2 py-1.5 shadow-lg backdrop-blur"
+                        onPointerDown={(event) => event.stopPropagation()}
+                        onPointerMove={(event) => event.stopPropagation()}
+                        onPointerUp={(event) => event.stopPropagation()}
+                      >
+                        <div className="mb-1 flex items-center justify-between text-[8px] font-medium text-slate-500">
+                          <span>0V</span>
+                          <span>
+                            {(potentiometerPosition * 5).toFixed(2)}V
+                          </span>
+                          <span>5V</span>
+                        </div>
+
+                        <input
+                          type="range"
+                          min="0"
+                          max="1"
+                          step="0.01"
+                          value={potentiometerPosition}
+                          onChange={(event) => {
+                            const position =
+                              Number(event.target.value);
+
+                            setNodes((currentNodes) =>
+                              currentNodes.map((node) =>
+                                node.id === id
+                                  ? {
+                                      ...node,
+                                      data: {
+                                        ...node.data,
+                                        potentiometerPosition:
+                                          position,
+                                      },
+                                    }
+                                  : node,
+                              ),
+                            );
+                          }}
+                          className="h-1.5 w-full cursor-pointer accent-cyan-500"
+                          aria-label="Potentiometer position"
+                        />
+                      </div>
+                    )}
+        
+            {isUltrasonic && (
+              <div
+                className="absolute left-1/2 top-full z-40 mt-2 w-40 -translate-x-1/2 rounded-lg border border-slate-300 bg-white/95 px-2 py-2 shadow-lg backdrop-blur"
+                onPointerDown={(event) => event.stopPropagation()}
+                onPointerMove={(event) => event.stopPropagation()}
+                onPointerUp={(event) => event.stopPropagation()}
+              >
+                <div className="mb-1 flex items-center justify-between text-[8px] font-medium text-slate-500">
+                  <span>2 cm</span>
+                  <span className="font-semibold text-slate-700">{ultrasonicDistanceCm.toFixed(0)} cm</span>
+                  <span>400 cm</span>
+                </div>
+                <input type="range" min="2" max="400" step="1" value={ultrasonicDistanceCm}
+                  onChange={(event) => {
+                    const distanceCm = Math.max(2, Math.min(400, Number(event.target.value)));
+                    setNodes((currentNodes) => currentNodes.map((node) =>
+                      node.id === id ? { ...node, data: { ...node.data, ultrasonicDistanceCm: distanceCm } } : node,
+                    ));
+                  }}
+                  className="h-1.5 w-full cursor-pointer accent-cyan-500"
+                  aria-label="HC-SR04 distance"
+                />
+                <div className="mt-1 flex items-center justify-between text-[8px] text-slate-400">
+                  <span>Near</span>
+                  <span>Echo {simulation?.ultrasonic?.echoHigh ? "HIGH" : "LOW"}</span>
+                  <span>Far</span>
+                </div>
+              </div>
+            )}
+
+            {/* The Wokwi membrane-keypad element is the real UI/input source. */}
         {isDs1307 && (
           <div
             className="pointer-events-none absolute left-1/2 top-full z-30 mt-1 w-42.5 -translate-x-1/2 rounded-md border border-slate-700 bg-slate-950/95 px-2 py-1.5 font-mono text-[10px] shadow-lg"
@@ -1931,35 +2009,7 @@ const ElectronicNode = ({
           </div>
         )}
 
-        {isUltrasonic && (
-          <div
-            className="absolute left-1/2 top-full z-40 mt-2 w-40 -translate-x-1/2 rounded-lg border border-slate-300 bg-white/95 px-2 py-2 shadow-lg backdrop-blur"
-            onPointerDown={(event) => event.stopPropagation()}
-            onPointerMove={(event) => event.stopPropagation()}
-            onPointerUp={(event) => event.stopPropagation()}
-          >
-            <div className="mb-1 flex items-center justify-between text-[8px] font-medium text-slate-500">
-              <span>2 cm</span>
-              <span className="font-semibold text-slate-700">{ultrasonicDistanceCm.toFixed(0)} cm</span>
-              <span>400 cm</span>
-            </div>
-            <input type="range" min="2" max="400" step="1" value={ultrasonicDistanceCm}
-              onChange={(event) => {
-                const distanceCm = Math.max(2, Math.min(400, Number(event.target.value)));
-                setNodes((currentNodes) => currentNodes.map((node) =>
-                  node.id === id ? { ...node, data: { ...node.data, ultrasonicDistanceCm: distanceCm } } : node,
-                ));
-              }}
-              className="h-1.5 w-full cursor-pointer accent-cyan-500"
-              aria-label="HC-SR04 distance"
-            />
-            <div className="mt-1 flex items-center justify-between text-[8px] text-slate-400">
-              <span>Near</span>
-              <span>Echo {simulation?.ultrasonic?.echoHigh ? "HIGH" : "LOW"}</span>
-              <span>Far</span>
-            </div>
-          </div>
-        )}
+        
 
         {isPir && (
           <div
@@ -2002,56 +2052,12 @@ const ElectronicNode = ({
             </div>
           </div>
         )}
+       </>)
+      }
 
         {isBuzzer && buzzerActive && (
           <div className="absolute left-1/2 top-full z-40 mt-2 -translate-x-1/2 whitespace-nowrap rounded-lg border border-amber-300 bg-white/95 px-2 py-1 text-[8px] font-medium text-slate-700 shadow-lg">
             {"🔊 " + (buzzerFrequency ? Math.round(buzzerFrequency) + " Hz" : "ACTIVE")}
-          </div>
-        )}
-
-        {isPotentiometer && (
-          <div
-            className="absolute left-1/2 top-full z-40 mt-2 w-24 -translate-x-1/2 rounded-lg border border-slate-300 bg-white/95 px-2 py-1.5 shadow-lg backdrop-blur"
-            onPointerDown={(event) => event.stopPropagation()}
-            onPointerMove={(event) => event.stopPropagation()}
-            onPointerUp={(event) => event.stopPropagation()}
-          >
-            <div className="mb-1 flex items-center justify-between text-[8px] font-medium text-slate-500">
-              <span>0V</span>
-              <span>
-                {(potentiometerPosition * 5).toFixed(2)}V
-              </span>
-              <span>5V</span>
-            </div>
-
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={potentiometerPosition}
-              onChange={(event) => {
-                const position =
-                  Number(event.target.value);
-
-                setNodes((currentNodes) =>
-                  currentNodes.map((node) =>
-                    node.id === id
-                      ? {
-                          ...node,
-                          data: {
-                            ...node.data,
-                            potentiometerPosition:
-                              position,
-                          },
-                        }
-                      : node,
-                  ),
-                );
-              }}
-              className="h-1.5 w-full cursor-pointer accent-cyan-500"
-              aria-label="Potentiometer position"
-            />
           </div>
         )}
 
@@ -2080,9 +2086,10 @@ const ElectronicNode = ({
                   )
                 }
 
-                className="
+                className={`
                   absolute
-                "
+                  ${isArduinoUno ? "opacity-0" : "opacity-100"}
+                `}
 
                 title={
                   isSsd1306 && pin.name === "DATA"
@@ -2111,6 +2118,8 @@ const ElectronicNode = ({
                     `${pin.y}px`,
 
                   zIndex: 20,
+                  background: "transparent", // 👈 ဤနေရာတွင် background အရောင်ကို ဖျောက်ရန်
+                  border: "none",            // 👈 ဤနေရာတွင် ဘောင် (border) ကို ဖျောက်ရန်
                 }}
 
                 data-pin-id={
@@ -2132,18 +2141,18 @@ const ElectronicNode = ({
                 className="
                   pointer-events-none
                   absolute
-                  -top-9
+                  -top-6
                   left-1/2
                   z-30
                   -translate-x-1/2
                   whitespace-nowrap
                   rounded
-                  bg-black/90
+                  bg-soft/80
                   px-1.5
                   py-0.5
                   text-[8px]
                   font-medium
-                  text-white
+                  text-text-main
                   opacity-0
                   transition-opacity
                   group-hover:opacity-100

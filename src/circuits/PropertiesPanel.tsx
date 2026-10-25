@@ -15,6 +15,7 @@ import {
 } from "react-icons/hi2";
 import { LuBrainCircuit } from "react-icons/lu";
 
+
 import type { Node, Edge } from "reactflow";
 import PinPlanes from "./PinPlanes";
 
@@ -52,6 +53,10 @@ type Props = {
     value: string
   ) => void;
 
+  onValid: (
+    nodeId: string,
+    newValid: boolean
+  ) => void;
 };
 
 
@@ -61,12 +66,16 @@ export default function PropertiesPanel({
   onDelete,
   onDocumentation,
   rotateNode,
+  onValid,
   nodes,
   edges,
   updateResistorValue,
   }: Props) {
 
     const [showSidebar, setShowSidebar] =
+    useState(true);
+
+    const [isValidOn, setIsValidOn] =
     useState(true);
 
   const [activeTab, setActiveTab] =
@@ -115,7 +124,6 @@ export default function PropertiesPanel({
   if (!selectedNode) {
     return null;
   }
-
 
   // =========================
   // DATA
@@ -242,7 +250,40 @@ export default function PropertiesPanel({
   return componentType?.toLowerCase().includes("resistor");
 }
 
+  function isPotentiometer(componentType: any) {
+    return componentType?.toLowerCase().includes("potentiometer");
+  }
 
+  function isUltrasonic(componentType: any) {
+    return componentType?.toLowerCase().includes("hc");
+  }
+
+  function isLdrSensor(componentType: any) {
+    return componentType?.toLowerCase().includes("ldr");
+  }
+
+  function isRipMotion(componentType: any) {
+    return componentType?.toLowerCase().includes("pir");
+  }
+
+  function isRtc(componentType: any) {
+    return componentType?.toLowerCase().includes("ds1307");
+  }
+
+  function isOld(componentType: any) {
+    return componentType?.toLowerCase().includes("ssd1306");
+  }
+
+  
+
+  // useEffect မလိုဘဲ componentType ပြောင်းလဲတိုင်း true (သို့) false ကို တိုက်ရိုက် ထွက်စေရန်
+  const isValid = 
+    isPotentiometer(componentType) ||
+    isUltrasonic(componentType) ||
+    isLdrSensor(componentType) ||
+    isRipMotion(componentType) ||
+    isRtc(componentType) ||
+    isOld(componentType);
 
   return (
     <aside
@@ -345,11 +386,11 @@ export default function PropertiesPanel({
 
         <div className="p-4 border-b border-text-secondary/30">
 
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4 justify-between">
 
             <div
               className="
-                w-5
+                w-26
                 h-5
                 flex
                 items-center
@@ -358,18 +399,37 @@ export default function PropertiesPanel({
               "
             >
               ⚯
-            </div>
-
-            <span
+              <span
               className="
                 text-[10px]
                 tracking-[0.15em]
                 text-text-main/90
                 uppercase
+                ms-2
+                mt-1.5
               "
             >
               Component
             </span>
+            </div>
+            {isValid && (
+              <button
+                onClick={() => {
+                  setIsValidOn(!isValidOn);
+                  onValid(selectedNode.id, isValidOn);
+                }}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 focus:outline-none cursor-pointer ${
+                  isValidOn ? 'bg-slate-700' : 'bg-blue-600'
+                }`}
+              >
+                {/* ရွှေ့လျားမည့် အလုံးလေး (Circle) */}
+                <span
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform duration-300 shadow-md ${
+                    isValidOn ? 'translate-x-1' : 'translate-x-6'
+                  }`}
+                />
+              </button>
+            )}
 
           </div>
 

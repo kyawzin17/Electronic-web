@@ -2061,6 +2061,8 @@ const stop =
 
           label: autoLabel,
 
+          isValid: true,
+
           pins: config.pins || [],
 
           stubLength:
@@ -2731,6 +2733,37 @@ const toggleCode = useCallback(() => {
     setEdges,
   ]);
 
+   const handleValid = useCallback(
+  (nodeId: string,
+      newValid: boolean) => {
+
+    setNodes((currentNodes) =>
+      currentNodes.map((node) => {
+        if (node.id !== nodeId) {
+          return node;
+        }
+
+        if (node.id !== nodeId) {
+          return node;
+        }
+
+        console.log("node", node);
+        return {
+          ...node,
+
+          data: {
+            ...node.data,
+
+            isValid: newValid,
+          },
+        };
+      })
+    );
+  },
+  [setNodes]
+);
+
+
   /* =======================================================
      RENDER
   ======================================================= */
@@ -3333,7 +3366,7 @@ const toggleCode = useCallback(() => {
         )}
       </div>
 
-      {/* ===================================================
+      {/* ================================================
           RIGHT PROPERTIES PANEL
       =================================================== */}
 
@@ -3346,6 +3379,7 @@ const toggleCode = useCallback(() => {
         selectedNode={selectedNode}
         updateResistorValue={updateResistorValue}
         onDocumentation={handleComponentDocumentation}
+        onValid={handleValid}
       />
 
       {/* ===================================================

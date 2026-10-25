@@ -1,4 +1,4 @@
-import React, {
+import {
   useEffect,
   useMemo,
 } from "react";
@@ -651,6 +651,8 @@ const BreadboardMiniNode = ({
               title={
                 pin.label
               }
+
+              className="opacity-0 hover:opacity-100"
 
               style={{
 
