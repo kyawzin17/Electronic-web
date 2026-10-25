@@ -32,7 +32,7 @@ const SimulationDebugger: React.FC<Props> = ({
   onClearTrace,
 }) => {
   return (
-    <div className="absolute bottom-20 right-4 z-50 w-90 max-h-[70vh] overflow-hidden rounded-2xl border border-text-secondary/80 bg-soft/60 text-text-main shadow-2xl backdrop-blur">
+    <div className="custom-scrollbar absolute bottom-20 right-4 z-50 w-90 max-h-[70vh] overflow-hidden rounded-2xl border border-text-secondary/80 bg-soft/60 text-text-main shadow-2xl backdrop-blur">
       <div className="flex items-center justify-between border-b border-text-secondary/60 px-4 py-3">
         <div>
           <div className="text-sm font-semibold">Simulation Debugger</div>

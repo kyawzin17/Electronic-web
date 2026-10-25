@@ -2745,7 +2745,7 @@ const toggleCode = useCallback(() => {
       >
 
         {/* TOP TOOLBAR */}
-        <div className="absolute left-2 sm:left-1/2 top-1 md:top-2 z-50 flex sm:-translate-x-1/2 items-center gap-2 sm:gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1.5 shadow-lg backdrop-blur-md">
+        <div className="absolute left-2 sm:left-1/2 top-1 md:top-2 z-60 flex sm:-translate-x-1/2 items-center gap-2 sm:gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1.5 shadow-lg backdrop-blur-md">
           {/* Screen > M */}
 
           {/* Undo */}
@@ -2941,7 +2941,7 @@ const toggleCode = useCallback(() => {
             onClick={() =>
               setIsToolbarMenuOpen((open) => !open)
             }
-            className="flex h-9 items-center gap-2 rounded-lg
+            className="flex h-9 items-center gap-2 rounded-lg z-101
               px-3 text-sm font-medium text-text-secondary
               transition hover:bg-text-secondary/30"
             aria-label="Toggle toolbar menu"
@@ -2957,7 +2957,7 @@ const toggleCode = useCallback(() => {
 
           {isToolbarMenuOpen && (
             <div
-              className="absolute right-0 top-full mt-2
+              className="absolute right-0 top-full mt-2 z-100
                 flex flex-col gap-1 rounded-xl
                 border border-primary/40 bg-soft p-2
                 shadow-xl"

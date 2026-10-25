@@ -802,14 +802,6 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
 
             </div>
 
-
-            <HiChevronDown
-              className="
-                text-slate-400
-                text-base
-              "
-            />
-
           </div>
 
 

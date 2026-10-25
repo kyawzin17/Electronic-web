@@ -1,5 +1,6 @@
 
 import { NavLink, useLocation } from 'react-router-dom';
+import "./header.css";
 // import { motion } from 'framer-motion';
 
 export default function Nav() {
@@ -43,14 +44,13 @@ export default function Nav() {
             : item.path === '/' 
               ? pathname === '/' 
               : pathname.startsWith(item.path);
-
         return (
           <NavLink
             key={item.name}
             to={item.path}
             className={`
-              relative text-md md:text-lg font-medium transition-colors duration-300
-              ${isCurrentActive ? "text-primary" : "text-text-main hover:text-primary"} 
+              relative font-medium transition-colors duration-300 hover-underline
+              ${isCurrentActive ? "active-color" : ""} 
             `}
           >
             {item.name}

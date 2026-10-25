@@ -9,6 +9,11 @@ import {
   Trash2,
   X,
 } from "lucide-react";
+import {
+  HiOutlineChevronLeft,
+  HiOutlineChevronRight,
+} from "react-icons/hi2";
+import { LuBrainCircuit } from "react-icons/lu";
 
 import type { Node, Edge } from "reactflow";
 import PinPlanes from "./PinPlanes";
@@ -60,6 +65,9 @@ export default function PropertiesPanel({
   edges,
   updateResistorValue,
   }: Props) {
+
+    const [showSidebar, setShowSidebar] =
+    useState(true);
 
   const [activeTab, setActiveTab] =
     useState("properties");
@@ -238,686 +246,538 @@ export default function PropertiesPanel({
 
   return (
     <aside
-      className="
-        w-[320px]
+      className={`
+        w-87
         h-[calc(100vh-132px)]
-        fixed
-        custom-scrollbar 
-        -right-1 bottom-0 border-3 rounded-md border-green
-        bg-card/90
-        border-l
+        p-0 m-0 gap-0
+        absolute 
+        bottom-0
+        transition-all duration-300
+        flex
+        justify-between
+        ${showSidebar ? "right-0" : "-right-82"}
+      `}
+    >
+      {/* =========================
+                COLLAPSE BUTTON
+            ========================= */}
+      <div className="flex items-center justify-center p-0 m-0 w-2 h-full">
+        <button
+              onClick={() =>
+                setShowSidebar(
+                  (previous) =>
+                    !previous
+                )
+              }
+              className="
+                -translate-y-1/2
+
+                w-36
+                h-8
+                px-1
+      
+                dark:bg-[#0d1c30]
+                bg-soft
+                border
+                border-[#254563]
+                
+                rotate-90
+      
+                rounded-b-xl
+      
+                flex
+                items-center
+                justify-center
+                gap-2
+      
+                text-text-main
+      
+                hover:bg-[#13263e]/90
+                hover:text-blue-400
+      
+                transition
+      
+                cursor-pointer
+              "
+              title={
+                showSidebar
+                  ? "Collapse Sidebar"
+                  : "Expand Sidebar"
+              }
+            >
+      
+              {showSidebar ? (
+      
+                <HiOutlineChevronLeft
+                  className="
+                    text-xl
+                    rotate-90
+                  "
+                />
+      
+              ) : (
+      
+                <HiOutlineChevronRight
+                  className="
+                    text-xl
+                    rotate-90
+                  "
+                />
+      
+              )}
+              <span className="text-xs -rotate-180">
+                Properties
+              </span>
+              <LuBrainCircuit size={16} className="-rotate-90" />
+            </button>
+      </div>
+            
+      <div className="custom-scrollbar bg-card/90
+        rounded-md
+        border-2
         border-text-secondary/30
         overflow-y-auto
-        custom-scrollbar
         text-text-main
-      "
-    >
+        w-82 h-full">
+        {/* =================================
+            HEADER
+        ================================= */}
 
-      {/* =================================
-          HEADER
-      ================================= */}
+        <div className="p-4 border-b border-text-secondary/30">
 
-      <div className="p-4 border-b border-text-secondary/30">
-
-        <div className="flex items-center gap-2 mb-4">
-
-          <div
-            className="
-              w-5
-              h-5
-              flex
-              items-center
-              justify-center
-              text-text-secondary
-            "
-          >
-            ⚯
-          </div>
-
-          <span
-            className="
-              text-[10px]
-              tracking-[0.15em]
-              text-text-main/90
-              uppercase
-            "
-          >
-            Component
-          </span>
-
-        </div>
-
-
-        <div className="flex gap-3">
-
-          {/* Component Preview */}
-
-          <div
-            className="
-              w-16
-              h-16
-              shrink-0
-              rounded-md
-              border
-              border-text-secondary/70
-              bg-card/90
-              flex
-              items-center
-              justify-center
-              overflow-hidden
-            "
-          >
-
-            {data.image ? (
-
-              <img
-                src={data.image}
-                alt={label}
-                className="
-                  max-w-[90%]
-                  max-h-[90%]
-                  object-contain
-                "
-              />
-
-            ) : data.tag ? (
-            
-                      /* WOKWI COMPONENT */
-            
-                      <div
-                        className="
-                          flex
-                          items-center
-                          justify-center
-                          transition-transform
-                          duration-200
-                          group-hover:scale-100
-                        "
-                        style={{
-                          transform: `
-                            scale(${data.scale})
-                            translateY(${data.yOffset})
-                          `,
-                          transformOrigin:
-                            "center center",
-                        }}
-                      >
-            
-                        {React.createElement(
-                          data.tag,
-                          data.props || {}
-                        )}
-            
-                      </div>
-            
-                    ) : (
-
-              <div
-                className="
-                  w-10
-                  h-10
-                  rounded
-                  bg-card/90
-                  flex
-                  items-center
-                  justify-center
-                  text-[10px]
-                  text-text-secondary
-                "
-              >
-                {componentType
-                  .slice(0, 2)
-                  .toUpperCase()}
-              </div>
-
-            )}
-
-          </div>
-
-
-          {/* Component Name */}
-
-          <div className="flex-1 min-w-0">
-
-            <div className="flex items-center gap-2">
-
-              <h2
-                className="
-                  text-lg
-                  font-bold
-                  text-text-main
-                  truncate
-                "
-              >
-                {name}
-              </h2>
-
-              <button
-                onClick={() =>
-                  setIsEditingName(true)
-                }
-                className="
-                  shrink-0
-                  text-text-secondary
-                  hover:text-secondary
-                  transition
-                "
-                title="Rename component"
-              >
-                <Pencil size={15} />
-              </button>
-
-            </div>
-
-
-            <p
-              className="
-                text-xs
-                text-text-secondary/80
-                mt-1
-              "
-            >
-              {componentType}
-            </p>
-
-
-            {/* Status */}
+          <div className="flex items-center gap-2 mb-4">
 
             <div
               className="
+                w-5
+                h-5
                 flex
                 items-center
-                gap-2
-                mt-2
+                justify-center
+                text-text-secondary
               "
             >
-
-              <span
-                className="
-                  w-2
-                  h-2
-                  rounded-full
-                  bg-emerald-400
-                "
-              />
-
-              <span
-                className={`${connected ? "text-success" : "text-error"} text-xs`}
-              >
-                {connected ? "Connected" : "Not Connected"}
-              </span>
-
+              ⚯
             </div>
+
+            <span
+              className="
+                text-[10px]
+                tracking-[0.15em]
+                text-text-main/90
+                uppercase
+              "
+            >
+              Component
+            </span>
 
           </div>
 
-        </div>
 
-      </div>
+          <div className="flex gap-3">
 
+            {/* Component Preview */}
 
-      {/* =================================
-          TABS
-      ================================= */}
-
-      <div
-        className="
-          grid
-          grid-cols-3
-          border-b
-          border-[#1e3148]
-          text-text-main/80
-        "
-      >
-
-        <TabButton
-          active={activeTab === "properties"}
-          onClick={() =>
-            setActiveTab("properties")
-          }
-        >
-          Properties
-        </TabButton>
-
-
-        <TabButton
-          active={activeTab === "pins"}
-          onClick={() =>
-            setActiveTab("pins")
-          }
-        >
-          Pins
-        </TabButton>
-
-
-        <TabButton
-          active={activeTab === "info"}
-          onClick={() =>
-            setActiveTab("info")
-          }
-        >
-          Info
-        </TabButton>
-
-      </div>
-
-
-      {/* =================================
-          CONTENT
-      ================================= */}
-
-      <div className="p-4">
-
-
-        {/* =================================
-            PROPERTIES TAB
-        ================================= */}
-
-        {activeTab === "properties" && (
-
-          <div className="text-text-main/90">
-
-            {/* BASIC */}
-
-            <SectionTitle>
-              Basic
-            </SectionTitle>
-
-
-            {/* NAME */}
-
-            <PropertyRow
-              label="Name"
+            <div
+              className="
+                w-16
+                h-16
+                shrink-0
+                rounded-md
+                border
+                border-text-secondary/70
+                bg-card/90
+                flex
+                items-center
+                justify-center
+                overflow-hidden
+              "
             >
 
-              {!isEditingName ? (
+              {data.image ? (
+
+                <img
+                  src={data.image}
+                  alt={label}
+                  className="
+                    max-w-[90%]
+                    max-h-[90%]
+                    object-contain
+                  "
+                />
+
+              ) : data.tag ? (
+              
+                        /* WOKWI COMPONENT */
+              
+                        <div
+                          className="
+                            flex
+                            items-center
+                            justify-center
+                            transition-transform
+                            duration-200
+                            group-hover:scale-100
+                          "
+                          style={{
+                            transform: `
+                              scale(${data.scale})
+                              translateY(${data.yOffset})
+                            `,
+                            transformOrigin:
+                              "center center",
+                          }}
+                        >
+              
+                          {React.createElement(
+                            data.tag,
+                            data.props || {}
+                          )}
+              
+                        </div>
+              
+                      ) : (
 
                 <div
                   className="
+                    w-10
+                    h-10
+                    rounded
+                    bg-card/90
                     flex
                     items-center
-                    justify-between
-                    w-full
-                    px-3
-                    py-2
-                    rounded-md
-                    bg-soft
-                    border
-                    border-[#29405b]
+                    justify-center
+                    text-[10px]
+                    text-text-secondary
                   "
                 >
-
-                  <span
-                    className="
-                      text-xs
-                      text-text-main
-                      truncate
-                    "
-                  >
-                    {name}
-                  </span>
-
-
-                  <button
-                    onClick={() =>
-                      setIsEditingName(true)
-                    }
-                    className="
-                      text-text-secondary
-                      hover:text-blue-400
-                    "
-                  >
-                    <Pencil size={14} />
-                  </button>
-
-                </div>
-
-              ) : (
-
-                <div
-                  className="
-                    flex
-                    items-center
-                    gap-2
-                  "
-                >
-
-                  <input
-                    autoFocus
-                    value={name}
-                    onChange={(event) =>
-                      setName(
-                        event.target.value
-                      )
-                    }
-                    onKeyDown={(event) => {
-
-                      if (
-                        event.key === "Enter"
-                      ) {
-                        handleSaveName();
-                      }
-
-                      if (
-                        event.key === "Escape"
-                      ) {
-                        handleCancelName();
-                      }
-
-                    }}
-                    className="
-                      flex-1
-                      min-w-0
-                      px-3
-                      py-2
-                      text-xs
-                      text-text-main
-                      bg-soft
-                      border
-                      border-blue-500
-                      rounded-md
-                      outline-none
-                    "
-                  />
-
-
-                  <button
-                    onClick={handleSaveName}
-                    className="
-                      p-2
-                      text-emerald-400
-                      hover:bg-emerald-500/10
-                      rounded
-                    "
-                  >
-                    <Check size={15} />
-                  </button>
-
-
-                  <button
-                    onClick={handleCancelName}
-                    className="
-                      p-2
-                      text-red-400
-                      hover:bg-red-500/10
-                      rounded
-                    "
-                  >
-                    <X size={15} />
-                  </button>
-
+                  {componentType
+                    .slice(0, 2)
+                    .toUpperCase()}
                 </div>
 
               )}
 
-            </PropertyRow>
+            </div>
 
 
-            {/* COMPONENT TYPE */}
+            {/* Component Name */}
 
-            <PropertyRow
-              label="Component Type"
-            >
+            <div className="flex-1 min-w-0">
 
-              <div
-                className="
-                  flex
-                  items-center
-                  justify-between
-                  px-3
-                  py-2
-                  mt-px
-                  rounded-md
-                  bg-soft
-                  border
-                  border-[#29405b]
-                  text-xs
-                  text-text-main
-                "
-              >
+              <div className="flex items-center gap-2">
 
-                <span>
-                  {componentType}
-                </span>
+                <h2
+                  className="
+                    text-lg
+                    font-bold
+                    text-text-main
+                    truncate
+                  "
+                >
+                  {name}
+                </h2>
 
-                {/* <ChevronDown size={14} /> */}
+                <button
+                  onClick={() =>
+                    setIsEditingName(true)
+                  }
+                  className="
+                    shrink-0
+                    text-text-secondary
+                    hover:text-secondary
+                    transition
+                  "
+                  title="Rename component"
+                >
+                  <Pencil size={15} />
+                </button>
 
               </div>
 
-            </PropertyRow>
+
+              <p
+                className="
+                  text-xs
+                  text-text-secondary/80
+                  mt-1
+                "
+              >
+                {componentType}
+              </p>
 
 
-            {/* ID */}
-
-            <PropertyRow
-              label="ID"
-            >
+              {/* Status */}
 
               <div
                 className="
                   flex
                   items-center
                   gap-2
+                  mt-2
                 "
+              >
+
+                <span
+                  className="
+                    w-2
+                    h-2
+                    rounded-full
+                    bg-emerald-400
+                  "
+                />
+
+                <span
+                  className={`${connected ? "text-success" : "text-error"} text-xs`}
+                >
+                  {connected ? "Connected" : "Not Connected"}
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* =================================
+            TABS
+        ================================= */}
+
+        <div
+          className="
+            grid
+            grid-cols-3
+            border-b
+            border-[#1e3148]
+            text-text-main/80
+          "
+        >
+
+          <TabButton
+            active={activeTab === "properties"}
+            onClick={() =>
+              setActiveTab("properties")
+            }
+          >
+            Properties
+          </TabButton>
+
+
+          <TabButton
+            active={activeTab === "pins"}
+            onClick={() =>
+              setActiveTab("pins")
+            }
+          >
+            Pins
+          </TabButton>
+
+
+          <TabButton
+            active={activeTab === "info"}
+            onClick={() =>
+              setActiveTab("info")
+            }
+          >
+            Info
+          </TabButton>
+
+        </div>
+
+
+        {/* =================================
+            CONTENT
+        ================================= */}
+
+        <div className="p-4">
+
+
+          {/* =================================
+              PROPERTIES TAB
+          ================================= */}
+
+          {activeTab === "properties" && (
+
+            <div className="text-text-main/90">
+
+              {/* BASIC */}
+
+              <SectionTitle>
+                Basic
+              </SectionTitle>
+
+
+              {/* NAME */}
+
+              <PropertyRow
+                label="Name"
+              >
+
+                {!isEditingName ? (
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      justify-between
+                      w-full
+                      px-3
+                      py-2
+                      rounded-md
+                      bg-soft
+                      border
+                      border-[#29405b]
+                    "
+                  >
+
+                    <span
+                      className="
+                        text-xs
+                        text-text-main
+                        truncate
+                      "
+                    >
+                      {name}
+                    </span>
+
+
+                    <button
+                      onClick={() =>
+                        setIsEditingName(true)
+                      }
+                      className="
+                        text-text-secondary
+                        hover:text-blue-400
+                      "
+                    >
+                      <Pencil size={14} />
+                    </button>
+
+                  </div>
+
+                ) : (
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-2
+                    "
+                  >
+
+                    <input
+                      autoFocus
+                      value={name}
+                      onChange={(event) =>
+                        setName(
+                          event.target.value
+                        )
+                      }
+                      onKeyDown={(event) => {
+
+                        if (
+                          event.key === "Enter"
+                        ) {
+                          handleSaveName();
+                        }
+
+                        if (
+                          event.key === "Escape"
+                        ) {
+                          handleCancelName();
+                        }
+
+                      }}
+                      className="
+                        flex-1
+                        min-w-0
+                        px-3
+                        py-2
+                        text-xs
+                        text-text-main
+                        bg-soft
+                        border
+                        border-blue-500
+                        rounded-md
+                        outline-none
+                      "
+                    />
+
+
+                    <button
+                      onClick={handleSaveName}
+                      className="
+                        p-2
+                        text-emerald-400
+                        hover:bg-emerald-500/10
+                        rounded
+                      "
+                    >
+                      <Check size={15} />
+                    </button>
+
+
+                    <button
+                      onClick={handleCancelName}
+                      className="
+                        p-2
+                        text-red-400
+                        hover:bg-red-500/10
+                        rounded
+                      "
+                    >
+                      <X size={15} />
+                    </button>
+
+                  </div>
+
+                )}
+
+              </PropertyRow>
+
+
+              {/* COMPONENT TYPE */}
+
+              <PropertyRow
+                label="Component Type"
               >
 
                 <div
                   className="
-                    flex-1
-                    min-w-0
+                    flex
+                    items-center
+                    justify-between
                     px-3
                     py-2
+                    mt-px
                     rounded-md
                     bg-soft
                     border
                     border-[#29405b]
                     text-xs
                     text-text-main
-                    truncate
-                  "
-                >
-                  {selectedNode.id}
-                </div>
-
-
-                <button
-                  onClick={handleCopyId}
-                  className="
-                    p-2
-                    rounded-md
-                    border
-                    border-[#29405b]
-                    text-text-secondary
-                    hover:text-text-main
-                    hover:bg-text-secondary/20
-                  "
-                >
-                  {copied
-                    ? <Check size={15} />
-                    : <Copy size={15} />
-                  }
-                </button>
-
-              </div>
-
-            </PropertyRow>
-
-
-            {/* =================================
-                TRANSFORM
-            ================================= */}
-
-            <div className="mt-6">
-
-              {/* <SectionTitle>
-                Transform
-              </SectionTitle>
-
-              <div
-                className="
-                  grid
-                  grid-cols-2
-                  gap-3
-                "
-              >
-
-                <NumberInput
-                  label="Position X"
-                  value={position.x}
-                  onChange={(value) =>
-                    handlePositionChange(
-                      "x",
-                      value
-                    )
-                  }
-                />
-
-
-                <NumberInput
-                  label="Position Y"
-                  value={position.y}
-                  onChange={(value) =>
-                    handlePositionChange(
-                      "y",
-                      value
-                    )
-                  }
-                />
-
-              </div> */}
-
-
-              {/* Rotation */}
-
-              <div className="mt-4">
-
-                <p
-                  className="
-                    text-xs
-                    text-text-secondary
-                    mb-2
-                  "
-                >
-                  Rotation
-                </p>
-
-
-                <div
-                  className="
-                    grid
-                    grid-cols-5
-                    gap-2
                   "
                 >
 
-                  {[0, 90, 180, 270, 360].map(
-                    (value) => {
-
-                      const active =
-                        rotation === value;
-
-                      return (
-
-                        <button
-                          key={value}
-                          onClick={() =>
-                            rotateNode(
-                              selectedNode.id,
-                              value
-                            )
-                          }
-                          className={`
-                            py-2
-                            rounded-md
-                            text-[10px]
-                            transition
-                            border
-                            hover:border-2
-                            ${
-                              active
-                                ? `
-                                  bg-blue-500/20
-                                  border-blue-500
-                                  text-blue-400
-                                  border-2
-                                `
-                                : `
-                                  bg-soft/60
-                                  border-[#29405b]
-                                  text-text-secondary
-                                  hover:border-blue-500/50
-                                `
-                            }
-                          `}
-                        >
-                          {value}°
-                        </button>
-
-                      );
-                    }
-                  )}
-
-                </div>
-
-              </div>
-
-            </div>
-
-              {/* =================================
-    RESISTOR SETTINGS
-================================= */}
-{isResistor(componentType) && (
-  <div className="mt-6">
-
-  {/* NAME */}
-
-            <PropertyRow
-              label="Resistance Value (Ohms)"
-            >
-
-              {!isEditingValue ? (
-
-                <div
-                  className="
-                    flex
-                    items-center
-                    justify-between
-                    w-full
-                    px-3
-                    py-2
-                    rounded-md
-                    bg-soft
-                    border
-                    border-[#29405b]
-                  "
-                >
-
-                  <span
-                    className="
-                      text-xs
-                      text-text-main
-                      truncate
-                    "
-                  >
-                    {value}
+                  <span>
+                    {componentType}
                   </span>
 
-
-                  <button
-                    onClick={() =>
-                      setIsEditingValue(true)
-                    }
-                    className="
-                      text-slate-400
-                      hover:text-blue-400
-                    "
-                  >
-                    <Pencil size={14} />
-                  </button>
+                  {/* <ChevronDown size={14} /> */}
 
                 </div>
 
-              ) : (
+              </PropertyRow>
+
+
+              {/* ID */}
+
+              <PropertyRow
+                label="ID"
+              >
 
                 <div
                   className="
@@ -927,335 +787,561 @@ export default function PropertiesPanel({
                   "
                 >
 
-                  <input
-                    type="number"
-                    autoFocus
-                    value={value}
-                    onChange={(event) =>
-                      setValue(
-                        event.target.value
-                      )
-                    }
-                    onKeyDown={(event) => {
-
-                      if (
-                        event.key === "Enter"
-                      ) {
-                        () => {
-                                updateResistorValue(
-                                  selectedNode.id,
-                                  value
-                                );
-                                setIsEditingValue(false);
-                              }
-                      }
-
-                      if (
-                        event.key === "Escape"
-                      ) {
-                        () => {
-                                setIsEditingValue(false);
-                              }}
-                      }
-
-                    }
+                  <div
                     className="
                       flex-1
                       min-w-0
                       px-3
                       py-2
+                      rounded-md
+                      bg-soft
+                      border
+                      border-[#29405b]
                       text-xs
                       text-text-main
-                      bg-soft/80
-                      border
-                      border-blue-500
-                      rounded-md
-                      outline-none
+                      truncate
                     "
+                  >
+                    {selectedNode.id}
+                  </div>
+
+
+                  <button
+                    onClick={handleCopyId}
+                    className="
+                      p-2
+                      rounded-md
+                      border
+                      border-[#29405b]
+                      text-text-secondary
+                      hover:text-text-main
+                      hover:bg-text-secondary/20
+                    "
+                  >
+                    {copied
+                      ? <Check size={15} />
+                      : <Copy size={15} />
+                    }
+                  </button>
+
+                </div>
+
+              </PropertyRow>
+
+
+              {/* =================================
+                  TRANSFORM
+              ================================= */}
+
+              <div className="mt-6">
+
+                {/* <SectionTitle>
+                  Transform
+                </SectionTitle>
+
+                <div
+                  className="
+                    grid
+                    grid-cols-2
+                    gap-3
+                  "
+                >
+
+                  <NumberInput
+                    label="Position X"
+                    value={position.x}
+                    onChange={(value) =>
+                      handlePositionChange(
+                        "x",
+                        value
+                      )
+                    }
                   />
 
 
-                  <button
-                    onClick={() => {
-                                updateResistorValue(
-                                  selectedNode.id,
-                                  value
-                                );
-                                setIsEditingValue(false);
-                              }}
-                    className="
-                      p-2
-                      text-emerald-400
-                      hover:bg-emerald-500/10
-                      rounded
-                    "
-                  >
-                    <Check size={15} />
-                  </button>
+                  <NumberInput
+                    label="Position Y"
+                    value={position.y}
+                    onChange={(value) =>
+                      handlePositionChange(
+                        "y",
+                        value
+                      )
+                    }
+                  />
+
+                </div> */}
 
 
-                  <button
-                    onClick={() => {
-                      setIsEditingValue(false);
-                    }}
+                {/* Rotation */}
+
+                <div className="mt-4">
+
+                  <p
                     className="
-                      p-2
-                      text-red-400
-                      hover:bg-red-500/10
-                      rounded
+                      text-xs
+                      text-text-secondary
+                      mb-2
                     "
                   >
-                    <X size={15} />
-                  </button>
+                    Rotation
+                  </p>
+
+
+                  <div
+                    className="
+                      grid
+                      grid-cols-5
+                      gap-2
+                    "
+                  >
+
+                    {[0, 90, 180, 270, 360].map(
+                      (value) => {
+
+                        const active =
+                          rotation === value;
+
+                        return (
+
+                          <button
+                            key={value}
+                            onClick={() =>
+                              rotateNode(
+                                selectedNode.id,
+                                value
+                              )
+                            }
+                            className={`
+                              py-2
+                              rounded-md
+                              text-[10px]
+                              transition
+                              border
+                              hover:border-2
+                              ${
+                                active
+                                  ? `
+                                    bg-blue-500/20
+                                    border-blue-500
+                                    text-blue-400
+                                    border-2
+                                  `
+                                  : `
+                                    bg-soft/60
+                                    border-[#29405b]
+                                    text-text-secondary
+                                    hover:border-blue-500/50
+                                  `
+                              }
+                            `}
+                          >
+                            {value}°
+                          </button>
+
+                        );
+                      }
+                    )}
+
+                  </div>
+
+                </div>
+
+              </div>
+
+                {/* =================================
+      RESISTOR SETTINGS
+  ================================= */}
+  {isResistor(componentType) && (
+    <div className="mt-6">
+
+    {/* NAME */}
+
+              <PropertyRow
+                label="Resistance Value (Ohms)"
+              >
+
+                {!isEditingValue ? (
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      justify-between
+                      w-full
+                      px-3
+                      py-2
+                      rounded-md
+                      bg-soft
+                      border
+                      border-[#29405b]
+                    "
+                  >
+
+                    <span
+                      className="
+                        text-xs
+                        text-text-main
+                        truncate
+                      "
+                    >
+                      {value}
+                    </span>
+
+
+                    <button
+                      onClick={() =>
+                        setIsEditingValue(true)
+                      }
+                      className="
+                        text-slate-400
+                        hover:text-blue-400
+                      "
+                    >
+                      <Pencil size={14} />
+                    </button>
+
+                  </div>
+
+                ) : (
+
+                  <div
+                    className="
+                      flex
+                      items-center
+                      gap-2
+                    "
+                  >
+
+                    <input
+                      type="number"
+                      autoFocus
+                      value={value}
+                      onChange={(event) =>
+                        setValue(
+                          event.target.value
+                        )
+                      }
+                      onKeyDown={(event) => {
+
+                        if (
+                          event.key === "Enter"
+                        ) {
+                          () => {
+                                  updateResistorValue(
+                                    selectedNode.id,
+                                    value
+                                  );
+                                  setIsEditingValue(false);
+                                }
+                        }
+
+                        if (
+                          event.key === "Escape"
+                        ) {
+                          () => {
+                                  setIsEditingValue(false);
+                                }}
+                        }
+
+                      }
+                      className="
+                        flex-1
+                        min-w-0
+                        px-3
+                        py-2
+                        text-xs
+                        text-text-main
+                        bg-soft/80
+                        border
+                        border-blue-500
+                        rounded-md
+                        outline-none
+                      "
+                    />
+
+
+                    <button
+                      onClick={() => {
+                                  updateResistorValue(
+                                    selectedNode.id,
+                                    value
+                                  );
+                                  setIsEditingValue(false);
+                                }}
+                      className="
+                        p-2
+                        text-emerald-400
+                        hover:bg-emerald-500/10
+                        rounded
+                      "
+                    >
+                      <Check size={15} />
+                    </button>
+
+
+                    <button
+                      onClick={() => {
+                        setIsEditingValue(false);
+                      }}
+                      className="
+                        p-2
+                        text-red-400
+                        hover:bg-red-500/10
+                        rounded
+                      "
+                    >
+                      <X size={15} />
+                    </button>
+
+                  </div>
+
+                )}
+
+              </PropertyRow>
+
+      {/* Preset Values (Quick Select) */}
+      <div className="mt-3">
+        <p className="text-xs text-text-secondary mb-2">Quick Presets</p>
+        <div className="grid grid-cols-4 gap-2">
+          {["220", "1000", "4700", "10000"].map((val) => (
+            <button
+              key={val}
+              onClick={() => {
+                setValue(val);
+                updateResistorValue(
+                                    selectedNode.id,
+                                    val
+                                  );
+                }
+              }
+              className={`
+                py-1.5
+                rounded-md
+                text-[10px]
+                border
+                hover:border-2
+                transition
+                ${
+                  (data.props?.value || String(data.value)) === val
+                    ? "bg-blue-500/20 border-blue-500 text-blue-400 border-2"
+                    : "bg-soft/60 border-[#29405b] text-text-secondary hover:border-blue-500/50"
+                }
+              `}
+            > 
+              {Number(val) >= 1000 ? `${Number(val) / 1000}kΩ` : `${val}Ω`}
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+              {/* =================================
+                  BOARD SETTINGS
+              ================================= */}
+
+              {isArduino(componentType) && (
+
+                <div className="mt-6">
+
+                  <SectionTitle>
+                    Board Settings
+                  </SectionTitle>
+
+
+                  <SelectLike
+                    label="Microcontroller"
+                    value={
+                      data.microcontroller ||
+                      "ATmega328P"
+                    }
+                  />
+
+
+                  <SelectLike
+                    label="Clock Speed"
+                    value={
+                      data.clockSpeed ||
+                      "16 MHz"
+                    }
+                  />
 
                 </div>
 
               )}
 
-            </PropertyRow>
 
-    {/* Preset Values (Quick Select) */}
-    <div className="mt-3">
-      <p className="text-xs text-text-secondary mb-2">Quick Presets</p>
-      <div className="grid grid-cols-4 gap-2">
-        {["220", "1000", "4700", "10000"].map((val) => (
-          <button
-            key={val}
-            onClick={() => {
-              setValue(val);
-              updateResistorValue(
-                                  selectedNode.id,
-                                  val
-                                );
-              }
-            }
-            className={`
-              py-1.5
-              rounded-md
-              text-[10px]
-              border
-              hover:border-2
-              transition
-              ${
-                (data.props?.value || String(data.value)) === val
-                  ? "bg-blue-500/20 border-blue-500 text-blue-400 border-2"
-                  : "bg-soft/60 border-[#29405b] text-text-secondary hover:border-blue-500/50"
-              }
-            `}
-          > 
-            {Number(val) >= 1000 ? `${Number(val) / 1000}kΩ` : `${val}Ω`}
-          </button>
-        ))}
-      </div>
-    </div>
-  </div>
-)}
+              {/* =================================
+                  ADDITIONAL SETTINGS
+              ================================= */}
 
-            {/* =================================
-                BOARD SETTINGS
-            ================================= */}
-
-            {isArduino(componentType) && (
-
-              <div className="mt-6">
-
-                <SectionTitle>
-                  Board Settings
-                </SectionTitle>
-
-
-                <SelectLike
-                  label="Microcontroller"
-                  value={
-                    data.microcontroller ||
-                    "ATmega328P"
-                  }
-                />
-
-
-                <SelectLike
-                  label="Clock Speed"
-                  value={
-                    data.clockSpeed ||
-                    "16 MHz"
-                  }
-                />
-
-              </div>
-
-            )}
-
-
-            {/* =================================
-                ADDITIONAL SETTINGS
-            ================================= */}
-
-            <button
-              onClick={() =>
-                setAdditionalOpen(
-                  !additionalOpen
-                )
-              }
-              className="
-                w-full
-                mt-5
-                flex
-                items-center
-                gap-2
-                py-3
-                text-xs
-                uppercase
-                tracking-wide
-                text-text-main
-                border-t
-                border-b
-                border-[#1e3148]
-              "
-            >
-
-              {additionalOpen
-                ? <ChevronDown size={15} />
-                : <ChevronRight size={15} />
-              }
-
-              Additional Settings
-
-            </button>
-
-
-            {additionalOpen && (
-
-              <div
+              <button
+                onClick={() =>
+                  setAdditionalOpen(
+                    !additionalOpen
+                  )
+                }
                 className="
-                  mt-4
-                  p-3
-                  rounded-md
-                  bg-soft
-                  border
-                  border-[#263b55]
+                  w-full
+                  mt-5
+                  flex
+                  items-center
+                  gap-2
+                  py-3
+                  text-xs
+                  uppercase
+                  tracking-wide
+                  text-text-main
+                  border-t
+                  border-b
+                  border-[#1e3148]
                 "
               >
 
-                <p
+                {additionalOpen
+                  ? <ChevronDown size={15} />
+                  : <ChevronRight size={15} />
+                }
+
+                Additional Settings
+
+              </button>
+
+
+              {additionalOpen && (
+
+                <div
                   className="
-                    text-xs
-                    text-text-secondary
+                    mt-4
+                    p-3
+                    rounded-md
+                    bg-soft
+                    border
+                    border-[#263b55]
                   "
                 >
-                  Additional component
-                  settings will appear here.
-                </p>
+
+                  <p
+                    className="
+                      text-xs
+                      text-text-secondary
+                    "
+                  >
+                    Additional component
+                    settings will appear here.
+                  </p>
+
+                </div>
+
+              )}
+
+
+              {/* =================================
+                  ACTIONS
+              ================================= */}
+
+              <div className="mt-6 space-y-3">
+
+                <button
+                  onClick={() =>
+                    onDocumentation?.(
+                      componentType
+                    )
+                  }
+                  className="
+                    w-full
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                    py-3
+                    rounded-md
+                    bg-blue-600
+                    hover:bg-blue-500
+                    text-white
+                    text-sm
+                    font-semibold
+                    transition
+                  "
+                >
+
+                  <BookOpen size={16} />
+
+                  Component Documentation
+
+                </button>
+
+
+                <button
+                  onClick={() =>
+                    onDelete?.(
+                      selectedNode.id
+                    )
+                  }
+                  className="
+                    w-full
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                    py-3
+                    rounded-md
+                    border
+                    border-error/60
+                    text-error
+                    hover:bg-error/10
+                    text-sm
+                    font-semibold
+                    transition
+                  "
+                >
+
+                  <Trash2 size={16} />
+
+                  Delete Component
+
+                </button>
 
               </div>
-
-            )}
-
-
-            {/* =================================
-                ACTIONS
-            ================================= */}
-
-            <div className="mt-6 space-y-3">
-
-              <button
-                onClick={() =>
-                  onDocumentation?.(
-                    componentType
-                  )
-                }
-                className="
-                  w-full
-                  flex
-                  items-center
-                  justify-center
-                  gap-2
-                  py-3
-                  rounded-md
-                  bg-blue-600
-                  hover:bg-blue-500
-                  text-white
-                  text-sm
-                  font-semibold
-                  transition
-                "
-              >
-
-                <BookOpen size={16} />
-
-                Component Documentation
-
-              </button>
-
-
-              <button
-                onClick={() =>
-                  onDelete?.(
-                    selectedNode.id
-                  )
-                }
-                className="
-                  w-full
-                  flex
-                  items-center
-                  justify-center
-                  gap-2
-                  py-3
-                  rounded-md
-                  border
-                  border-error/60
-                  text-error
-                  hover:bg-error/10
-                  text-sm
-                  font-semibold
-                  transition
-                "
-              >
-
-                <Trash2 size={16} />
-
-                Delete Component
-
-              </button>
 
             </div>
 
-          </div>
-
-        )}
+          )}
 
 
-        {/* =================================
-            PINS TAB
-        ================================= */}
+          {/* =================================
+              PINS TAB
+          ================================= */}
 
-        {/* Pins */}
+          {/* Pins */}
 
-        {activeTab === "pins" && (
+          {activeTab === "pins" && (
 
-          <PinPlanes
-            selectedNode={selectedNode}
-            nodes={nodes}
-            edges={edges}
-            setConnected={setConnected}
-          />
+            <PinPlanes
+              selectedNode={selectedNode}
+              nodes={nodes}
+              edges={edges}
+              setConnected={setConnected}
+            />
 
-        )}
+          )}
 
 
-        {/* =================================
-            INFO TAB
-        ================================= */}
+          {/* =================================
+              INFO TAB
+          ================================= */}
 
-        {activeTab === "info" && (
+          {activeTab === "info" && (
 
-          <InfoTab
-            selectedNode={selectedNode}
-          />
+            <InfoTab
+              selectedNode={selectedNode}
+            />
 
-        )}
+          )}
 
+        </div>
       </div>
-
     </aside>
   );
 }
