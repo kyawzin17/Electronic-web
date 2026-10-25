@@ -3,12 +3,13 @@ import "../App.css";
 import "./page.css";
 import { useNavigate } from "react-router-dom";
 import "@wokwi/elements";
+import CircuitIllustration from "../homes/TestHome.tsx";
+
 
 import { faAddressCard, faBookmark, faLightbulb } from "@fortawesome/free-regular-svg-icons";
 import ReadCard from "../homes/ReadCard.tsx";
 import HeroCircle from "../homes/HeroCircle.tsx";
 import Timeline from "../homes/Timeline.tsx";
-import LanguageToggle from "../homes/LanguageToogle.tsx";
 import FeatureShowcase from "../homes/FeatureShowcase.tsx";
 // import WhatEle from "../docs/WhatEle.tsx";
 
@@ -26,29 +27,11 @@ import { autoLoginService } from "../registerAndLogin/services/auth.ts";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-interface Content {
-    EN: {
-        badge: string;
-        title: string;
-        sub: string;
-        btnPrimary: string;
-        btnSecondary: string;
-    };
-    MM: {
-        badge: string;
-        title: string;
-        sub: string;
-        btnPrimary: string;
-        btnSecondary: string;
-    };
-}
-
 const Home= forwardRef<HTMLElement>(() => {
     const navigate= useNavigate();
     const containerRef= useRef<HTMLDivElement | null>(null);
     const cardRef= useRef<{ [key: string]: HTMLElement | null }>({}); 
     const imageRef= useRef<HTMLDivElement>(null);
-    const {language}= useAppContext();
     const { setUser, setLogin }= useAppContext();
 
     useEffect(() => {
@@ -105,67 +88,10 @@ const Home= forwardRef<HTMLElement>(() => {
     })
    }, { });
 
-   const content: Content = {
-  EN: {
-    badge: "Red Dragon Electronic ⚡",
-    title: "Empowering Myanmar’s Makers, One Circuit at a Time!",
-    sub: "Master electronics with high-quality Burmese documentation, hands-on DIY projects, and interactive circuit simulations you can run right in your browser.",
-    btnPrimary: "Start Learning",
-    btnSecondary: "Browse Projects"
-  },
-  MM: {
-    badge: "Red Dragon အီလက်ထရောနစ် ⚡",
-    title: "မြန်မာ့နည်းပညာရှင်သစ်များအတွက် အီလက်ထရောနစ် သင်ယူမှု ပလက်ဖောင်း!",
-    sub: "စနစ်တကျ ပြုစုထားတဲ့ သင်ခန်းစာတွေ၊ လက်တွေ့ DIY ပရောဂျက်တွေအပြင် ပတ်လမ်း (Circuits) တွေကိုပါ ဝဘ်ဆိုဒ်ထဲမှာတင် တိုက်ရိုက် Run ပြီး စမ်းသပ်လေ့လာလိုက်ပါ။",
-    btnPrimary: "စတင်လေ့လာရန်",
-    btnSecondary: "ပရောဂျက်များကြည့်ရန်"
-  }
-};
-
     return (
         <section className="w-full relative z-2 transform transition duration-300">
             <HeroCircle />
-             {/* Hero div */}
-            <div className="w-full flex flex-col items-center justify-center py-18 md:py-28 z-2 relative">
-                    <LanguageToggle />
-
-                    <div className="floating-shape absolute top-32 left-10 w-4 h-4 border border-cyan-500/50 rotate-45"></div>
-                    <div className="floating-shape absolute top-3/4 right-20 w-3 h-3 bg-purple-500/50 rounded-full"></div>
-                    <div className="floating-shape absolute bottom-22 left-1/4 w-5 h-1 bg-cyan-400/50 -rotate-12"></div>
-                    <wokwi-led className="floating-shape absolute bottom-26 right-[12%] -rotate-12" color='red' value={true}></wokwi-led>
-                    <wokwi-resistor className="floating-shape absolute top-18 left-[20%] -rotate-12"></wokwi-resistor>
-
-                {language === 'EN' ? 
-                <div className="flex max-w-220 justify-between items-end px-3 md:px-0">
-                    <div className="w-full h-auto flex flex-col items-center text-center font-serif py-5 px-3 rounded-lg gap-1">
-                        <h6 className="w-fit text-main text-xs md:text-sm rounded-lg border-primary border-3 py-px px-2 mb-0.5 md:mb-1">{content.EN.badge}</h6>
-                        <h2 className="text-3xl md:text-5xl text-shadow-lg/25 font-bold bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent mb-px md:mb-0.5 line-height-1.5">{content.EN.title}</h2>
-                        <p className="text-sm md:text-base text-text-muted mb-2 md:mb-4">{content.EN.sub}</p>
-                        <div className="flex gap-6 p-3">
-                            <button onClick={() => navigate("/docs/learning")}
-                                     className="px-3 py-1.5 md:px-4 md:py-2 bg-linear-to-r from-(--primary) to-(--secondary)
-                                             text-bg text-base rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">{content.EN.btnPrimary}</button>
-                            <button onClick={() => navigate("/project")}
-                                     className="px-3 py-1.5 text-base md:px-4 md:py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">{content.EN.btnSecondary}</button>
-                        </div>
-                    </div>
-                </div> 
-                :
-                <div className="flex max-w-220 justify-between items-end px-3 md:px-0">
-                    <div className="w-full h-auto flex flex-col items-center text-center font-serif py-5 px-3 rounded-lg gap-1">
-                        <h6 className="w-fit text-main text-xs md:text-sm rounded-lg border-primary border-3 py-px px-2 mb-0.5 md:mb-1">{content.MM.badge}</h6>
-                        <h2 className="text-2xl md:text-4xl text-shadow-lg/25 font-bold bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent leading-mm-relaxed mb-px md:mb-0.5">{content.MM.title}</h2>
-                        <p className="text-sm md:text-base text-text-muted mb-2 md:mb-4 leading-mm-relaxed">{content.MM.sub}</p>
-                        <div className="flex gap-6 p-3">
-                            <button onClick={() => navigate("/docs/learning")}
-                                     className="px-3 py-1.5 md:px-4 md:py-2 bg-linear-to-r from-(--primary) to-(--secondary)
-                                             text-bg text-base rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">{content.MM.btnPrimary}</button>
-                            <button onClick={() => navigate("/project")}
-                                     className="px-3 text-base py-1.5 md:px-4 md:py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">{content.MM.btnSecondary}</button>
-                        </div>
-                    </div>
-                </div>}
-            </div>
+            <CircuitIllustration />
 
             {/* What is Electronics? */}
             {/* <WhatEle /> */}
