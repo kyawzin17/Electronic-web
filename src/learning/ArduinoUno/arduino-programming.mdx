@@ -1,0 +1,119 @@
+# Arduino Programming အခြေခံ
+
+Arduino sketch များကို C++ အခြေခံ syntax နှင့် Arduino API များကို အသုံးပြု၍ ရေးသားသည်။ Arduino IDE သို့မဟုတ် ကိုက်ညီသော development environment တစ်ခုတွင် code ရေး၊ board နှင့် port ရွေး၊ compile လုပ်ပြီး upload လုပ်နိုင်သည်။
+
+## Sketch ၏ အဓိကဖွဲ့စည်းပုံ
+
+```cpp
+void setup() {
+  // Board စတင်သည့်အချိန်တွင် တစ်ကြိမ်ခေါ်သည်။
+}
+
+void loop() {
+  // Program လည်ပတ်နေသရွေ့ ထပ်ခါထပ်ခါခေါ်သည်။
+}
+```
+
+- `setup()` တွင် pin mode၊ Serial communication နှင့် initialization များကို သတ်မှတ်သည်။
+- `loop()` တွင် input ဖတ်ခြင်း၊ condition စစ်ခြင်းနှင့် output ထိန်းချုပ်ခြင်းတို့ကို လုပ်ဆောင်သည်။
+
+## Variables နှင့် Data Types
+
+Variable သည် တန်ဖိုးတစ်ခုကို သိမ်းဆည်းရန် အသုံးပြုသည်။ ဥပမာ `int` ကို integer အတွက်၊ `float` ကို floating-point value အတွက်၊ `bool` ကို true/false state အတွက် အသုံးပြုနိုင်သည်။ Data type ကို ရွေးရာတွင် လိုအပ်သော range နှင့် memory ကို ထည့်စဉ်းစားပါ။
+
+```cpp
+const int ledPin = 13;
+int sensorValue = 0;
+bool alarmEnabled = false;
+```
+
+Pin number မပြောင်းလဲရမည့်အခါ `const int` ကဲ့သို့ constant ကို အသုံးပြုခြင်းသည် code ကို ဖတ်ရလွယ်စေသည်။
+
+## LED Blink Project
+
+လိုအပ်သည်မှာ Arduino Uno R3 နှင့် onboard LED ပါဝင်သော board ဖြစ်သည်။ External LED ကို အသုံးပြုပါက သင့်လျော်သော series resistor ထည့်ရမည်။
+
+```cpp
+const int ledPin = 13;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(ledPin, HIGH);
+  delay(1000);
+  digitalWrite(ledPin, LOW);
+  delay(1000);
+}
+```
+
+`pinMode()` သည် pin ကို input/output အဖြစ် သတ်မှတ်ပြီး `digitalWrite()` သည် digital output state ကို ပြောင်းသည်။ `delay(1000)` သည် ခန့်မှန်းအားဖြင့် 1000 milliseconds စောင့်စေသည်။ `delay()` သည် အချိန်အတွင်း program flow ကို block လုပ်သောကြောင့် တစ်ပြိုင်နက် အလုပ်များစွာလုပ်ရမည့် project များတွင် `millis()` ကို အခြေခံသည့် non-blocking timing ကို စဉ်းစားနိုင်သည်။
+
+## Serial Monitor ဖြင့် Debug လုပ်ခြင်း
+
+```cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(A0);
+  Serial.println(value);
+  delay(250);
+}
+```
+
+Serial Monitor တွင် ဖတ်ရှုရလွယ်သော output ရရှိရန် Serial baud rate နှင့် Monitor baud rate တူညီရမည်။ Sensor reading များကို print လုပ်ခြင်းသည် wiring နှင့် program behavior ကို စစ်ဆေးရာတွင် အထောက်အကူပြုသည်။
+
+## Condition နှင့် Input Reading
+
+```cpp
+const int sensorPin = A0;
+const int ledPin = 9;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(sensorPin);
+  Serial.println(value);
+
+  if (value > 600) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+
+  delay(50);
+}
+```
+
+ဤဥပမာရှိ `600` သည် demonstration threshold သာဖြစ်သည်။ Sensor အမျိုးအစား၊ wiring၊ lighting နှင့် calibration ပေါ်မူတည်၍ တကယ့် threshold ကို စမ်းသပ်ပြီး ရွေးချယ်ရမည်။
+
+## Functions
+
+လုပ်ဆောင်ချက်တစ်ခုကို ထပ်ခါထပ်ခါအသုံးပြုရပါက function အဖြစ် ခွဲရေးနိုင်သည်။ ထိုသို့ရေးခြင်းက code duplication ကို လျှော့ချပြီး program ကို ထိန်းသိမ်းရလွယ်စေသည်။
+
+```cpp
+void turnLedOn() {
+  digitalWrite(LED_BUILTIN, HIGH);
+}
+```
+
+## Compile နှင့် Upload လုပ်ရာတွင် စစ်ဆေးရန်
+
+1. သက်ဆိုင်ရာ board ကို ရွေးထားသလား။
+2. မှန်ကန်သော serial port ကို ရွေးထားသလား။
+3. Braces `{}` နှင့် semicolon `;` များ မှန်ကန်သလား။
+4. Variable နှင့် pin name များ တူညီသလား။
+5. Upload error ဖြစ်လျှင် cable၊ port၊ driver နှင့် board selection ကို စစ်ပြီး error message အပြည့်အစုံကို ဖတ်ပါ။
+
+## ဆက်လက်လေ့လာရန်
+
+- [Arduino Language Reference](https://docs.arduino.cc/language-reference/)
+- [Arduino Overview](/docs/learning/ArduinoUno/arduino-uno)
+- [Hardware နှင့် Pinout](/docs/learning/ArduinoUno/arduino-pinout)
+- [လက်တွေ့ Project များ](/docs/learning/ArduinoUno/arduino-project)

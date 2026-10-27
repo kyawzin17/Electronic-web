@@ -130,6 +130,13 @@ export default function Learn() {
         { name: "Capacitor", slug: "capacitor", category: "Chapter-1" }, 
         { name: "Diode", slug: "diode", category: "Chapter-1" },   
         { name: "Transistor", slug: "transistor", category: "Chapter-1" },   
+
+        { name: "Arduino Uno", slug: "arduino-uno", category: "ArduinoUno" },
+        { name: "Arduino Pinout", slug: "arduino-pinout", category: "ArduinoUno" },
+        { name: "Arduino Programming", slug: "arduino-programming", category: "ArduinoUno" },
+        { name: "Arduino Project", slug: "arduino-project", category: "ArduinoUno" },
+        { name: "Arduino Safety Troubleshooting", slug: "arduino-safety-troubleshooting", category: "ArduinoUno" },
+        
     ];
 
     const componentsForSidebar= [

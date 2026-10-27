@@ -1,0 +1,137 @@
+# Arduino လက်တွေ့ Project များ
+
+ဤစာမျက်နှာတွင် Arduino အခြေခံကို လက်တွေ့လေ့ကျင့်နိုင်ရန် project များကို အလွယ်မှ အဆင့်မြင့်သို့ စီထားသည်။ Circuit များကို power မပေးမီ wiring ကို ပြန်စစ်ပြီး board နှင့် component များ၏ voltage/current rating ကို လိုက်နာပါ။
+
+## Project 1 — LED Blink
+
+**ရည်ရွယ်ချက်:** Digital output နှင့် timing ကို နားလည်ရန်။
+
+1. Arduino Uno R3 ကို USB မှတစ်ဆင့် computer နှင့် ချိတ်ဆက်ပါ။
+2. Arduino IDE တွင် Blink sketch ကို ဖွင့်ပါ သို့မဟုတ် အောက်ပါ code ကို အသုံးပြုပါ။
+3. Board နှင့် port မှန်ကန်စွာရွေးပြီး upload လုပ်ပါ။
+4. LED သည် တစ်စက္ကန့်ခန့်စီ အဖွင့်/အပိတ် ဖြစ်နေသလား စစ်ဆေးပါ။
+
+```cpp
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(LED_BUILTIN, HIGH);
+  delay(1000);
+  digitalWrite(LED_BUILTIN, LOW);
+  delay(1000);
+}
+```
+
+## Project 2 — Push Button ဖြင့် LED ထိန်းချုပ်ခြင်း
+
+**ရည်ရွယ်ချက်:** Digital input နှင့် internal pull-up ကို နားလည်ရန်။
+
+**Wiring:** ခလုတ်တစ်ဖက်ကို D2၊ အခြားတစ်ဖက်ကို GND သို့ ချိတ်ပါ။ LED ကို onboard LED အဖြစ် အသုံးပြုနိုင်သည်။
+
+```cpp
+const int buttonPin = 2;
+const int ledPin = LED_BUILTIN;
+
+void setup() {
+  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  bool buttonPressed = (digitalRead(buttonPin) == LOW);
+  digitalWrite(ledPin, buttonPressed ? HIGH : LOW);
+}
+```
+
+ခလုတ်နှိပ်ထားချိန်တွင် input သည် LOW ဖြစ်ရခြင်းမှာ internal pull-up အသုံးပြုထားပြီး switch ကို GND သို့ ဆက်ထားသောကြောင့်ဖြစ်သည်။ Mechanical button များတွင် contact bounce ဖြစ်နိုင်သဖြင့် တိကျသော state transition လိုအပ်သည့် project များတွင် debounce logic ထည့်ပါ။
+
+## Project 3 — Potentiometer ဖြင့် LED Brightness ချိန်ခြင်း
+
+**ရည်ရွယ်ချက်:** ADC input နှင့် PWM output ကို ပေါင်းစပ်အသုံးပြုရန်။
+
+**Wiring:** Potentiometer ၏ outer terminals ကို 5V နှင့် GND သို့၊ center wiper ကို A0 သို့ ချိတ်ပါ။ ဤ wiring သည် potentiometer ၏ rating နှင့် board voltage ကိုက်ညီကြောင်း စစ်ဆေးပြီးမှ လုပ်ဆောင်ပါ။
+
+```cpp
+const int potPin = A0;
+const int ledPin = 9; // Uno R3 PWM-capable pin
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+}
+
+void loop() {
+  int reading = analogRead(potPin);       // 0–1023
+  int brightness = map(reading, 0, 1023, 0, 255);
+  analogWrite(ledPin, brightness);        // PWM duty value 0–255
+}
+```
+
+External LED ကို အသုံးပြုပါက series resistor ထည့်ပါ။ `map()` သည် integer mapping ဖြစ်ပြီး calibration သို့မဟုတ် smoothing ကို အလိုအလျောက်မလုပ်ပေးပါ။
+
+## Project 4 — Sensor Value ကို Serial Monitor တွင် ပြသခြင်း
+
+**ရည်ရွယ်ချက်:** Analog sensor reading နှင့် basic debugging ကို လေ့ကျင့်ရန်။
+
+```cpp
+void setup() {
+  Serial.begin(9600);
+}
+
+void loop() {
+  int reading = analogRead(A0);
+  Serial.print("A0 reading: ");
+  Serial.println(reading);
+  delay(250);
+}
+```
+
+ဤဥပမာတွင် A0 သို့ ချိတ်ထားသော sensor သို့မဟုတ် potentiometer တစ်ခု လိုအပ်သည်။ Input ကို floating အနေအထားထားလျှင် reading မတည်ငြိမ်နိုင်သည်။ Sensor datasheet နှင့် circuit configuration အတိုင်း ချိတ်ဆက်ပါ။
+
+## Project 5 — Threshold-Based Alert
+
+**ရည်ရွယ်ချက်:** Sensor value ကို condition နှင့်ပေါင်းပြီး output ကို ထိန်းချုပ်ရန်။
+
+```cpp
+const int sensorPin = A0;
+const int ledPin = LED_BUILTIN;
+const int threshold = 600;
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int value = analogRead(sensorPin);
+  Serial.println(value);
+  digitalWrite(ledPin, value > threshold ? HIGH : LOW);
+  delay(50);
+}
+```
+
+`threshold` ကို sensor ၏ real-world measurement နှင့် ကိုက်ညီအောင် စမ်းသပ်ချိန်ညှိပါ။ အရေးကြီးသော alarm သို့မဟုတ် safety system အတွက် Arduino prototype တစ်ခုတည်းကို အတည်ပြုထားသော safety control အဖြစ် မယူဆပါနှင့်။
+
+## လေ့ကျင့်ခန်းများ
+
+1. LED Blink interval ကို 100 ms၊ 500 ms နှင့် 2 s အဖြစ် ပြောင်းပါ။
+2. Button ကို နှိပ်လျှင် LED ဖွင့်၊ လွှတ်လျှင် LED ပိတ်အောင် ပြုလုပ်ပါ။
+3. Potentiometer reading နှင့် PWM value ကို Serial Monitor တွင် ပြပါ။
+4. Sensor reading 10 ခုကို ဖတ်ပြီး average တွက်ပါ။
+5. Threshold ကို variable အဖြစ်ထားပြီး ပြောင်းလဲစမ်းသပ်ပါ။
+6. `delay()` မသုံးဘဲ `millis()` ဖြင့် LED blink timing ကို ရေးကြည့်ပါ။
+
+## Project တစ်ခုချင်းစီအတွက် စစ်ဆေးစာရင်း
+
+- Circuit diagram နှင့် physical wiring ကို နှိုင်းယှဉ်ထားသလား။
+- GND reference ကို မှန်ကန်စွာချိတ်ထားသလား။
+- Input voltage နှင့် output current သည် rating အတွင်းရှိသလား။
+- Sensor value ကို Serial Monitor မှတစ်ဆင့် စစ်ဆေးထားသလား။
+- Code ထဲရှိ threshold၊ pin number နှင့် timing တို့ကို မှတ်တမ်းတင်ထားသလား။
+
+## ဆက်လက်လေ့လာရန်
+
+- [Programming အခြေခံ](/docs/learning/ArduinoUno/arduino-programming)
+- [Hardware နှင့် Pinout](/docs/learning/ArduinoUno/arduino-pinout)
+- [Electrical Safety နှင့် Troubleshooting](/docs/learning/ArduinoUno/arduino-safety-troubleshooting)

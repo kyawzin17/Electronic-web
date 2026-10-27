@@ -158,3 +158,50 @@ em {
     margin-left: 80px !important;
   }
 }
+
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #345675 transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #294967;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3a6388;
+}
+
+
+/* Category tabs horizontal scrollbar hide */
+
+.custom-scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.custom-scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+/* Scroll မလိုတဲ့အချိန် scrollbar မပေါ်စေဖို့ */
+.canvas-container {
+  overflow: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.canvas-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}

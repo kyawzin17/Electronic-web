@@ -1,0 +1,159 @@
+
+.rde-carousel {
+  --carousel-cyan: var(--primary, #00d1ff);
+  --carousel-bg: var(--bg, #0b0e14);
+
+  width: 100%;
+  min-width: 0;
+  color: var(--text-primary, #f4f7fb);
+}
+
+.rde-carousel *,
+.rde-carousel *::before,
+.rde-carousel *::after {
+  box-sizing: border-box;
+}
+
+.rde-carousel__viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #164b7c;
+  border-radius-bottom: 8px;
+  background: var(--carousel-bg);
+}
+
+.rde-carousel__track {
+  display: flex;
+  width: 100%;
+  transition: transform 650ms cubic-bezier(0.22, 0.75, 0.25, 1);
+  will-change: transform;
+}
+
+.rde-carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+}
+
+.rde-carousel__slide::after {
+  content: "";
+  position: absolute;
+  inset: 20% 0 0;
+  pointer-events: none;
+}
+
+.rde-carousel__slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+}
+
+.rde-carousel__caption {
+  position: absolute;
+  z-index: 1;
+  bottom: 3px;
+  left: 3px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 4px;
+  border: 1px solid var(--text-muted);
+  font-size: clamp(10px, 2vw, 14px);
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+
+.rde-carousel__arrow {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+
+  display: grid;
+  place-items: center;
+
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  transform: translateY(-50%);
+
+  border: 1px solid var(--text-muted);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-main);
+
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background 180ms ease, color 180ms ease;
+}
+
+.rde-carousel__arrow:hover {
+  background: var(--carousel-cyan);
+  color: #00111b;
+}
+
+.rde-carousel__arrow svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rde-carousel__arrow--left {
+  left: 14px;
+}
+
+.rde-carousel__arrow--right {
+  right: 14px;
+}
+
+@media (max-width: 640px) {
+  .rde-carousel__viewport {
+    border-radius: 2px;
+  }
+
+  .rde-carousel__slide {
+    aspect-ratio: 4 / 3;
+  }
+
+  .rde-carousel__arrow {
+    width: 36px;
+    height: 36px;
+  }
+
+  .rde-carousel__arrow--left {
+    left: 9px;
+  }
+
+  .rde-carousel__arrow--right {
+    right: 9px;
+  }
+
+  .rde-carousel__caption {
+    right: 14px;
+    bottom: 14px;
+    left: 14px;
+  }
+
+  .rde-carousel__footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rde-carousel__track {
+    transition: none;
+  }
+}

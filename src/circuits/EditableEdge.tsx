@@ -1,13 +1,12 @@
+import { CrossIcon } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { type EdgeProps, BaseEdge, EdgeLabelRenderer, Position, useReactFlow, useStore } from 'reactflow';
 
 type Point = { x: number; y: number };
 
-const GRID_SIZE = 10.5; 
+const GRID_SIZE = 10;
 const CORNER_RADIUS = 8; 
-const STUB_LENGTH = 15; 
 const HANDLE_RADIUS = 2.8; 
-
 function createRoundedPath(points: Point[], radius: number) {
   if (points.length < 2) return '';
   let path = `M ${points[0].x},${points[0].y}`;
@@ -38,6 +37,8 @@ function createRoundedPath(points: Point[], radius: number) {
 export default function EditableEdge({
   id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, style = {}, data, markerStart, markerEnd,
 }: EdgeProps) {
+  const stubLength = data?.stubLength || 0;
+
   const { setEdges } = useReactFlow();
   const zoom = useStore((s) => s.transform[2]);
   
@@ -59,10 +60,10 @@ export default function EditableEdge({
 
   const getInitialPoints = useCallback((): Point[] => {
     const getOffset = (pos: Position, x: number, y: number) => {
-      if (pos === Position.Top) return { x, y: y - STUB_LENGTH };
-      if (pos === Position.Bottom) return { x, y: y + STUB_LENGTH };
-      if (pos === Position.Left) return { x: x - STUB_LENGTH, y };
-      return { x: x + STUB_LENGTH, y };
+      if (pos === Position.Top) return { x, y: y - stubLength };
+      if (pos === Position.Bottom) return { x, y: y + stubLength };
+      if (pos === Position.Left) return { x: x - stubLength, y };
+      return { x: x + stubLength, y };
     };
 
     const p1 = { x: trueSource.x, y: trueSource.y };
@@ -103,10 +104,10 @@ export default function EditableEdge({
       newPts[len - 1] = { x: trueTarget.x, y: trueTarget.y };
 
       const updateStub = (pos: Position, x: number, y: number) => {
-        if (pos === Position.Top) return { x, y: y - STUB_LENGTH };
-        if (pos === Position.Bottom) return { x, y: y + STUB_LENGTH };
-        if (pos === Position.Left) return { x: x - STUB_LENGTH, y };
-        return { x: x + STUB_LENGTH, y };
+        if (pos === Position.Top) return { x, y: y - stubLength };
+        if (pos === Position.Bottom) return { x, y: y + stubLength };
+        if (pos === Position.Left) return { x: x - stubLength, y };
+        return { x: x + stubLength, y };
       };
 
       newPts[1] = updateStub(sourcePosition, trueSource.x, trueSource.y);
@@ -124,7 +125,7 @@ export default function EditableEdge({
 
   const onSegmentMouseDown = (e: React.MouseEvent, index: number, isVertical: boolean) => {
     e.stopPropagation();
-    if (index === 0 || index === points.length - 2) return;
+   // (၁၉, ၆, ၂၀၂၆) if (index === 0 || index === points.length - 2) return;
     
     const startMouse = { x: e.clientX, y: e.clientY };
     const startPoints = [...pointsRef.current]; // Ref ကနေ လက်ရှိ Point တွေကို ယူမယ်
@@ -193,23 +194,99 @@ export default function EditableEdge({
     setEdges((eds) => eds.map((edge) => edge.id === id ? { ...edge, data: { ...edge.data, points: newPts } } : edge));
   };
 
+  const validation = data?.validation as
+    | {
+        isValid?: boolean;
+        severity?: "error" | "warning";
+        code?: string;
+        message?: string;
+      }
+    | undefined;
+
+  const isInvalid =
+    validation?.isValid === false;
+
+  const simulation = data?.simulation as
+    | {
+        isActive?: boolean;
+        currentMa?: number;
+        netId?: string;
+        traceActive?: boolean;
+      }
+    | undefined;
+
+  const isActive =
+    simulation?.isActive === true;
+
+  const isTraceActive =
+    simulation?.traceActive === true;
+
+  const currentMa =
+    typeof simulation?.currentMa === "number"
+      ? simulation.currentMa
+      : undefined;
+
+  const flowColor = "#22d3ee";
+
   const edgePath = createRoundedPath(points, CORNER_RADIUS);
+
+  const labelPoint =
+    points.length > 1
+      ? points[Math.floor(points.length / 2)]
+      : trueSource;
+
   const segments = points.slice(0, -1).map((p1, i) => {
     const p2 = points[i + 1];
-    return { p1, p2, isVertical: Math.abs(p1.x - p2.x) < 0.1, isDraggable: i !== 0 && i !== points.length - 2 };
+    return { p1, p2, isVertical: Math.abs(p1.x - p2.x) < 0.1, isDraggable: true}; //i !== 0 && i !== points.length - 2
   });
-  const wireColor = style.stroke || '#ff0000';
+  const wireColor = isInvalid
+    ? "#ef4444"
+    : (style.stroke || '#ff0000');
 
   return (
     <>
-      <BaseEdge path={edgePath} markerEnd={markerEnd} markerStart={markerStart} style={{ stroke: style.stroke || '#0a1161', strokeWidth: 6, ...style }} />
+      <BaseEdge
+        path={edgePath}
+        markerEnd={markerEnd}
+        markerStart={markerStart}
+        style={{
+          ...style,
+          stroke: isInvalid
+            ? "#ef4444"
+            : (style.stroke || '#0a1161'),
+          strokeWidth: isInvalid
+            ? 3
+            : (isTraceActive ? 4 : 2),
+          filter: isTraceActive ? "drop-shadow(0 0 4px rgba(34,211,238,0.85))" : undefined,
+        }}
+      />
+
+      {isActive && (
+        <path
+          d={edgePath}
+          fill="none"
+          stroke={flowColor}
+          strokeWidth={isTraceActive ? 4 : 2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="circuit-wire-flow"
+          pointerEvents="none"
+        >
+          <title>
+            {currentMa !== undefined
+              ? "Current flow: " + currentMa.toFixed(2) + " mA"
+              : "Current flow detected"}
+          </title>
+        </path>
+      )}
+
       {segments.map((seg, index) => (
         <path
           key={index}
           d={`M ${seg.p1.x},${seg.p1.y} L ${seg.p2.x},${seg.p2.y}`}
           fill="none"
-          stroke={hoveredIndex === index ? "rgba(100,149,237,0.3)" : "transparent"}
-          strokeWidth={seg.isDraggable ? 20 : 0} 
+          stroke={hoveredIndex === index ? "rgba(239,68,68,0.3)" : "transparent"}
+          strokeWidth={seg.isDraggable ? 4 : 0} 
           style={{ cursor: !seg.isDraggable ? 'default' : seg.isVertical ? 'col-resize' : 'row-resize' }}
           onMouseEnter={() => seg.isDraggable && setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -218,14 +295,71 @@ export default function EditableEdge({
         />
       ))}
      <EdgeLabelRenderer>
+        {isInvalid && (
+          <div
+            title={validation?.message ?? "Invalid circuit connection"}
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              transform:
+                "translate(" +
+                labelPoint.x +
+                "px, " +
+                labelPoint.y +
+                "px) translate(-50%, -50%)",
+              width: "16px",
+              height: "16px",
+              borderRadius: "9999px",
+              background: "transparent",
+              color: "#ffffff",
+              border: "1.5px solid #ef4444",
+              boxShadow: "0 2px 8px rgba(0,0,0,0.28)",
+              backgroundColor: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontWeight: 900,
+              padding: "0px",
+              lineHeight: 1,
+              pointerEvents: "auto",
+              cursor: "help",
+              zIndex: 2000,
+            }}
+          >
+            <CrossIcon size={10} strokeWidth={3} className="text-red-500  rotate-45" />
+          </div>
+        )}
+
+        {isActive && (
+          <div
+            className="circuit-wire-current-badge"
+            style={{
+              left: 0,
+              top: 0,
+              transform:
+                "translate(" +
+                labelPoint.x +
+                "px, " +
+                labelPoint.y +
+                "px) translate(-50%, -50%)",
+            }}
+          >
+            <span className="circuit-wire-current-dot" />
+            {currentMa !== undefined
+              ? currentMa.toFixed(1) + " mA"
+              : "FLOW"}
+          </div>
+        )}
+
         {/* Source Dot (အစ) - True Center ကို အသုံးပြုထားသည် */}
          <div
           style={{
             position: 'absolute',
             left: 0, top: 0,
             transform: `translate(${trueSource.x}px, ${trueSource.y}px) translate(-50%, -50%)`,
-            width: '6px',
-            height: '6px',
+            width: '5px',
+            height: '5px',
             background: wireColor,
             borderRadius: '50%',
             pointerEvents: 'none',
@@ -238,8 +372,8 @@ export default function EditableEdge({
             position: 'absolute',
             left: 0, top: 0,
             transform: `translate(${trueTarget.x}px, ${trueTarget.y}px) translate(-50%, -50%)`,
-            width: '6px',
-            height: '6px',
+            width: '5px',
+            height: '5px',
             background: wireColor,
             borderRadius: '50%',
             pointerEvents: 'none',
@@ -258,7 +392,7 @@ export default function EditableEdge({
 
 // const GRID_SIZE = 10.5; 
 // const CORNER_RADIUS = 8; 
-// const STUB_LENGTH = 15; 
+// const stubLength = 15; 
 // const HANDLE_RADIUS = 2.8; // 🌟 6px Pin ရဲ့ အလယ်ဗဟိုကို ရောက်ရန် 3px အသုံးပြုပါမည်
 
 // function createRoundedPath(points: Point[], radius: number) {

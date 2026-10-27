@@ -60,3 +60,7 @@ blockquote:has(💡) {
 }
 .text-green { color: #22c55e; }
 .text-red { color: #ef4444; }
+
+a {
+  color: var(--text-main);
+}

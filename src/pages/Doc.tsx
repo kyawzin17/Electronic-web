@@ -8,6 +8,7 @@ import RightSidebar from "../components/RightSideBar";
 import Components from "../docs/Components.tsx";
 import MobileLeftSidebar from "../docs/MobileLeftSidebar.tsx";
 import LearnSidebarMode from "../components/LearnSidebarMode";
+import '../App.css'
 
 interface FormattedHeading {
     title: string;
@@ -48,6 +49,7 @@ export default function Docs() {
         slug: string;
         category: string;
     }[] = [
+        { name: "Breadboard", slug: "breadboard", category: "passives" },
         { name: "Resistor", slug: "resistor", category: "passives" },
         { name: "Variable Resistor", slug: "variableResistor", category: "passives" },
         { name: "Capacitor", slug: "capacitor", category: "passives" },
@@ -186,6 +188,8 @@ export default function Docs() {
         { name: "Electric Motor", slug: "electricMotor", category: "interfaces" },
         { name: "Servo Motor", slug: "servoMotor", category: "interfaces" },
         { name: "Stepper Motor", slug: "stepperMotor", category: "interfaces" },
+        { name: "Keypad", slug: "keypad", category: "interfaces" },
+        { name: "SlideSwitch", slug: "slideSwitch", category: "interfaces" },
 
     ];
 
@@ -253,7 +257,7 @@ export default function Docs() {
             
              <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
-            <div className="sticky bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4"
+            <div className="sticky custom-scrollbar bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
                     <LearnSidebarMode />
                      {/* Search Bar */}

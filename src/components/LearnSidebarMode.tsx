@@ -2,7 +2,6 @@ import { useLocation } from "react-router-dom";
 import { useAppContext } from "../hooks/useAppContext";
 import { useNavigate } from "react-router-dom";
 
-
 const LearnSidebarMode: React.FC = () => {
     const location = useLocation();
 

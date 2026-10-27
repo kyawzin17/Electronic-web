@@ -5,6 +5,7 @@ import { faTimes, faSearch, faMicrochip, faChevronRight, faChevronDown } from "@
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import '../App.css'
 
 interface MobileLeftSidebarProps {
     docArray: any[];
@@ -36,7 +37,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
     if (!menu) return null;
 
     return (
-    <div className="fixed duration-900 inset-0 z-101 lg:hidden">
+    <div className="fixed h-full duration-900 overflow-y-auto mb-4 custom-scrollbar inset-0 z-101 lg:hidden">
         {/* Overlay */}
         <div 
             className="absolute inset-0 bg-black/50 transition-opacity duration-300" 
@@ -44,7 +45,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
         ></div>
         
         {/* Menu Container */}
-        <div className="absolute left-0 top-0 h-full w-full md:w-80 bg-soft shadow-lg transform transition-transform duration-300 translate-x-0">
+        <div className="absolute left-0 top-0 h-auto w-full md:w-80 bg-soft shadow-lg transform transition-transform duration-300 translate-x-0">
             {/* Header */}
             <div className="py-4 px-1 border-b border-border flex justify-between items-center">
                 <h3 className="text-lg font-semibold text-text-main">Menu</h3>
@@ -68,7 +69,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                         </button>
                     </div>
             {/* Scrollable Content */}
-            <div className="flex-1 overflow-y-auto" style={{ height: 'calc(100% - 73px)' }}>
+            <div className="flex-1">
                         {/* Search Bar */}
                         <div className="mb-4 mt-4">
                             <div className="relative">
@@ -164,7 +165,7 @@ const MobileLeftSidebar= ({ docArray, categories, searchTerm, setSearchTerm, ope
                             );
                         })}
 </div>
-                    </div>
+        </div>
     </div>
     )
 }

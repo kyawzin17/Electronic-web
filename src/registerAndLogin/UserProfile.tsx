@@ -220,7 +220,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="w-full h-auto relative bg-bg select-none">
+    <div className={` ${isLogout ? "overflow-hidden h-screen" : "h-auto"} w-full relative bg-bg font-mono select-none`}>
       <div className="max-w-2xl border-x-2 border-border h-full px-6 md:px-12 py-18 flex flex-col items-center mx-auto relative">
           <div className="w-full h-auto flex justify-between items-center px-4 absolute left-0 top-6">
             <button 
@@ -262,10 +262,10 @@ const Profile = () => {
 
           <div className="mb-4">
             <div className="w-full h-auto flex justify-center items-center mt-4 mb-2">
-              <h2 className="text-2xl md:text-3xl text-text-main font-extrabold font-serif">{user!.name}</h2>
+              <h2 className="text-2xl md:text-3xl text-text-main font-extrabold">{user!.name}</h2>
             </div>
             <div className="w-full h-auto flex justify-center items-center mb-4">
-              <p className="text-base md:text-md font-medium font-serif text-text-secondary">{user!.email}</p>
+              <p className="text-base md:text-md font-medium text-text-secondary">{user!.email}</p>
             </div>
           </div>
 
@@ -311,32 +311,32 @@ const Profile = () => {
 
           {/* User Details Info */}
           <div className="w-full h-auto mt-6 md:mt-8">
-            <h2 className="text-text-main font-serif font-semibold mb-6 text-2xl">User Account Information!</h2>
+            <h2 className="text-text-main font-semibold mb-6 text-2xl">User Account Information!</h2>
             <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Role: </span>
-              <p className="text-base font-serif text-text-main/90 lowercase first-letter:uppercase">{user!.role}</p>
+              <span className="text-md text-text-main">Role: </span>
+              <p className="text-base text-text-main/90 lowercase first-letter:uppercase">{user!.role}</p>
             </div>
             <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Hobby: </span>
-              <p className="text-base font-serif text-text-main/90 lowercase first-letter:uppercase">{user!.hobby}</p>
+              <span className="text-md text-text-main">Hobby: </span>
+              <p className="text-base text-text-main/90 lowercase first-letter:uppercase">{user!.hobby}</p>
             </div>
             <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Gender: </span>
-              <p className="text-base font-serif text-text-main/90 lowercase first-letter:uppercase">{user!.gender}</p>
+              <span className="text-md text-text-main">Gender: </span>
+              <p className="text-base text-text-main/90 lowercase first-letter:uppercase">{user!.gender}</p>
             </div>
             <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Create Time: </span>
-              <p className="text-base font-serif text-warning">{user!.createdAt}</p>
+              <span className="text-md text-text-main">Create Time: </span>
+              <p className="text-base font-mono text-warning">{user!.createdAt}</p>
             </div>
             <div className="w-full h-auto flex justify-between items-center mt-4">
-              <span className="text-md text-text-main font-serif">Update Time: </span>
-              <p className="text-base font-serif text-success">{user!.updatedAt}</p>
+              <span className="text-md text-text-main">Update Time: </span>
+              <p className="text-base font-mono text-success">{user!.updatedAt}</p>
             </div>
             <div className="w-full h-px bg-text-secondary my-6"></div>
             <div className="w-full h-auto flex justify-end">
                 <button onClick={() => {
                   setIsLogout(true);
-                }} className="px-3 py-1.5 mt-4 cursor-pointer bg-error rounded-lg border-2 border-border text-text-main hover:text-bg font-bold font-serif text-md">
+                }} className="px-4 py-2.5 text-sm font-semibold border border-text-main/60 hover:border-error hover:text-error rounded-xl hover:bg-soft cursor-pointer active:scale-95 transition-all">
                   Logout!
                 </button>
             </div>
@@ -403,8 +403,8 @@ const Profile = () => {
           </div>
         </div>
       )}
-      <div className={`w-screen h-screen fixed top-0 left-0 bg-text-main opacity-30 ${isLogout ? 'block' : 'hidden'}`}></div>
-        <div className={`max-w-3xl h-auto flex flex-col gap-4 bg-card z-500 border-2 border-red-700 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md ${isLogout ? 'block' : 'hidden'}`}>
+      <div className={`w-screen h-screen fixed top-0 left-0 bg-black/60 inset-0 z-10001 ${isLogout ? 'block' : 'hidden'}`}></div>
+        {/* <div className={`max-w-3xl h-auto z-10002 flex flex-col gap-4 bg-card backdrop-blur-md border-2 border-error shadow-sm shadow-error fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md ${isLogout ? 'block' : 'hidden'}`}>
                     <div className='w-full h-auto px-4 py-6'>
                         <h2 className="text-lg md:text-xl font-bold border-b border-text-secondary pb-2 text-text-main text-center mb-4">Logout Account!</h2>
                         <div className="w-full h-auto py-4 flex flex-col gap-4">
@@ -415,14 +415,14 @@ const Profile = () => {
                                 user!.name.charAt(0).toUpperCase()
                             )}
                             </div>
-                        <p className="text-base text-text-secondary">Are you sure you want to logout your account?</p>
+                        <p className="text-base text-text-secondary text-center">Are you sure you want to logout your account?</p>
                         </div>
                     </div>
-                    <div className="w-full grid grid-cols-2 bg-text-main/90 gap-px rounded-b-md pt-px">
+                    <div className="w-full grid grid-cols-2 bg-text-secondary/60 gap-0.5 rounded-b-md pt-px">
                         <button 
                             type="button"
                             onClick={() => setIsLogout(false)}
-                            className="bg-card font-semibold hover:bg-sky-300 rounded-bl-md text-text-main/90 text-center py-2 cursor-pointer border-t-0.5 border-text-main/90"
+                            className="bg-card font-semibold hover:bg-card/60 hover:text-text-main rounded-bl-md text-text-secondary/80 text-center py-2 cursor-pointer border-t-0.5 border-text-main/90"
                         >
                             Cancel
                         </button>
@@ -435,12 +435,68 @@ const Profile = () => {
                               setLogin(false);
                               setIsLogout(false);
                             }}
-                            className="bg-card font-semibold hover:bg-error rounded-br-md text-text-main text-center py-2 cursor-pointer"
+                            className="bg-card font-semibold hover:bg-card/60 hover:text-error rounded-br-md text-text-secondary/80 text-center py-2 cursor-pointer border-t-0.5 border-text-main/90"
                         >
                             Logout
                         </button>
                     </div>
+        </div> */}
+        <div 
+      className={`fixed inset-0 z-100002 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200 ${isLogout ? 'block' : 'hidden'}`}
+      onClick={() => setIsLogout(false)} // Background နှိပ်ရင် Modal ပိတ်ချင်ပါက သုံးနိုင်သည်
+    >
+      {/* Modal Box */}
+      <div 
+        className="w-full max-w-sm bg-card border border-error/30 shadow-2xl rounded-2xl overflow-hidden flex flex-col gap-4 animate-in zoom-in-95 duration-200"
+        onClick={(e) => e.stopPropagation()} // Card အထဲ နှိပ်လျှင် မပိတ်အောင် တားခြင်း
+      >
+        <div className="w-full px-6 pt-6 pb-2 text-center">
+          <h2 className="text-xl font-bold text-text-main mb-4 border-b border-text-muted/20 pb-2">
+            Logout Account!
+          </h2>
+          
+          <div className="w-full h-auto py-2 flex flex-col items-center">
+            {/* Avatar */}
+            <div className="w-24 h-24 rounded-full bg-soft border-2 border-primary/50 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main mx-auto mb-4 shadow-md">
+              {user?.avatarUrl ? (
+                <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
+              ) : (
+                <span>{user?.name ? user.name.charAt(0).toUpperCase() : 'U'}</span>
+              )}
+            </div>
+
+            <p className="text-sm text-text-secondary">
+              Are you sure you want to logout your account?
+            </p>
+          </div>
         </div>
+
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-3 p-4 bg-soft/40 border-t border-text-muted/20">
+          <button 
+            type="button"
+            onClick={() => setIsLogout(false)}
+            className="w-full py-2.5 px-4 rounded-xl font-semibold text-text-secondary bg-card hover:bg-text-muted/10 transition duration-200 cursor-pointer text-sm border border-text-muted/30"
+          >
+            Cancel
+          </button>
+          
+          <button 
+            type="button"
+            onClick={() => {
+                              localStorage.removeItem("token");
+                              setUser(null);
+                              navigate("/")
+                              setLogin(false);
+                              setIsLogout(false);
+                            }}
+            className="w-full py-2.5 px-4 rounded-xl font-semibold text-white bg-error hover:bg-error/90 shadow-md shadow-error/20 transition duration-200 cursor-pointer text-sm"
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
     </div>
   );
 };

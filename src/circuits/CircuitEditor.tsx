@@ -1,277 +1,3427 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { lazy, Suspense, useState, useCallback, useRef, useEffect, useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 import ReactFlow, {
- addEdge,
- updateEdge,
- Background,
- BackgroundVariant,
- Controls,
- useNodesState,
- useEdgesState,
+  addEdge,
+  Background,
+  BackgroundVariant,
+  Controls,
+  useNodesState,
+  useEdgesState,
   ConnectionMode,
- type EdgeTypes,
- type Connection,
- type Edge,
- type ReactFlowInstance
-} from 'reactflow';
-import 'reactflow/dist/style.css';
-import Sidebar from './Sidebar.tsx';
-import ElectronicNode from './ElectronicNode.tsx';
-import { useAppContext } from "../hooks/useAppContext";
+  type EdgeTypes,
+  type Connection,
+  type Edge,
+  type ReactFlowInstance,
+  useReactFlow,
+} from "reactflow";
 
+import "reactflow/dist/style.css";
 
-// CircuitEditor.tsx အပေါ်ဆုံးမှာ Import လုပ်ပါ
-import EditableEdge from './EditableEdge';
+// * ----------> Components Circuit Pins For Right Sidebar Pin Panel <----------
+import { arduinoUnoPins } from "./pins/arduinoUnoPins.ts";
+import { resistorPins } from "./pins/resistorPins.ts";
+import { ledPins } from "./pins/ledPins.ts";
+import { buzzerPins } from "./pins/buzzerPins.ts";
+import { hcsr04Pins } from "./pins/hcsr04Pins.ts";
+import { servoPins } from "./pins/servoMotorPins.ts";
+import { lcd1602I2cPins } from "./pins/lcd1602_i2cPins.ts";
+import { lcd1602Pins } from "./pins/lcd1602Pins.ts";
+import { miniBreadboardPins } from "./pins/miniBreadBoardPins.ts";
+import { halfBreadboardPins } from "./pins/halfBreadBoardPins.ts";
+import { fullBreadboardPins } from "./pins/fullBreadBoardPins.ts";
+import { pushbuttonPins } from "./pins/pushButtonPins.ts";
+import { potentiometerPins } from "./pins/potentiometerPins.ts";
+import { slideSwitchPins } from "./pins/slideSwitchPins.ts";
+import { sevenSegmentPins } from "./pins/7-segmentPins.ts";
+import { keypadPins } from "./pins/keypadPins.ts";
+import { neopixelPins } from "./pins/neoPixelPins.ts";
+// import { arduinoMegaPins } from "./pins/arduinoMegaPins.ts";
+// import { arduinoNanoPins } from "./pins/arduinoNanoPins.ts";  
+import { esp32Pins } from "./pins/esp32Pins.ts";
+import { ldrModulePins } from "./pins/ldrSensorPins.ts";
+import { pirPins } from "./pins/pirMotionSensorPins.ts";
+import { ds1307Pins } from "./pins/ds1307Pins.ts";
+import { oledSsd13068PinPins } from "./pins/ssd1306Pins.ts";
+import { batteryPins } from "./pins/battery9VPins.ts";
 
-// ၁။ Error ပျောက်အောင် EdgeTypes ကို ဒီလို သတ်မှတ်ပါ
+// * ----------> Icons <----------
+import { ChevronDown, ZoomIn, ZoomOut, Maximize, Check, Undo, Redo, Menu as MenuIcon,
+  X } from "lucide-react";
+import { MdDeleteForever } from "react-icons/md";
+import { VscDebugAll, VscNewFolder } from "react-icons/vsc";
+import { FaRegSave } from "react-icons/fa";
+import { FolderOpen } from "lucide-react";
+import { FaArrowsRotate, FaPlay, FaStop } from "react-icons/fa6";
+import { LuGrid2X2X, LuGrid2X2Plus, LuCode } from "react-icons/lu";
+
+// * ----------> Components <----------
+import EditableEdge from "./EditableEdge"; // Editable Edge Component (Custom Edge Component)
+import Sidebar from "./Sidebar.tsx";  // Left Sidebar Component (For drag and drop nodes)
+import PropertiesPanel from "./PropertiesPanel"; // Properties Panel Component (Right Sidebar)
+import ElectronicNode from "./ElectronicNode.tsx"; // Electronic Custom Node Component (For Pin Handling)
+import SimulationDebugger from "./SimulationDebugger";
+
+// * ----------> Components Custom Nodes (For Component Handling & Design) <----------
+import BreadboardMiniNode from "./nodes/BreadboardMiniNode";
+import BreadboardHalfNode from "./nodes/BreadboardHalfNode.tsx";
+import BreadboardFullNode from "./nodes/BreadboardFullNode.tsx";
+import Battery9VNode from "./nodes/Battery9VNode.tsx";
+import PicoNode from "./nodes/Respberrypipico.tsx";
+
+// * ----------> Simulation Engine <----------
+import { useSimulationStore } from "../stores/simulationStore"; // Simulation Store for Simulation Engine ()
+import { SimulationEngine } from "./simulator/core/SimulationEngine.ts"; // Simulation Engine Component
+import type { SimulationDiagnostics } from "./simulator/types/simulator.types";
+import { validateCircuitConnection } from "./simulator/validation/CircuitValidator.ts";
+import {
+  getSavedProject,
+  saveCircuitProject,
+} from "./projectStorage";
+
+// * ----------> Types <----------
+// Circuit Edge Data Type (For Simulation Engine)
+type CircuitEdgeData = {
+  points: unknown;
+
+  sourceNodeId: string;
+  sourcePinId: string | null;
+
+  targetNodeId: string;
+  targetPinId: string | null;
+
+  validation?: {
+    isValid: boolean;
+    severity?: "error" | "warning";
+    code?: string;
+    message?: string;
+  };
+
+  simulation?: {
+    isActive: boolean;
+    currentMa?: number;
+    netId?: string;
+    traceActive?: boolean;
+  };
+};
+type CircuitEdge = Edge<CircuitEdgeData>;
+
+// Edge Types
 const edgeTypes: EdgeTypes = {
- editable: EditableEdge,
+  editable: EditableEdge,
 };
 
+// Node Types
 const nodeTypes = {
- electronicNode: ElectronicNode,
+  electronicNode: ElectronicNode,
+  breadboardMiniNode: BreadboardMiniNode,
+  breadboardHalfNode: BreadboardHalfNode,
+  breadboardFullNode: BreadboardFullNode,
+  battery9VNode: Battery9VNode,
+  picoNode: PicoNode,
 };
 
-const getEdgeColor = (handleId: string | null) => {
- if (!handleId) return '#2ecc71'; // Default Green
- if (handleId.startsWith('digital')) return '#2563eb'; // Blue if (handleId.startsWith('analog')) return '#eab308'; // Yellow
- if (handleId === 'power_5v') return '#ef4444';// Red
- if (handleId === 'power_gnd') return '#000000'; // Black
- return '#2ecc71';
+// * ----------> Constants <----------
+const zoomLevels = [ 0.25, 0.5, 0.75, 1, 1.25, 1.5, 2 ]; // Zoom Levels for Canvas (For Zooming In/Out)
+const GRID_SIZE = 10;
+
+
+// * ----------> Edge Color <----------
+// Wires are colored from the semantic type of the two connected pins.
+// Power/ground take priority, then communication/analog/PWM/digital.
+type AutoWireKind =
+  | "ground"
+  | "power5"
+  | "power33"
+  | "analog"
+  | "pwm"
+  | "digital"
+  | "i2c"
+  | "spi"
+  | "usart"
+  | "signal";
+
+const AUTO_WIRE_COLORS: Record<AutoWireKind, string> = {
+  ground: "#000000",
+  power5: "#ef4444",
+  power33: "#f97316",
+  analog: "#3b82f6",
+  pwm: "#8b5cf6",
+  digital: "#22c55e",
+  i2c: "#06b6d4",
+  spi: "#0ea5e9",
+  usart: "#a855f7",
+  signal: "#10b981",
 };
 
-const GRID_SIZE = 10.5;
+function getPinDefinition(
+  node: any,
+  pinId: string,
+): any | undefined {
+  const pins = Array.isArray(
+    node?.data?.pins,
+  )
+    ? node.data.pins
+    : [];
+
+  return pins.find(
+    (pin: any) =>
+      String(pin?.id ?? pin?.name ?? "")
+        .toUpperCase() ===
+      String(pinId ?? "").toUpperCase(),
+  );
+}
 
 
-//start CircuitEditor
+async function captureCircuitThumbnail(
+  wrapper: HTMLDivElement | null,
+): Promise<string | undefined> {
+  if (!wrapper) {
+    return undefined;
+  }
+
+  const renderer =
+    wrapper.querySelector<HTMLElement>(
+      ".react-flow__renderer",
+    );
+
+  if (!renderer) {
+    return undefined;
+  }
+
+  try {
+    /*
+     * Capture the actual React Flow renderer rather than the whole
+     * editor. This keeps the saved preview focused on the circuit
+     * canvas and avoids saving the toolbar/sidebar UI.
+     */
+    const { default: html2canvas } = await import("@html2canvas/html2canvas");
+    const canvas = await html2canvas(
+      renderer,
+      {
+        backgroundColor: "#f1f5f9",
+        scale: 1,
+        useCORS: true,
+        logging: false,
+        imageTimeout: 5000,
+      },
+    );
+
+    const maxWidth = 640;
+    const maxHeight = 360;
+
+    const scale = Math.min(
+      1,
+      maxWidth / canvas.width,
+      maxHeight / canvas.height,
+    );
+
+    const outputWidth = Math.max(
+      1,
+      Math.round(canvas.width * scale),
+    );
+    const outputHeight = Math.max(
+      1,
+      Math.round(canvas.height * scale),
+    );
+
+    const output =
+      document.createElement("canvas");
+
+    output.width = outputWidth;
+    output.height = outputHeight;
+
+    const context =
+      output.getContext("2d");
+
+    if (!context) {
+      return canvas.toDataURL(
+        "image/jpeg",
+        0.72,
+      );
+    }
+
+    context.drawImage(
+      canvas,
+      0,
+      0,
+      outputWidth,
+      outputHeight,
+    );
+
+    return output.toDataURL(
+      "image/jpeg",
+      0.72,
+    );
+  } catch (error) {
+    console.warn(
+      "[Project Thumbnail] capture failed:",
+      error,
+    );
+
+    return undefined;
+  }
+}
+
+function getPinAutoWireKind(
+  node: any,
+  pinId: string,
+): AutoWireKind {
+  const name =
+    String(pinId ?? "").toUpperCase();
+
+  const pin =
+    getPinDefinition(node, pinId);
+
+  const type =
+    String(pin?.type ?? "").toLowerCase();
+
+  const protocols =
+    Array.isArray(pin?.protocols)
+      ? pin.protocols.map(
+          (value: unknown) =>
+            String(value).toLowerCase(),
+        )
+      : [];
+
+  const features =
+    Array.isArray(pin?.features)
+      ? pin.features.map(
+          (value: unknown) =>
+            String(value).toLowerCase(),
+        )
+      : [];
+
+  if (
+    type === "ground" ||
+    name.includes("GND")
+  ) {
+    return "ground";
+  }
+
+  const nominalVoltage =
+    Number(pin?.voltage?.nominal);
+
+  if (
+    type === "power" &&
+    (
+      name.includes("5V") ||
+      name.includes("VCC") ||
+      nominalVoltage >= 4.5 ||
+      pin?.voltage?.max >= 4.5
+    )
+  ) {
+    return "power5";
+  }
+
+  if (
+    type === "power" &&
+    (
+      name.includes("3V3") ||
+      name.includes("3.3") ||
+      (
+        Number.isFinite(nominalVoltage) &&
+        nominalVoltage > 3 &&
+        nominalVoltage < 4.5
+      )
+    )
+  ) {
+    return "power33";
+  }
+
+  if (protocols.includes("i2c")) {
+    return "i2c";
+  }
+
+  if (protocols.includes("spi")) {
+    return "spi";
+  }
+
+  if (protocols.includes("uart")) {
+    return "usart";
+  }
+
+  if (
+    type === "analog" ||
+    /^A\d+$/.test(name) ||
+    features.includes("adc")
+  ) {
+    return "analog";
+  }
+
+  if (
+    features.includes("pwm") ||
+    /^D(?:3|5|6|9|10|11)$/.test(name)
+  ) {
+    return "pwm";
+  }
+
+  if (
+    type === "digital" ||
+    /^D\d+$/.test(name)
+  ) {
+    return "digital";
+  }
+
+  return "signal";
+}
+
+function getEdgeAutoColor(
+  sourceNode: any,
+  sourcePinId: string,
+  targetNode: any,
+  targetPinId: string,
+): string {
+  const kinds = [
+    getPinAutoWireKind(
+      sourceNode,
+      sourcePinId,
+    ),
+    getPinAutoWireKind(
+      targetNode,
+      targetPinId,
+    ),
+  ];
+
+  if (kinds.includes("ground")) {
+    return AUTO_WIRE_COLORS.ground;
+  }
+
+  if (kinds.includes("power5")) {
+    return AUTO_WIRE_COLORS.power5;
+  }
+
+  if (kinds.includes("power33")) {
+    return AUTO_WIRE_COLORS.power33;
+  }
+
+  const priority: AutoWireKind[] = [
+    "i2c",
+    "spi",
+    "usart",
+    "pwm",
+    "analog",
+    "digital",
+    "signal",
+  ];
+
+  for (const kind of priority) {
+    if (kinds.includes(kind)) {
+      return AUTO_WIRE_COLORS[kind];
+    }
+  }
+
+  return AUTO_WIRE_COLORS.signal;
+}
+
+/* =========================================================
+   HELPER
+========================================================= */
+
+const createWireId = () => {
+  return `wire-${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}`;
+};
+
+/**
+ * Convert React Flow connection information
+ * into our own circuit-domain connection data.
+ *
+ * Example:
+ *
+ * Arduino D13 -> Resistor A
+ *
+ * {
+ *   sourceNodeId: "arduino-123",
+ *   sourcePinId: "D13",
+ *   targetNodeId: "resistor-456",
+ *   targetPinId: "A"
+ * }
+ */
+const createConnectionData = (
+  connection: Connection
+): CircuitEdgeData => {
+  return {
+    points: null,
+
+    sourceNodeId: connection.source!,
+    sourcePinId: connection.sourceHandle ?? null,
+
+    targetNodeId: connection.target!,
+    targetPinId: connection.targetHandle ?? null,
+  };
+};
+
+// ? =========> ZOOM CONTROLS <========= 
+
+const ZoomControls = () => {
+  const {
+    getZoom,
+    zoomIn,
+    zoomOut,
+    fitView,
+    setViewport,
+  } = useReactFlow();
+
+  const [showZoomLevels, setShowZoomLevels] =
+    useState(false);
+
+  const [currentZoom, setCurrentZoom] =
+    useState(1);
+
+  useEffect(() => {
+    const updateZoom = () => {
+      setCurrentZoom(getZoom());
+    };
+
+    updateZoom();
+
+    const interval = window.setInterval(
+      updateZoom,
+      100
+    );
+
+    return () => {
+      window.clearInterval(interval);
+    };
+  }, [getZoom]);
+
+  const zoomPercentage =
+    Math.round(currentZoom * 100);
+
+  const handleZoomIn = () => {
+    zoomIn({
+      duration: 200,
+    });
+  };
+
+  const handleZoomOut = () => {
+    zoomOut({
+      duration: 200,
+    });
+  };
+
+  const handleZoomLevel = (
+    level: number
+  ) => {
+    setViewport(
+      {
+        x: 0,
+        y: 0,
+        zoom: level,
+      },
+      {
+        duration: 300,
+      }
+    );
+
+    setShowZoomLevels(false);
+  };
+
+  const handleFitView = () => {
+    fitView({
+      padding: 0.2,
+      duration: 300,
+    });
+  };
+  return (
+    <div className="absolute bottom-5 left-1/2 z-50 -translate-x-1/2">
+      <div className="flex items-center gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1 shadow-xl backdrop-blur-md">
+
+        {/* Zoom Out */}
+        <button
+          type="button"
+          onClick={handleZoomOut}
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/40 hover:text-text-main"
+          title="Zoom out"
+        >
+          <ZoomOut size={18} />
+        </button>
+
+        {/* Zoom Percentage */}
+        <button
+          type="button"
+          onClick={() =>
+            setShowZoomLevels((prev) => !prev)
+          }
+          className="flex h-9 min-w-16.25 items-center justify-center gap-1 rounded-lg px-2 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/40 hover:text-text-main"
+        >
+          {zoomPercentage}%
+          <ChevronDown size={14} />
+        </button>
+
+        {/* Zoom In */}
+        <button
+          type="button"
+          onClick={handleZoomIn}
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/40 hover:text-slate-900"
+          title="Zoom in"
+        >
+          <ZoomIn size={18} />
+        </button>
+
+        {/* Fit View */}
+        <button
+          type="button"
+          onClick={handleFitView}
+          className="flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/40 hover:text-slate-900"
+          title="Fit view"
+        >
+          <Maximize size={17} />
+        </button>
+
+        {/* Zoom Menu */}
+        {showZoomLevels && (
+          <div className="absolute bottom-12 left-1/2 w-28 -translate-x-1/2 rounded-xl border border-primary/40 bg-soft/60 text-text-main p-1.5 shadow-xl">
+            {zoomLevels.map((level) => (
+              <button
+                key={level}
+                type="button"
+                onClick={() => handleZoomLevel(level)}
+                className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition hover:bg-text-secondary/56 ${
+                  Math.abs(currentZoom - level) < 0.01
+                    ? "bg-text-secondary/50 font-semibold"
+                    : ""
+                }`}
+              >
+                <span>
+                  {Math.round(level * 100)}%
+                </span>
+
+                {Math.abs(currentZoom - level) < 0.01 && (
+                  <Check size={14} />
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ? ==========> MAIN COMPONENT <==========
+
+const CodeSection = lazy(() => import("./CodeSection.tsx"));
+
 const CircuitEditor = () => {
- const reactFlowWrapper = useRef<HTMLDivElement>(null);
- const [nodes, setNodes, onNodesChange] = useNodesState([]);
- const [edges, setEdges, onEdgesChange] = useEdgesState([]);
- const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
- const { headerHeight } = useAppContext();
 
- // ... အပေါ်က useState တွေရဲ့အောက်မှာ ထည့်ပါ ...
-const [edgeMenu, setEdgeMenu] = useState<{ id: string, x: number, y: number, color: string } | null>(null);
+  // ! SIMULATION ENGINE
+  const simulationEngine =
+  useRef<SimulationEngine | null>(null);
+const [isToolbarMenuOpen, setIsToolbarMenuOpen] =
+  useState(false);
 
+  const [editorTheme, setEditorTheme] = useState<
+  "light" | "vs-dark"
+>(() =>
+  document.documentElement.getAttribute("data-theme") === "light"
+    ? "light"
+    : "vs-dark"
+);
 
-const onConnect = useCallback((params: Connection | Edge) => {
- const strokeColor = getEdgeColor(params.sourceHandle || null);
+useEffect(() => {
+  const root = document.documentElement;
 
- const newEdge = {
- ...params,
-  type: 'editable', // ဒါကို ထည့်ဖို့ အရေးကြီးဆုံးပါ (ဒါမှ hover နဲ့ grid အလုပ်လုပ်မှာပါ)
-  data: { points: null }, // initialization အတွက်
-  style: {
-  strokeWidth: 1,
-  stroke: strokeColor,
- },
-};
+  const syncTheme = () => {
+    setEditorTheme(
+      root.getAttribute("data-theme") === "light"
+        ? "light"
+        : "vs-dark"
+    );
+  };
 
-setEdges((eds) => addEdge(newEdge, eds));
-}, [setEdges]);
+  syncTheme();
 
-// --- ကြိုးကို ဆွဲရွှေ့တဲ့အခါ ခေါ်မယ့် function (onEdgeUpdate) ---
- const onEdgeUpdate = useCallback(
- (oldEdge: Edge, newConnection: Connection) => {
- setEdges((eds) => updateEdge(oldEdge, newConnection, eds));
- },
- [setEdges]
- );
+  const observer = new MutationObserver(syncTheme);
 
+  observer.observe(root, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
 
-const onDragOver = useCallback((event: React.DragEvent) => {
- event.preventDefault();
- event.dataTransfer.dropEffect = 'move';
+  return () => observer.disconnect();
 }, []);
 
-const onDrop = useCallback(
-  (event: React.DragEvent) => {
-    event.preventDefault();
+  useEffect(() => {
+  const engine =
+    new SimulationEngine({
+      onStateChange: (state) => {
+        setDiagnostics(state.diagnostics);
+        useSimulationStore.getState().setSerialOutput(
+          state.serialOutput,
+        );
+        /*
+         * Component visualization:
+         * AVR -> GPIO -> digital solver -> LED state
+         */
+        setNodes((currentNodes) =>
+          currentNodes.map((node) => {
+            const ledState = state.ledStates[node.id];
+            const componentType = String(
+              node.data?.componentType ??
+                node.type ??
+                "",
+            ).toLowerCase();
 
-    const type = event.dataTransfer.getData('application/reactflow');
-    if (!type) return;
+            if (
+              componentType === "arduino-uno" ||
+              componentType === "arduino"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    arduinoBoard:
+                      state.arduinoBoard,
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
 
-    const position = reactFlowInstance?.screenToFlowPosition({
-      x: event.clientX,
-      y: event.clientY,
+            if (
+              componentType === "lcd1602" ||
+              componentType === "lcd-1602" ||
+              componentType === "lcd1602-full" ||
+              componentType === "lcd1602-i2c" ||
+              componentType === "lcd1602_i2c" ||
+              componentType === "lcd-i2c"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    lcd:
+                      state.lcdStates?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (componentType === "ssd1306") {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    ssd1306:
+                      state.ssd1306States?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (
+              componentType === "ds1307" ||
+              componentType === "rtc-ds1307" ||
+              componentType === "rtc"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    ds1307States:
+                      state.ds1307States,
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (
+              componentType === "7segment" ||
+              componentType === "sevensegment" ||
+              componentType === "seven-segment"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    sevenSegment:
+                      state.sevenSegmentStates?.[node.id],
+                    buzzer:
+                      state.buzzerStates?.[node.id],
+                    ultrasonic:
+                      state.ultrasonicStates?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (
+              componentType === "pir" ||
+              componentType === "pir-motion-sensor" ||
+              componentType === "pir-motion"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    pir:
+                      state.pirStates?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (
+              componentType === "servo" ||
+              componentType === "servo-motor" ||
+              componentType === "servomotor"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    servo: state.servoStates?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(node.id) === true,
+                  },
+                },
+              };
+            }
+
+            if (
+              componentType === "buzzer" ||
+              componentType === "hc-sr04" ||
+              componentType === "ultrasonic"
+            ) {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    buzzer:
+                      state.buzzerStates?.[node.id],
+                    ultrasonic:
+                      state.ultrasonicStates?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (componentType === "neopixel") {
+              return {
+                ...node,
+                data: {
+                  ...node.data,
+                  simulation: {
+                    ...(node.data?.simulation ?? {}),
+                    neopixel:
+                      state.neopixelStates?.[node.id],
+                    traceActive:
+                      state.diagnostics.trace?.componentIds.includes(
+                        node.id,
+                      ) === true,
+                  },
+                },
+              };
+            }
+
+            if (!componentType.includes("led")) {
+              return node;
+            }
+
+            return {
+              ...node,
+              data: {
+                ...node.data,
+                simulation: {
+                  ...(node.data?.simulation ?? {}),
+                  isOn: ledState?.isOn === true,
+                  traceActive:
+                    state.diagnostics.trace?.componentIds.includes(
+                      node.id,
+                    ) === true,
+                  brightness:
+                    typeof ledState?.brightness === "number"
+                      ? ledState.brightness
+                      : 0,
+                },
+              },
+            };
+          }),
+        );
+
+        /*
+         * Electrical visualization:
+         * current-flow solver -> physical wire state
+         */
+        setEdges((currentEdges) =>
+          currentEdges.map((edge) => {
+            const wireState =
+              state.wireStates?.[edge.id];
+
+            return {
+              ...edge,
+              data: {
+                ...(edge.data ?? {}),
+                simulation: {
+                  isActive:
+                    wireState?.isActive === true,
+                  currentMa:
+                    wireState?.currentMa,
+                  netId:
+                    wireState?.netId,
+                  traceActive:
+                    state.diagnostics.trace?.netIds.includes(
+                      wireState?.netId ?? "",
+                    ) === true,
+                },
+              },
+            };
+          }),
+        );
+      },
+
+      onError: (error) => {
+        console.error(
+          "[Simulation Error]",
+          error
+        );
+      },
     });
 
-    // Sidebar က အစိတ်အပိုင်းအလိုက် Tag နှင့် Props များ သတ်မှတ်ခြင်း
-    const componentConfigs: Record<string, any> = {
-      'breadboard-half': { tag: 'wokwi-breadboard-half', label: 'Breadboard Half' },
-      'arduino-uno': { tag: 'wokwi-arduino-uno', label: 'Arduino Uno' },
-      'arduino-mega': { tag: 'wokwi-arduino-mega', label: 'Arduino Mega' },
-      'arduino-nano': { tag: 'wokwi-arduino-nano', label: 'Arduino Nano' },
-      'led-red': { tag: 'wokwi-led', props: { color: 'red' }, label: 'Red LED' },
-      'led-green': { tag: 'wokwi-led', props: { color: 'green' }, label: 'Green LED' },
-      'led-blue': { tag: 'wokwi-led', props: { color: 'blue' }, label: 'Blue LED' },
-      'resistor': { tag: 'wokwi-resistor', props: { value: '1000' }, label: 'Resistor' },
-      'pushbutton': { tag: 'wokwi-pushbutton', label: 'Pushbutton' },
-      'potentiometer': { tag: 'wokwi-potentiometer', label: 'Potentiometer' },
-      'slide-switch': { tag: 'wokwi-slide-switch', label: 'Slide Switch' },
-      '7segment': { tag: 'wokwi-7segment', label: '7-Segment' },
-      'lcd1602': { tag: 'wokwi-lcd1602', label: 'LCD 16x2' },
-      'lcd1602-i2c': { tag: 'wokwi-lcd1602', props: { pins: 'i2c'}, label: 'LCD 16x2 (I2C)' },
-      'neopixel': { tag: 'wokwi-neopixel', label: 'NeoPixel' },
-      'buzzer': { tag: 'wokwi-buzzer', label: 'Buzzer' },
-      'servo': { tag: 'wokwi-servo', label: 'Servo' },
-      'hc-sr04': { tag: 'wokwi-hc-sr04', label: 'Ultrasonic Sensor HC-SR04' },
-      'membrane-keypad': { tag: 'wokwi-membrane-keypad', label: 'Keypad Membrane' },
+  simulationEngine.current =
+    engine;
 
-      // ... ကျန်တဲ့ ၂၀ လုံးကို ဒီမှာ ထည့်ပေးပါ
-    };
+  const handleArduinoHardwareReset = () => {
+    simulationEngine.current?.hardwareReset();
+  };
 
-    const config = componentConfigs[type] || { tag: 'wokwi-led', label: 'Unknown' };
+  window.addEventListener(
+    "circuit:arduino-reset",
+    handleArduinoHardwareReset,
+  );
 
-    const newNode = {
-      id: `${type}-${Date.now()}`,
-      type: 'electronicNode', // ကျွန်တော်တို့ ရေးခဲ့တဲ့ custom node type
-      position,
-      data: { 
-        componentType: type,
-        tag: config.tag, 
-        props: config.props,
-        label: config.label 
-      },
-    };
+  return () => {
+    window.removeEventListener(
+      "circuit:arduino-reset",
+      handleArduinoHardwareReset,
+    );
+    engine.stop();
 
-    setNodes((nds: any) => nds.concat(newNode));
-  },
-  [reactFlowInstance]
-);
- // --- ကြိုးကို Click နှိပ်တဲ့အခါ Menu ပေါ်စေရန် ---
- const onEdgeClick = useCallback((event: React.MouseEvent, edge: Edge) => {
- event.stopPropagation(); // Canvas ကိုပါ နှိပ်မိသလို မဖြစ်အောင် တားထားခြင်း
- if (reactFlowWrapper.current) {
- const bounds = reactFlowWrapper.current.getBoundingClientRect();
- setEdgeMenu({
- id: edge.id,
- x: event.clientX - bounds.left,
- y: event.clientY - bounds.top,
-  color: edge.style?.stroke?.toString() || '#2ecc71',
- });
-}
- }, []);
+    simulationEngine.current =
+      null;
+  };
+}, []);
 
-// --- အပြင် (Canvas) ကို နှိပ်မိရင် Menu ပြန်ဖျောက်ရန် ---
- const onPaneClick = useCallback(() => {
-  setEdgeMenu(null);
- }, []);
 
- // --- ကြိုးအရောင် ပြောင်းရန် ---
- const updateEdgeColor = (color: string) => {
-   if (!edgeMenu) return;
-   setEdges((eds) =>
- eds.map((e) =>
- e.id === edgeMenu.id ? { ...e, style: { ...e.style, stroke: color } } : e
- )
- );
-  // Menu ပေါ်က အရောင်ကိုပါ ချက်ချင်း Update လုပ်ပေးရန်
- //  setEdgeMenu((prev) => (prev ? { ...prev, color } : null)); 
- };
+const handleRunSimulation = async () => {
+  const engine = simulationEngine.current;
+  if (!engine) {
+    return;
+  }
 
- // --- ကြိုး ဖြုတ်ရန် (Delete Edge) ---
- const deleteEdge = () => {
-   if (!edgeMenu) return;
-   setEdges((eds) => eds.filter((e) => e.id !== edgeMenu.id));
-   setEdgeMenu(null); // ဖျက်ပြီးရင် Menu ကို ဖျောက်ပါ
- };
+  const currentCode =
+    useSimulationStore.getState().code;
 
-// ဆက်သွားပြီးရင် မြင်ရမယ့် ကြိုးရဲ့ Setting များ
-const defaultEdgeOptions = {
-  type: 'smoothstep',  // ကြိုးပုံစံ (straight, step, smoothstep, default)
-  zIndex: 1000,        // 🌟 အရေးကြီးဆုံး: Component တွေရဲ့ အပေါ်ကို ရောက်လာစေဖို့
+  try {
+    /*
+     * Keep every Run entry point on the same path:
+     * Code panel -> Run and Canvas -> Run both compile the current
+     * sketch before loading it into AVR8JS.
+     *
+     * This also prevents stale HEX from being executed after the
+     * user edits the code.
+     */
+    const hasFirmware = currentCode.trim().length > 0;
+
+    if (hasFirmware) {
+      const success = await compile();
+
+      if (!success) {
+        /*
+         * compile() already stores the compiler error in the
+         * simulation store. Do not start the engine with stale HEX.
+         */
+        return;
+      }
+    }
+
+    engine.stop();
+
+    engine.setCircuit(
+      nodes,
+      edges as CircuitEdge[],
+    );
+
+    if (hasFirmware) {
+      const hex =
+        useSimulationStore.getState().hex;
+
+      if (!hex) {
+        useSimulationStore.setState({
+          status: "error",
+          error:
+            "Compilation succeeded but no Arduino HEX was produced.",
+        });
+        return;
+      }
+
+      /*
+       * Firmware exists: load the freshly compiled Arduino HEX
+       * and let AVR8JS drive the GPIO pins.
+       */
+      engine.loadHex(hex);
+    } else {
+      /*
+       * Empty sketch: start power-only simulation.
+       *
+       * The Uno's 5V/3.3V/IOREF/GND rails are still
+       * active even when no firmware is loaded.
+       */
+      useSimulationStore.setState({
+        status: "idle",
+        error: null,
+      });
+    }
+
+    engine.start();
+
+    useSimulationStore.getState().setRunning();
+  } catch (error) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : String(error);
+
+    useSimulationStore.setState({
+      status: "error",
+      error: message,
+    });
+  }
 };
- return (
-   <div className="flex w-full bg-gray-100" style={{ height: `calc(100vh - ${headerHeight}px)` }}>
 
-     <Sidebar />
-{/*       Sidebar - မြန်မာစာသားများဖြင့် အဆင့်မြှင့်ထားသည်
-      <aside className="w-72 bg-gray-900 p-6 flex flex-col gap-4 shadow-2xl z-10 border-r border-gray-700">
-        <h2 className="text-cyan-400 font-bold text-xl mb-4 border-b border-gray-700 pb-2">
-          အစိတ်အပိုင်းများ
-        </h2>
-        
-        <div 
-          className="bg-gray-800 p-4 rounded-lg cursor-grab hover:bg-gray-700 transition border border-gray-600 group"
-          onDragStart={(event) => onDragStart(event, 'arduino')}
-          draggable
-        >
-          <div className="text-blue-400 font-bold group-hover:text-blue-300">Arduino Uno</div>
-          <div className="text-[10px] text-gray-400">Microcontroller Board</div>
-        </div>
+const handleStopSimulation = () => {
+  simulationEngine.current?.stop();
+  stop();
+};
 
-        <div 
-          className="bg-gray-800 p-4 rounded-lg cursor-grab hover:bg-gray-700 transition border border-gray-600 group"
-          onDragStart={(event) => onDragStart(event, 'led')}
-          draggable
-        >
-          <div className="text-red-400 font-bold group-hover:text-red-300">Red LED</div>
-          <div className="text-[10px] text-gray-400">Light Emitting Diode</div>
-        </div>
+const handlePauseSimulation = () => {
+  simulationEngine.current?.pause();
+  useSimulationStore.setState({ status: "idle", error: null });
+};
 
-        <div className="mt-auto text-[10px] text-gray-500 italic text-center">
-          RedDargon Virtual Lab v1.0
-        </div>
-      </aside> */}
+const handleStepSimulation = () => {
+  const engine = simulationEngine.current;
+  if (!engine) return;
 
-      {/* Editor Canvas Area */}
-      <div className="flex-1 relative bg-white" ref={reactFlowWrapper}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onInit={setReactFlowInstance}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          snapToGrid={true} // Grid ပေါ်မှာပဲ ရွှေ့ခွင့်ပေးမယ်
-          snapGrid={[GRID_SIZE, GRID_SIZE]} // X နဲ့ Y ကို 10px စီ snap လုပ်မယ်
-          onEdgeUpdate={onEdgeUpdate} // Props အသစ်ထည့်ပါ
-          onEdgeClick={onEdgeClick} // ထပ်တိုး
-          onPaneClick={onPaneClick} // ထပ်တိုး
-          connectionMode={ConnectionMode.Loose}
-          fitView
+  try {
+    if (!engine.getNetlist()) {
+      engine.setCircuit(nodes, edges as CircuitEdge[]);
+      const currentCode = useSimulationStore.getState().code;
+      const hex = useSimulationStore.getState().hex;
+      if (currentCode.trim() && hex) {
+        engine.loadHex(hex);
+      }
+    }
+    engine.step();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    useSimulationStore.setState({ status: "error", error: message });
+  }
+};
+
+const handleTraceNet = (netId: string) => {
+  simulationEngine.current?.traceNet(netId);
+};
+
+const handleClearTrace = () => {
+  simulationEngine.current?.clearTrace();
+};
+
+const handleTraceComponent = (componentId: string) => {
+  simulationEngine.current?.traceComponent(componentId);
+};
+
+const handleResetSimulation = () => {
+  simulationEngine.current?.reset();
+  useSimulationStore.getState().reset();
+  setDiagnostics({
+    simulatedCycles: 0,
+    simulatedMs: 0,
+    frameCount: 0,
+    pins: [],
+    nets: [],
+    components: [],
+    faults: [],
+    trace: undefined,
+  });
+};
+  /* =======================================================
+     REFS
+  ======================================================= */
+
+  const reactFlowWrapper =
+    useRef<HTMLDivElement>(null);
+
+  const nodesRef = useRef<any[]>([]);
+  const edgesRef = useRef<CircuitEdge[]>([]);
+
+  const [showCode, setShowCode] = useState<boolean>(false);
+  const [showDebugger, setShowDebugger] = useState<boolean>(false);
+  const [diagnostics, setDiagnostics] = useState<SimulationDiagnostics>({
+    simulatedCycles: 0,
+    simulatedMs: 0,
+    frameCount: 0,
+    pins: [],
+    nets: [],
+    components: [],
+    faults: [],
+  });
+  /* =======================================================
+     REACT FLOW STATE
+  ======================================================= */
+
+  const [nodes, setNodes, onNodesChange] =
+    useNodesState([]);
+
+  const [edges, setEdges, onEdgesChange] =
+    useEdgesState([]);
+
+  const navigate = useNavigate();
+
+  // Map simulator component types to the matching RDE documentation page.
+  const handleComponentDocumentation = (rawType: string) => {
+    const type = String(rawType ?? "")
+      .toLowerCase()
+      .replace(/[_\s]+/g, "-")
+      .replace(/-+/g, "-");
+
+    const docs: Array<[RegExp, string]> = [
+      [/arduino|atmega328|uno/, "/docs/doc/microcontrollers/arduino"],
+      [/raspberry|pico/, "/docs/doc/microcontrollers/raspberryPi"],
+      [/esp32/, "/docs/doc/microcontrollers/esp32"],
+      [/esp8266/, "/docs/doc/microcontrollers/esp8266"],
+      [/resistor|\br[0-9]*\b/, "/docs/doc/passives/resistor"],
+      [/capacitor|\bcap\b/, "/docs/doc/passives/capacitor"],
+      [/potentiometer|variable-resistor|rheostat/, "/docs/doc/passives/potentiometer"],
+      [/inductor|coil/, "/docs/doc/passives/inductor"],
+      [/transistor|\bnpn\b|\bpnp\b|mosfet|bjt/, "/docs/doc/passives/transistor"],
+      [/led|neopixel|ws2812/, "/docs/doc/diodes/led"],
+      [/photodiode/, "/docs/doc/diodes/photo"],
+      [/diode/, "/docs/doc/passives/diode"],
+      [/battery|power-supply|9v/, "/docs/doc/powers/battery"],
+      [/breadboard|mini-board|half-board|full-board/, "/docs/doc/passives/breadboard"],
+      [/lcd|1602/, "/docs/doc/interfaces/lcd"],
+      [/oled|ssd1306/, "/docs/doc/interfaces/oled"],
+      [/servo/, "/docs/doc/interfaces/servoMotor"],
+      [/buzzer|piezo/, "/docs/doc/interfaces/buzzer"],
+      [/push.?button|button/, "/docs/doc/interfaces/pushButton"],
+      [/slide.?switch|switch/, "/docs/doc/interfaces/slideSwitch"],
+      [/relay/, "/docs/doc/interfaces/relay"],
+      [/7.?segment|seven.?segment/, "/docs/doc/interfaces/7Segment"],
+      [/ultrasonic|hc-sr04/, "/docs/doc/sensors/ultrasonicSensor"],
+      [/pir|motion-sensor/, "/docs/doc/sensors/pirSensor"],
+      [/ldr|light-sensor|photoresistor/, "/docs/doc/sensors/lightSensor"],
+      [/dht|humidity|temperature/, "/docs/doc/sensors/temperatureSensor"],
+      [/rtc|ds1307|real-time-clock/, "/docs/doc/microcontrollers/rtcModule"],
+      [/keypad/, "/docs/doc/interfaces/keypad"],
+      [/ir.?sensor|infrared/, "/docs/doc/sensors/irSensor"],
+    ];
+
+    const match = docs.find(([pattern]) => pattern.test(type));
+    navigate(match?.[1] ?? "/docs/doc/components");
+  };
+  const [searchParams] = useSearchParams();
+  const projectIdFromUrl = searchParams.get("project");
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const [currentProjectName, setCurrentProjectName] = useState("Untitled Circuit");
+  const [isSavingProject, setIsSavingProject] = useState(false);
+  const loadedProjectRef = useRef<string | null>(null);
+
+  /*
+   * Keep live component state (for example a pressed pushbutton)
+   * synchronized with the running simulator without rebuilding
+   * the electrical topology.
+   */
+  useEffect(() => {
+    simulationEngine.current?.updateNodes(
+      nodes,
+    );
+  }, [nodes]);
+
+  const [
+    reactFlowInstance,
+    setReactFlowInstance,
+  ] = useState<ReactFlowInstance | null>(null);
+
+  /* =======================================================
+     UI STATE
+  ======================================================= */
+
+  const [grid, setGrid] =
+    useState<boolean>(true);
+
+  const simulationStatus =
+  useSimulationStore(
+    (state) => state.status
+  );
+
+const compile =
+  useSimulationStore(
+    (state) => state.compile
+  );
+
+const stop =
+  useSimulationStore(
+    (state) => state.stop
+  );
+
+  const [selectedNode, setSelectedNode] =
+    useState<any>(null);
+     const validatedEdges = useMemo(
+    () =>
+      (edges as CircuitEdge[]).map((edge) => {
+        const connection: Connection = {
+          source: edge.source,
+          sourceHandle: edge.sourceHandle ?? null,
+          target: edge.target,
+          targetHandle: edge.targetHandle ?? null,
+        };
+
+        const validation =
+          validateCircuitConnection(
+            connection,
+            nodes,
+            (edges as CircuitEdge[]).filter(
+              (candidate) => candidate.id !== edge.id,
+            ),
+          );
+
+        return {
+          ...edge,
+          data: {
+            ...(edge.data ?? {}),
+            validation,
+          },
+          style: {
+            ...edge.style,
+            stroke:
+              validation.isValid === false
+                ? "#ef4444"
+                : edge.style?.stroke,
+          },
+        };
+      }),
+    [edges, nodes],
+  );
+
+
+
+  useEffect(() => {
+    if (!reactFlowInstance || !projectIdFromUrl) {
+      return;
+    }
+
+    if (loadedProjectRef.current === projectIdFromUrl) {
+      return;
+    }
+
+    const project = getSavedProject(projectIdFromUrl);
+
+    if (!project) {
+      loadedProjectRef.current = projectIdFromUrl;
+      navigate("/", { replace: true });
+      return;
+    }
+
+    simulationEngine.current?.stop();
+
+    setNodes(project.nodes);
+    setEdges(project.edges);
+
+    setHistory({
+      stack: [
+        {
+          nodes: project.nodes,
+          edges: project.edges as CircuitEdge[],
+        },
+      ],
+      index: 0,
+    });
+
+    useSimulationStore.getState().setCode(project.code);
+    useSimulationStore.getState().setSelectedLibraries(project.selectedLibraries ?? []);
+
+    setCurrentProjectId(project.id);
+    setCurrentProjectName(project.name);
+    setSelectedNode(null);
+    setEdgeMenu(null);
+
+    if (project.viewport) {
+      reactFlowInstance.setViewport(project.viewport);
+    } else {
+      requestAnimationFrame(() => {
+        reactFlowInstance.fitView({
+          padding: 0.2,
+          duration: 200,
+        });
+      });
+    }
+
+    loadedProjectRef.current = projectIdFromUrl;
+  }, [
+    reactFlowInstance,
+    projectIdFromUrl,
+    navigate,
+    setNodes,
+    setEdges,
+  ]);
+
+  const [edgeMenu, setEdgeMenu] =
+    useState<{
+      id: string;
+      x: number;
+      y: number;
+      color: string;
+    } | null>(null);
+
+  /* =======================================================
+     KEEP REFS IN SYNC
+  ======================================================= */
+
+  useEffect(() => {
+    nodesRef.current = nodes;
+  }, [nodes]);
+
+  useEffect(() => {
+    edgesRef.current = edges as CircuitEdge[];
+  }, [edges]);
+
+  /* =======================================================
+     HISTORY
+  ======================================================= */
+
+  const [history, setHistory] = useState<{
+    stack: {
+      nodes: any[];
+      edges: CircuitEdge[];
+    }[];
+
+    index: number;
+  }>({
+    stack: [
+      {
+        nodes: [],
+        edges: [],
+      },
+    ],
+    index: 0,
+  });
+
+  const updateResistorValue = useCallback(
+  (nodeId: string, value: string) => {
+    setNodes((currentNodes) =>
+      currentNodes.map((node) => {
+        if (node.id !== nodeId) {
+          return node;
+        }
+
+        if (node.data?.componentType !== "resistor") {
+          return node;
+        }
+
+        return {
+          ...node,
+
+          data: {
+            ...node.data,
+
+            props: {
+              ...(node.data.props ?? {}),
+              value,
+            },
+          },
+        };
+      })
+    );
+  },
+  [setNodes]
+);
+
+  /* =======================================================
+     PUSH HISTORY
+  ======================================================= */
+
+  const pushToHistory = useCallback(
+    (
+      newNodes: any[],
+      newEdges: CircuitEdge[]
+    ) => {
+      setHistory((prev) => {
+        const cleanStack =
+          prev.stack.slice(0, prev.index + 1);
+
+        const clonedNodes = JSON.parse(
+          JSON.stringify(newNodes)
+        );
+
+        const clonedEdges = JSON.parse(
+          JSON.stringify(newEdges)
+        );
+
+        return {
+          stack: [
+            ...cleanStack,
+            {
+              nodes: clonedNodes,
+              edges: clonedEdges,
+            },
+          ],
+          index: cleanStack.length,
+        };
+      });
+    },
+    []
+  );
+
+  /* =======================================================
+     UNDO
+  ======================================================= */
+
+  const undo = useCallback(() => {
+    setHistory((prev) => {
+      if (prev.index <= 0) {
+        return prev;
+      }
+
+      const nextIndex = prev.index - 1;
+
+      setNodes(prev.stack[nextIndex].nodes);
+      setEdges(prev.stack[nextIndex].edges);
+
+      return {
+        ...prev,
+        index: nextIndex,
+      };
+    });
+  }, [setNodes, setEdges]);
+
+  /* =======================================================
+     REDO
+  ======================================================= */
+
+  const redo = useCallback(() => {
+    setHistory((prev) => {
+      if (
+        prev.index >=
+        prev.stack.length - 1
+      ) {
+        return prev;
+      }
+
+      const nextIndex = prev.index + 1;
+
+      setNodes(prev.stack[nextIndex].nodes);
+      setEdges(prev.stack[nextIndex].edges);
+
+      return {
+        ...prev,
+        index: nextIndex,
+      };
+    });
+  }, [setNodes, setEdges]);
+
+  /* =======================================================
+     CONNECT
+  ======================================================= */
+
+  const onConnect = useCallback(
+    (params: Connection) => {
+      /** 
+       * React Flow guarantees (အာမခံ) source and target for a valid connection (မှန်ကန်တဲ့ ချိပ်ဆက်မှု).
+       *
+       * Still guard (စောင့်ကြည့်တာ) here because our domain layer requires both.
+       */
+      if (
+        !params.source ||
+        !params.target
+      ) {
+        return;
+      }
+      const sourceNode =
+        nodesRef.current.find(
+          (node) => node.id === params.source,
+        );
+
+      const targetNode =
+        nodesRef.current.find(
+          (node) => node.id === params.target,
+        );
+
+      const sourcePinId =
+        params.sourceHandle ?? "";
+
+      const targetPinId =
+        params.targetHandle ?? "";
+
+      const strokeColor =
+        getEdgeAutoColor(
+          sourceNode,
+          sourcePinId,
+          targetNode,
+          targetPinId,
+        );
+
+      const currentEdges =
+        edgesRef.current;
+
+      const validation =
+        validateCircuitConnection(
+          params,
+          nodesRef.current,
+          currentEdges,
+        );
+
+      const connectionData =
+        createConnectionData(params);
+
+      const newEdge: CircuitEdge = {
+        id: createWireId(),
+
+        source: params.source,
+        sourceHandle:
+          params.sourceHandle ?? null,
+
+        target: params.target,
+        targetHandle:
+          params.targetHandle ?? null,
+
+        type: "editable",
+
+        data: {
+          ...connectionData,
+          validation,
+        },
+
+        style: {
+          strokeWidth: 2,
+          stroke: strokeColor,
+        },
+      };
+
+      const currentNodes =
+        nodesRef.current;
+
+      const nextEdges = addEdge(
+        newEdge,
+        currentEdges
+      ) as CircuitEdge[];
+      setEdges(nextEdges);
+
+      pushToHistory(
+        currentNodes,
+        nextEdges
+      );
+    },
+    [setEdges, pushToHistory]
+  );
+
+  /* =======================================================
+     EDGE UPDATE / RECONNECT
+  ======================================================= */
+
+  const onEdgeUpdate = useCallback(
+    (
+      oldEdge: Edge,
+      newConnection: Connection
+    ) => {
+      if (
+        !newConnection.source ||
+        !newConnection.target
+      ) {
+        return;
+      }
+
+      const currentEdges =
+        edgesRef.current;
+
+      const nextEdges =
+        currentEdges.map((edge) => {
+          if (edge.id !== oldEdge.id) {
+            return edge;
+          }
+
+          const sourcePinId =
+            newConnection.sourceHandle ??
+            null;
+
+          const targetPinId =
+            newConnection.targetHandle ??
+            null;
+
+          const validation =
+            validateCircuitConnection(
+              newConnection,
+              nodesRef.current,
+              currentEdges.filter(
+                (candidate) => candidate.id !== oldEdge.id,
+              ),
+            );
+
+          const updatedData: CircuitEdgeData = {
+            ...(edge.data ?? {
+              points: null,
+              sourceNodeId: "",
+              sourcePinId: null,
+              targetNodeId: "",
+              targetPinId: null,
+            }),
+
+            validation,
+
+            sourceNodeId:
+              newConnection.source ?? "",  // Guard against null
+
+            sourcePinId,
+
+            targetNodeId:
+              newConnection.target ?? "",  // Guard against null
+
+            targetPinId,
+          };
+
+          return {
+            ...edge,
+
+            source:
+              newConnection.source,
+
+            sourceHandle:
+              sourcePinId,
+
+            target:
+              newConnection.target,
+
+            targetHandle:
+              targetPinId,
+
+            data: updatedData,
+
+            style: {
+              ...edge.style,
+
+              stroke: getEdgeAutoColor(
+                nodesRef.current.find(
+                  (node) =>
+                    node.id ===
+                    newConnection.source,
+                ),
+                sourcePinId ?? "",
+                nodesRef.current.find(
+                  (node) =>
+                    node.id ===
+                    newConnection.target,
+                ),
+                targetPinId ?? "",
+              ),
+            },
+          };
+        });
+
+      setEdges(nextEdges as CircuitEdge[]);
+
+      pushToHistory(
+        nodesRef.current,
+        nextEdges as CircuitEdge[]
+      );
+    },
+    [setEdges, pushToHistory]
+  );
+
+  /* =======================================================
+     DROP
+  ======================================================= */
+
+  const onDragOver = useCallback(
+    (event: React.DragEvent) => {
+      event.preventDefault();
+
+      event.dataTransfer.dropEffect =
+        "move";
+    },
+    []
+  );
+
+  /* =======================================================
+     DROP COMPONENT
+  ======================================================= */
+
+  const onDrop = useCallback(
+    (event: React.DragEvent | null, clickedType?: string) => {
+      event?.preventDefault();
+
+      if (!reactFlowInstance) {
+        return;
+      }
+
+      const type =
+        clickedType ||
+        event?.dataTransfer.getData(
+          "application/reactflow"
+        );
+
+        // * console.log(type);
+
+      if (!type) {
+        return;
+      }
+
+      /* ===================================================
+         COMPONENT CONFIG
+      =================================================== */
+
+      const componentConfigs: Record<
+        string,
+        any
+      > = {
+        "arduino-uno": {
+          label: "Arduino Uno",
+          tag: "wokwi-arduino-uno",
+          props: {},
+          pins: arduinoUnoPins,
+          scale: 0.2,
+          yOffset: "-15px",
+        },
+
+        // "arduino-mega": {
+        //   label: "Arduino Mega",
+        //   tag: "wokwi-arduino-mega",
+        //   props: {},
+        //   pins: arduinoMegaPins,
+        //   scale: 0.2,
+        //   yOffset: "-15px",
+        // },
+
+        // "arduino-nano": {
+        //   label: "Arduino Nano",
+        //   tag: "wokwi-arduino-nano",
+        //   props: {},
+        //   pins: arduinoNanoPins,
+        //   scale: 0.2,
+        //   yOffset: "-15px",
+        // },
+
+        "esp32": {
+          label: "ESP32 DevKit",
+          tag: "wokwi-esp32-devkit-v1",
+          props: {},
+          pins: esp32Pins,
+          scale: 0.18,
+          yOffset: "0px",
+        },
+
+        resistor: {
+          label: "Resistor",
+          tag: "wokwi-resistor",
+          props: {},
+          pins: resistorPins,
+        },
+
+        "led-blue": {
+          label: "Blue LED",
+          tag: "wokwi-led",
+          props: {
+            color: "blue",
+          },
+          pins: ledPins,
+        },
+
+        "led-green": {
+          label: "Green LED",
+          tag: "wokwi-led",
+          props: {
+            color: "green",
+          },
+          pins: ledPins,
+        },
+
+        "led-red": {
+          label: "Red LED",
+          tag: "wokwi-led",
+          props: {
+            color: "red",
+          },
+          pins: ledPins,
+        },
+
+        "ldr": {
+        label: "LDR Sensor",
+        tag: "wokwi-photoresistor-sensor",
+        props: {},
+        pins: ldrModulePins,
+        },
+
+        "pir": {
+          label: "PIR Sensor",
+          tag: "wokwi-pir-motion-sensor",
+          props: {},
+          pins: pirPins,
+        },
+
+        "ds1307": {
+          label: "DS1307 RTC",
+          tag: "wokwi-ds1307",
+          props: {},
+          pins: ds1307Pins,
+        },
+
+        "ssd1306": {
+          label: "SSD1306 OLED",
+          tag: "wokwi-ssd1306",
+          props: {},
+          pins: oledSsd13068PinPins,
+        },
+
+        pushbutton: {
+          label: "Push Button",
+          tag: "wokwi-pushbutton",
+          props: {
+          
+          },
+          pins: pushbuttonPins,
+        },
+
+        potentiometer: {
+          label: "Potentiometer",
+          tag: "wokwi-potentiometer",
+          props: {},
+          pins: potentiometerPins,
+        },
+
+        "slide-switch": {
+          label: "Slide Switch",
+          tag: "wokwi-slide-switch",
+          props: {},
+          pins: slideSwitchPins,
+        },
+
+        "hc-sr04": {
+          label: "HC-SR04",
+          tag: "wokwi-hc-sr04",
+          props: {},
+          pins: hcsr04Pins,
+        },
+
+        lcd1602: {
+          label: "LCD 1602",
+          tag: "wokwi-lcd1602",
+          props: {},
+          pins: lcd1602Pins,
+        },
+
+        "lcd1602-i2c": {
+          label: "LCD 1602 I2C",
+          tag: "wokwi-lcd1602",
+          props: {
+            pins: "i2c",
+          },
+          pins: lcd1602I2cPins,
+        },
+
+        buzzer: {
+          label: "Buzzer",
+          tag: "wokwi-buzzer",
+          props: {},
+          pins: buzzerPins,
+        },
+
+        neopixel: {
+          label: "NeoPixel",
+          tag: "wokwi-neopixel",
+          props: {},
+          pins: neopixelPins,
+        },
+      "7segment": {
+        label: "7 Segment",
+        tag: "wokwi-7segment",
+        props: {
+          color: "red",
+          offColor: "white",
+          background: "#000",
+          common: "anode",
+          digits: 1,
+          values: [0, 0, 0, 0, 0, 0, 0, 0]
+        },
+        pins: sevenSegmentPins,
+      },
+        "servo": {
+          label: "Servo",
+          tag: "wokwi-servo",
+          props: {
+            signal: "PWM",
+            vcc: "V+",
+            gnd: "GND"
+          },
+          pins: servoPins,
+        },
+
+        "membrane-keypad": {
+          label: "Membrane Keypad",
+          tag: "wokwi-membrane-keypad",
+          props: {},
+          pins: keypadPins,
+        },
+
+        "mini-board": {
+          label: "Mini Breadboard",
+          tag: "wokwi-mini-board",
+          props: {},
+          pins: miniBreadboardPins,
+        },
+
+        "half-board": {
+          label: "Half Breadboard",
+          tag: "wokwi-half-board",
+          props: {},
+          pins: halfBreadboardPins,
+        },
+
+        "full-board": {
+          label: "Full Breadboard",
+          tag: "wokwi-full-board",
+          props: {},
+          pins: fullBreadboardPins,
+        },
+
+        "raspberry-pico": {
+          label: "Raspberry Pi Pico",
+          tag: "wokwi-pico",
+          props: {},
+        },
+        "battery-9v": {
+          label: "9V Battery",
+          tag: "wokwi-battery-9v",
+          props: {},
+          pins: batteryPins,
+        },
+      };
+
+      const config =
+        componentConfigs[type];
+
+      if (!config) {
+        console.warn(
+          `Unknown component type: ${type}`
+        );
+
+        return;
+      }
+
+      /* ===================================================
+         POSITION
+      =================================================== */
+
+      // Drag-and-drop uses the pointer location. Sidebar clicks add
+      // the component at the center of the visible canvas.
+      const canvasBounds = reactFlowWrapper.current?.getBoundingClientRect();
+      const screenPosition = event
+        ? { x: event.clientX, y: event.clientY }
+        : canvasBounds
+          ? {
+              x: canvasBounds.left + canvasBounds.width / 2,
+              y: canvasBounds.top + canvasBounds.height / 2,
+            }
+          : { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+
+      const position =
+        reactFlowInstance.screenToFlowPosition(screenPosition);
+
+      /* ===================================================
+         INSTANCE NUMBER
+      =================================================== */
+
+      const sameTypeNodes =
+        nodesRef.current.filter(
+          (node) =>
+            node.data?.componentType ===
+            type
+        );
+
+      const instanceNumber =
+        sameTypeNodes.length + 1;
+
+      /* ===================================================
+         AUTO LABEL
+      =================================================== */
+
+      const autoLabel =
+        `${config.label}-${instanceNumber}`;
+
+
+      /* ===================================================
+         NODE TYPE
+      =================================================== */
+
+      let customNodeType =
+        "electronicNode";
+
+      const isBreadboard =
+        type === "mini-board" ||
+        type === "half-board" ||
+        type === "full-board" ||
+        type === "battery-9v";
+
+      if (
+        type === "mini-board"
+      ) {
+        customNodeType =
+          "breadboardMiniNode";
+      }
+
+      if (
+        type === "half-board"
+      ) {
+        customNodeType =
+          "breadboardHalfNode";
+      }
+
+      if (
+        type === "full-board"
+      ) {
+        customNodeType =
+          "breadboardFullNode";
+      }
+
+      if (
+        type === "battery-9v"
+      ) {
+        customNodeType = "battery9VNode";
+      }
+
+      if (
+        type === "pico"
+      ) {
+        customNodeType = "picoNode";
+      }
+
+      /* ===================================================
+         CREATE NODE
+      =================================================== */
+
+      const newNode = {
+        id: `${type}-${Date.now()}-${Math.random()
+          .toString(36)
+          .slice(2, 7)}`,
+
+        type: customNodeType,
+
+        position,
+
+        data: {
+          componentType: type,
+
+          tag: config.tag,
+
+          props: { ...config.props },
+
+          label: autoLabel,
+
+          isValid: true,
+
+          pins: config.pins || [],
+
+          stubLength:
+            config.stubLength || 5,
+
+          instanceNumber,
+
+          /*
+           * Potentiometer state belongs to the circuit data so it
+           * survives save/load and can be consumed by the analog
+           * solver while the simulation is running.
+           */
+          potentiometerPosition:
+            type === "potentiometer"
+              ? 0.5
+              : undefined,
+
+          /*
+           * Slide switch starts on throw 1.
+           * Wokwi's SPDT switch uses value 0/1.
+           */
+          switchValue:
+            type === "slide-switch"
+              ? 0
+              : undefined,
+
+          /*
+           * LDR / photoresistor state.
+           *
+           * Wokwi's default photoresistor model uses:
+           * lux=500, rl10=50kΩ, gamma=0.7, threshold=2.5V.
+           * Keep these values in circuit data so Save/Load preserves
+           * the sensor environment.
+           */
+          ldrLux:
+            type === "ldr"
+              ? 500
+              : undefined,
+          ldrRl10:
+            type === "ldr"
+              ? 50
+              : undefined,
+          ldrGamma:
+            type === "ldr"
+              ? 0.7
+              : undefined,
+          ldrThreshold:
+            type === "ldr"
+              ? 2.5
+              : undefined,
+
+          /*
+           * HC-SR04 environment state. The sensor is driven by
+           * real TRIG/ECHO timing in the AVR runtime; this value
+           * only describes the simulated obstacle distance.
+           */
+          ultrasonicDistanceCm:
+            type === "hc-sr04"
+              ? 100
+              : undefined,
+        },
+
+        zIndex: isBreadboard
+          ? 0
+          : 10,
+      };
+
+      const nextNodes = [
+        ...nodesRef.current,
+        newNode,
+      ];
+
+      // * console.log("This is NextNodes:", nextNodes);
+      setNodes(nextNodes);
+
+      pushToHistory(
+        nextNodes,
+        edgesRef.current
+      );
+    },
+    [
+      reactFlowInstance,
+      setNodes,
+      pushToHistory,
+    ]
+  );
+
+  const onSidebarComponentClick = useCallback(
+    (componentType: string) => {
+      onDrop(null, componentType);
+    },
+    [onDrop]
+  );
+
+  /* =======================================================
+     RENAME
+  ======================================================= */
+
+  const handleRename = useCallback(
+    (
+      nodeId: string,
+      newLabel: string
+    ) => {
+      const nextNodes =
+        nodesRef.current.map(
+          (node) => {
+            if (node.id !== nodeId) {
+              return node;
+            }
+
+            return {
+              ...node,
+
+              data: {
+                ...node.data,
+
+                label: newLabel,
+              },
+            };
+          }
+        );
+
+      setNodes(nextNodes);
+
+      const updatedSelectedNode =
+        nextNodes.find(
+          (node) =>
+            node.id === nodeId
+        );
+
+      if (updatedSelectedNode) {
+        setSelectedNode(
+          updatedSelectedNode
+        );
+      }
+
+      pushToHistory(
+        nextNodes,
+        edgesRef.current
+      );
+    },
+    [setNodes, pushToHistory]
+  );
+
+  /* =======================================================
+     EDGE CLICK
+  ======================================================= */
+
+  const onEdgeClick = useCallback(
+    (
+      event: React.MouseEvent,
+      edge: Edge
+    ) => {
+      event.stopPropagation();
+
+      setEdgeMenu({
+        id: edge.id,
+
+        x: event.clientX,
+
+        y: event.clientY,
+
+        color:
+          typeof edge.style?.stroke ===
+          "string"
+            ? edge.style.stroke
+            : "#2ecc71",
+      });
+    },
+    []
+  );
+
+  /* =======================================================
+     PANE CLICK
+  ======================================================= */
+
+  const onPaneClick = useCallback(() => {
+    setEdgeMenu(null);
+
+    setSelectedNode(null);
+  }, []);
+
+  /* =======================================================
+     UPDATE EDGE COLOR
+  ======================================================= */
+
+  const updateEdgeColor = useCallback(
+    (color: string) => {
+      if (!edgeMenu) {
+        return;
+      }
+
+      const nextEdges =
+        edgesRef.current.map(
+          (edge) => {
+            if (
+              edge.id !== edgeMenu.id
+            ) {
+              return edge;
+            }
+
+            return {
+              ...edge,
+
+              style: {
+                ...edge.style,
+
+                stroke: color,
+              },
+            };
+          }
+        );
+
+      setEdges(nextEdges);
+
+      pushToHistory(
+        nodesRef.current,
+        nextEdges
+      );
+
+      setEdgeMenu(null);
+    },
+    [
+      edgeMenu,
+      setEdges,
+      pushToHistory,
+    ]
+  );
+
+  /* =======================================================
+     DELETE EDGE
+  ======================================================= */
+
+  const deleteEdge = useCallback(() => {
+    if (!edgeMenu) {
+      return;
+    }
+
+    const nextEdges =
+      edgesRef.current.filter(
+        (edge) =>
+          edge.id !== edgeMenu.id
+      );
+
+    setEdges(nextEdges);
+
+    pushToHistory(
+      nodesRef.current,
+      nextEdges
+    );
+
+    setEdgeMenu(null);
+  }, [
+    edgeMenu,
+    setEdges,
+    pushToHistory,
+  ]);
+
+  /* =======================================================
+     DELETE NODE
+  ======================================================= */
+
+  const deleteNode = useCallback(
+    (nodeId: string) => {
+      const nextNodes =
+        nodesRef.current.filter(
+          (node) =>
+            node.id !== nodeId
+        );
+
+      const nextEdges =
+        edgesRef.current.filter(
+          (edge) =>
+            edge.source !== nodeId &&
+            edge.target !== nodeId
+        );
+
+      setNodes(nextNodes);
+
+      setEdges(nextEdges);
+
+      if (
+        selectedNode?.id === nodeId
+      ) {
+        setSelectedNode(null);
+      }
+
+      pushToHistory(
+        nextNodes,
+        nextEdges
+      );
+    },
+    [
+      selectedNode,
+      setNodes,
+      setEdges,
+      pushToHistory,
+    ]
+  );
+
+  /* =======================================================
+     ROTATE NODE
+  ======================================================= */
+
+  const rotateNode = useCallback(
+    (
+      nodeId: string,
+      rotation?: number
+    ) => {
+      let rotateNumber = 0;
+
+      const nextNodes =
+        nodesRef.current.map(
+          (node) => {
+            if (
+              node.id !== nodeId
+            ) {
+              return node;
+            }
+
+            if (
+              rotation !== undefined &&
+              rotation !== null
+            ) {
+              rotateNumber =
+                rotation;
+            } else  {
+              const currentRotation =
+                node.data?.rotation || 0;
+
+              if (
+                currentRotation ===
+                360
+              ) {
+                rotateNumber = 0;
+              } else {
+                rotateNumber =
+                  currentRotation + 90;
+              }
+            }
+
+            const updatedNode = {
+              ...node,
+
+              data: {
+                ...node.data,
+
+                rotation:
+                  rotateNumber,
+              },
+            };
+
+            if (
+              selectedNode?.id ===
+              nodeId
+            ) {
+              setSelectedNode(
+                updatedNode
+              );
+            }
+
+            return updatedNode;
+          }
+        );
+
+      setNodes(nextNodes);
+
+      pushToHistory(
+        nextNodes,
+        edgesRef.current
+      );
+    },
+    [
+      selectedNode,
+      setNodes,
+      pushToHistory,
+    ]
+  );
+
+  /* =======================================================
+     DEFAULT EDGE
+  ======================================================= */
+
+  const defaultEdgeOptions = {
+    type: "smoothstep",
+
+    zIndex: 1000,
+  };
+
+  /* =======================================================
+     PLAY / STOP
+  ======================================================= */
+
+  const togglePlay = useCallback(
+  async () => {
+    if (
+      simulationStatus ===
+      "compiling"
+    ) {
+      handleStopSimulation();
+      return;
+    }
+
+    if (
+      simulationStatus ===
+      "running"
+    ) {
+      handleStopSimulation();
+      return;
+    }
+
+    /*
+     * Use the exact same run pipeline as the Code panel.
+     * handleRunSimulation() compiles the current sketch before
+     * starting the engine, so both Run buttons behave identically.
+     */
+    await handleRunSimulation();
+  },
+  [
+    simulationStatus,
+    handleRunSimulation,
+  ]
+);
+
+const toggleCode = useCallback(() => {
+  setShowCode(!showCode);
+}, [showCode]);
+
+  const handleSaveProject = useCallback(async () => {
+    if (isSavingProject) return;
+
+    const defaultName =
+      currentProjectName ||
+      "Untitled Circuit";
+
+    const enteredName = currentProjectId
+      ? currentProjectName
+      : window.prompt(
+          "Project name",
+          defaultName,
+        );
+
+    if (enteredName === null) {
+      return;
+    }
+
+    const name =
+      enteredName.trim() ||
+      defaultName;
+
+    setIsSavingProject(true);
+
+    try {
+      // Let React render the saving state before writing to storage.
+      await new Promise<void>((resolve) => window.setTimeout(resolve, 0));
+
+      const viewport =
+        reactFlowInstance?.getViewport();
+
+      /*
+       * Keep the existing circuit thumbnail behavior. Capture the
+       * canvas preview before persisting the project.
+       */
+      const thumbnail = await captureCircuitThumbnail(
+        reactFlowWrapper.current,
+      );
+
+      const project = saveCircuitProject({
+        id: currentProjectId,
+        name,
+        nodes: nodesRef.current,
+        edges: edgesRef.current,
+        code: useSimulationStore.getState().code,
+        selectedLibraries: useSimulationStore.getState().selectedLibraries,
+        viewport,
+        thumbnail,
+      });
+
+      setCurrentProjectId(project.id);
+      setCurrentProjectName(project.name);
+      loadedProjectRef.current = project.id;
+
+      navigate(
+        "/circuit/?project=" +
+          encodeURIComponent(project.id),
+        { replace: true },
+      );
+    } catch (error) {
+      console.error("[Circuit Project] Save failed:", error);
+      window.alert("Project save failed. Your circuit is still open; please try again.");
+    } finally {
+      setIsSavingProject(false);
+    }
+  }, [
+    currentProjectId,
+    currentProjectName,
+    isSavingProject,
+    reactFlowInstance,
+    navigate,
+  ]);
+
+  /*
+   * =========================================================
+   * EDITOR KEYBOARD SHORTCUTS
+   * =========================================================
+   *
+   * Ctrl/Cmd + S              -> Save project
+   * Ctrl/Cmd + Z              -> Undo
+   * Ctrl/Cmd + Shift + Z      -> Redo
+   * Ctrl + Y                  -> Redo (Windows/Linux)
+   * Ctrl/Cmd + Enter          -> Run / Stop simulation
+   * Delete / Backspace        -> Delete selected component
+   * Escape                    -> Close menus / stop simulation
+   *
+   * Text inputs and Monaco keep their normal editing shortcuts.
+   * We only intercept Save and Run there.
+   */ 
+  useEffect(() => {
+    const handleShortcut = (
+      event: KeyboardEvent,
+    ) => {
+      const target =
+        event.target as HTMLElement | null;
+
+      const isTextEditing =
+        target instanceof HTMLInputElement ||
+        target instanceof HTMLTextAreaElement ||
+        target instanceof HTMLSelectElement ||
+        target?.isContentEditable === true ||
+        Boolean(
+          target?.closest(
+            ".monaco-editor",
+          ),
+        );
+
+      const key =
+        event.key.toLowerCase();
+
+      const modifier =
+        event.ctrlKey ||
+        event.metaKey;
+
+      // Save must work even while the code editor is focused.
+      if (modifier && key === "s") {
+        event.preventDefault();
+        void handleSaveProject();
+        return;
+      }
+
+      // Run/Stop must also work from Monaco.
+      if (
+        modifier &&
+        event.key === "Enter"
+      ) {
+        event.preventDefault();
+        void togglePlay();
+        return;
+      }
+
+      // Never steal normal text-editor editing shortcuts.
+      if (isTextEditing) {
+        return;
+      }
+
+      if (
+        modifier &&
+        key === "z"
+      ) {
+        event.preventDefault();
+
+        if (event.shiftKey) {
+          redo();
+        } else {
+          undo();
+        }
+
+        return;
+      }
+
+      if (
+        event.ctrlKey &&
+        key === "y"
+      ) {
+        event.preventDefault();
+        redo();
+        return;
+      }
+
+      if (event.key === "Delete" || event.key === "Backspace") {
+        if (selectedNode) {
+          event.preventDefault();
+          deleteNode(selectedNode.id);
+        }
+
+        return;
+      }
+
+      if (event.key === "Escape") {
+        setEdgeMenu(null);
+
+        if (simulationStatus === "running") {
+          handleStopSimulation();
+        }
+
+        return;
+      }
+    };
+
+    window.addEventListener(
+      "keydown",
+      handleShortcut,
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        handleShortcut,
+      );
+    };
+  }, [
+    handleSaveProject,
+    togglePlay,
+    undo,
+    redo,
+    selectedNode,
+    deleteNode,
+    simulationStatus,
+    setEdgeMenu,
+  ]);
+
+  const handleNewProject = useCallback(() => {
+    simulationEngine.current?.stop();
+
+    setNodes([]);
+    setEdges([]);
+
+    setHistory({
+      stack: [
+        {
+          nodes: [],
+          edges: [],
+        },
+      ],
+      index: 0,
+    });
+
+    setSelectedNode(null);
+    setCurrentProjectId(null);
+    setCurrentProjectName("Untitled Circuit");
+    loadedProjectRef.current = null;
+
+    useSimulationStore.getState().setCode("");
+    useSimulationStore.getState().setSelectedLibraries([]);
+
+    navigate("/circuit", { replace: true });
+
+    requestAnimationFrame(() => {
+      reactFlowInstance?.setViewport({
+        x: 0,
+        y: 0,
+        zoom: 1,
+      });
+    });
+  }, [
+    navigate,
+    reactFlowInstance,
+    setNodes,
+    setEdges,
+  ]);
+
+   const handleValid = useCallback(
+  (nodeId: string,
+      newValid: boolean) => {
+
+    setNodes((currentNodes) =>
+      currentNodes.map((node) => {
+        if (node.id !== nodeId) {
+          return node;
+        }
+
+        if (node.id !== nodeId) {
+          return node;
+        }
+
+        console.log("node", node);
+        return {
+          ...node,
+
+          data: {
+            ...node.data,
+
+            isValid: newValid,
+          },
+        };
+      })
+    );
+  },
+  [setNodes]
+);
+
+
+  /* =======================================================
+     RENDER
+  ======================================================= */
+
+  return (
+    <div className="flex h-full w-full overflow-hidden bg-bg">
+      <Sidebar onComponentClick={onSidebarComponentClick} />
+      {/* Main Canvas */}
+      <div
+        ref={reactFlowWrapper}
+        className="relative h-full flex-1"
+      >
+
+        {/* TOP TOOLBAR */}
+        <div className="absolute left-2 sm:left-1/2 top-1 md:top-2 z-60 flex sm:-translate-x-1/2 items-center gap-2 sm:gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1.5 shadow-lg backdrop-blur-md">
+          {/* Screen > M */}
+
+          {/* Undo */}
+          <button
+            type="button"
+            onClick={undo}
+            disabled={history.index <= 0}
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Undo"
+          >
+            <Undo size={17} />
+          </button>
+
+          {/* Redo */}
+          <button
+            type="button"
+            onClick={redo}
+            disabled={
+              history.index >=
+              history.stack.length - 1
+            }
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Redo"
+          >
+            <Redo size={17} />
+          </button>
+
+          <div className="hidden sm:block mx-1 h-6 w-px bg-text-secondary/90" />
+
+          {/* Grid */}
+          <button
+            type="button"
+            onClick={() =>
+              setGrid((prev) => !prev)
+            }
+            className={`hidden sm:flex h-9 w-9 items-center justify-center rounded-lg transition ${
+              grid
+                ? "bg-text-secondary/30 text-text-main"
+                : "text-slate-400 hover:bg-text-secondary/30 hover:text-text-main"
+            }`}
+            title="Toggle grid"
+          >
+            {grid ? (
+              <LuGrid2X2X size={18} />
+            ) : (
+              <LuGrid2X2Plus size={18} />
+            )}
+          </button>
+
+          {/* Rotate */}
+          <button
+            type="button"
+            disabled={!selectedNode}
+            onClick={() => {
+              if (!selectedNode) {
+                return;
+              }
+
+              rotateNode(
+                selectedNode.id
+              );
+            }}
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-text-secondary transition hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Rotate"
+          >
+            <FaArrowsRotate size={16} />
+          </button>
+
+          {/* Delete */}
+          <button
+            type="button"
+            disabled={!selectedNode}
+            onClick={() => {
+              if (!selectedNode) {
+                return;
+              }
+
+              deleteNode(
+                selectedNode.id
+              );
+            }}
+            className="hidden sm:flex h-9 w-9 items-center justify-center rounded-lg text-red-500 transition hover:bg-error/30 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Delete selected component"
+          >
+            <MdDeleteForever size={20} />
+          </button>
+
+          <div className="hidden sm:block mx-1 h-6 w-px bg-text-secondary/90" />
+
+          {/* Code */}
+          <button
+            type="button"
+            onClick={toggleCode}
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium transition bg-blue-500 text-white hover:bg-blue-600`}
+            title="Code"
+          >
+            <LuCode className="lg:hidden" size={18} />
+            <span className="text-xs hidden lg:inline-block">Code</span>
+          </button>
+
+        <div className="hidden sm:block mx-1 h-6 w-px bg-text-secondary/90" />
+
+          {/* Save */}
+          <button
+            type="button"
+            onClick={handleSaveProject}
+            disabled={isSavingProject}
+            className="hidden sm:flex disabled:cursor-wait disabled:opacity-60 h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
+            title="Save circuit project"
+          >
+            <FaRegSave className="lg:hidden" size={16} />
+            <span className="text-xs hidden lg:inline-block">{isSavingProject ? "Saving..." : "Save"}</span>
+          </button>
+
+          {/* Projects */}
+          <button
+            type="button"
+            onClick={() => navigate("/circuit/project")}
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
+            title="Open saved projects"
+          >
+            <FolderOpen className="lg:hidden" size={18} />
+            <span className="text-xs hidden lg:inline-block">Projects</span>
+          </button>
+
+          {/* New */}
+          <button
+            type="button"
+            onClick={handleNewProject}
+            className="hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
+            title="Create a new circuit"
+          >
+           <VscNewFolder className="lg:hidden" size={18} />
+            <span className="text-xs hidden lg:inline-block">
+              New
+            </span>
+          </button>
+
+          {/* Debug */}
+          <button
+            type="button"
+            onClick={() => setShowDebugger((value) => !value)}
+            className={`hidden sm:flex h-9 items-center gap-2 rounded-lg px-3 text-xs font-medium transition ${
+              showDebugger ? "bg-slate-900 text-white" : "text-text-secondary hover:bg-text-secondary/30 hover:text-text-main"
+            }`}
+            title="Simulation debugger"
+          >
+            <VscDebugAll className="lg:hidden" size={18} />
+            <span className="text-xs hidden lg:inline-block">
+              Debug
+            </span>
+          </button>
+
+          {/* Play */}
+          <button
+            type="button"
+            onClick={togglePlay}
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium transition ${
+              simulationStatus === "running"
+                ? "bg-red-50 text-red-600"
+                : simulationStatus === "compiling"
+                  ? "bg-yellow-100 text-yellow-700"
+                  : "bg-slate-900 text-white hover:bg-slate-800"
+            }`}
+                        title={
+                          simulationStatus === "running"
+                  ? "Stop simulation"
+                  : "Run simulation"
+                        }
+          >
+            {simulationStatus === "running"
+              ? (
+              <>
+                <FaStop className="lg:hidden" size={16} />
+                <span className="text-xs hidden lg:inline-block">
+                  Stop
+                </span>
+              </>
+            ) : (
+              <>
+                <FaPlay className="lg:hidden" size={16} />
+                <span className="text-xs hidden lg:inline-block">
+                  Run
+                </span>
+              </>
+            )}
+          </button>
+
+            {/* Mobile Menu */}
+        <div className="relative sm:hidden">
+          <button
+            type="button"
+            onClick={() =>
+              setIsToolbarMenuOpen((open) => !open)
+            }
+            className="flex h-9 items-center gap-2 rounded-lg z-101
+              px-3 text-sm font-medium text-text-secondary
+              transition hover:bg-text-secondary/30"
+            aria-label="Toggle toolbar menu"
+            aria-expanded={isToolbarMenuOpen}
+            title="Toggle toolbar menu"
+          >
+            {isToolbarMenuOpen ? (
+              <X size={18} />
+            ) : (
+              <MenuIcon size={18} />
+            )}
+          </button>
+
+          {isToolbarMenuOpen && (
+            <div
+              className="absolute right-0 top-full mt-2 z-100
+                flex flex-col gap-1 rounded-xl
+                border border-primary/40 bg-soft p-2
+                shadow-xl"
+            >
+              {/* Dropdown ထဲမှာ ကျန်တဲ့ toolbar action တွေ ထည့်ရန် */}
+                {/* Undo */}
+          <button
+            type="button"
+            onClick={undo}
+            disabled={history.index <= 0}
+            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-text-secondary hover:bg-text-secondary/30 rounded-lg transition disabled:cursor-not-allowed disabled:opacity-30"
+            title="Undo"
+          >
+            <Undo size={17} />
+            <span className="text-xs inline-block sm:hidden">Undo</span>
+          </button>
+
+          {/* Redo */}
+          <button
+            type="button"
+            onClick={redo}
+            disabled={
+              history.index >=
+              history.stack.length - 1
+            }
+            className="flex h-9 items-center gap-2 px-3 text-sm font-medium text-text-secondary hover:bg-text-secondary/30 rounded-lg transition disabled:cursor-not-allowed disabled:opacity-30"
+            title="Redo"
+          >
+            <Redo size={17} />
+            <span className="text-xs block sm:hidden">Redo</span>
+          </button>
+
+ {/* Grid */}
+          <button
+            type="button"
+            onClick={() =>
+              setGrid((prev) => !prev)
+            }
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 ${
+              grid
+                ? "bg-text-main/20 text-primary"
+                : "text-text-secondary hover:bg-text-secondary/30"
+            }`}
+            title="Toggle grid"
+          >
+            {grid ? (
+              <LuGrid2X2X size={18} />
+            ) : (
+              <LuGrid2X2Plus size={18} />
+            )}
+            <span className="text-xs block sm:hidden">Grid</span>
+          </button>
+
+          {/* Rotate */}
+          <button
+            type="button"
+            disabled={!selectedNode}
+            onClick={() => {
+              if (!selectedNode) {
+                return;
+              }
+
+              rotateNode(
+                selectedNode.id
+              );
+            }}
+            className="flex h-9 gap-2 px-3 text-sm font-medium text-text-secondary transition items-center rounded-lg hover:bg-text-secondary/30 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Rotate"
+          >
+            <FaArrowsRotate size={16} />
+            <span className="text-xs block sm:hidden">Rotate</span>
+          </button>
+
+          {/* Delete */}
+          <button
+            type="button"
+            disabled={!selectedNode}
+            onClick={() => {
+              if (!selectedNode) {
+                return;
+              }
+
+              deleteNode(
+                selectedNode.id
+              );
+            }}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-red-500 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-30"
+            title="Delete selected component"
+          >
+            <MdDeleteForever size={20} />
+            <span className="text-xs block sm:hidden">Delete</span>
+          </button>
+
+                    {/* Save */}
+          <button
+            type="button"
+            onClick={handleSaveProject}
+            disabled={isSavingProject}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main disabled:cursor-wait disabled:opacity-60"
+            title="Save circuit project"
+          >
+            <FaRegSave className="lg:hidden" size={16} />
+            <span className="text-xs block sm:hidden lg:inline-block">{isSavingProject ? "Saving..." : "Save"}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => navigate("/circuit/project")}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/30 hover:text-text-main"
+            title="Open saved projects"
+          >
+            <FolderOpen className="lg:hidden" size={18} />
+            <span className="text-xs block sm:hidden lg:inline-block">Projects</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleNewProject}
+            className="flex h-9 items-center gap-2 rounded-lg px-3 text-sm font-medium text-text-main/70 transition hover:bg-text-secondary/30 hover:text-text-main"
+            title="Create a new circuit"
+          >
+           <VscNewFolder className="lg:hidden" size={18} />
+            <span className="text-xs block sm:hidden lg:inline-block">
+              New
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowDebugger((value) => !value)}
+            className={`flex h-9 items-center gap-2 rounded-lg px-3 text-xs font-medium transition ${
+              showDebugger ? "bg-slate-900 text-white" : "text-slate-900 hover:bg-slate-100"
+            }`}
+            title="Simulation debugger"
+          >
+            <VscDebugAll className="lg:hidden" size={18} />
+            <span className="text-xs block sm:hidden lg:inline-block">
+              Debug
+            </span>
+          </button>
+
+            </div>
+          )}
+        </div>
+          
+        </div>
+
+        {/* =================================================
+            REACT FLOW
+        ================================================= */}
+
+        <ReactFlow
+          nodes={nodes}
+          edges={validatedEdges}
+          className="bg-bg"
+          onNodesChange={
+            onNodesChange
+          }
+
+          onEdgesChange={
+            onEdgesChange
+          }
+
+          onConnect={onConnect}
+
+          onInit={
+            setReactFlowInstance
+          }
+
+          onDrop={onDrop}
+
+          onDragOver={
+            onDragOver
+          }
+
+          nodeTypes={nodeTypes}
+
+          edgeTypes={edgeTypes}
+
+          snapToGrid={true}
+
+          snapGrid={[
+            GRID_SIZE / 2,
+            GRID_SIZE / 2,
+          ]}
+
+          onEdgeUpdate={
+            onEdgeUpdate
+          }
+
+          onEdgeClick={
+            onEdgeClick
+          }
+
+          onPaneClick={
+            onPaneClick
+          }
+
+          connectionMode={
+            ConnectionMode.Loose
+          }
+
+          onNodeDragStop={() => {
+            pushToHistory(
+              nodesRef.current,
+              edgesRef.current
+            );
+          }}
+
+          onNodeClick={(
+            event,
+            node
+          ) => {
+            event.stopPropagation();
+
+            setSelectedNode(node);
+
+            setEdgeMenu(null);
+          }}
+
+          fitView
+
           minZoom={0.5}
-          maxZoom={12}
-// အောက်က နှစ်ကြောင်းကို ထပ်ထည့်ပေးပါ
-      defaultEdgeOptions={defaultEdgeOptions}
-        >
-          <Background color="#e2e8f0" gap={GRID_SIZE} size={1} variant={BackgroundVariant.Lines} />
-          <Controls />
-        </ReactFlow>
-        {/* --- Floating Edge Edit Menu (ကြိုးပြင်ဆင်ရန် UI) --- */}
-        {edgeMenu && (
-          <div
-            className="absolute z-50 bg-white p-4 rounded-xl shadow-2xl border border-gray-200 flex flex-col gap-3 w-48"
-            style={{ top: edgeMenu.y, left: edgeMenu.x }}
-          >
-            <div className="text-xs font-bold text-gray-500 border-b pb-2">ကြိုး ပြင်ဆင်ရန်</div>
-            
-            <div className="flex items-center justify-between">
-              <label className="text-sm text-gray-700 font-medium">အရောင်ရွေးပါ</label>
-              <input
-                type="color"
-                value={edgeMenu.color}
-                onChange={(e) => updateEdgeColor(e.target.value)}
-                className="w-8 h-8 cursor-pointer rounded border-0 p-0"
-              />
-            </div>
 
-            <button
-              onClick={deleteEdge}
-              className="mt-2 w-full bg-red-50 hover:bg-red-500 hover:text-white text-red-600 border border-red-200 text-sm py-1.5 px-3 rounded-lg transition-colors font-medium"
-            >
-              ကြိုးဖြုတ်မည်
-            </button>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+          maxZoom={12}
+
+          defaultEdgeOptions={
+            defaultEdgeOptions
+          }
+        >
+
+          {/* ===============================================
+              GRID
+          =============================================== */}
+            {grid && (
+            <Background
+              color={
+                editorTheme === "light"
+                  ? "#cbd5e1"
+                  : "#334155"
+              }
+              className="bg-bg"
+              gap={GRID_SIZE}
+              size={1}
+              variant={BackgroundVariant.Lines}
+            />
+          )}
+
+          {/* ================= DEFAULT CONTROLS ================= Custorm control ရှိနေလို့ သူ့ကို ဖျောက်ထားတာ ချင် ဖျောက်ထားလို့ရ */}
+
+          <Controls 
+                  showZoom={false}
+                  showFitView={false}
+                  className="hover:-translate-y-1 duration-200 transition-all ease-in-out"
+                  style={{
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                    }}
+                  />
+
+          {/* =============== CUSTOM ZOOM =============== */} 
+
+          <ZoomControls />
+
+        </ReactFlow>
+
+        {/* =================================================
+            EDGE CONTEXT MENU
+        ================================================= */}
+
+        {edgeMenu && (
+          <div
+            className="fixed z-100 w-48 rounded-xl border border-border bg-soft p-2 shadow-2xl"
+            style={{
+              left: edgeMenu.x,
+              top: edgeMenu.y,
+            }}
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+          >
+            {/* Header */}
+
+            <div className="mb-2 px-2 py-1 text-xs font-semibold text-text-secondary">
+              Wire
+            </div>
+
+            {/* Color Options */}
+
+            <div className="grid grid-cols-5 gap-1 px-1 pb-2">
+
+              {[
+                "#2ecc71",
+                "#2563eb",
+                "#eab308",
+                "#ef4444",
+                "#000000",
+                "#8b5cf6",
+                "#ec4899",
+                "#f97316",
+                "#14b8a6",
+                "#64748b",
+              ].map((color) => (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() =>
+                    updateEdgeColor(
+                      color
+                    )
+                  }
+                  className="h-7 w-7 rounded-md border border-border transition hover:scale-110"
+                  style={{
+                    backgroundColor:
+                      color,
+                  }}
+                  title={color}
+                />
+              ))}
+
+            </div>
+
+            {/* Delete */}
+
+            <button
+              type="button"
+              onClick={deleteEdge}
+              className="flex w-full justify-center items-center gap-2 rounded-lg px-2 py-2 text-left text-sm text-red-600 transition hover:bg-red-50"
+            >
+              <MdDeleteForever
+                size={17}
+              />
+
+              Delete wire
+            </button>
+
+            {/* Close */}
+
+            <button
+              type="button"
+              onClick={() =>
+                setEdgeMenu(null)
+              }
+              className="mt-1 flex w-full items-center justify-center rounded-lg px-2 py-1.5 text-xs text-slate-500 transition hover:bg-slate-100"
+            >
+              Close
+            </button>
+          </div>
+        )}
+
+        {/* =================================================
+            EMPTY STATE
+        ================================================= */}
+
+        {nodes.length === 0 && (
+          <div className="pointer-events-none absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center">
+
+            <div className="rounded-2xl border border-dashed border-primary bg-soft/40 m-2 px-8 py-6 shadow-sm backdrop-blur-md">
+
+              <div className="mb-2 text-sm font-semibold text-text-main">
+                Circuit Canvas
+              </div>
+
+              <div className="text-xs text-text-secondary">
+                Drag components from the
+                sidebar to start building
+                your circuit.
+              </div>
+
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ================================================
+          RIGHT PROPERTIES PANEL
+      =================================================== */}
+
+      <PropertiesPanel
+        nodes={nodes}
+        edges={edges}
+        onRename={handleRename}
+        rotateNode={rotateNode}
+        onDelete={deleteNode}
+        selectedNode={selectedNode}
+        updateResistorValue={updateResistorValue}
+        onDocumentation={handleComponentDocumentation}
+        onValid={handleValid}
+      />
+
+      {/* ===================================================
+          CODE SECTION
+      =================================================== */}
+
+      {showDebugger && (
+        <SimulationDebugger
+          diagnostics={diagnostics}
+          running={simulationStatus === "running"}
+          onRun={handleRunSimulation}
+          onPause={handlePauseSimulation}
+          onStep={handleStepSimulation}
+          onStop={handleStopSimulation}
+          onReset={handleResetSimulation}
+          onTraceNet={handleTraceNet}
+          onTraceComponent={handleTraceComponent}
+          onClearTrace={handleClearTrace}
+        />
+      )}
+
+      {showCode && (
+        <Suspense
+          fallback={(
+            <div className="absolute bottom-0 left-0 z-51 flex h-125 w-full items-center justify-center rounded-lg border border-primary bg-soft text-sm text-text-secondary">
+              Loading code editor...
+            </div>
+          )}
+        >
+          <CodeSection
+            show={showCode}
+            setShow={setShowCode}
+            onRun={handleRunSimulation}
+            onStop={handleStopSimulation}
+          />
+        </Suspense>
+      )}
+
+    </div>
+
+    
+  );
 };
 
 export default CircuitEditor;

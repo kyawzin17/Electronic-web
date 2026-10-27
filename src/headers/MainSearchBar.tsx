@@ -91,10 +91,10 @@ const SearchModal = () => {
 
       {/* Dark Mode Modal Overlay */}
       {isOpen && (
-        <div className="fixed inset-0 z-100 h-screen w-screen flex items-start justify-center pt-[10vh] px-4 bg-black/94 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="fixed h-screen inset-0 z-100 p-3 backdrop-blur-md sm:p-6 dark:bg-slate-950/75 bg-slate-900/35 role='dialog' aria-modal='true' aria-labelledby='library-manager-title'">
           
           {/* Modal Container */}
-          <div ref={searchContainerRef} className="relative w-full max-w-2xl bg-[#0f172a] rounded-xl shadow-2xl border border-slate-700 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
+          <div ref={searchContainerRef} className="relative w-full mx-auto max-w-2xl bg-bg rounded-xl shadow-2xl border border-slate-700 overflow-hidden flex flex-col animate-in fade-in zoom-in-95 duration-200">
             
             {/* Search Input Header */}
             <div className="flex items-center px-4 py-4 border-b border-slate-700/60">
@@ -105,11 +105,11 @@ const SearchModal = () => {
                 value={query}
                 onChange={handleSearch}
                 autoFocus
-                className="flex-1 bg-transparent text-slate-200 placeholder:text-slate-500 focus:outline-none text-lg"
+                className="flex-1 bg-transparent text-text-main/80 placeholder:text-text-secondary focus:outline-none text-lg"
               />
               <button 
                 onClick={closeModal}
-                className="ml-4 px-2 py-1 text-[10px] font-bold tracking-wider text-slate-400 uppercase bg-slate-800 border border-slate-700 rounded hover:bg-slate-700 hover:text-slate-200 transition-colors"
+                className="ml-4 px-2 py-1 text-[10px] font-bold tracking-wider text-text-main/40 uppercase bg-text-card/80 border border-text-main/80 rounded hover:bg-text-secondary/10 hover:text-text-main transition-colors"
               >
                 esc
               </button>
@@ -119,7 +119,7 @@ const SearchModal = () => {
             <div className="overflow-y-auto max-h-[60vh]">
               {results.length > 0 ? (
                 <div className="py-2">
-                  <div className="px-4 py-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+                  <div className="px-4 py-2 text-xs font-semibold tracking-wide text-text-main/90 uppercase">
                     Documentation
                   </div>
                   <ul>
@@ -131,11 +131,11 @@ const SearchModal = () => {
                           className="flex items-center justify-between px-4 py-3 hover:bg-blue-600 transition-colors"
                         >
                           <div>
-                            <div className="text-sm font-medium text-slate-300 group-hover:text-white">
+                            <div className="text-sm font-medium text-text-main/80 group-hover:text-white">
                               {formatTitle(item.title)}
                             </div>
                             {item.category && (
-                              <div className="text-xs text-slate-500 group-hover:text-blue-200 mt-0.5 capitalize">
+                              <div className="text-xs text-text-secondary group-hover:text-blue-200 mt-0.5 capitalize">
                                 {item.category}
                               </div>
                             )}
@@ -143,8 +143,8 @@ const SearchModal = () => {
                           
                           {/* ညာဘက်က Icon လေးများ (ပုံထဲကအတိုင်း) */}
                           <div className="hidden group-hover:flex items-center space-x-3 text-blue-200">
-                            <Star size={16} className="hover:text-white transition-colors" />
-                            <X size={16} className="hover:text-white transition-colors" />
+                            <Star size={16} className="hover:text-text-main transition-colors" />
+                            <X size={16} className="hover:text-text-main transition-colors" />
                           </div>
                         </Link>
                       </li>
@@ -153,17 +153,17 @@ const SearchModal = () => {
                 </div>
               ) : (
                 query && (
-                  <div className="px-4 py-14 text-center text-slate-500">
-                    No results found for "<span className="text-slate-300">{query}</span>"
+                  <div className="px-4 py-14 text-center text-text-secondary">
+                    No results found for "<span className="text-text-main/50">{query}</span>"
                   </div>
                 )
               )}
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-end px-4 py-3 bg-slate-800/50 border-t border-slate-700/60">
-              <span className="text-xs text-slate-500 flex items-center gap-1.5">
-                Search by <strong className="text-slate-300 font-semibold tracking-wide">RDE</strong>
+            <div className="flex items-center justify-end px-4 py-3 bg-soft/80 border-t border-text-main/60">
+              <span className="text-xs text-text-secondary flex items-center gap-1.5">
+                Search by <strong className="text-text-main/50 font-semibold tracking-wide">RDE</strong>
               </span>
             </div>
 
