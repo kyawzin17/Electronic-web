@@ -8,43 +8,34 @@ const Project = () => {
  
   const projects = [
     {
-      title: "Arduino Clap Switch",
-      slug: "arduino-clap-switch",
-      description: "Sound Sensor ကို အသုံးပြု၍ လက်ခုပ်သံနဲ့ မီးဖွင့်ပိတ်နိုင်သော စနစ်။",
-      micro: "Arduino UNO R3",
-      power: "5V DC",
-      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774853660/clip-img_zlbadf.jpg",
-      category: "Automation"
-    },
+  title: "Arduino LED Blink",
+  slug: "arduino-led-blink",
+  description:
+    "Arduino UNO R3၊ LED နှင့် Resistor ကို အသုံးပြု၍ LED ကို အချိန်အပိုင်းအခြားအလိုက် အဖွင့်အပိတ် ပြုလုပ်သည့် အခြေခံ Electronic Project။",
+  micro: "Arduino UNO R3",
+  power: "7V - 12V DC",
+  image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793083552/led-blink_rqp3b4.webp",
+  category: "Basics"
+},
     {
       title: "Ultrasonic Distance Detector",
       slug: "ultrasonic-distance-detector",
       description: "Ultrasonic Sensor နှင့် Arduino UNO R3 ကို အသုံးပြု၍ အကွာအဝေးတိုင်းတာသော စနစ်။",
       micro: "Arduino UNO R3",
       power: "7V - 12V DC",
-      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774853665/distance-detector_ezshky.png",
+      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793082086/distance-detector_yc4yi8.webp",
       category: "Automation"
     },
     {
-      title: "Smart Home Automation",
-      slug: "smart-home-automation",
-      description: "ESP8266 နှင့် Relay Module များကို အသုံးပြု၍ အိမ်တွင်းမီးများကို ဖုန်းမှတစ်ဆင့် ထိန်းချုပ်နိုင်သော စနစ်။",
-      micro: "ESP8266 / NodeMCU",
-      power: "5V DC",
-      // Internet မှ နမူနာပုံ (Smart Home/Arduino)
-      image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1774864193/smart-img_lsuccq.jpg",
-      category: "Automation"
-    },
-    {
-      title: "Digital Thermometer",
-      slug: "digital-thermometer",
-      description: "LM35 Temperature Sensor နှင့် I2C LCD Display ကို အသုံးပြုထားသော အပူချိန်တိုင်း ကိရိယာ။",
-      micro: "Arduino Nano",
-      power: "9V Battery",
-      // Internet မှ နမူနာပုံ (Circuit Board)
-      image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000",
-      category: "Sensors"
-    }
+  title: "Smart Lock Door System",
+  slug: "smart-lock-door",
+  description:
+    "Arduino UNO R3၊ Keypad၊ LCD1602 နှင့် Servo Motor ကို အသုံးပြု၍ Password ဖြင့် တံခါးဖွင့်ပိတ်နိုင်သော လုံခြုံရေးစနစ်။",
+  micro: "Arduino UNO R3",
+  power: "7V - 12V DC",
+  image: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793082086/smart-lock-door_yo6izu.webp",
+  category: "Security"
+},
   ];
 
   
