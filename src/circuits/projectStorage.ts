@@ -22,6 +22,7 @@ export type SavedCircuitProject = {
    * Kept optional so older saved projects continue to load.
    */
   thumbnail?: string;
+  isBuiltIn?: boolean;
 };
 
 function clone<T>(value: T): T {
@@ -90,6 +91,7 @@ export function saveCircuitProject(input: {
   selectedLibraries?: string[];
   viewport?: SavedCircuitProject["viewport"];
   thumbnail?: string;
+  isBuiltIn?: boolean;
 }): SavedCircuitProject {
   const now = Date.now();
   const projects = readProjects();
@@ -121,6 +123,7 @@ export function saveCircuitProject(input: {
       (existingIndex >= 0
         ? projects[existingIndex].thumbnail
         : undefined),
+    isBuiltIn: false,
   };
 
   if (existingIndex >= 0) {
