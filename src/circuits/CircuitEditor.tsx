@@ -78,6 +78,8 @@ import {
   getSavedProject,
   saveCircuitProject,
 } from "./projectStorage";
+import { getBuiltInProject } from "./buildInProjectLoad";
+
 
 // * ----------> Types <----------
 // Circuit Edge Data Type (For Simulation Engine)
@@ -1253,18 +1255,35 @@ const stop =
 
 
   useEffect(() => {
-    if (!reactFlowInstance || !projectIdFromUrl) {
-      return;
+  if (!reactFlowInstance || !projectIdFromUrl) {
+    return;
+  }
+
+  if (loadedProjectRef.current === projectIdFromUrl) {
+    return;
+  }
+
+  let cancelled = false;
+
+  const loadProject = async () => {
+    let project = null;
+
+    // 1. JSON ထဲက built-in project ကို အရင်ရှာမယ်
+    try {
+      project = await getBuiltInProject(projectIdFromUrl);
+    } catch (error) {
+      console.error("Built-in project loading failed:", error);
     }
 
-    if (loadedProjectRef.current === projectIdFromUrl) {
-      return;
+    // 2. Built-in မဟုတ်မှ localStorage ကို ရှာမယ်
+    if (!project) {
+      project = getSavedProject(projectIdFromUrl);
     }
 
-    const project = getSavedProject(projectIdFromUrl);
+    if (cancelled) return;
 
     if (!project) {
-      loadedProjectRef.current = projectIdFromUrl;
+      console.error("Project not found:", projectIdFromUrl);
       navigate("/", { replace: true });
       return;
     }
@@ -1285,7 +1304,9 @@ const stop =
     });
 
     useSimulationStore.getState().setCode(project.code);
-    useSimulationStore.getState().setSelectedLibraries(project.selectedLibraries ?? []);
+    useSimulationStore.getState().setSelectedLibraries(
+      project.selectedLibraries ?? [],
+    );
 
     setCurrentProjectId(project.id);
     setCurrentProjectName(project.name);
@@ -1304,13 +1325,20 @@ const stop =
     }
 
     loadedProjectRef.current = projectIdFromUrl;
-  }, [
-    reactFlowInstance,
-    projectIdFromUrl,
-    navigate,
-    setNodes,
-    setEdges,
-  ]);
+  };
+
+  void loadProject();
+
+  return () => {
+    cancelled = true;
+  };
+}, [
+  reactFlowInstance,
+  projectIdFromUrl,
+  navigate,
+  setNodes,
+  setEdges,
+]);
 
   const [edgeMenu, setEdgeMenu] =
     useState<{

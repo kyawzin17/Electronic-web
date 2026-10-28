@@ -1,6 +1,7 @@
 import "./home.css";
 import { Link } from "react-router-dom";
 import ImageCarousel from "./HomeImage";
+import { FaArrowRight } from "react-icons/fa6";
 
 const projects = [
   {
@@ -165,7 +166,9 @@ export default function CircuitLandingPage() {
                       )}
               </div>
           </div>
-          <Link className="card-arrow bg-secondary/50 text-text-main border border-text-secondary" to={`${project.url}`} aria-label={`Open ${project.title}`}>›</Link>
+          <Link className="card-arrow bg-secondary/50 text-text-main/60 hover:text-text-main border border-text-secondary" to={`${project.url}`} aria-label={`Open ${project.title}`}>
+            <FaArrowRight size={16}/>
+          </Link>
       </article>)}
       </div>
     </section>
