@@ -4,6 +4,8 @@ import { useSimulationStore } from "../stores/simulationStore";
 import {
   BookOpen, Check, Code2, Package, Plus, Search, Trash2, X,
 } from "lucide-react";
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
+import "../App.css";
 
 type Library = {
   id: string;
@@ -47,6 +49,9 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
   const selectedLibraries = useSimulationStore((state) => state.selectedLibraries);
   const setSelectedLibraries = useSimulationStore((state) => state.setSelectedLibraries);
   const isDark = readTheme();
+
+  const [rightSidebar, setRightSidebar] =
+      useState(true);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -114,7 +119,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
           </div>
         </header>
 
-        <div className="grid min-h-0 flex-1 grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.78fr)]">
+        <div className="relative grid custom-scrollbar min-h-0 flex-1 grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.78fr)]">
           <div className={`flex min-h-0 flex-col border-b md:border-b-0 md:border-r ${isDark ? "border-slate-700/80" : "border-slate-200"}`}>
             <div className="space-y-3 p-4 sm:p-5">
               <label className={`flex items-center gap-2 rounded-xl border px-3 focus-within:border-cyan-500 ${field}`}>
@@ -131,7 +136,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
               {filtered.map((library) => {
                 const inProject = selectedLibraries.includes(library.id);
                 return <div key={library.id} className={`flex items-center gap-2 rounded-xl border p-3 transition ${inProject ? activeCard : card}`}>
-                  <div className="flex min-w-0 flex-1 items-start gap-3 text-left">
+                  <div className="flex min-w-0 flex-1 items-start gap-3 text-right">
                     <div className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${inProject ? "bg-cyan-500/10 text-cyan-600" : isDark ? "bg-slate-800 text-slate-400" : "bg-slate-100 text-slate-500"}`}><BookOpen size={17} /></div>
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2"><span className="text-sm font-semibold">{library.name}</span>{inProject && <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600"><Check size={11} /> In project</span>}</div>
@@ -148,12 +153,63 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
             </div>
           </div>
 
-          <aside className={`flex min-h-0 flex-col overflow-y-auto p-4 sm:p-5 ${isDark ? "bg-black/10" : "bg-slate-50/70"}`}>
-            <div className="flex items-start justify-between gap-3">
+          <aside className={`absolute max-w-100 h-full md:w-auto md:static top-1/2 translate-y-[-50%] md:translate-0 flex-row justify-between items-center md:border-0 rounded-md md:rounded-0 ${rightSidebar ? "-right-1" : "-right-94.5"} transition-all ease-in-out duration-200 flex `}>
+            
+            <button
+                    onClick={() =>
+                      setRightSidebar(
+                        (previous) =>
+                          !previous
+                      )
+                    }
+                    className="
+                      w-6
+                      h-10
+                      
+                      dark:bg-[#0d1c30]
+                      bg-soft
+                      border
+                      border-[#254563]
+            
+                      rounded-l-xl
+            
+                      flex
+                      md:hidden
+                      items-center
+                      justify-center
+            
+                      text-text-main
+            
+                      font-bold
+            
+                      hover:bg-[#13263e]
+                      hover:text-blue-400
+            
+                      transition
+            
+                      cursor-pointer
+                      z-60
+                    "
+                    title={
+                      rightSidebar
+                        ? "Collapse Sidebar"
+                        : "Expand Sidebar"
+                    }
+                  >
+            
+                    {rightSidebar ? (
+                      <LuArrowBigRightDash size={18}/>
+                    ) : (
+                      <LuArrowBigLeftDash size={18}/>
+                    )}
+            
+              </button>
+              <div className={`h-full w-auto min-h-0 flex flex-col overflow-y-auto border border-secondary/70 md:border-0 rounded-l-lg p-4 ${isDark ? "bg-black/50 md:bg-black/10" : "bg-slate-50 md:bg-slate-50/70"}`}>
+                     <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-violet-500">Current sketch</div>
                 <h3 className="text-lg font-bold">Project Libraries</h3>
-                <p className={`mt-1 text-xs leading-5 ${muted}`}>Press + on the left to add a library to this project.</p>
+                <p className={`mt-1 text-xs leading-5 ${muted}`}>Press + on the right to add a library to this project.</p>
               </div>
               <span className="rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-1 text-xs font-bold text-cyan-600">{selectedLibraries.length}</span>
             </div>
@@ -186,6 +242,8 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
                 <p className="text-[11px] leading-5 text-amber-700">Selected libraries are sent to the backend compiler. A source-available label means the compiler has the header; runtime adapters are shown separately and still need real compile/run checks.</p>
               </div>
             </div>
+              </div>
+            
           </aside>
         </div>
         <footer className={`flex items-center justify-between gap-3 border-t px-4 py-3 sm:px-5 ${panel}`}>

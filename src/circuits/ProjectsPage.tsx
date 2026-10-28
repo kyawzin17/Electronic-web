@@ -7,7 +7,8 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+
 import {
   deleteSavedProject,
   listSavedProjects,
@@ -241,14 +242,13 @@ export default function ProjectsPage() {
                 </button>
 
                 <div className="border-t border-text-secondary/20 px-4 py-3">
-                  <button
-                    type="button"
-                    onClick={() => removeProject(project.id)}
+                  <Link
+                    to={project.project_url || ""}
                     className="flex items-center font-bold gap-1.5 text-xs text-secondary/80 transition hover:text-secondary"
                   >
                     <FaBook className="text-success" size={14} />
                     Read Description!
-                  </button>
+                  </Link>
                 </div>
               </article>
             ))}

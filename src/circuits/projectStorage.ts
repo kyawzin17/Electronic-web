@@ -23,6 +23,7 @@ export type SavedCircuitProject = {
    */
   thumbnail?: string;
   isBuiltIn?: boolean;
+  project_url?: string;
 };
 
 function clone<T>(value: T): T {

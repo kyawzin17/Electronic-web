@@ -167,7 +167,7 @@ export default function CircuitLandingPage() {
               </div>
           </div>
           <Link className="card-arrow bg-secondary/50 text-text-main/60 hover:text-text-main border border-text-secondary" to={`${project.url}`} aria-label={`Open ${project.title}`}>
-            <FaArrowRight size={16}/>
+            <FaArrowRight size={14}/>
           </Link>
       </article>)}
       </div>

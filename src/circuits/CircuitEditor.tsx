@@ -3220,6 +3220,8 @@ const toggleCode = useCallback(() => {
           connectionMode={
             ConnectionMode.Loose
           }
+          connectOnClick={true}
+          connectionRadius={25}
 
           onNodeDragStop={() => {
             pushToHistory(

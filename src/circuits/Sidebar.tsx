@@ -2,13 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import "@wokwi/elements";
 
 import {
-  HiChevronDown,
   HiMagnifyingGlass,
   HiOutlineCube,
-  HiOutlineChevronLeft,
-  HiOutlineChevronRight,
 } from "react-icons/hi2";
-
+import { LuArrowBigLeftDash, LuArrowBigRightDash } from "react-icons/lu";
 import "./circuit.css";
 
 import miniBoard from "../assets/gemini-svg (1).svg";
@@ -802,6 +799,54 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
 
             </div>
 
+            <div>
+              <button
+                onClick={() =>
+                  setLeftSidebar(
+                    (previous) =>
+                      !previous
+                  )
+                }
+                className="
+
+                  w-6
+                  h-10
+
+                  flex
+                  md:hidden
+                  items-center
+                  justify-center
+
+                  text-text-main
+
+                  hover:bg-[#13263e]
+                  hover:text-blue-400
+
+                  transition
+
+                  cursor-pointer
+                  z-60
+                "
+                title={
+                  leftSidebar
+                    ? "Collapse Sidebar"
+                    : "Expand Sidebar"
+                }
+              >
+
+                {leftSidebar ? (
+
+                  <LuArrowBigLeftDash size={16} />
+
+                ) : (
+
+                  <LuArrowBigRightDash size={16} />
+
+                )}
+
+              </button>
+            </div>
+
           </div>
 
 
@@ -1076,7 +1121,7 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
 
           w-6
           h-10
-
+          
           dark:bg-[#0d1c30]
           bg-soft
           border
@@ -1089,6 +1134,8 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
           justify-center
 
           text-text-main
+
+          font-bold
 
           hover:bg-[#13263e]
           hover:text-blue-400
@@ -1107,19 +1154,11 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
 
         {leftSidebar ? (
 
-          <HiOutlineChevronLeft
-            className="
-              text-xl
-            "
-          />
+          <LuArrowBigLeftDash size={18}/>
 
         ) : (
 
-          <HiOutlineChevronRight
-            className="
-              text-xl
-            "
-          />
+          <LuArrowBigRightDash size={18}/>
 
         )}
 
