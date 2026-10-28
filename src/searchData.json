@@ -925,97 +925,90 @@
   },
   {
     "id": 133,
-    "title": "arduino-clap-switch",
+    "title": "arduino-led-blink",
     "tags": "",
     "category": "projects",
-    "link": "/projects/arduino-clap-switch"
+    "link": "/projects/arduino-led-blink"
   },
   {
     "id": 134,
-    "title": "digital-thermometer",
+    "title": "smart-lock-door",
     "tags": "",
     "category": "projects",
-    "link": "/projects/digital-thermometer"
+    "link": "/projects/smart-lock-door"
   },
   {
     "id": 135,
-    "title": "smart-home-automation",
-    "tags": "",
-    "category": "projects",
-    "link": "/projects/smart-home-automation"
-  },
-  {
-    "id": 136,
     "title": "ultrasonic-distance-detector",
     "tags": "",
     "category": "projects",
     "link": "/projects/ultrasonic-distance-detector"
   },
   {
-    "id": 137,
+    "id": 136,
     "title": "arduino-pinout",
     "tags": "",
     "category": "learning",
     "link": "/learning/ArduinoUno/arduino-pinout"
   },
   {
-    "id": 138,
+    "id": 137,
     "title": "arduino-programming",
     "tags": "",
     "category": "learning",
     "link": "/learning/ArduinoUno/arduino-programming"
   },
   {
-    "id": 139,
+    "id": 138,
     "title": "arduino-project",
     "tags": "",
     "category": "learning",
     "link": "/learning/ArduinoUno/arduino-project"
   },
   {
-    "id": 140,
+    "id": 139,
     "title": "arduino-safety-troubleshooting",
     "tags": "",
     "category": "learning",
     "link": "/learning/ArduinoUno/arduino-safety-troubleshooting"
   },
   {
-    "id": 141,
+    "id": 140,
     "title": "arduino-uno",
     "tags": "",
     "category": "learning",
     "link": "/learning/ArduinoUno/arduino-uno"
   },
   {
-    "id": 142,
+    "id": 141,
     "title": "capacitor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/capacitor"
   },
   {
-    "id": 143,
+    "id": 142,
     "title": "diode",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/diode"
   },
   {
-    "id": 144,
+    "id": 143,
     "title": "resistor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/resistor"
   },
   {
-    "id": 145,
+    "id": 144,
     "title": "transistor",
     "tags": "",
     "category": "learning",
     "link": "/learning/Chapter-1/transistor"
   },
   {
-    "id": 146,
+    "id": 145,
     "title": "introduction",
     "tags": "",
     "category": "learning",
