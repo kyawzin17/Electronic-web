@@ -204,7 +204,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
                     )}
             
               </button>
-              <div className={`h-full w-auto min-h-0 flex flex-col overflow-y-auto border border-secondary/70 md:border-0 rounded-l-lg p-4 ${isDark ? "bg-black/95 md:bg-black/10" : "bg-slate-50 md:bg-slate-50/70"}`}>
+              <div className={`h-full w-auto min-h-0 flex flex-col overflow-y-auto border border-secondary/70 md:border-0 rounded-l-lg p-4 ${isDark ? "bg-soft/90 md:bg-soft/10" : "bg-slate-50 md:bg-slate-50/70"}`}>
                      <div className="flex items-start justify-between gap-3">
               <div>
                 <div className="mb-1 text-[10px] font-bold uppercase tracking-wider text-violet-500">Current sketch</div>

@@ -169,4 +169,4 @@ Resistor ၏ အခန်းကဏ္ဍနှင့် Arduino Code ၏ အခ�
 - ဤ Project သည် Low-Voltage Learning Circuit ဖြစ်ပြီး အိမ်သုံး AC လျှပ်စစ်နှင့်
   တိုက်ရိုက် မချိတ်ဆက်ရပါ။
 
-  - [To View The Circuit Simulation](https://www.rde-mm.com/circuit/?project=project-1791991873555-258ice)
+  - [To View The Circuit Simulation](/circuit/?project=project-1791991873555-258ice)

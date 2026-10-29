@@ -3,6 +3,8 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -63,6 +65,29 @@ export default function MarkdownView({ markdown }: { markdown: string }) {
                             />
                         </Zoom>
                     ),
+                    a: ({ href = "", children, ...props }) => {
+                        const isInternal =
+                            href.startsWith("/") &&
+                            !href.startsWith("//");
+
+                        if (isInternal) {
+                            return (
+                            <Link to={href} {...props}>
+                                {children}
+                            </Link>
+                            );
+                        }
+
+                        return (
+                            <a
+                            href={href}
+                            {...props}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >
+                            {children}
+                            </a>
+                        )},
                     code({ node, inline, className, children, ...props }: any) {
                         const match = /language-(\w+)/.exec(className || '');
                         return !inline && match ? (
