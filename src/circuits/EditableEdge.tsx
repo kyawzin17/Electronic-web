@@ -288,6 +288,7 @@ export default function EditableEdge({
           stroke={hoveredIndex === index ? "rgba(239,68,68,0.3)" : "transparent"}
           strokeWidth={seg.isDraggable ? 4 : 0} 
           style={{ cursor: !seg.isDraggable ? 'default' : seg.isVertical ? 'col-resize' : 'row-resize' }}
+          onClick={() => seg.isDraggable && setHoveredIndex(index)}
           onMouseEnter={() => seg.isDraggable && setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(null)}
           onMouseDown={(e) => seg.isDraggable && onSegmentMouseDown(e, index, seg.isVertical)}

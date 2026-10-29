@@ -38,7 +38,7 @@ export default function TrendComponents() {
         );
         gsap.from(headerRef.current,
             {
-                x: 70,
+                y: 70,
                 duration: 0.8,
                 opacity: 0,
                 ease: "back.out",
