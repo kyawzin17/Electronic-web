@@ -144,8 +144,6 @@ void loop() {
 
 ### အကြံပြုချက်:  
 >  **LCD Address:** LCD က အလုပ်မလုပ်ရင် `0x27` အစား `0x3F` ဖြစ်နိုင်တာမို့ အဲ့ဒါလေးကို သတိပြုပါ။  
-
 - [To View The Circuit Simulation](/circuit/?project=project-1792315039378-uo9yy6)
-
 
 ---
