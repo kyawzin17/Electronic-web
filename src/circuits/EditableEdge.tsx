@@ -123,45 +123,148 @@ export default function EditableEdge({
     });
   }, [trueSource.x, trueSource.y, trueTarget.x, trueTarget.y, sourcePosition, targetPosition, getInitialPoints, data?.points]);
 
-  const onSegmentMouseDown = (e: React.MouseEvent, index: number, isVertical: boolean) => {
-    e.stopPropagation();
-   // (၁၉, ၆, ၂၀၂၆) if (index === 0 || index === points.length - 2) return;
+  // const onSegmentMouseDown = (e: React.MouseEvent, index: number, isVertical: boolean) => {
+  //   e.stopPropagation();
+  //  // (၁၉, ၆, ၂၀၂၆) if (index === 0 || index === points.length - 2) return;
     
-    const startMouse = { x: e.clientX, y: e.clientY };
-    const startPoints = [...pointsRef.current]; // Ref ကနေ လက်ရှိ Point တွေကို ယူမယ်
-    let lastCalculatedPoints = startPoints;
+  //   const startMouse = { x: e.clientX, y: e.clientY };
+  //   const startPoints = [...pointsRef.current]; // Ref ကနေ လက်ရှိ Point တွေကို ယူမယ်
+  //   let lastCalculatedPoints = startPoints;
 
-    const onMouseMove = (moveEvent: MouseEvent) => {
-      const deltaX = (moveEvent.clientX - startMouse.x) / zoom;
-      const deltaY = (moveEvent.clientY - startMouse.y) / zoom;
-      const newPts = startPoints.map((p) => ({ ...p }));
+  //   const onMouseMove = (moveEvent: MouseEvent) => {
+  //     const deltaX = (moveEvent.clientX - startMouse.x) / zoom;
+  //     const deltaY = (moveEvent.clientY - startMouse.y) / zoom;
+  //     const newPts = startPoints.map((p) => ({ ...p }));
 
-      if (isVertical) {
-        const newX = Math.round((startPoints[index].x + deltaX) / GRID_SIZE) * GRID_SIZE;
-        newPts[index].x = newX;
-        newPts[index + 1].x = newX;
-      } else {
-        const newY = Math.round((startPoints[index].y + deltaY) / GRID_SIZE) * GRID_SIZE;
-        newPts[index].y = newY;
-        newPts[index + 1].y = newY;
-      }
-      lastCalculatedPoints = newPts;
-      setPoints(newPts);
-    };
+  //     if (isVertical) {
+  //       const newX = Math.round((startPoints[index].x + deltaX) / GRID_SIZE) * GRID_SIZE;
+  //       newPts[index].x = newX;
+  //       newPts[index + 1].x = newX;
+  //     } else {
+  //       const newY = Math.round((startPoints[index].y + deltaY) / GRID_SIZE) * GRID_SIZE;
+  //       newPts[index].y = newY;
+  //       newPts[index + 1].y = newY;
+  //     }
+  //     lastCalculatedPoints = newPts;
+  //     setPoints(newPts);
+  //   };
 
-    const onMouseUp = () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+  //   const onMouseUp = () => {
+  //     window.removeEventListener('mousemove', onMouseMove);
+  //     window.removeEventListener('mouseup', onMouseUp);
       
-      // 🌟 ပြင်ထားတဲ့ Point အသစ်တွေကို Edge Data ထဲမှာ သိမ်းလိုက်မယ်
-      setEdges((eds) => eds.map((edge) => 
-        edge.id === id ? { ...edge, data: { ...edge.data, points: lastCalculatedPoints } } : edge
-      ));
-    };
+  //     // 🌟 ပြင်ထားတဲ့ Point အသစ်တွေကို Edge Data ထဲမှာ သိမ်းလိုက်မယ်
+  //     setEdges((eds) => eds.map((edge) => 
+  //       edge.id === id ? { ...edge, data: { ...edge.data, points: lastCalculatedPoints } } : edge
+  //     ));
+  //   };
 
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
+  //   window.addEventListener('mousemove', onMouseMove);
+  //   window.addEventListener('mouseup', onMouseUp);
+  // };
+
+  
+const onSegmentPointerDown = (
+  e: React.PointerEvent<SVGPathElement>,
+  index: number,
+  isVertical: boolean,
+) => {
+  e.stopPropagation();
+  e.preventDefault();
+
+  // Pointer ကို လက်ရှိ path ပေါ်မှာ capture လုပ်ထားမယ်။
+  // Pointer path အပြင်ထွက်သွားလည်း drag ဆက်လုပ်နိုင်မယ်။
+  const target = e.currentTarget;
+  target.setPointerCapture(e.pointerId);
+
+  const startPointer = {
+    x: e.clientX,
+    y: e.clientY,
   };
+
+  const startPoints = [...pointsRef.current];
+  let lastCalculatedPoints = startPoints;
+
+  const onPointerMove = (moveEvent: PointerEvent) => {
+    if (moveEvent.pointerId !== e.pointerId) return;
+
+    const deltaX =
+      (moveEvent.clientX - startPointer.x) / zoom;
+    const deltaY =
+      (moveEvent.clientY - startPointer.y) / zoom;
+
+    const newPts = startPoints.map((p) => ({ ...p }));
+
+    if (isVertical) {
+      const newX =
+        Math.round(
+          (startPoints[index].x + deltaX) / GRID_SIZE,
+        ) * GRID_SIZE;
+
+      newPts[index].x = newX;
+      newPts[index + 1].x = newX;
+    } else {
+      const newY =
+        Math.round(
+          (startPoints[index].y + deltaY) / GRID_SIZE,
+        ) * GRID_SIZE;
+
+      newPts[index].y = newY;
+      newPts[index + 1].y = newY;
+    }
+
+    lastCalculatedPoints = newPts;
+    setPoints(newPts);
+  };
+
+  const cleanup = () => {
+    window.removeEventListener(
+      "pointermove",
+      onPointerMove,
+    );
+    window.removeEventListener(
+      "pointerup",
+      onPointerUp,
+    );
+    window.removeEventListener(
+      "pointercancel",
+      onPointerCancel,
+    );
+
+    if (target.hasPointerCapture(e.pointerId)) {
+      target.releasePointerCapture(e.pointerId);
+    }
+  };
+
+  const onPointerUp = (upEvent: PointerEvent) => {
+    if (upEvent.pointerId !== e.pointerId) return;
+
+    cleanup();
+
+    setEdges((eds) =>
+      eds.map((edge) =>
+        edge.id === id
+          ? {
+              ...edge,
+              data: {
+                ...edge.data,
+                points: lastCalculatedPoints,
+              },
+            }
+          : edge,
+      ),
+    );
+  };
+
+  const onPointerCancel = (cancelEvent: PointerEvent) => {
+    if (cancelEvent.pointerId !== e.pointerId) return;
+    cleanup();
+  };
+
+  window.addEventListener("pointermove", onPointerMove);
+  window.addEventListener("pointerup", onPointerUp);
+  window.addEventListener("pointercancel", onPointerCancel);
+};
 
   const onSegmentDoubleClick = (e: React.MouseEvent, index: number, isVertical: boolean) => {
     e.stopPropagation();
@@ -281,19 +384,63 @@ export default function EditableEdge({
       )}
 
       {segments.map((seg, index) => (
-        <path
-          key={index}
-          d={`M ${seg.p1.x},${seg.p1.y} L ${seg.p2.x},${seg.p2.y}`}
-          fill="none"
-          stroke={hoveredIndex === index ? "rgba(239,68,68,0.3)" : "transparent"}
-          strokeWidth={seg.isDraggable ? 4 : 0} 
-          style={{ cursor: !seg.isDraggable ? 'default' : seg.isVertical ? 'col-resize' : 'row-resize' }}
-          onClick={() => seg.isDraggable && setHoveredIndex(index)}
-          onMouseEnter={() => seg.isDraggable && setHoveredIndex(index)}
-          onMouseLeave={() => setHoveredIndex(null)}
-          onMouseDown={(e) => seg.isDraggable && onSegmentMouseDown(e, index, seg.isVertical)}
-          onDoubleClick={(e) => seg.isDraggable && onSegmentDoubleClick(e, index, seg.isVertical)} 
-        />
+        // <path
+        //   key={index}
+        //   d={`M ${seg.p1.x},${seg.p1.y} L ${seg.p2.x},${seg.p2.y}`}
+        //   fill="none"
+        //   stroke={hoveredIndex === index ? "rgba(239,68,68,0.3)" : "transparent"}
+        //   strokeWidth={seg.isDraggable ? 4 : 0} 
+        //   style={{ cursor: !seg.isDraggable ? 'default' : seg.isVertical ? 'col-resize' : 'row-resize' }}
+        //   onClick={() => seg.isDraggable && setHoveredIndex(index)}
+        //   onMouseEnter={() => seg.isDraggable && setHoveredIndex(index)}
+        //   onMouseLeave={() => setHoveredIndex(null)}
+        //   onMouseDown={(e) => seg.isDraggable && onSegmentMouseDown(e, index, seg.isVertical)}
+        //   onDoubleClick={(e) => seg.isDraggable && onSegmentDoubleClick(e, index, seg.isVertical)} 
+        // />
+        
+      <path
+        key={index}
+        d={`M ${seg.p1.x},${seg.p1.y} L ${seg.p2.x},${seg.p2.y}`}
+        fill="none"
+        stroke={
+          hoveredIndex === index
+            ? "rgba(239,68,68,0.3)"
+            : "transparent"
+        }
+        strokeWidth={seg.isDraggable ? 12 : 0}
+        style={{
+          cursor: !seg.isDraggable
+            ? "default"
+            : seg.isVertical
+              ? "col-resize"
+              : "row-resize",
+          pointerEvents: seg.isDraggable ? "stroke" : "none",
+          touchAction: "none",
+        }}
+        onPointerEnter={() => {
+          if (seg.isDraggable) setHoveredIndex(index);
+        }}
+        onPointerLeave={(e) => {
+          // Keep the selection while dragging.
+          if (e.buttons === 0) setHoveredIndex(null);
+        }}
+        onPointerDown={(e) => {
+          if (!seg.isDraggable) return;
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          setHoveredIndex(index);
+
+          onSegmentPointerDown(e, index, seg.isVertical);
+        }}
+        onDoubleClick={(e) => {
+          if (seg.isDraggable) {
+            onSegmentDoubleClick(e, index, seg.isVertical);
+          }
+        }}
+      />
+
       ))}
      <EdgeLabelRenderer>
         {isInvalid && (

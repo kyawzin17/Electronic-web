@@ -71,7 +71,7 @@ export default function ProjectsPage() {
 
 
   return (
-    <main className="h-[calc(100vh-65px)] project-scrollbar-width m-0 custom-scrollbar bg-soft text-text-main overflow-auto">
+    <main className="h-[calc(100vh-65px)] fixed top-16.25 left-0 right-0 project-scrollbar-width m-0 custom-scrollbar bg-soft text-text-main overflow-auto">
       <header className="sticky top-0 z-20 border-b border-slate-800/80 bg-card/90 px-5 py-4 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
           <div className="flex items-center gap-3">

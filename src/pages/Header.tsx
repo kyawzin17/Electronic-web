@@ -18,6 +18,7 @@ export default function Header() {
     const headerRef= useRef<HTMLElement | null>(null);
     const location= useLocation();
     const isDocActive= location.pathname.startsWith('/doc');
+    const isCircuitActive= location.pathname.startsWith('/circuit');
     // const [ scrollHeader, setHeaderScroll ]= useState<boolean>(false);
 
     // useEffect(() => {
@@ -35,7 +36,7 @@ export default function Header() {
     // }, []);
 
  return (
-    <header ref={headerRef} className="px-3 border-b border-secondary/40 md:px-6 lg:px-10 py-2 flex justify-between items-center z-100 sticky top-0 left-0 transition duration-100 backdrop-blur-md">
+    <header ref={headerRef} className={`px-3 border-b border-secondary/40 md:px-6 lg:px-10 py-2 flex justify-between items-center z-100 top-0 left-0 transition duration-100 backdrop-blur-md ${isCircuitActive ? "fixed w-full" : "sticky w-auto"}`}>
       {isDocActive && 
       <button
        className="cursor-pointer block lg:hidden"

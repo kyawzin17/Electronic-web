@@ -6,7 +6,7 @@ import CircuitEditor from "./CircuitEditor";
 
 const Circuit = () => {
     return (
-        <div className="relative h-[calc(100dvh-65px)] w-full flex  flex-col overflow-hidden">
+        <div className="fixed top-16.25 left-0 right-0 h-[calc(100dvh-65px)] w-full flex  flex-col overflow-hidden">
             <ReactFlowProvider>
                 <CircuitEditor />
             </ReactFlowProvider>
