@@ -725,7 +725,7 @@ const BreadboardHalfNode = ({
             }
 
             className={`transition-all duration-100 ${selectedPinId === pin.handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white"}`}
-            onPointerDown={(event) => { event.stopPropagation(); setSelectedPinId(pin.handleId); }}
+            onPointerDown={(event) => { setSelectedPinId(pin.handleId); }}
 
             style={{
 
@@ -747,11 +747,11 @@ const BreadboardHalfNode = ({
                   ${-5 * SCALE}px
                 )`,
 
-              background:
-                "transparent",
-
-              border:
-                "none",
+              background: selectedPinId === pin.handleId ? "#00D1FF" : undefined,
+              border: selectedPinId === pin.handleId ? "2px solid white" : undefined,
+              boxShadow: selectedPinId === pin.handleId
+                ? "0 0 0 3px rgba(0, 209, 255, 0.35)"
+                : undefined,
 
               minWidth:
                 0,
