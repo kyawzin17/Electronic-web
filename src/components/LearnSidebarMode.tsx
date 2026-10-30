@@ -13,19 +13,19 @@ const LearnSidebarMode: React.FC = () => {
     
 
     return (
-        <div className="w-full bg-transparent flex py-6 border-b-4 border-double border-b-text-secondary/50">
+        <div className="w-full sticky z-50 top-0 left-0 right-0 flex flex-row bg-soft/80 backdrop-blur-lg border-secondary/30 py-4 gap-2 border-b-4 border-double border-b-text-secondary/50">
                         <button onClick={() => {
                             setDocComponents("doc");
                             navigate("/docs/doc/components")
                             localStorage.setItem("docComponents", "/docs/doc/components");
-                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium ${secondPath === 'doc' ? "text-text-main border-text-secondary bg-text-muted/40" : "bg-transparent text-text-muted rounded-sm"}`}>
+                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium rounded-sm ${secondPath === 'doc' ? "text-text-main border-text-secondary bg-text-muted/40" : "bg-transparent text-text-muted"}`}>
                             Components
                         </button>
                         <button onClick={() => {
                             setDocComponents("learn");
                             navigate("/docs/learning")
                             localStorage.setItem("docComponents", "/docs/learning");
-                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium ${secondPath === 'learning' ? "text-text-main border-text-secondary bg-text-muted/40" : "bg-transparent text-text-muted rounded-sm"}`}>
+                        }} className={`w-full cursor-pointer border-2 border-border py-2 flex items-center justify-center font-medium rounded-sm ${secondPath === 'learning' ? "text-text-main border-text-secondary bg-text-muted/40" : "bg-transparent text-text-muted"}`}>
                             Learning
                         </button>
                     </div>

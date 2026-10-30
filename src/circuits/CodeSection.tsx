@@ -3,6 +3,7 @@ import { Maximize, ArrowDown, Package } from "lucide-react";
 import { useState, useEffect } from "react";
 import LibraryManager from "./LibraryManager.tsx";
 import { useSimulationStore } from "../stores/simulationStore";
+import "./Circuit.css"
 
 type CodeSectionProps = {
   show: boolean;
@@ -59,6 +60,33 @@ useEffect(() => {
   });
 
   return () => observer.disconnect();
+}, []);
+
+useEffect(() => {
+  const viewport = window.visualViewport;
+
+  if (!viewport) return;
+
+  const updateEditorHeight = () => {
+    document.documentElement.style.setProperty(
+      "--editor-viewport-height",
+      `${viewport.height}px`
+    );
+  };
+
+  updateEditorHeight();
+
+  viewport.addEventListener("resize", updateEditorHeight);
+  viewport.addEventListener("scroll", updateEditorHeight);
+
+  return () => {
+    viewport.removeEventListener("resize", updateEditorHeight);
+    viewport.removeEventListener("scroll", updateEditorHeight);
+
+    document.documentElement.style.removeProperty(
+      "--editor-viewport-height"
+    );
+  };
 }, []);
 
   return (
@@ -128,25 +156,36 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="min-h-0 flex-1">
-        <Editor
-          height="100%"
-          language="cpp"
-          value={code}
-          onChange={(value) => setCode(value ?? "")}
-          theme={
-            editorTheme === "vs-dark"
-              ? "vs-dark"
-              : "vs-light"
-          }
-          options={{
-            fontSize: 14,
-            minimap: { enabled: false },
-            automaticLayout: true,
-            scrollBeyondLastLine: false,
-          }}
-        />
-      </div>
+     <div className="editor-container min-h-0 flex-1">
+  <Editor
+    height="100%"
+    language="cpp"
+    value={code}
+    onChange={(value) => setCode(value ?? "")}
+    theme={
+      editorTheme === "vs-dark"
+        ? "vs-dark"
+        : "vs-light"
+    }
+    options={{
+      fontSize: 14,
+      minimap: { enabled: false },
+      automaticLayout: true,
+      scrollBeyondLastLine: false,
+      scrollBeyondLastColumn: 3,
+      wordWrap: "on",
+      scrollbar: {
+        vertical: "auto",
+        horizontal: "auto",
+        alwaysConsumeMouseWheel: false,
+      },
+      padding: {
+        top: 12,
+        bottom: 12,
+      },
+    }}
+  />
+</div>
 
       {showLibraryManager && (
         <LibraryManager

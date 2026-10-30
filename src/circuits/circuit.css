@@ -31,3 +31,16 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* * code editor container */
+.editor-container {
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .editor-container {
+    height: var(--editor-viewport-height, 100dvh);
+    max-height: 100%;
+  }
+}

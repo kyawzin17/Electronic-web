@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import "../App.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SearchBar from "../headers/MainSearchBar";
@@ -13,10 +13,25 @@ import ThemeButton from "../headers/ThemeButton";
 export default function Header() {
   
    const navigate= useNavigate();
-    const { menu, setMenu, rightMenu, setRightMenu, login, user }= useAppContext();
+    const { menu, setMenu, rightMenu, setRightMenu, login, user, setHeaderHeight}= useAppContext();
     const headerRef= useRef<HTMLElement | null>(null);
     const location= useLocation();
     const isDocActive= location.pathname.startsWith('/doc');
+    const [ scrollHeader, setHeaderScroll ]= useState<boolean>(false);
+
+    useEffect(() => {
+        const height= headerRef.current?.offsetHeight || 0;
+        setHeaderHeight(height);
+
+        const handleScroll= () => { 
+          if (window.scrollY > 10) {
+            setHeaderScroll(true);
+          } else {
+            setHeaderScroll(false);
+          }
+        };
+        window.addEventListener('scroll', handleScroll);
+    }, []);
 
  return (
     <header ref={headerRef} className={`px-3 border-b border-secondary/40 md:px-6 lg:px-10 py-2 flex justify-between items-center z-100 top-0 left-0 transition duration-100 backdrop-blur-md sticky w-auto`}>

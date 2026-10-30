@@ -253,29 +253,29 @@ export default function Docs() {
     }, [fileName]);
     console.log("header height",headerHeight);
     return (
-        <section className="w-full h-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
+        <section className="w-full relative h-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
             
              <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
             <div className="sticky custom-scrollbar bg-soft overflow-y-auto hidden lg:flex flex-col items-start gap-4"
                  style={{ height: `calc(100vh - ${headerHeight}px)`, top: `${headerHeight}px` }}>
-                    <LearnSidebarMode />
-                     {/* Search Bar */}
-                    <div className="w-full px-3 mb-1">
-                        <div className="relative">
-                            <FontAwesomeIcon 
-                                icon={faSearch} 
-                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary text-sm"
-                            />
-                            <input
-                                type="text"
-                                placeholder="Search components..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full pl-10 pr-4 py-2 text-sm border border-border rounded-lg bg-bg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                            />
+                        <LearnSidebarMode />
+                    {/* Search Bar */}
+                        <div className="w-full px-3 mb-1">
+                            <div className="relative">
+                                <FontAwesomeIcon 
+                                    icon={faSearch} 
+                                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-secondary text-sm"
+                                />
+                                <input
+                                    type="text"
+                                    placeholder="Search components..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full pl-10 pr-4 py-2 text-sm border border-border rounded-lg bg-bg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                />
+                            </div>
                         </div>
-                    </div>
                     <button 
                         onClick={() => {
                             setOpenCategory("components");

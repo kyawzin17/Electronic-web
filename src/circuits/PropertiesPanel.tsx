@@ -368,7 +368,7 @@ export default function PropertiesPanel({
             </button>
       </div>
             
-      <div className="custom-scrollbar bg-card/90
+      <div className="custom-scrollbar bg-card/95
         rounded-md
         border-2
         border-text-secondary/30
