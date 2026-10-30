@@ -123,6 +123,7 @@ type SimulationState = {
 const ElectronicNode = ({
   id,
   data,
+  selected,
 }: NodeProps) => {
 
   // =========================================================
@@ -1763,7 +1764,13 @@ const ElectronicNode = ({
         group
         relative
         border-2
-        ${simulation?.traceActive ? "border-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.55)]" : "border-transparent"}
+        ${
+          selected
+            ? "border-blue-500 shadow-[0_0_0_2px_rgba(59,130,246,0.22),0_0_14px_rgba(59,130,246,0.35)]"
+            : simulation?.traceActive
+              ? "border-cyan-400 shadow-[0_0_18px_rgba(34,211,238,0.55)]"
+              : "border-transparent"
+        }
         hover:border-blue-400/60
       `}
     >
