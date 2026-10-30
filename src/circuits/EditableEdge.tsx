@@ -91,7 +91,10 @@ export default function EditableEdge({
 
   const [points, setPoints] = useState<Point[]>(data?.points || getInitialPoints());
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+const selectedIndex =
+    typeof data?.selectedSegmentIndex === "number"
+      ? data.selectedSegmentIndex
+      : null;
 
   // Synchronize points with ref
   useEffect(() => { pointsRef.current = points; }, [points]);
@@ -208,7 +211,7 @@ const onSegmentPointerDown = (
 
   // Pointer ကို လက်ရှိ path ပေါ်မှာ capture လုပ်ထားမယ်။
   // Pointer path အပြင်ထွက်သွားလည်း drag ဆက်လုပ်နိုင်မယ်။
-  setSelectedIndex(index);
+
   const target = e.currentTarget;
   target.setPointerCapture(e.pointerId);
 
