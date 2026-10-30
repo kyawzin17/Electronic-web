@@ -1359,6 +1359,51 @@ const stop =
   ======================================================= */
 
   useEffect(() => {
+  const handleWireSegmentSelect = (event: Event) => {
+    const customEvent = event as CustomEvent<{
+      id: string;
+      segmentIndex: number;
+      isVertical: boolean;
+      x: number;
+      y: number;
+    }>;
+
+    const { id, segmentIndex, isVertical, x, y } =
+      customEvent.detail;
+
+    const edge = edgesRef.current.find(
+      (item) => item.id === id
+    );
+
+    if (!edge) return;
+
+    setEdgeMenu({
+      id,
+      segmentIndex,
+      isVertical,
+      x,
+      y,
+      color:
+        typeof edge.style?.stroke === "string"
+          ? edge.style.stroke
+          : "#2ecc71",
+    });
+  };
+
+  window.addEventListener(
+    "rde:wire-segment-select",
+    handleWireSegmentSelect
+  );
+
+  return () => {
+    window.removeEventListener(
+      "rde:wire-segment-select",
+      handleWireSegmentSelect
+    );
+  };
+}, []);
+
+  useEffect(() => {
     nodesRef.current = nodes;
   }, [nodes]);
 
@@ -3457,7 +3502,7 @@ const toggleCode = useCallback(() => {
                   type="button"
                   disabled={edgeMenu.segmentIndex < 1}
                   onClick={insertBendOnSelectedWireSegment}
-                  className="flex h-8 items-center justify-center rounded-md bg-secondary/30 hover:bg-secondary/40 text-text-secondary hover:text-text-main disabled:cursor-not-allowed disabled:opacity-25"
+                  className="flex h-8 items-center justify-center rounded-md bg-secondary/60 hover:bg-secondary/70 text-text-main/80 hover:text-text-main disabled:cursor-not-allowed disabled:opacity-25"
                   title="Insert wire bend"
                   aria-label="Insert wire bend"
                 >
