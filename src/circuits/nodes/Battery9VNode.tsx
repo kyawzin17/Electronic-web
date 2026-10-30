@@ -1,4 +1,4 @@
-import React, {
+import {
   useEffect,
   useMemo,
   useState,
@@ -151,9 +151,14 @@ const Battery9VNode = ({
   // ===================================================
 
   const [selectedPinId, setSelectedPinId] = useState<string | null>(null);
+  const [selected, setSelected] = useState<boolean>(false);
+  const [selectedPin, setSelectedPin] = useState<string | null>(null);
 
   useEffect(() => {
-    const clearSelection = () => setSelectedPinId(null);
+    const clearSelection = () => {
+      setSelectedPinId(null);
+      setSelected(false);
+    };
     window.addEventListener("rde:clear-pin-selection", clearSelection);
     return () => window.removeEventListener("rde:clear-pin-selection", clearSelection);
   }, []);
@@ -186,6 +191,7 @@ const Battery9VNode = ({
         border-transparent
         hover:border-blue-400/60
       "
+      onPointerDown={() => setSelected(true)}
       style={{
         width:
           `${nodeWidth}px`,
@@ -207,7 +213,17 @@ const Battery9VNode = ({
       {/* =================================================
           SVG 9V BATTERY VISUAL
       ================================================= */}
-
+    {selected && (
+            <span className="pointer-events-none absolute -top-7 left-1/2 z-100 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+              {String(data.label ?? data.componentType ?? "Component")}
+            </span>
+          )}
+    {selectedPinId && (
+            <span className="pointer-events-none absolute top-1/2 left-1/2 z-100 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+              {String(selectedPin ?? "Pin")}
+            </span>
+          )}
+    
       <svg
         viewBox={`0 0 ${SVG_WIDTH} ${SVG_HEIGHT}`}
         width={nodeWidth}
@@ -421,8 +437,10 @@ const Battery9VNode = ({
           position={Position.Top}
 
           title={pin.label}
-          onPointerDown={() => setSelectedPinId(pin.handleId)}
-          className={selectedPinId === pin.handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white"}
+          onPointerDown={() => { 
+            setSelectedPin(pin.label);
+            setSelectedPinId(pin.handleId); }}
+          className={selectedPin === pin.handleId ? "opacity-100! bg-cyan-400! border-2! border-white! shadow-[0_0_0_3px_rgba(0,209,255,0.35)]!" : "opacity-0 hover:opacity-100 active:opacity-100! hover:bg-cyan-400! active:border-2! hover:border-white! active:border-white!"}
           style={{
 
             left:

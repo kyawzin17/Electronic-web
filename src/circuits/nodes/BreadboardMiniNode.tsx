@@ -255,9 +255,15 @@ const BreadboardMiniNode = ({
   );
 
   const [selectedPinId, setSelectedPinId] = useState<string | null>(null);
+const [selected, setSelected] = useState<boolean>(false);
+const [selectedPin, setSelectedPin] = useState<string | null>(null);
+
 
   useEffect(() => {
-    const clearSelection = () => setSelectedPinId(null);
+    const clearSelection = () => {
+      setSelectedPinId(null);
+      setSelected(false);
+    };
     window.addEventListener("rde:clear-pin-selection", clearSelection);
     return () => window.removeEventListener("rde:clear-pin-selection", clearSelection);
   }, []);
@@ -324,6 +330,16 @@ const BreadboardMiniNode = ({
         transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
+      {selected && (
+        <span className="pointer-events-none absolute -top-7 left-1/2 z-100 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+          {String(data.label ?? data.componentType ?? "Component")}
+        </span>
+      )}
+      {selectedPinId && (
+            <span className="pointer-events-none absolute top-1/2 left-1/2 z-100 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+              {String(selectedPin ?? "Pin")}
+            </span>
+          )}
       {/* =================================================
           SVG BREADBOARD
       ================================================= */}
@@ -661,8 +677,10 @@ const BreadboardMiniNode = ({
                 pin.label
               }
 
-              className={`transition-all duration-100 ${selectedPinId === pin.handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white"}`}
-            onPointerDown={(event) => { setSelectedPinId(pin.handleId); }}
+              className={`transition-all duration-100 ${selectedPinId === pin.label ? "opacity-100! bg-cyan-400! border-2! border-white! shadow-[0_0_0_3px_rgba(0,209,255,0.35)]!" : "opacity-0 hover:opacity-100 active:opacity-100! hover:bg-cyan-400! active:bg-cyan-400! hover:border-2! hover:border-white! active:border-2! active:border-white!"}`}
+            onPointerDown={() => { 
+              setSelectedPin(pin.label);
+              setSelectedPinId(pin.handleId); }}
 
               style={{
 
@@ -716,9 +734,9 @@ const BreadboardMiniNode = ({
                  * =====================================
                  */
 
-                background: selectedPinId === pin.handleId ? "#00D1FF" : undefined,
-                border: selectedPinId === pin.handleId ? "2px solid white" : undefined,
-                boxShadow: selectedPinId === pin.handleId ? "0 0 0 3px rgba(0, 209, 255, 0.35)" : undefined,
+                background: selectedPinId === pin.label ? "#00D1FF" : undefined,
+                border: selectedPinId === pin.label ? "2px solid white" : undefined,
+                boxShadow: selectedPinId === pin.label ? "0 0 0 3px rgba(0, 209, 255, 0.35)" : undefined,
 
                 minWidth:
                   0,

@@ -122,7 +122,7 @@ const selectedIndex =
   }, [data?.points, id, setEdges]);
 
   useEffect(() => {
-    setPoints((prev) => {
+    setPoints(() => {
       // Always render from the latest edge data. Direction buttons and
       // drag handlers update edge.data.points; using only prev here leaves
       // the SVG path stuck on the previous local state.

@@ -1786,10 +1786,15 @@ const ElectronicNode = ({
       `}
     >
       {selected && (
-        <span className="pointer-events-none absolute -top-7 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+        <span className="pointer-events-none absolute -top-7 left-1/2 z-100 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
           {String(data.label ?? data.componentType ?? "Component")}
         </span>
       )}
+      {selectedPinId && (
+            <span className="pointer-events-none absolute top-1/2 left-1/2 z-100 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-1.5 py-0.75 text-[9px] font-semibold text-white shadow-lg">
+              {String(selectedPinId ?? "Pin")}
+            </span>
+          )}
 
       <div className="relative">
 
@@ -2158,12 +2163,6 @@ const ElectronicNode = ({
                   )
                 }
               />
-
-              <span
-                className={`pointer-events-none absolute -top-6 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded bg-soft/90 px-1.5 py-0.5 text-[8px] font-medium text-text-main transition-opacity ${selectedPinId === handleId ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
-              >
-                {handleId}
-              </span>
 
             </React.Fragment>
           );
