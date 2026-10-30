@@ -2097,7 +2097,7 @@ const ElectronicNode = ({
                 }
 
                 className={`absolute transition-all duration-100 ${isArduinoUno ? (selectedPinId === handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white") : "opacity-100"}`}
-                onPointerDown={isArduinoUno ? (event) => { event.stopPropagation(); setSelectedPinId(handleId); } : undefined}
+                onPointerDown={isArduinoUno ? (event) => { setSelectedPinId(handleId); } : undefined}
 
                 title={
                   isSsd1306 && pin.name === "DATA"
