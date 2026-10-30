@@ -71,7 +71,7 @@ export default function ProjectsPage() {
 
 
   return (
-    <main className="h-[calc(100vh-65px)] fixed top-16.25 left-0 right-0 project-scrollbar-width m-0 custom-scrollbar bg-soft text-text-main overflow-auto">
+    <main className="h-[calc(100vh-65px)] fixed top-16 left-0 right-0 project-scrollbar-width m-0 custom-scrollbar bg-soft text-text-main overflow-auto">
       <header className="sticky top-0 z-20 border-b border-slate-800/80 bg-card/90 px-5 py-4 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
           <div className="flex items-center gap-3">
@@ -85,7 +85,7 @@ export default function ProjectsPage() {
             </button>
 
             <div>
-              <h1 className="text-lg font-semibold mb-4">My Projects</h1>
+              <h1 className="text-md lg:text-lg font-semibold mb-4">My Projects</h1>
               <p className="text-xs text-text-secondary">
                 Saved circuits and Arduino sketches
               </p>
@@ -95,7 +95,7 @@ export default function ProjectsPage() {
           <button
             type="button"
             onClick={createProject}
-            className="flex items-center gap-2 rounded-xl bg-cyan-500 px-4 py-2.5 text-sm font-semibold text-black/90 transition hover:bg-cyan-400"
+            className="flex items-center gap-2 rounded-xl bg-cyan-500 px-4 py-2.5 text-xs lg:text-sm font-semibold text-black/90 transition hover:bg-cyan-400"
           >
             <Plus size={17} />
             New Project
@@ -192,9 +192,9 @@ export default function ProjectsPage() {
         )}
       </section>
       <section className="mx-auto max-w-6xl px-5 py-8 border-t-2 border-text-secondary">
-        <h1 className="text-center font-bold text-text-main text-xl lg:text-2xl mt-4">Build In Projects</h1>
-        <p className="text-center text-2xl lg:text-4xl mb-12 font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">✦•┈๑⋅⋯ ⋯⋅๑┈•✦</p>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <h1 className="text-center font-bold text-text-main text-base lg:text-xl mt-4">Build In Projects</h1>
+        <p className="text-center text-lg lg:text-4xl mb-12 font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">✦•┈๑⋅⋯ ⋯⋅๑┈•✦</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-12">
             {allProjects.filter((project) => project.isBuiltIn).map((project) => (
               <article
                 key={project.id}
