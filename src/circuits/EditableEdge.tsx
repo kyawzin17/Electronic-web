@@ -1,6 +1,7 @@
 import { CrossIcon } from 'lucide-react';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { type EdgeProps, BaseEdge, EdgeLabelRenderer, Position, useReactFlow, useStore } from 'reactflow';
+import { insertWireBend } from './wireUtils';
 
 type Point = { x: number; y: number };
 
@@ -300,33 +301,17 @@ const onSegmentPointerDown = (
 
   const onSegmentDoubleClick = (e: React.MouseEvent, index: number, isVertical: boolean) => {
     e.stopPropagation();
-    if (index === 0 || index === points.length - 2) return; 
-    const newPts = [...points];
-    const p1 = newPts[index];
-    const p2 = newPts[index + 1];
-    if (!isVertical) {
-      const midX = (p1.x + p2.x) / 2;
-      const dirX = Math.sign(p2.x - p1.x) || 1;
-      const offset = 15; 
-      newPts.splice(index + 1, 0, 
-        { x: midX - dirX * offset, y: p1.y },
-        { x: midX - dirX * offset, y: p1.y + 20 }, 
-        { x: midX + dirX * offset, y: p1.y + 20 },
-        { x: midX + dirX * offset, y: p1.y }
-      );
-    } else {
-      const midY = (p1.y + p2.y) / 2;
-      const dirY = Math.sign(p2.y - p1.y) || 1;
-      const offset = 15;
-      newPts.splice(index + 1, 0, 
-        { x: p1.x, y: midY - dirY * offset },
-        { x: p1.x + 20, y: midY - dirY * offset }, 
-        { x: p1.x + 20, y: midY + dirY * offset },
-        { x: p1.x, y: midY + dirY * offset }
-      );
-    }
+    const newPts = insertWireBend(pointsRef.current, index, isVertical);
+    if (!newPts) return;
+
     setPoints(newPts);
-    setEdges((eds) => eds.map((edge) => edge.id === id ? { ...edge, data: { ...edge.data, points: newPts } } : edge));
+    setEdges((eds) =>
+      eds.map((edge) =>
+        edge.id === id
+          ? { ...edge, data: { ...edge.data, points: newPts } }
+          : edge,
+      ),
+    );
   };
 
   const validation = data?.validation as
