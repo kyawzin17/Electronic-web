@@ -87,6 +87,7 @@ import { getBuiltInProject } from "./buildInProjectLoad";
 // Circuit Edge Data Type (For Simulation Engine)
 type CircuitEdgeData = {
   points: unknown;
+  selectedSegmentIndex?: number;
 
   sourceNodeId: string;
   sourcePinId: string | null;
@@ -1354,6 +1355,20 @@ const stop =
       isVertical: boolean;
     } | null>(null);
 
+  const clearWireSegmentHighlight = useCallback(() => {
+    setEdges((currentEdges) =>
+      currentEdges.map((edge) => {
+        if (edge.data?.selectedSegmentIndex === undefined) {
+          return edge;
+        }
+
+        const nextData = { ...edge.data };
+        delete nextData.selectedSegmentIndex;
+        return { ...edge, data: nextData };
+      }),
+    );
+  }, [setEdges]);
+
   /* =======================================================
      KEEP REFS IN SYNC
   ======================================================= */
@@ -1376,6 +1391,17 @@ const stop =
     );
 
     if (!edge) return;
+
+    setEdges((currentEdges) =>
+      currentEdges.map((item) => ({
+        ...item,
+        data: {
+          ...item.data,
+          selectedSegmentIndex:
+            item.id === id ? segmentIndex : undefined,
+        },
+      })),
+    );
 
     setEdgeMenu({
       id,
@@ -2362,9 +2388,10 @@ const stop =
 
   const onPaneClick = useCallback(() => {
     setEdgeMenu(null);
+    clearWireSegmentHighlight();
 
     setSelectedNode(null);
-  }, []);
+  }, [clearWireSegmentHighlight]);
 
   /* =======================================================
      UPDATE EDGE COLOR
@@ -3410,6 +3437,7 @@ const toggleCode = useCallback(() => {
             setSelectedNode(node);
 
             setEdgeMenu(null);
+            clearWireSegmentHighlight();
           }}
 
           fitView
@@ -3579,9 +3607,10 @@ const toggleCode = useCallback(() => {
 
             <button
               type="button"
-              onClick={() =>
-                setEdgeMenu(null)
-              }
+              onClick={() => {
+                setEdgeMenu(null);
+                clearWireSegmentHighlight();
+              }}
               className="mt-1 w-full text-center rounded-lg px-2 py-1.5 text-xs font-medium text-text-secondary hover:text-text-main transition hover:bg-secondary/20"
             >
               Close
