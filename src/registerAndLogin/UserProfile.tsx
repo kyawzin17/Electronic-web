@@ -237,7 +237,7 @@ const Profile = () => {
           </div>
           {/* Profile Image View Area */}
           <div className="relative group mb-2">
-            <div className="w-26 h-26 rounded-full bg-soft border-2 border-blue-500 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
+            <div className="w-26 h-26 rounded-full bg-soft border-2 border-secondary/80 overflow-hidden flex items-center justify-center text-3xl font-bold text-text-main/90">
               {user ? (
                 <img src={user.avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
               ) : (
@@ -283,10 +283,10 @@ const Profile = () => {
                   ကျန်ရှိစာလုံးရေ: {CHARACTER_LIMIT - bioText.length} လုံး
                 </div>
                 <div className="flex gap-2 mt-3 justify-end w-full text-xs">
-                  <button onClick={handleCancelBio} className="px-4 py-2 bg-transparent border border-border hover:bg-secondary text-text-secondary hover:text-bg rounded-md transition">
+                  <button onClick={handleCancelBio} className="px-4 py-2 bg-transparent font-mono border border-border hover:border-error/70 hover:bg-error/20 text-text-secondary hover:text-text-main rounded-md transition-all active:scale-90">
                     Cancel
                   </button>
-                  <button onClick={handleSaveBio} className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded-md transition">
+                  <button onClick={handleSaveBio} className="px-4 py-2 font-mono border border-secondary/90 hover:border-success/90 bg-secondary/20 hover:bg-success/20 text-text-main font-medium rounded-md transition-all active:scale-90">
                     Save
                   </button>
                 </div>

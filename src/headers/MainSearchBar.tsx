@@ -82,7 +82,7 @@ const SearchModal = () => {
       >
         <div className="flex items-center text-text-main">
           <Search size={20} className="mr-0 md:mr-2 opacity-70" />
-          <span className="hidden text-text-secondary md:block pe-6">ရှာဖွေရန် . . .</span>
+          <span className="hidden text-text-secondary md:block pe-6">Search . . .</span>
         </div>
         <kbd className="hidden md:flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-medium text-text-main bg-transparent border border-text-main rounded">
           <Command size={12} /> K

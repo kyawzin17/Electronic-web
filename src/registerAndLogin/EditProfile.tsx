@@ -139,14 +139,14 @@ export default function EditProfile() {
                         <button 
                         type="button" 
                         onClick={() => navigate("/auth/profile")}
-                        className="px-5 py-2 rounded-xl text-sm font-semibold bg-text-muted/40 text-text-main cursor-pointer hover:bg-text-muted transition-all active:scale-95"
+                        className="px-5 py-2 rounded-xl text-sm font-semibold bg-secondary/10 text-text-main cursor-pointer hover:bg-error/20 backdrop-blur-lg border border-secondary/80 hover:border-error/80 transition-all active:scale-95"
                         >
                         Cancel
                         </button>
                         <button 
                         onClick={handleSubmit}
                         type="submit" 
-                        className="px-5 py-2 rounded-xl text-sm font-semibold bg-[#8e44ad] text-white hover:bg-[#7d3c98] cursor-pointer transition-all active:scale-95"
+                        className="px-5 py-2 rounded-xl text-sm font-semibold bg-primary/10 text-text-main hover:bg-success/30 backdrop-blur-lg border border-primary/80 hover:border-success/80 cursor-pointer transition-all active:scale-95"
                         >
                         Save Changes
                         </button>

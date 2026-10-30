@@ -251,9 +251,9 @@ export default function Docs() {
         // စာမျက်နှာအသစ်ရောက်တိုင်း အပေါ်ဆုံးကို ပြန်တင်ပေးမယ်
         window.scrollTo(0, 0);
     }, [fileName]);
-
+    console.log("header height",headerHeight);
     return (
-        <section className="w-full relative h-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
+        <section className="w-full h-auto grid grid-cols-5 gap-1 lg:gap-6 xl:gap-8">
             
              <MobileLeftSidebar categories={categories} docArray={docArray} openCategory={openCategory} setOpenCategory={setOpenCategory} searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
             {/* Left Sidebar */}
