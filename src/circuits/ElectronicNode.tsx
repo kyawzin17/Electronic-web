@@ -1726,6 +1726,8 @@ const ElectronicNode = ({
 
   return (
     <div
+      title={String(data.label ?? data.componentType ?? "Component")}
+      
       onPointerDown={
         isPushButton
           ? handlePushButtonPointerDown
@@ -2153,28 +2155,10 @@ const ElectronicNode = ({
               />
 
               <span
-                className="
-                  pointer-events-none
-                  absolute
-                  -top-6
-                  left-1/2
-                  z-30
-                  -translate-x-1/2
-                  whitespace-nowrap
-                  rounded
-                  bg-soft/80
-                  px-1.5
-                  py-0.5
-                  text-[8px]
-                  font-medium
-                  text-text-main
-                  opacity-0
-                  transition-opacity
-                  group-hover:opacity-100
-                "
+                className={`pointer-events-none absolute -top-6 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded bg-soft/90 px-1.5 py-0.5 text-[8px] font-medium text-text-main transition-opacity ${selectedPinId === handleId ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
               >
-                {data.label}
-              </span>
+                {handleId}
+              </span>       </span>
 
             </React.Fragment>
           );
