@@ -2,6 +2,7 @@ import React, {
   memo,
   useEffect,
   useRef,
+  useState,
 } from "react";
 
 import {
@@ -156,6 +157,8 @@ const ElectronicNode = ({
 
   const componentRef =
     useRef<HTMLElement | null>(null);
+
+  const [selectedPinId, setSelectedPinId] = useState<string | null>(null);
 
   const ssd1306CanvasRef =
     useRef<HTMLCanvasElement | null>(null);
@@ -2093,10 +2096,8 @@ const ElectronicNode = ({
                   )
                 }
 
-                className={`
-                  absolute
-                  ${isArduinoUno ? "opacity-0" : "opacity-100"}
-                `}
+                className={`absolute transition-all duration-100 ${isArduinoUno ? (selectedPinId === handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white") : "opacity-100"}`}
+                onPointerDown={isArduinoUno ? (event) => { event.stopPropagation(); setSelectedPinId(handleId); } : undefined}
 
                 title={
                   isSsd1306 && pin.name === "DATA"
@@ -2125,8 +2126,9 @@ const ElectronicNode = ({
                     `${pin.y}px`,
 
                   zIndex: 20,
-                  background: "transparent", // 👈 ဤနေရာတွင် background အရောင်ကို ဖျောက်ရန်
-                  border: "none",            // 👈 ဤနေရာတွင် ဘောင် (border) ကို ဖျောက်ရန်
+                  background: isArduinoUno && selectedPinId === handleId ? "#00D1FF" : undefined,
+                  border: isArduinoUno && selectedPinId === handleId ? "2px solid white" : undefined,
+                  boxShadow: isArduinoUno && selectedPinId === handleId ? "0 0 0 3px rgba(0, 209, 255, 0.35)" : undefined
                 }}
 
                 data-pin-id={
