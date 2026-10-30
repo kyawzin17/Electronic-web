@@ -619,6 +619,7 @@ const CircuitEditor = () => {
   useRef<SimulationEngine | null>(null);
 const [isToolbarMenuOpen, setIsToolbarMenuOpen] =
   useState(false);
+  const [pendingConnection, setPendingConnection] = useState<Connection | null>(null);
 
   const [editorTheme, setEditorTheme] = useState<
   "light" | "vs-dark"
@@ -1575,7 +1576,7 @@ const stop =
      CONNECT
   ======================================================= */
 
-  const onConnect = useCallback(
+  const commitConnection = useCallback(
     (params: Connection) => {
       /** 
        * React Flow guarantees (အာမခံ) source and target for a valid connection (မှန်ကန်တဲ့ ချိပ်ဆက်မှု).
@@ -1665,6 +1666,21 @@ const stop =
     },
     [setEdges, pushToHistory]
   );
+
+  const onConnect = useCallback((params: Connection) => {
+    if (!params.source || !params.target || !params.sourceHandle || !params.targetHandle) return;
+    setPendingConnection(params);
+  }, []);
+
+  const confirmPendingConnection = useCallback(() => {
+    if (pendingConnection) commitConnection(pendingConnection);
+    setPendingConnection(null);
+  }, [pendingConnection, commitConnection]);
+
+  const cancelPendingConnection = useCallback(() => {
+    // Keep the second pin highlighted so the user can continue from it.
+    setPendingConnection(null);
+  }, []);
 
   /* =======================================================
      EDGE UPDATE / RECONNECT
@@ -3486,6 +3502,33 @@ const toggleCode = useCallback(() => {
           <ZoomControls />
 
         </ReactFlow>
+
+        {pendingConnection && (
+          <div className="absolute inset-0 z-[200] flex items-center justify-center bg-slate-950/45 p-4" role="presentation">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="wire-confirm-title"
+              className="w-full max-w-sm rounded-2xl border border-border bg-soft p-5 text-text-main shadow-2xl"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/15 text-cyan-500">
+                <span className="text-xl">⌁</span>
+              </div>
+              <h3 id="wire-confirm-title" className="text-base font-semibold">Connect these pins?</h3>
+              <p className="mt-1 text-sm text-text-secondary">Do you want to create a wire between these two pins?</p>
+              <div className="my-4 rounded-xl border border-border bg-bg/60 p-3 text-xs">
+                <div className="font-semibold">{nodesRef.current.find((node) => node.id === pendingConnection.source)?.data?.label ?? nodesRef.current.find((node) => node.id === pendingConnection.source)?.data?.componentType ?? "Component"} <span className="text-cyan-500">· {pendingConnection.sourceHandle}</span></div>
+                <div className="my-2 border-t border-dashed border-border" />
+                <div className="font-semibold">{nodesRef.current.find((node) => node.id === pendingConnection.target)?.data?.label ?? nodesRef.current.find((node) => node.id === pendingConnection.target)?.data?.componentType ?? "Component"} <span className="text-cyan-500">· {pendingConnection.targetHandle}</span></div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <button type="button" onClick={cancelPendingConnection} className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-text-secondary transition hover:bg-text-secondary/10">Cancel</button>
+                <button type="button" onClick={confirmPendingConnection} className="rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-cyan-600">Connect</button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* =================================================
             EDGE CONTEXT MENU
