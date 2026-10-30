@@ -58,6 +58,7 @@ import { LuGrid2X2X, LuGrid2X2Plus, LuCode } from "react-icons/lu";
 
 // * ----------> Components <----------
 import EditableEdge from "./EditableEdge"; // Editable Edge Component (Custom Edge Component)
+import { insertWireBend } from './wireUtils';
 import Sidebar from "./Sidebar.tsx";  // Left Sidebar Component (For drag and drop nodes)
 import PropertiesPanel from "./PropertiesPanel"; // Properties Panel Component (Right Sidebar)
 import ElectronicNode from "./ElectronicNode.tsx"; // Electronic Custom Node Component (For Pin Handling)
@@ -2371,6 +2372,34 @@ const stop =
      MOVE SELECTED WIRE SEGMENT
   ======================================================= */
 
+  const insertBendOnSelectedWireSegment = useCallback(() => {
+    if (!edgeMenu) return;
+
+    let didUpdate = false;
+    const nextEdges = edgesRef.current.map((edge) => {
+      if (edge.id !== edgeMenu.id) return edge;
+
+      const currentPoints = Array.isArray(edge.data?.points)
+        ? edge.data.points as { x: number; y: number }[]
+        : [];
+      const nextPoints = insertWireBend(
+        currentPoints,
+        edgeMenu.segmentIndex,
+        edgeMenu.isVertical,
+      );
+
+      if (!nextPoints) return edge;
+
+      didUpdate = true;
+      return { ...edge, data: { ...edge.data, points: nextPoints } };
+    });
+
+    if (!didUpdate) return;
+
+    setEdges(nextEdges);
+    pushToHistory(nodesRef.current, nextEdges as CircuitEdge[]);
+  }, [edgeMenu, setEdges, pushToHistory]);
+
   const moveSelectedWireSegment = useCallback(
     (direction: "left" | "right" | "up" | "down") => {
       if (!edgeMenu) return;
@@ -2395,9 +2424,7 @@ const stop =
           (!edgeMenu.isVertical && direction !== "up" && direction !== "down")
         ) return edge;
 
-        const delta = direction === "left" || direction === "up"
-          ? -GRID_SIZE
-          : GRID_SIZE;
+        const delta = direction === "left" || direction === "up" ? -GRID_SIZE : GRID_SIZE;
         const nextPoints = currentPoints.map((point) => ({ ...point }));
 
         if (edgeMenu.isVertical) {
@@ -3426,7 +3453,14 @@ const toggleCode = useCallback(() => {
                   onClick={() => moveSelectedWireSegment("left")}
                   className="flex h-8 items-center justify-center rounded-md bg-text-secondary/10 text-text-main transition hover:bg-primary/15 disabled:cursor-not-allowed disabled:opacity-25"
                   title="Move left" aria-label="Move wire segment left"><ArrowLeft size={16} /></button>
-                <button className="flex h-8 items-center justify-center rounded-md bg-secondary/30 hover:bg-secondary/40 text-text-secondary hover:text-text-main">
+                <button
+                  type="button"
+                  disabled={edgeMenu.segmentIndex < 1}
+                  onClick={insertBendOnSelectedWireSegment}
+                  className="flex h-8 items-center justify-center rounded-md bg-secondary/30 hover:bg-secondary/40 text-text-secondary hover:text-text-main disabled:cursor-not-allowed disabled:opacity-25"
+                  title="Insert wire bend"
+                  aria-label="Insert wire bend"
+                >
                   <TbSTurnDown size={16} />
                 </button>
                 <button type="button"
