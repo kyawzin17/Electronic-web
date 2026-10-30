@@ -656,7 +656,7 @@ const BreadboardMiniNode = ({
               }
 
               className={`transition-all duration-100 ${selectedPinId === pin.handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white"}`}
-            onPointerDown={(event) => { event.stopPropagation(); setSelectedPinId(pin.handleId); }}
+            onPointerDown={(event) => { setSelectedPinId(pin.handleId); }}
 
               style={{
 
