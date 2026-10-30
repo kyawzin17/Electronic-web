@@ -118,9 +118,17 @@ export default function EditableEdge({
 
   useEffect(() => {
     setPoints((prev) => {
-      if (!data?.points) return getInitialPoints();
-      const newPts = [...prev];
+      // Always render from the latest edge data. Direction buttons and
+      // drag handlers update edge.data.points; using only prev here leaves
+      // the SVG path stuck on the previous local state.
+      const sourcePoints = Array.isArray(data?.points)
+        ? (data.points as Point[])
+        : getInitialPoints();
+
+      const newPts = sourcePoints.map((point) => ({ ...point }));
       const len = newPts.length;
+
+      if (len < 2) return newPts;
 
       newPts[0] = { x: trueSource.x, y: trueSource.y };
       newPts[len - 1] = { x: trueTarget.x, y: trueTarget.y };
@@ -132,8 +140,10 @@ export default function EditableEdge({
         return { x: x + stubLength, y };
       };
 
-      newPts[1] = updateStub(sourcePosition, trueSource.x, trueSource.y);
-      newPts[len - 2] = updateStub(targetPosition, trueTarget.x, trueTarget.y);
+      if (len >= 3) {
+        newPts[1] = updateStub(sourcePosition, trueSource.x, trueSource.y);
+        newPts[len - 2] = updateStub(targetPosition, trueTarget.x, trueTarget.y);
+      }
 
       if (len >= 4) {
         const isSVert = sourcePosition === Position.Top || sourcePosition === Position.Bottom;
