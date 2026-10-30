@@ -1785,6 +1785,11 @@ const ElectronicNode = ({
         hover:border-blue-400/60
       `}
     >
+      {selected && (
+        <span className="pointer-events-none absolute -top-7 left-1/2 z-[100] -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+          {String(data.label ?? data.componentType ?? "Component")}
+        </span>
+      )}
 
       <div className="relative">
 
