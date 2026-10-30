@@ -48,6 +48,7 @@ import { batteryPins } from "./pins/battery9VPins.ts";
 // * ----------> Icons <----------
 import { ChevronDown, ZoomIn, ZoomOut, Maximize, Check, Undo, Redo, Menu as MenuIcon,
   X, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
+  import { TbSTurnDown } from "react-icons/tb";
 import { MdDeleteForever } from "react-icons/md";
 import { VscDebugAll, VscNewFolder } from "react-icons/vsc";
 import { FaRegSave } from "react-icons/fa";
@@ -527,6 +528,8 @@ const ZoomControls = () => {
       duration: 300,
     });
   };
+
+  
   return (
     <div className="absolute bottom-5 left-1/2 z-50 -translate-x-1/2">
       <div className="flex items-center gap-1 rounded-xl border border-primary/40 bg-soft/40 p-1 shadow-xl backdrop-blur-md">
@@ -2411,7 +2414,7 @@ const stop =
       });
 
       setEdges(nextEdges);
-      pushToHistory(nodesRef.current, nextEdges);
+      pushToHistory(nodesRef.current, nextEdges as CircuitEdge[]);
     },
     [edgeMenu, setEdges, pushToHistory]
   );
@@ -3390,11 +3393,11 @@ const toggleCode = useCallback(() => {
 
         {edgeMenu && (
           <div
-            className="fixed z-100 w-48 rounded-xl border border-border bg-soft p-2 shadow-2xl"
-            style={{
-              left: edgeMenu.x,
-              top: edgeMenu.y,
-            }}
+            className="absolute bottom-2 right-2 z-100 w-52 h-auto rounded-xl border-2 border-border bg-soft p-2 shadow-2xl"
+            // style={{
+            //   left: edgeMenu.x,
+            //   top: edgeMenu.y,
+            // }}
             onClick={(event) =>
               event.stopPropagation()
             }
@@ -3407,7 +3410,7 @@ const toggleCode = useCallback(() => {
 
             {/* Direction controls for the clicked wire segment */}
             <div className="mb-2 rounded-lg border border-border/70 bg-bg/50 p-2">
-              <div className="mb-2 px-1 text-[11px] font-semibold text-text-secondary">
+              <div className="mb-2 px-1 text-[11px] text-center font-semibold text-text-secondary">
                 Move selected segment
               </div>
               <div className="grid grid-cols-3 gap-1">
@@ -3423,9 +3426,9 @@ const toggleCode = useCallback(() => {
                   onClick={() => moveSelectedWireSegment("left")}
                   className="flex h-8 items-center justify-center rounded-md bg-text-secondary/10 text-text-main transition hover:bg-primary/15 disabled:cursor-not-allowed disabled:opacity-25"
                   title="Move left" aria-label="Move wire segment left"><ArrowLeft size={16} /></button>
-                <div className="flex h-8 items-center justify-center rounded-md text-[10px] text-text-secondary">
-                  {edgeMenu.isVertical ? "↕" : "↔"}
-                </div>
+                <button className="flex h-8 items-center justify-center rounded-md bg-secondary/30 hover:bg-secondary/40 text-text-secondary hover:text-text-main">
+                  <TbSTurnDown size={16} />
+                </button>
                 <button type="button"
                   disabled={edgeMenu.segmentIndex < 1 || !edgeMenu.isVertical}
                   onClick={() => moveSelectedWireSegment("right")}
@@ -3484,7 +3487,7 @@ const toggleCode = useCallback(() => {
             <button
               type="button"
               onClick={deleteEdge}
-              className="flex w-full justify-center items-center gap-2 rounded-lg px-2 py-2 text-left text-sm text-red-600 transition hover:bg-red-50"
+              className="flex w-full justify-center items-center gap-2 rounded-lg px-2 py-2 text-left font-medium text-sm text-error/90 hover:text-error transition hover:bg-error/20"
             >
               <MdDeleteForever
                 size={17}
@@ -3500,7 +3503,7 @@ const toggleCode = useCallback(() => {
               onClick={() =>
                 setEdgeMenu(null)
               }
-              className="mt-1 flex w-full items-center justify-center rounded-lg px-2 py-1.5 text-xs text-slate-500 transition hover:bg-slate-100"
+              className="mt-1 w-full text-center rounded-lg px-2 py-1.5 text-xs font-medium text-text-secondary hover:text-text-main transition hover:bg-secondary/20"
             >
               Close
             </button>

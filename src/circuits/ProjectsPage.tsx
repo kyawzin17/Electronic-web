@@ -85,7 +85,7 @@ export default function ProjectsPage() {
             </button>
 
             <div>
-              <h1 className="text-md lg:text-lg font-semibold mb-4">My Projects</h1>
+              <h2 className="text-2xl lg:text-4xl font-semibold mb-4">My Projects</h2>
               <p className="text-xs text-text-secondary">
                 Saved circuits and Arduino sketches
               </p>
@@ -192,7 +192,7 @@ export default function ProjectsPage() {
         )}
       </section>
       <section className="mx-auto max-w-6xl px-5 py-8 border-t-2 border-text-secondary">
-        <h1 className="text-center font-bold text-text-main text-base lg:text-xl mt-4">Build In Projects</h1>
+        <h2 className="text-center font-bold text-text-main text-2xl lg:text-4xl mt-4">Build In Projects</h2>
         <p className="text-center text-lg lg:text-4xl mb-12 font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">✦•┈๑⋅⋯ ⋯⋅๑┈•✦</p>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-12">
             {allProjects.filter((project) => project.isBuiltIn).map((project) => (
