@@ -3,7 +3,7 @@ import { Maximize, ArrowDown, Package } from "lucide-react";
 import { useState, useEffect } from "react";
 import LibraryManager from "./LibraryManager.tsx";
 import { useSimulationStore } from "../stores/simulationStore";
-import "./Circuit.css"
+import "./circuit.css"
 
 type CodeSectionProps = {
   show: boolean;
