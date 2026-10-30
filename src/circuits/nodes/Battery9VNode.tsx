@@ -1,6 +1,7 @@
 import React, {
   useEffect,
   useMemo,
+  useState,
 } from "react";
 
 import {
@@ -148,6 +149,14 @@ const Battery9VNode = ({
   // ===================================================
   // CREATE PINS
   // ===================================================
+
+  const [selectedPinId, setSelectedPinId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const clearSelection = () => setSelectedPinId(null);
+    window.addEventListener("rde:clear-pin-selection", clearSelection);
+    return () => window.removeEventListener("rde:clear-pin-selection", clearSelection);
+  }, []);
 
   const pins = useMemo(
     () => createBatteryPins(),
@@ -412,7 +421,8 @@ const Battery9VNode = ({
           position={Position.Top}
 
           title={pin.label}
-
+          onPointerDown={() => setSelectedPinId(pin.handleId)}
+          className={selectedPinId === pin.handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white"}
           style={{
 
             left:
@@ -433,11 +443,10 @@ const Battery9VNode = ({
                 ${-6 * SCALE}px
               )`,
 
-            background:
-              "transparent",
+            background: selectedPinId === pin.handleId ? "#00D1FF" : "transparent",
 
-            border:
-              "none",
+            border: selectedPinId === pin.handleId ? "2px solid white" : "none",
+            boxShadow: selectedPinId === pin.handleId ? "0 0 0 3px rgba(0, 209, 255, 0.35)" : undefined,
 
             minWidth: 0,
 
