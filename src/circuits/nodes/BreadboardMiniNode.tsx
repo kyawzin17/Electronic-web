@@ -256,6 +256,12 @@ const BreadboardMiniNode = ({
 
   const [selectedPinId, setSelectedPinId] = useState<string | null>(null);
 
+  useEffect(() => {
+    const clearSelection = () => setSelectedPinId(null);
+    window.addEventListener("rde:clear-pin-selection", clearSelection);
+    return () => window.removeEventListener("rde:clear-pin-selection", clearSelection);
+  }, []);
+
   // ===================================================
   // UPDATE REACT FLOW HANDLE POSITIONS
   // ===================================================
