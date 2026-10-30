@@ -2389,7 +2389,7 @@ const stop =
   const onPaneClick = useCallback(() => {
     setEdgeMenu(null);
     clearWireSegmentHighlight();
-
+    window.dispatchEvent(new Event("rde:clear-pin-selection"));
     setSelectedNode(null);
   }, [clearWireSegmentHighlight]);
 
