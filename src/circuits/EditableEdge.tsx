@@ -94,6 +94,28 @@ export default function EditableEdge({
   // Synchronize points with ref
   useEffect(() => { pointsRef.current = points; }, [points]);
 
+  // Persist the generated initial route so the context menu can identify
+  // the exact segment selected by the user.
+  useEffect(() => {
+    if (Array.isArray(data?.points)) return;
+    const initialPoints = pointsRef.current;
+    if (initialPoints.length < 2) return;
+
+    setEdges((currentEdges) =>
+      currentEdges.map((edge) =>
+        edge.id === id
+          ? {
+              ...edge,
+              data: {
+                ...edge.data,
+                points: initialPoints.map((point) => ({ ...point })),
+              },
+            }
+          : edge,
+      ),
+    );
+  }, [data?.points, id, setEdges]);
+
   useEffect(() => {
     setPoints((prev) => {
       if (!data?.points) return getInitialPoints();

@@ -47,7 +47,7 @@ import { batteryPins } from "./pins/battery9VPins.ts";
 
 // * ----------> Icons <----------
 import { ChevronDown, ZoomIn, ZoomOut, Maximize, Check, Undo, Redo, Menu as MenuIcon,
-  X } from "lucide-react";
+  X, ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react";
 import { MdDeleteForever } from "react-icons/md";
 import { VscDebugAll, VscNewFolder } from "react-icons/vsc";
 import { FaRegSave } from "react-icons/fa";
@@ -1346,6 +1346,8 @@ const stop =
       x: number;
       y: number;
       color: string;
+      segmentIndex: number;
+      isVertical: boolean;
     } | null>(null);
 
   /* =======================================================
@@ -2240,27 +2242,69 @@ const stop =
   ======================================================= */
 
   const onEdgeClick = useCallback(
-    (
-      event: React.MouseEvent,
-      edge: Edge
-    ) => {
+    (event: React.MouseEvent, edge: Edge) => {
       event.stopPropagation();
+
+      const flowPoint = reactFlowInstance
+        ? reactFlowInstance.screenToFlowPosition({
+            x: event.clientX,
+            y: event.clientY,
+          })
+        : { x: event.clientX, y: event.clientY };
+
+      const edgePoints = Array.isArray(edge.data?.points)
+        ? edge.data.points as { x: number; y: number }[]
+        : [];
+
+      let segmentIndex = -1;
+      let closestDistance = Number.POSITIVE_INFINITY;
+
+      // Ignore the two endpoint stubs; only interior segments are movable.
+      for (let index = 1; index < edgePoints.length - 2; index += 1) {
+        const start = edgePoints[index];
+        const end = edgePoints[index + 1];
+        const dx = end.x - start.x;
+        const dy = end.y - start.y;
+        const lengthSquared = dx * dx + dy * dy;
+        const projection = lengthSquared === 0
+          ? 0
+          : Math.max(0, Math.min(1,
+              ((flowPoint.x - start.x) * dx +
+                (flowPoint.y - start.y) * dy) / lengthSquared
+            ));
+        const distance = Math.hypot(
+          flowPoint.x - (start.x + projection * dx),
+          flowPoint.y - (start.y + projection * dy)
+        );
+
+        if (distance < closestDistance) {
+          closestDistance = distance;
+          segmentIndex = index;
+        }
+      }
+
+      if (segmentIndex < 0 && edgePoints.length >= 2) {
+        segmentIndex = Math.min(1, edgePoints.length - 2);
+      }
+
+      const first = edgePoints[segmentIndex];
+      const second = edgePoints[segmentIndex + 1];
+      const isVertical = first && second
+        ? Math.abs(first.x - second.x) < 0.1
+        : false;
 
       setEdgeMenu({
         id: edge.id,
-
         x: event.clientX,
-
         y: event.clientY,
-
-        color:
-          typeof edge.style?.stroke ===
-          "string"
-            ? edge.style.stroke
-            : "#2ecc71",
+        color: typeof edge.style?.stroke === "string"
+          ? edge.style.stroke
+          : "#2ecc71",
+        segmentIndex,
+        isVertical,
       });
     },
-    []
+    [reactFlowInstance]
   );
 
   /* =======================================================
@@ -2318,6 +2362,58 @@ const stop =
       setEdges,
       pushToHistory,
     ]
+  );
+
+  /* =======================================================
+     MOVE SELECTED WIRE SEGMENT
+  ======================================================= */
+
+  const moveSelectedWireSegment = useCallback(
+    (direction: "left" | "right" | "up" | "down") => {
+      if (!edgeMenu) return;
+
+      const nextEdges = edgesRef.current.map((edge) => {
+        if (edge.id !== edgeMenu.id) return edge;
+
+        const currentPoints = Array.isArray(edge.data?.points)
+          ? edge.data.points as { x: number; y: number }[]
+          : [];
+        const index = edgeMenu.segmentIndex;
+
+        if (
+          index < 1 ||
+          index >= currentPoints.length - 2 ||
+          !currentPoints[index] ||
+          !currentPoints[index + 1]
+        ) return edge;
+
+        if (
+          (edgeMenu.isVertical && direction !== "left" && direction !== "right") ||
+          (!edgeMenu.isVertical && direction !== "up" && direction !== "down")
+        ) return edge;
+
+        const delta = direction === "left" || direction === "up"
+          ? -GRID_SIZE
+          : GRID_SIZE;
+        const nextPoints = currentPoints.map((point) => ({ ...point }));
+
+        if (edgeMenu.isVertical) {
+          const nextX = nextPoints[index].x + delta;
+          nextPoints[index].x = nextX;
+          nextPoints[index + 1].x = nextX;
+        } else {
+          const nextY = nextPoints[index].y + delta;
+          nextPoints[index].y = nextY;
+          nextPoints[index + 1].y = nextY;
+        }
+
+        return { ...edge, data: { ...edge.data, points: nextPoints } };
+      });
+
+      setEdges(nextEdges);
+      pushToHistory(nodesRef.current, nextEdges);
+    },
+    [edgeMenu, setEdges, pushToHistory]
   );
 
   /* =======================================================
@@ -3307,6 +3403,45 @@ const toggleCode = useCallback(() => {
 
             <div className="mb-2 px-2 py-1 text-xs font-semibold text-text-secondary">
               Wire
+            </div>
+
+            {/* Direction controls for the clicked wire segment */}
+            <div className="mb-2 rounded-lg border border-border/70 bg-bg/50 p-2">
+              <div className="mb-2 px-1 text-[11px] font-semibold text-text-secondary">
+                Move selected segment
+              </div>
+              <div className="grid grid-cols-3 gap-1">
+                <span />
+                <button type="button"
+                  disabled={edgeMenu.segmentIndex < 1 || edgeMenu.isVertical}
+                  onClick={() => moveSelectedWireSegment("up")}
+                  className="flex h-8 items-center justify-center rounded-md bg-text-secondary/10 text-text-main transition hover:bg-primary/15 disabled:cursor-not-allowed disabled:opacity-25"
+                  title="Move up" aria-label="Move wire segment up"><ArrowUp size={16} /></button>
+                <span />
+                <button type="button"
+                  disabled={edgeMenu.segmentIndex < 1 || !edgeMenu.isVertical}
+                  onClick={() => moveSelectedWireSegment("left")}
+                  className="flex h-8 items-center justify-center rounded-md bg-text-secondary/10 text-text-main transition hover:bg-primary/15 disabled:cursor-not-allowed disabled:opacity-25"
+                  title="Move left" aria-label="Move wire segment left"><ArrowLeft size={16} /></button>
+                <div className="flex h-8 items-center justify-center rounded-md text-[10px] text-text-secondary">
+                  {edgeMenu.isVertical ? "↕" : "↔"}
+                </div>
+                <button type="button"
+                  disabled={edgeMenu.segmentIndex < 1 || !edgeMenu.isVertical}
+                  onClick={() => moveSelectedWireSegment("right")}
+                  className="flex h-8 items-center justify-center rounded-md bg-text-secondary/10 text-text-main transition hover:bg-primary/15 disabled:cursor-not-allowed disabled:opacity-25"
+                  title="Move right" aria-label="Move wire segment right"><ArrowRight size={16} /></button>
+                <span />
+                <button type="button"
+                  disabled={edgeMenu.segmentIndex < 1 || edgeMenu.isVertical}
+                  onClick={() => moveSelectedWireSegment("down")}
+                  className="flex h-8 items-center justify-center rounded-md bg-text-secondary/10 text-text-main transition hover:bg-primary/15 disabled:cursor-not-allowed disabled:opacity-25"
+                  title="Move down" aria-label="Move wire segment down"><ArrowDown size={16} /></button>
+                <span />
+              </div>
+              <p className="mt-1 text-center text-[10px] text-text-secondary">
+                {edgeMenu.isVertical ? "Vertical: Left / Right" : "Horizontal: Up / Down"} · 1 grid step
+              </p>
             </div>
 
             {/* Color Options */}
