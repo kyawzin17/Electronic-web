@@ -1678,8 +1678,8 @@ const stop =
   }, [pendingConnection, commitConnection]);
 
   const cancelPendingConnection = useCallback(() => {
+    // Keep the second pin highlighted so the user can continue from it.
     setPendingConnection(null);
-    window.dispatchEvent(new Event("rde:clear-pin-selection"));
   }, []);
 
   /* =======================================================
