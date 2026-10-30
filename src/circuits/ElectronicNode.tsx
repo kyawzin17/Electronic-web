@@ -160,6 +160,12 @@ const ElectronicNode = ({
 
   const [selectedPinId, setSelectedPinId] = useState<string | null>(null);
 
+  useEffect(() => {
+    const clearSelection = () => setSelectedPinId(null);
+    window.addEventListener("rde:clear-pin-selection", clearSelection);
+    return () => window.removeEventListener("rde:clear-pin-selection", clearSelection);
+  }, []);
+
   const ssd1306CanvasRef =
     useRef<HTMLCanvasElement | null>(null);
 
@@ -2096,8 +2102,8 @@ const ElectronicNode = ({
                   )
                 }
 
-                className={`absolute transition-all duration-100 ${isArduinoUno ? (selectedPinId === handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white") : "opacity-100"}`}
-                onPointerDown={isArduinoUno ? (event) => { setSelectedPinId(handleId); } : undefined}
+                className={`absolute transition-all duration-100 ${selectedPinId === handleId ? "!opacity-100 !bg-cyan-400 !border-2 !border-white !shadow-[0_0_0_3px_rgba(0,209,255,0.35)]" : isArduinoUno ? "opacity-0 hover:!opacity-100 active:!opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white" : "opacity-100 hover:!bg-cyan-400 active:!bg-cyan-400 hover:!border-2 hover:!border-white active:!border-2 active:!border-white"}`}
+                onPointerDown={() => setSelectedPinId(handleId)}
 
                 title={
                   isSsd1306 && pin.name === "DATA"
@@ -2126,9 +2132,9 @@ const ElectronicNode = ({
                     `${pin.y}px`,
 
                   zIndex: 20,
-                  background: isArduinoUno && selectedPinId === handleId ? "#00D1FF" : undefined,
-                  border: isArduinoUno && selectedPinId === handleId ? "2px solid white" : undefined,
-                  boxShadow: isArduinoUno && selectedPinId === handleId ? "0 0 0 3px rgba(0, 209, 255, 0.35)" : undefined
+                  background: selectedPinId === handleId ? "#00D1FF" : undefined,
+                  border: selectedPinId === handleId ? "2px solid white" : undefined,
+                  boxShadow: selectedPinId === handleId ? "0 0 0 3px rgba(0, 209, 255, 0.35)" : undefined
                 }}
 
                 data-pin-id={
