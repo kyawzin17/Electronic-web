@@ -2158,7 +2158,7 @@ const ElectronicNode = ({
                 className={`pointer-events-none absolute -top-6 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded bg-soft/90 px-1.5 py-0.5 text-[8px] font-medium text-text-main transition-opacity ${selectedPinId === handleId ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
               >
                 {handleId}
-              </span>       </span>
+              </span>
 
             </React.Fragment>
           );
