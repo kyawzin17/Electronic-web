@@ -14,6 +14,7 @@ import Zoom from "react-medium-image-zoom";
 import "react-medium-image-zoom/dist/styles.css"; // CSS မပါရင် zoom effect အလုပ်မလုပ်ပါဘူး
 
 export default function MarkdownView({ markdown }: { markdown: string }) {
+
     const renderH3 = ({ children }: { children: React.ReactNode }) => {
         const title = Array.isArray(children) ? children[0] : children;
         const id = typeof title === 'string'
@@ -43,6 +44,10 @@ export default function MarkdownView({ markdown }: { markdown: string }) {
             dark:prose-li:text-slate-200
             dark:prose-strong:text-slate-100
             transition-colors duration-300">
+            {!markdown
+             ?
+             <div className="text-center text-slate-500">No content available</div> 
+             :
             <ReactMarkdown
                 remarkPlugins={[remarkGfm, remarkMath]}
                 rehypePlugins={[rehypeKatex]}
@@ -125,6 +130,7 @@ export default function MarkdownView({ markdown }: { markdown: string }) {
             >
                 {markdown}
             </ReactMarkdown>
+            }
         </div>
     );
 }

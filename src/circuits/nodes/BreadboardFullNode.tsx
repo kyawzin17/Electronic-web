@@ -355,6 +355,7 @@ const BreadboardFullNode = ({
     return () => window.removeEventListener("rde:clear-pin-selection", clearSelection);
   }, []);
 
+
   // ===================================================
   // BOARD SIZE
   // ===================================================
@@ -404,15 +405,15 @@ const BreadboardFullNode = ({
         transition:
           "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
-      onPointerDown={() => { setSelected(true); }}
+      onPointerDown={() => setSelected(true) }
     >
 
-      {selected && (
-        <span className="pointer-events-none absolute -top-7 left-1/2 z-100 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
-          {String(data.label ?? data.componentType ?? "Component")}
-        </span>
-      )}
-       {selectedPinId && (
+       {selected && (
+            <span className="pointer-events-none absolute -top-7 left-1/2 z-100 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
+              {String(data.label ?? data.componentType ?? "Component")}
+            </span>
+          )}
+    {selectedPinId && (
             <span className="pointer-events-none absolute top-1/2 left-1/2 z-100 -translate-y-1/2 -translate-x-1/2 whitespace-nowrap rounded-md border border-cyan-400/50 bg-slate-950/90 px-2 py-1 text-[10px] font-semibold text-white shadow-lg">
               {String(selectedPin ?? "Pin")}
             </span>
