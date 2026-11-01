@@ -49,7 +49,6 @@ export default function About() {
         <LanguageToggle />
       </div>
 
-      <CircuitSimulatorGuide />
 
       <section className="relative flex w-full flex-col items-center justify-center px-4 py-16 md:py-24">
         <div className="pointer-events-none absolute left-[20%] top-16 hidden h-4 w-4 rotate-45 border border-cyan-500/50 sm:block" />
