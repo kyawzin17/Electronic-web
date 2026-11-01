@@ -102,7 +102,69 @@ export default function ProjectsPage() {
           </button>
         </div>
       </header>
+       <section className="mx-auto max-w-6xl px-5 py-8 border-t-2 border-text-secondary">
+        <h2 className="text-center font-bold text-text-main text-2xl lg:text-4xl mt-4">Build In Projects</h2>
+        <p className="text-center text-lg lg:text-4xl mb-12 font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">✦•┈๑⋅⋯ ⋯⋅๑┈•✦</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-12">
+            {allProjects.filter((project) => project.isBuiltIn).map((project) => (
+              <article
+                key={project.id}
+                className="group overflow-hidden rounded-2xl border border-secondary/20 bg-card shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:border-cyan-500/40"
+              >
+                <button
+                  type="button"
+                  onClick={() => openProject(project.id)}
+                  className="block w-full text-left"
+                >
+                  <div className="relative h-40 overflow-hidden border-b border-soft/80 bg-bg">
+                    {project.thumbnail ? (
+                      <img
+                        src={project.thumbnail}
+                        alt={project.name + " circuit preview"}
+                        loading="lazy"
+                        className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.02]"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.08),transparent_60%)]">
+                        <CircuitBoard
+                          size={48}
+                          className="text-cyan-400/70 transition group-hover:scale-105 group-hover:text-cyan-300"
+                        />
+                      </div>
+                    )}
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-black/30 to-transparent" />
+                  </div>
 
+                  <div className="p-4 bg-card">
+                    <h2 className="truncate text-sm font-semibold text-text-main">
+                      {project.name}
+                    </h2>
+
+                    <div className="mt-3 flex items-center gap-4 text-xs text-text-secondary">
+                      <span>{project.nodes.length} components</span>
+                      <span>{project.edges.length} wires</span>
+                    </div>
+
+                    <div className="mt-2 flex items-center gap-1.5 text-[11px] text-text-secondary/90">
+                      <Clock3 size={12} />
+                      {formatDate(project.updatedAt)}
+                    </div>
+                  </div>
+                </button>
+
+                <div className="border-t border-text-secondary/20 px-4 py-3">
+                  <Link
+                    to={project.project_url || ""}
+                    className="flex items-center font-bold gap-1.5 text-xs text-secondary/80 transition hover:text-secondary"
+                  >
+                    <FaBook className="text-success" size={14} />
+                    Read Description!
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+      </section>
       <section className="mx-auto max-w-6xl px-5 py-8">
         {allProjects.filter((project) => !project.isBuiltIn).length === 0 ? (
           <div className="flex min-h-[55vh] flex-col items-center justify-center rounded-3xl border border-dashed border-slate-800 bg-slate-950/40 text-center">
@@ -191,69 +253,7 @@ export default function ProjectsPage() {
           </div>
         )}
       </section>
-      <section className="mx-auto max-w-6xl px-5 py-8 border-t-2 border-text-secondary">
-        <h2 className="text-center font-bold text-text-main text-2xl lg:text-4xl mt-4">Build In Projects</h2>
-        <p className="text-center text-lg lg:text-4xl mb-12 font-extrabold bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">✦•┈๑⋅⋯ ⋯⋅๑┈•✦</p>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 pb-12">
-            {allProjects.filter((project) => project.isBuiltIn).map((project) => (
-              <article
-                key={project.id}
-                className="group overflow-hidden rounded-2xl border border-secondary/20 bg-card shadow-xl shadow-black/10 transition hover:-translate-y-0.5 hover:border-cyan-500/40"
-              >
-                <button
-                  type="button"
-                  onClick={() => openProject(project.id)}
-                  className="block w-full text-left"
-                >
-                  <div className="relative h-40 overflow-hidden border-b border-soft/80 bg-bg">
-                    {project.thumbnail ? (
-                      <img
-                        src={project.thumbnail}
-                        alt={project.name + " circuit preview"}
-                        loading="lazy"
-                        className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-[1.02]"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.08),transparent_60%)]">
-                        <CircuitBoard
-                          size={48}
-                          className="text-cyan-400/70 transition group-hover:scale-105 group-hover:text-cyan-300"
-                        />
-                      </div>
-                    )}
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-8 bg-linear-to-t from-black/30 to-transparent" />
-                  </div>
-
-                  <div className="p-4 bg-card">
-                    <h2 className="truncate text-sm font-semibold text-text-main">
-                      {project.name}
-                    </h2>
-
-                    <div className="mt-3 flex items-center gap-4 text-xs text-text-secondary">
-                      <span>{project.nodes.length} components</span>
-                      <span>{project.edges.length} wires</span>
-                    </div>
-
-                    <div className="mt-2 flex items-center gap-1.5 text-[11px] text-text-secondary/90">
-                      <Clock3 size={12} />
-                      {formatDate(project.updatedAt)}
-                    </div>
-                  </div>
-                </button>
-
-                <div className="border-t border-text-secondary/20 px-4 py-3">
-                  <Link
-                    to={project.project_url || ""}
-                    className="flex items-center font-bold gap-1.5 text-xs text-secondary/80 transition hover:text-secondary"
-                  >
-                    <FaBook className="text-success" size={14} />
-                    Read Description!
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-      </section>
+     
     </main>
   );
 }
