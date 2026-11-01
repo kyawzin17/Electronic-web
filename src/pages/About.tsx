@@ -89,8 +89,9 @@ export default function About() {
 
       <div className="mx-auto max-w-5xl space-y-16 py-10 md:space-y-24 md:py-12">
         <div className="space-y-12 px-4 sm:px-6">
-          <section className="space-y-5 text-center">
-            <h2 className="bg-linear-to-r from-primary to-secondary bg-clip-text text-3xl font-extrabold text-transparent sm:text-4xl">
+          <section className="mx-auto max-w-3xl space-y-4 text-center sm:text-left">
+            <p className="text-xs font-semibold tracking-[0.18em] text-primary">OUR STORY</p>
+            <h2 className="text-2xl font-bold text-text-main sm:text-3xl">
               {content.aboutTitle}
             </h2>
             <p className={`mx-auto max-w-2xl text-base leading-relaxed text-text-secondary md:text-lg ${language === "MM" ? "leading-mm-relaxed" : ""}`}>
@@ -115,6 +116,8 @@ export default function About() {
         </div>
 
         <AboutInformation />
+
+        <CircuitSimulatorGuide />
 
         <section className="mx-4 flex flex-col items-center gap-8 rounded-3xl border-2 border-border bg-linear-to-br from-soft to-card p-6 transition-all hover:border-primary hover:shadow-2xl hover:shadow-primary/20 sm:mx-6 sm:flex-row sm:p-8">
           <div className="h-40 w-40 shrink-0 overflow-hidden rounded-full shadow-xl sm:h-48 sm:w-48 sm:rounded-2xl">
