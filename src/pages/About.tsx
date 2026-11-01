@@ -13,7 +13,7 @@ const pageContent = {
     badge: "Red Dragon Electronic ⚡",
     title: "Empowering Myanmar’s Makers, One Circuit at a Time!",
     subtitle: "Master electronics with high-quality Burmese documentation, hands-on DIY projects, and interactive circuit simulations you can run right in your browser.",
-    startLearning: "Start Learning",
+    report: "Report",
     userGuide: "User Guide",
     aboutTitle: "About Red Dragon Electronics",
     aboutDescription: "We bring practical and easy-to-follow electronics learning resources together in one place for everyone taking their first steps into the world of electronics.",
@@ -28,8 +28,8 @@ const pageContent = {
     badge: "Red Dragon အီလက်ထရောနစ် ⚡",
     title: "မြန်မာ့နည်းပညာရှင်သစ်များအတွက် အီလက်ထရောနစ် သင်ယူမှု ပလက်ဖောင်း!",
     subtitle: "မြန်မာဘာသာဖြင့် ရေးသားထားသော သင်ခန်းစာများ၊ လက်တွေ့ DIY Project များနှင့် Browser ထဲမှာတင် စမ်းသပ်နိုင်သော Circuit Simulator တို့ဖြင့် အီလက်ထရောနစ်ပညာကို လေ့လာလိုက်ပါ။",
-    startLearning: "စတင်လေ့လာရန်",
-    userGuide: "အသုံးပြုနည်းပညာ",
+    report: "မှတ်ချက်ရေးရန်",
+    userGuide: "အသုံးပြုနည်း",
     aboutTitle: "Red Dragon Electronics အကြောင်း",
     aboutDescription: "အီလက်ထရောနစ်လောကထဲသို့ စတင်ဝင်ရောက်လေ့လာသူတိုင်းအတွက် စနစ်ကျပြီး လက်တွေ့အသုံးချနိုင်သော သင်ခန်းစာများနှင့် လမ်းညွှန်ချက်များကို တစ်နေရာတည်းတွင် စုစည်းပေးထားပါသည်။",
     founded: "စတင်တည်ထောင်သည့်နှစ်",
@@ -80,9 +80,9 @@ export default function About() {
                          <h2 className={`${language === "MM" ? "leading-mm-relaxed text-3xl md:text-5xl" : "line-height-2 text-3xl md:text-5xl" } text-shadow-lg/25 font-bold bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-transparent mb-px md:mb-0.5 line-height-1.5`}>{content.title}</h2>
                          <p className="text-sm md:text-base text-text-muted mb-2 md:mb-4">{content.subtitle}</p>
                          <div className="flex gap-6 p-3">
-                             <button onClick={() => navigate("/docs/learning")}
+                             <button onClick={() => navigate("/report")}
                                       className="px-3 py-1.5 md:px-4 md:py-2 bg-linear-to-r from-(--primary) to-(--secondary)
-                                              text-bg text-base rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">{content.startLearning}</button>
+                                              text-bg text-base rounded-lg shadow transition duration-300 hover:shadow-[0_0_10px_var(--primary)] select-none cursor-pointer">{content.report}</button>
                              <button onClick={() => navigate("/circuit/user-guide")}
                                       className="px-3 py-1.5 text-base md:px-4 md:py-2 border border-(--secondary) text-(--secondary) rounded-lg select-none cursor-pointer shadow transition duration-300 hover:border-(--secondary) hover:shadow-[0_0_8px_var(--secondary)]">
                                         {content.userGuide}
