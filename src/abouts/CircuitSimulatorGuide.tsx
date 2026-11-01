@@ -87,23 +87,23 @@ export default function CircuitSimulatorGuide() {
   };
 
   return (
-    <section id="circuit-user-guide" className="relative isolate overflow-hidden border-y border-border bg-bg px-4 py-14 text-text-main sm:px-6 md:py-20">
+    <section id="circuit-user-guide" className="relative isolate overflow-hidden border-y border-border bg-bg px-4 py-12 text-text-main sm:px-6 md:py-16">
       <div className="pointer-events-none absolute -left-28 top-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -right-28 bottom-0 h-80 w-80 rounded-full bg-secondary/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-7xl">
         <div className="mx-auto max-w-3xl text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-3 py-1 text-xs font-semibold tracking-[0.18em] text-primary">
+          <span className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.18em] text-primary">
             <span className="h-2 w-2 rounded-full bg-primary shadow-[0_0_12px_var(--primary)]" />
             {content.eyebrow}
           </span>
-          <h2 className="mt-5 bg-linear-to-r from-(--primary) to-(--secondary) bg-clip-text text-3xl font-black leading-tight text-transparent sm:text-4xl md:text-5xl">
+          <h2 className="mt-3 text-2xl font-bold leading-tight text-text-main sm:text-3xl md:text-4xl">
             {content.title}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-text-muted sm:text-base">
             {content.subtitle}
           </p>
-          <a href="/circuit" className="mt-7 inline-flex items-center justify-center gap-2 rounded-xl bg-linear-to-r from-(--primary) to-(--secondary) px-5 py-3 text-sm font-bold text-bg shadow-lg shadow-primary/15 transition hover:-translate-y-0.5 hover:shadow-primary/30">
+          <a href="/circuit" className="mt-6 inline-flex items-center justify-center gap-2 rounded-lg border border-primary/50 px-4 py-2.5 text-sm font-semibold text-primary transition hover:bg-primary/10">
             {content.start} <span aria-hidden="true">→</span>
           </a>
         </div>
