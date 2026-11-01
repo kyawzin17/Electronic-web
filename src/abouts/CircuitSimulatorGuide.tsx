@@ -149,7 +149,7 @@ export default function CircuitSimulatorGuide() {
               <div className="flex min-h-48 flex-col items-center justify-center gap-3 px-5 py-8 text-center sm:min-h-64">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/30 bg-primary/10 text-xl text-primary">▧</div>
                 <p className="text-sm font-semibold text-text-main">{active.screenshot}</p>
-                <p className="max-w-sm text-xs leading-5 text-text-muted">Replace this placeholder with the matching screenshot from your simulator UI.</p>
+                <p className="max-w-sm text-xs leading-5 text-text-muted">{language === "EN" ? "Replace this placeholder with the matching screenshot from your simulator UI." : "ဒီနေရာတွင် သက်ဆိုင်ရာ Simulator Screenshot ကို ထည့်သွင်းပါ။"}</p>
               </div>
             </div>
 
