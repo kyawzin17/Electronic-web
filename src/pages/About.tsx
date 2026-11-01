@@ -3,7 +3,6 @@ import profile from "../../public/assets/profile.webp";
 import { useAppContext } from "../hooks/useAppContext";
 import { useNavigate } from "react-router-dom";
 import LanguageToggle from "../homes/LanguageToogle";
-import CircuitSimulatorGuide from "../abouts/CircuitSimulatorGuide";
 
 const pageContent = {
   EN: {
@@ -115,9 +114,6 @@ export default function About() {
         </div>
 
         <AboutInformation />
-
-        <CircuitSimulatorGuide />
-
         <section className="mx-4 flex flex-col items-center gap-8 rounded-3xl border-2 border-border bg-linear-to-br from-soft to-card p-6 transition-all hover:border-primary hover:shadow-2xl hover:shadow-primary/20 sm:mx-6 sm:flex-row sm:p-8">
           <div className="h-40 w-40 shrink-0 overflow-hidden rounded-full shadow-xl sm:h-48 sm:w-48 sm:rounded-2xl">
             <img src={profile} alt="Project creator portrait" className="h-full w-full rounded-full bg-transparent object-cover sm:rounded-2xl" />

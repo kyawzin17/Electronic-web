@@ -12,6 +12,7 @@ import miniBoard from "../assets/gemini-svg (1).svg";
 import halfBoard from "../assets/gemini-svg (2).svg";
 import fullBoard from "../assets/gemini-svg (3).svg";
 import battery9V from "../assets/gemini-svg (4).svg";
+import { Link } from "react-router";
 
 
 type CategoryButtonProps = {
@@ -1067,6 +1068,7 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
             shrink-0
             flex
             items-center
+            justify-between
             gap-2
             px-4
             border-t
@@ -1076,26 +1078,36 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
             bg-soft
           "
         >
-
-          <HiOutlineCube
-            className="
-              text-text-main
-              text-lg
-            "
-          />
-
-
-          <span
-            className="
-              text-xs
-              font-medium
-              text-text-main
-            "
-          >
-            Total Components:
-            {" "}
-            {allComponents.length}
-          </span>
+          <div className="flex items-center gap-1.5">
+              <HiOutlineCube
+              className="
+                text-text-main
+                text-lg
+              "
+            />
+            <span
+              className="
+                text-xs
+                font-medium
+                text-text-main
+              "
+            >
+              Total Components:
+              {" "}
+              {allComponents.length}
+            </span>
+          </div>
+          <button className="text-xs text-text-main/80 hover:text-text-main bg-secondary/20 hover:bg-secondary/30 px-1.5 py-1 rounded-lg border border-text-main/70 hover:border-secondary">
+            <Link to="/circuit/user-guide"
+              className="
+                text-xs 
+                font-medium
+                text-text-main
+              "
+            >
+              User Guide
+            </Link>
+          </button>
 
         </div>
 

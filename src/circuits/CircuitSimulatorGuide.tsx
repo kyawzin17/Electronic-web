@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAppContext } from "../hooks/useAppContext";
+import LanguageToggle from "../homes/LanguageToogle";
 
 type GuideSection = {
   id: string;
@@ -87,7 +88,10 @@ export default function CircuitSimulatorGuide() {
   };
 
   return (
-    <section id="circuit-user-guide" className="relative isolate overflow-hidden border-y border-border bg-bg px-4 py-12 text-text-main sm:px-6 md:py-16">
+    <section id="circuit-user-guide" className="relative isolate overflow-hidden border-y border-border bg-bg px-4 pt-6 pb-12 text-text-main sm:px-6 md:pb-16">
+      <div className="relative z-30 h-12 mb-8">
+        <LanguageToggle />
+      </div>
       <div className="pointer-events-none absolute -left-28 top-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -right-28 bottom-0 h-80 w-80 rounded-full bg-secondary/10 blur-3xl" />
 

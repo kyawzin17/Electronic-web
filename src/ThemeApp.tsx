@@ -21,6 +21,7 @@ import EditProfile from "./registerAndLogin/EditProfile.tsx";
 import OtpFill from "./registerAndLogin/OtpFill.tsx";
 import PasswordFill from "./registerAndLogin/PasswordFill.tsx";
 import UserProfile from "./registerAndLogin/UserProfile.tsx";
+import CircuitSimulatorGuide from "./circuits/CircuitSimulatorGuide.tsx";
 
 import { AppProvider } from "./hooks/useAppContext.tsx";
 
@@ -76,6 +77,14 @@ export default function ThemeApp() {
                     element: (
                         <Suspense fallback={<RouteLoading label="Loading Circuit Projects..." />}>
                             <CircuitProjects />
+                        </Suspense>
+                    ),
+                },
+                {
+                    path: "/circuit/user-guide",
+                    element: (
+                        <Suspense fallback={<RouteLoading label="Loading Circuit Simulator Guide..." />}>
+                            <CircuitSimulatorGuide />
                         </Suspense>
                     ),
                 },
