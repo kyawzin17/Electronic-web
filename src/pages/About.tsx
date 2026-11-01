@@ -3,6 +3,7 @@ import profile from "../../public/assets/profile.webp";
 import { useAppContext } from "../hooks/useAppContext";
 import { useNavigate } from "react-router-dom";
 import LanguageToggle from "../homes/LanguageToogle";
+import CircuitSimulatorGuide from "../abouts/CircuitSimulatorGuide";
 
 interface Content {
     EN: {
@@ -44,6 +45,7 @@ export default function About() {
 
   return (
     <div className="min-h-screen w-full bg-bg text-text-main">
+      <CircuitSimulatorGuide />
 
          {/* Hero div */}
             <div className="w-full flex flex-col items-center justify-center py-18 md:py-28 z-2 relative">
