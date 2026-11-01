@@ -65,16 +65,6 @@ const Home= forwardRef<HTMLElement>(() => {
    }, { scope: containerRef});
 
    useGSAP(() => {
-    // 1. Background Shapes Animation (အပေါ်အောက် ပေါလောပေါ်နေစေရန်)
-    gsap.to('.floating-shape', {
-      y: -20,
-      rotation: '+=15',
-      duration: 4,
-      yoyo: true,
-      repeat: -1,
-      ease: 'sine.inOut',
-      stagger: 0.3,
-    });
     
     gsap.from(imageRef.current, {
         y: 70,

@@ -8,7 +8,7 @@ const LanguageToggle = () => {
   };
 
   return (
-    <div className="flex items-center gap-3 absolute right-[2%] top-[2%] cursor-pointer">
+    <div className="flex items-center gap-3 cursor-pointer">
       <button
         onClick={toggleLanguage}
         className="group relative flex items-center bg-card/80 backdrop-blur-md border-2 border-slate-700/50 p-1 rounded-full w-20 h-10 transition-all duration-300 hover:border-cyan-500/60 shadow-inner"

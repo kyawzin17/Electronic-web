@@ -3504,7 +3504,7 @@ const toggleCode = useCallback(() => {
         </ReactFlow>
 
         {pendingConnection && (
-          <div className="absolute inset-0 z-[200] flex items-center justify-center bg-slate-950/45 p-4" role="presentation">
+          <div className="absolute inset-0 z-200 flex items-center justify-center bg-slate-950/45 p-4" role="presentation">
             <div
               role="dialog"
               aria-modal="true"

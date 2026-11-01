@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useAppContext } from "../hooks/useAppContext";
 import LanguageToggle from "../homes/LanguageToogle";
+import { TiArrowBackOutline } from "react-icons/ti";
+import { useNavigate } from "react-router";
 
 type GuideSection = {
   id: string;
@@ -24,14 +26,14 @@ const guideContent = {
     next: "Next",
     finish: "You reached the end",
     sections: [
-      { id: "workspace", number: "01", title: "Workspace Overview", description: "Get familiar with the simulator workspace before building a circuit.", steps: ["Open Circuit Simulator from the website navigation.", "Identify the canvas, component panel, properties panel, and code or simulation controls.", "Use the canvas as your main area to place and arrange components."], screenshot: "Add your workspace screenshot here" },
-      { id: "components", number: "02", title: "Adding Components", description: "Choose the electronic parts required for your project.", steps: ["Open the Components panel.", "Find the component you need and add it to the canvas.", "Move components into a clear layout so their pins are easy to access."], screenshot: "Add your components panel screenshot here" },
-      { id: "wiring", number: "03", title: "Connecting Wires", description: "Create connections between component pins to form a circuit.", steps: ["Locate the pin where the connection should begin.", "Start a wire from that pin and connect it to the target pin.", "Review each connection and make sure the circuit matches your intended design."], screenshot: "Add your wire connection screenshot here" },
-      { id: "properties", number: "04", title: "Editing Properties", description: "Configure component values and options when they are available.", steps: ["Select a component on the canvas.", "Open or review its Properties panel.", "Change the available values and confirm that the displayed component updates as expected."], screenshot: "Add your properties panel screenshot here" },
-      { id: "code", number: "05", title: "Writing Code", description: "Use the code editor for projects that require microcontroller code.", steps: ["Select the supported microcontroller in your circuit.", "Open the code editor and review the starter code.", "Write or update your program, then check the selected board and required libraries."], screenshot: "Add your code editor screenshot here" },
-      { id: "simulation", number: "06", title: "Compile and Simulate", description: "Check your circuit and run the available simulation workflow.", steps: ["Review component wiring and power connections first.", "Use the Compile or Run controls available in the simulator.", "Read any compiler or simulation messages and fix reported issues before trying again."], screenshot: "Add your simulation controls screenshot here" },
-      { id: "projects", number: "07", title: "Saving Projects", description: "Keep a copy of your circuit so you can continue working later.", steps: ["Use the simulator's Save Project action when you are ready.", "Give the project a clear name if prompted.", "Open the saved project from the projects area when you want to continue. Save manually after important changes."], screenshot: "Add your project save screenshot here" },
-      { id: "troubleshooting", number: "08", title: "Tips and Troubleshooting", description: "A few checks can help you find common circuit and workflow mistakes.", steps: ["Check that wires connect to the intended pins.", "Confirm power, ground, and component orientation.", "Read compile errors carefully and check board or library settings.", "Save your work manually after making important changes."], screenshot: "Add a troubleshooting screenshot here" },
+      { id: "workspace", number: "01", title: "Workspace Overview", description: "Get familiar with the simulator workspace before building a circuit.", steps: ["Open Circuit Simulator from the website navigation.", "Identify the canvas, component panel, properties panel, and code or simulation controls.", "Use the canvas as your main area to place and arrange components."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1793514271/user-guid-1_lctk7a.webp" },
+      { id: "components", number: "02", title: "Adding Components", description: "Choose the electronic parts required for your project.", steps: ["Open the Components panel.", "Find the component you need and add it to the canvas.", "Move components into a clear layout so their pins are easy to access."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-2_w3htzz.webp" },
+      { id: "wiring", number: "03", title: "Connecting Wires", description: "Create connections between component pins to form a circuit.", steps: ["Locate the pin where the connection should begin.", "Start a wire from that pin and connect it to the target pin.", "Review each connection and make sure the circuit matches your intended design."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514271/user-guide-3_fiot9r.webp" },
+      { id: "properties", number: "04", title: "Editing Properties", description: "Configure component values and options when they are available.", steps: ["Select a component on the canvas.", "Open or review its Properties panel.", "Change the available values and confirm that the displayed component updates as expected."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-4_jcjjf6.webp" },
+      { id: "code", number: "05", title: "Writing Code", description: "Use the code editor for projects that require microcontroller code.", steps: ["Select the supported microcontroller in your circuit.", "Open the code editor and review the starter code.", "Write or update your program, then check the selected board and required libraries."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-5_crof9c.webp" },
+      { id: "simulation", number: "06", title: "Compile and Simulate", description: "Check your circuit and run the available simulation workflow.", steps: ["Review component wiring and power connections first.", "Use the Compile or Run controls available in the simulator.", "Read any compiler or simulation messages and fix reported issues before trying again."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-6_k2eubn.webp" },
+      { id: "projects", number: "07", title: "Saving Projects", description: "Keep a copy of your circuit so you can continue working later.", steps: ["Use the simulator's Save Project action when you are ready.", "Give the project a clear name if prompted.", "Open the saved project from the projects area when you want to continue. Save manually after important changes."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514273/user-guide-7_h0lecw.webp" },
+      { id: "troubleshooting", number: "08", title: "Tips and Troubleshooting", description: "A few checks can help you find common circuit and workflow mistakes.", steps: ["Check that wires connect to the intended pins.", "Confirm power, ground, and component orientation.", "Read compile errors carefully and check board or library settings.", "Save your work manually after making important changes."], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514273/user-guide-8_rcm8qs.webp" },
     ] as GuideSection[],
     faqTitle: "Frequently Asked Questions",
     faqs: [
@@ -53,14 +55,14 @@ const guideContent = {
     next: "နောက်အဆင့်",
     finish: "လမ်းညွှန်ပြီးဆုံးပါပြီ",
     sections: [
-      { id: "workspace", number: "01", title: "Workspace ကို သိကျွမ်းခြင်း", description: "Circuit မတည်ဆောက်ခင် Simulator ရဲ့ အဓိကနေရာတွေကို အရင်လေ့လာပါ။", steps: ["Website Navigation မှ Circuit Simulator ကို ဖွင့်ပါ။", "Canvas၊ Components Panel၊ Properties Panel နဲ့ Code/Simulation Controls တွေကို ရှာဖွေပါ။", "Canvas ကို Components တွေ ထည့်သွင်းပြီး နေရာချထားဖို့ အဓိကနေရာအဖြစ် အသုံးပြုပါ။"], screenshot: "Workspace Screenshot ထည့်ရန်" },
-      { id: "components", number: "02", title: "Components ထည့်သွင်းခြင်း", description: "ကိုယ်တည်ဆောက်မယ့် Project အတွက် လိုအပ်တဲ့ Electronic Parts တွေကို ရွေးချယ်ပါ။", steps: ["Components Panel ကို ဖွင့်ပါ။", "လိုအပ်တဲ့ Component ကို ရှာပြီး Canvas ထဲ ထည့်ပါ။", "Pin တွေကို အလွယ်တကူ ချိတ်ဆက်နိုင်ဖို့ Components တွေကို စနစ်တကျ နေရာချပါ။"], screenshot: "Components Panel Screenshot ထည့်ရန်" },
-      { id: "wiring", number: "03", title: "Wire ချိတ်ဆက်ခြင်း", description: "Circuit တစ်ခု ဖြစ်လာဖို့ Component Pin တွေကြား Connection ပြုလုပ်ပါ။", steps: ["စတင်ချိတ်ဆက်မယ့် Pin ကို ရှာပါ။", "အဲဒီ Pin ကနေ Wire စတင်ပြီး ချိတ်ဆက်လိုတဲ့ Pin ဆီ ဆက်ပါ။", "Connection တစ်ခုချင်းစီကို ပြန်စစ်ပြီး ကိုယ်လိုချင်တဲ့ Circuit Design နဲ့ ကိုက်ညီမှုရှိမရှိ စစ်ဆေးပါ။"], screenshot: "Wire Connection Screenshot ထည့်ရန်" },
-      { id: "properties", number: "04", title: "Properties ပြင်ဆင်ခြင်း", description: "အသုံးပြုနိုင်တဲ့ Component Value နဲ့ Options တွေကို လိုအပ်သလို ပြင်ဆင်ပါ။", steps: ["Canvas ပေါ်က Component ကို ရွေးပါ။", "Properties Panel ကို ဖွင့်ပြီး ပြသထားတဲ့ Options တွေကို ကြည့်ပါ။", "ရရှိနိုင်တဲ့ Value တွေကို ပြင်ဆင်ပြီး Component မှာ ပြောင်းလဲမှုရှိမရှိ စစ်ဆေးပါ။"], screenshot: "Properties Panel Screenshot ထည့်ရန်" },
-      { id: "code", number: "05", title: "Code ရေးသားခြင်း", description: "Microcontroller အသုံးပြုတဲ့ Project တွေအတွက် Code Editor ကို အသုံးပြုပါ။", steps: ["Circuit ထဲမှာ အသုံးပြုထားတဲ့ Supported Microcontroller ကို ရွေးချယ်ပါ။", "Code Editor ကို ဖွင့်ပြီး Starter Code ကို လေ့လာပါ။", "Program ကို ရေးသား/ပြင်ဆင်ပြီး ရွေးချယ်ထားတဲ့ Board နဲ့ လိုအပ်တဲ့ Libraries တွေကို စစ်ဆေးပါ။"], screenshot: "Code Editor Screenshot ထည့်ရန်" },
-      { id: "simulation", number: "06", title: "Compile နှင့် Simulation", description: "Circuit ကို စစ်ဆေးပြီး ရရှိနိုင်တဲ့ Simulation Workflow နဲ့ စမ်းသပ်ပါ။", steps: ["အရင်ဆုံး Wiring၊ Power နဲ့ Ground Connection တွေကို စစ်ဆေးပါ။", "Simulator မှာ ရရှိနိုင်တဲ့ Compile သို့မဟုတ် Run Control ကို အသုံးပြုပါ။", "Compiler သို့မဟုတ် Simulation က ပြသတဲ့ Message တွေကို ဖတ်ပြီး Error ရှိရင် ပြင်ဆင်ကာ ပြန်စမ်းပါ။"], screenshot: "Simulation Controls Screenshot ထည့်ရန်" },
-      { id: "projects", number: "07", title: "Project သိမ်းဆည်းခြင်း", description: "နောက်တစ်ကြိမ်မှာ ဆက်လက်လုပ်ဆောင်နိုင်ဖို့ ကိုယ့် Circuit ကို သိမ်းထားပါ။", steps: ["အဆင်သင့်ဖြစ်တဲ့အခါ Simulator ရဲ့ Save Project ကို အသုံးပြုပါ။", "အမည်တောင်းလာပါက မှတ်မိလွယ်တဲ့ Project Name ပေးပါ။", "ဆက်လက်လုပ်ဆောင်လိုတဲ့အခါ Projects နေရာမှ ပြန်ဖွင့်ပါ။ အရေးကြီးတဲ့ ပြောင်းလဲမှုတိုင်းပြီးနောက် ကိုယ်တိုင် Save လုပ်ပါ။"], screenshot: "Project Save Screenshot ထည့်ရန်" },
-      { id: "troubleshooting", number: "08", title: "အမှားရှာဖွေခြင်းနှင့် အကြံပြုချက်များ", description: "Circuit နဲ့ Workflow မှာ ဖြစ်တတ်တဲ့ ပြဿနာတွေကို အခြေခံအချက်တွေကနေ စစ်ဆေးနိုင်ပါတယ်။", steps: ["Wire တွေက မှန်ကန်တဲ့ Pin တွေမှာ ချိတ်ထားခြင်းရှိမရှိ စစ်ပါ။", "Power၊ Ground နဲ့ Component Orientation ကို စစ်ဆေးပါ။", "Compile Error တွေကို သေချာဖတ်ပြီး Board သို့မဟုတ် Library Setting တွေကို စစ်ပါ။", "အရေးကြီးတဲ့ ပြောင်းလဲမှုတွေ ပြုလုပ်ပြီးတိုင်း ကိုယ်တိုင် Save လုပ်ပါ။"], screenshot: "Troubleshooting Screenshot ထည့်ရန်" },
+      { id: "workspace", number: "01", title: "Workspace ကို သိကျွမ်းခြင်း", description: "Circuit မတည်ဆောက်ခင် Simulator ရဲ့ အဓိကနေရာတွေကို အရင်လေ့လာပါ။", steps: ["Website Navigation မှ Circuit Simulator ကို ဖွင့်ပါ။", "Canvas၊ Components Panel၊ Properties Panel နဲ့ Code/Simulation Controls တွေကို ရှာဖွေပါ။", "Canvas ကို Components တွေ ထည့်သွင်းပြီး နေရာချထားဖို့ အဓိကနေရာအဖြစ် အသုံးပြုပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/v1793514271/user-guid-1_lctk7a.webp" },
+      { id: "components", number: "02", title: "Components ထည့်သွင်းခြင်း", description: "ကိုယ်တည်ဆောက်မယ့် Project အတွက် လိုအပ်တဲ့ Electronic Parts တွေကို ရွေးချယ်ပါ။", steps: ["Components Panel ကို ဖွင့်ပါ။", "လိုအပ်တဲ့ Component ကို ရှာပြီး Canvas ထဲ ထည့်ပါ။", "Pin တွေကို အလွယ်တကူ ချိတ်ဆက်နိုင်ဖို့ Components တွေကို စနစ်တကျ နေရာချပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-2_w3htzz.webp" },
+      { id: "wiring", number: "03", title: "Wire ချိတ်ဆက်ခြင်း", description: "Circuit တစ်ခု ဖြစ်လာဖို့ Component Pin တွေကြား Connection ပြုလုပ်ပါ။", steps: ["စတင်ချိတ်ဆက်မယ့် Pin ကို ရှာပါ။", "အဲဒီ Pin ကနေ Wire စတင်ပြီး ချိတ်ဆက်လိုတဲ့ Pin ဆီ ဆက်ပါ။", "Connection တစ်ခုချင်းစီကို ပြန်စစ်ပြီး ကိုယ်လိုချင်တဲ့ Circuit Design နဲ့ ကိုက်ညီမှုရှိမရှိ စစ်ဆေးပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514271/user-guide-3_fiot9r.webp" },
+      { id: "properties", number: "04", title: "Properties ပြင်ဆင်ခြင်း", description: "အသုံးပြုနိုင်တဲ့ Component Value နဲ့ Options တွေကို လိုအပ်သလို ပြင်ဆင်ပါ။", steps: ["Canvas ပေါ်က Component ကို ရွေးပါ။", "Properties Panel ကို ဖွင့်ပြီး ပြသထားတဲ့ Options တွေကို ကြည့်ပါ။", "ရရှိနိုင်တဲ့ Value တွေကို ပြင်ဆင်ပြီး Component မှာ ပြောင်းလဲမှုရှိမရှိ စစ်ဆေးပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-4_jcjjf6.webp" },
+      { id: "code", number: "05", title: "Code ရေးသားခြင်း", description: "Microcontroller အသုံးပြုတဲ့ Project တွေအတွက် Code Editor ကို အသုံးပြုပါ။", steps: ["Circuit ထဲမှာ အသုံးပြုထားတဲ့ Supported Microcontroller ကို ရွေးချယ်ပါ။", "Code Editor ကို ဖွင့်ပြီး Starter Code ကို လေ့လာပါ။", "Program ကို ရေးသား/ပြင်ဆင်ပြီး ရွေးချယ်ထားတဲ့ Board နဲ့ လိုအပ်တဲ့ Libraries တွေကို စစ်ဆေးပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-5_crof9c.webp" },
+      { id: "simulation", number: "06", title: "Compile နှင့် Simulation", description: "Circuit ကို စစ်ဆေးပြီး ရရှိနိုင်တဲ့ Simulation Workflow နဲ့ စမ်းသပ်ပါ။", steps: ["အရင်ဆုံး Wiring၊ Power နဲ့ Ground Connection တွေကို စစ်ဆေးပါ။", "Simulator မှာ ရရှိနိုင်တဲ့ Compile သို့မဟုတ် Run Control ကို အသုံးပြုပါ။", "Compiler သို့မဟုတ် Simulation က ပြသတဲ့ Message တွေကို ဖတ်ပြီး Error ရှိရင် ပြင်ဆင်ကာ ပြန်စမ်းပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514272/user-guide-6_k2eubn.webp" },
+      { id: "projects", number: "07", title: "Project သိမ်းဆည်းခြင်း", description: "နောက်တစ်ကြိမ်မှာ ဆက်လက်လုပ်ဆောင်နိုင်ဖို့ ကိုယ့် Circuit ကို သိမ်းထားပါ။", steps: ["အဆင်သင့်ဖြစ်တဲ့အခါ Simulator ရဲ့ Save Project ကို အသုံးပြုပါ။", "အမည်တောင်းလာပါက မှတ်မိလွယ်တဲ့ Project Name ပေးပါ။", "ဆက်လက်လုပ်ဆောင်လိုတဲ့အခါ Projects နေရာမှ ပြန်ဖွင့်ပါ။ အရေးကြီးတဲ့ ပြောင်းလဲမှုတိုင်းပြီးနောက် ကိုယ်တိုင် Save လုပ်ပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514273/user-guide-7_h0lecw.webp" },
+      { id: "troubleshooting", number: "08", title: "အမှားရှာဖွေခြင်းနှင့် အကြံပြုချက်များ", description: "Circuit နဲ့ Workflow မှာ ဖြစ်တတ်တဲ့ ပြဿနာတွေကို အခြေခံအချက်တွေကနေ စစ်ဆေးနိုင်ပါတယ်။", steps: ["Wire တွေက မှန်ကန်တဲ့ Pin တွေမှာ ချိတ်ထားခြင်းရှိမရှိ စစ်ပါ။", "Power၊ Ground နဲ့ Component Orientation ကို စစ်ဆေးပါ။", "Compile Error တွေကို သေချာဖတ်ပြီး Board သို့မဟုတ် Library Setting တွေကို စစ်ပါ။", "အရေးကြီးတဲ့ ပြောင်းလဲမှုတွေ ပြုလုပ်ပြီးတိုင်း ကိုယ်တိုင် Save လုပ်ပါ။"], screenshot: "https://res.cloudinary.com/dn4jczzgu/image/upload/f_auto,q_100/v1793514273/user-guide-8_rcm8qs.webp" },
     ] as GuideSection[],
     faqTitle: "မကြာခဏ မေးလေ့ရှိသော မေးခွန်းများ",
     faqs: [
@@ -74,6 +76,7 @@ const guideContent = {
 
 export default function CircuitSimulatorGuide() {
   const { language } = useAppContext();
+  const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(0);
   const [completed, setCompleted] = useState<string[]>([]);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -89,7 +92,13 @@ export default function CircuitSimulatorGuide() {
 
   return (
     <section id="circuit-user-guide" className="relative isolate overflow-hidden border-y border-border bg-bg px-4 pt-6 pb-12 text-text-main sm:px-6 md:pb-16">
-      <div className="relative z-30 h-12 mb-8">
+      <div className="relative z-30 w-full h-12 flex flex-row justify-between items-center mb-4 mx-auto max-w-7xl">
+        <button onClick={() => navigate(-1)} className="px-2 py-1 flex flex-row items-center gap-1 text-sm font-md text-text-secondary hover:text-text-main bg-text-secondary/20 rounded-lg hover:bg-text-secondary/30 hover:border border-text-secondary cursor-pointer">
+          <TiArrowBackOutline  size={22} />
+          <span className="text-base md:text-md font-md">
+            Back
+          </span>
+        </button>
         <LanguageToggle />
       </div>
       <div className="pointer-events-none absolute -left-28 top-16 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
@@ -150,11 +159,7 @@ export default function CircuitSimulatorGuide() {
             <p className="mt-2 text-sm leading-7 text-text-muted sm:text-base">{active.description}</p>
 
             <div className="mt-6 overflow-hidden rounded-2xl border border-dashed border-primary/40 bg-bg/70">
-              <div className="flex min-h-48 flex-col items-center justify-center gap-3 px-5 py-8 text-center sm:min-h-64">
-                <div className="grid h-12 w-12 place-items-center rounded-2xl border border-primary/30 bg-primary/10 text-xl text-primary">▧</div>
-                <p className="text-sm font-semibold text-text-main">{active.screenshot}</p>
-                <p className="max-w-sm text-xs leading-5 text-text-muted">{language === "EN" ? "Replace this placeholder with the matching screenshot from your simulator UI." : "ဒီနေရာတွင် သက်ဆိုင်ရာ Simulator Screenshot ကို ထည့်သွင်းပါ။"}</p>
-              </div>
+             <img src={active.screenshot} alt={`${active.title} screenshot`} loading="lazy" className="w-full" />
             </div>
 
             <ol className="mt-7 space-y-4">
