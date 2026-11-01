@@ -491,15 +491,15 @@ const Sidebar = ({ onComponentClick }: SidebarProps) => {
       category: "basic",
     },
 
-    {
-      type: "lcd1602",
-      name: "LCD 1602",
-      tag: "wokwi-lcd1602",
-      props: {},
-      scale: 0.15,
-      yOffset: "0px",
-      category: "basic",
-    },
+    // {
+    //   type: "lcd1602",
+    //   name: "LCD 1602",
+    //   tag: "wokwi-lcd1602",
+    //   props: {},
+    //   scale: 0.15,
+    //   yOffset: "0px",
+    //   category: "basic",
+    // },
 
     {
       type: "lcd1602-i2c",
