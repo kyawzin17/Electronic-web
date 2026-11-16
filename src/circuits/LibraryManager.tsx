@@ -119,7 +119,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
           </div>
         </header>
 
-        <div className="relative grid custom-scrollbar min-h-0 flex-1 grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.78fr)]">
+        <div className="relative grid custom-scrollbar mx-auto min-h-0 flex-1 grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(260px,0.78fr)]">
           <div className={`flex min-h-0 flex-col border-b md:border-b-0 md:border-r ${isDark ? "border-slate-700/80" : "border-slate-200"}`}>
             <div className="space-y-3 p-4 sm:p-5">
               <label className={`flex items-center gap-2 rounded-xl border px-3 focus-within:border-cyan-500 ${field}`}>
@@ -153,7 +153,7 @@ export default function LibraryManager({ onClose, code, onCodeChange }: Props) {
             </div>
           </div>
 
-          <aside className={`absolute max-w-100 h-full md:w-auto md:static top-1/2 translate-y-[-50%] md:translate-0 flex-row justify-between items-center md:border-0 rounded-md md:rounded-0 ${rightSidebar ? "-right-1" : "-right-94.5"} transition-all ease-in-out duration-200 flex `}>
+          <aside className={`absolute max-w-100 h-full overflow-y-auto md:w-auto md:static top-1/2 translate-y-[-50%] md:translate-0 flex-row justify-between items-center md:border-0 rounded-md md:rounded-0 ${rightSidebar ? "-right-1" : "-right-94.5"} md:right-0 transition-all ease-in-out duration-200 flex `}>
             
             <button
                     onClick={() =>
