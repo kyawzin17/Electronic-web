@@ -1430,6 +1430,7 @@ const stop =
   };
 }, []);
 
+// ! Keep the nodes and edges refs in sync with the latest state for use in callbacks.
   useEffect(() => {
     nodesRef.current = nodes;
   }, [nodes]);
@@ -1816,6 +1817,7 @@ const stop =
     (event: React.DragEvent | null, clickedType?: string) => {
       event?.preventDefault();
 
+      // စစချင်းမှာ canvas ကို drop လုပ်မယ်ဆိုရင် reactFlowInstance မရှိနိုင်ပါဘူး။ ဒီအချိန်မှာ return လုပ်ပါ။
       if (!reactFlowInstance) {
         return;
       }
@@ -3671,7 +3673,7 @@ const toggleCode = useCallback(() => {
             <div className="rounded-2xl border border-dashed border-primary bg-soft/40 m-2 px-8 py-6 shadow-sm backdrop-blur-md">
 
               <div className="mb-2 text-sm font-semibold text-text-main">
-                Circuit Canvas
+                Circuit Canvas V(0.0.2)
               </div>
 
               <div className="text-xs text-text-secondary">
